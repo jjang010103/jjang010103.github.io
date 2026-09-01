@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<title>장민규 · C#/.NET 개발자 이력서</title>
+<meta name="description" content="8년차 C#/.NET 개발자 장민규입니다. .NET 기반 윈도우 데스크톱과 Avalonia 크로스플랫폼 앱을 개발합니다. 압축 프로그램 ezZip을 기획·개발·운영해 DAU 6만 명을 달성했습니다.">
+<meta name="author" content="장민규">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="장민규 · C#/.NET 개발자 이력서">
+<meta property="og:description" content="8년차 C#/.NET 개발자 · Windows Desktop / Cross-platform / Backend · ezZip DAU 6만 명">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#fbfbf9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-jp-dynamic-subset.min.css">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>(function(){var t=null;try{t=localStorage.getItem('mj-resume-theme')}catch(e){}
+if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
+document.documentElement.style.colorScheme=t;
+var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#0c0c0d':'#fbfbf9');})()</script>
+<style>
+:root{color-scheme:light dark}
+body{margin:0;background:light-dark(#fbfbf9,#0c0c0d);color:light-dark(#1c1b19,#ececed);font-family:'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;letter-spacing:inherit}
+a:hover{color:light-dark(#000,#fff);text-decoration:underline;text-underline-offset:3px}
+::selection{background:light-dark(#151514,#f2f2f2);color:light-dark(#fff,#111)}
+[data-modalcard] li strong{background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);padding:.08em .3em .12em;margin:0 .04em;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+[data-modalcard] li strong::selection{background:light-dark(#f2f2f2,#151514);color:light-dark(#111,#fff)}
+[data-footer]::selection,[data-footer] ::selection,[data-tlbar]::selection,[data-tlbar] ::selection,[data-inverted]::selection,[data-inverted] ::selection{background:light-dark(#f2f2f2,#151514);color:light-dark(#111,#fff)}
+html[lang="ko"] body{word-break:keep-all;overflow-wrap:break-word}
+
+/* shared atoms — these were 164 copies of the mono stack and 56 identical pills inline */
+.mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace}
+.sq{corner-shape:squircle}
+.pill{font-size:12px;padding:5px 10px;border-radius:10px;white-space:nowrap}
+.pill-on{background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d)}
+.pill-off{border:1px solid light-dark(#dedcd6,#2a2a30)}
+.tag{font-size:11px;padding:2px 7px;border-radius:6px;background:light-dark(#eae8e2,#1b1b20);border:1px solid light-dark(#d8d6ce,#282830);color:light-dark(#2b2a27,#dcdcdf)}
+.eyebrow{font-size:10.5px;letter-spacing:.14em;color:light-dark(#6f6f68,#8e8e98)}
+.speclabel{font-size:10.5px;letter-spacing:.12em;color:light-dark(#7a7972,#858590);margin-bottom:4px}
+
+/* native smooth scroll replaces the hand-rolled setInterval tween */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+#s-intro,section[data-chapter],[data-kpisec]{scroll-margin-top:64px}
+
+::view-transition-group(root){animation-duration:620ms}
+::view-transition-image-pair(root){isolation:auto}
+::view-transition-old(root),::view-transition-new(root){mix-blend-mode:normal;backdrop-filter:none;animation:none}
+:root[data-vt="out"]::view-transition-old(root){z-index:1}
+:root[data-vt="out"]::view-transition-new(root){z-index:2;animation:mj-vt-out 620ms cubic-bezier(.4,0,.2,1) both}
+:root[data-vt="in"]::view-transition-new(root){z-index:1}
+:root[data-vt="in"]::view-transition-old(root){z-index:2;animation:mj-vt-in 620ms cubic-bezier(.4,0,.2,1) both}
+@keyframes mj-vt-out{from{clip-path:circle(0px at var(--vtx,50%) var(--vty,50%))}to{clip-path:circle(var(--vtr,150vmax) at var(--vtx,50%) var(--vty,50%))}}
+@keyframes mj-vt-in{from{clip-path:circle(var(--vtr,150vmax) at var(--vtx,50%) var(--vty,50%))}to{clip-path:circle(0px at var(--vtx,50%) var(--vty,50%))}}
+:focus{outline:none}
+:focus-visible{outline:2px solid light-dark(#151514,#ececef);outline-offset:3px;border-radius:4px}
+nav::-webkit-scrollbar{display:none}
+@media (min-width:721px){[data-bar] > button:first-of-type{background-image:none !important}}
+[data-modalcard] > div{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:4px}
+[data-modalcard] > div > div:first-child{margin-bottom:14px !important}
+[data-modalcard] > div > h3{margin:0 0 14px !important;font-size:clamp(21px,2.6vw,25px) !important;line-height:1.26 !important}
+[data-modalcard] > div > p{margin:0 0 24px !important;font-size:14.5px !important;line-height:1.76 !important}
+[data-modalcard] > div > ul{order:1;gap:15px !important;background:light-dark(#f1f1f0,rgba(255,255,255,.055));corner-shape:squircle;border-radius:20px;padding:24px 26px !important}
+[data-modalcard] > div > div:nth-of-type(2){order:2;margin:18px 0 0 !important}
+[data-modalcard] > div > div:nth-of-type(2) > span{background:light-dark(#f1f1f0,rgba(255,255,255,.055)) !important}
+[data-modalcard] > div > div:nth-of-type(3){order:3;margin-top:26px !important}
+
+[data-projgrid] > article,[data-cocards] > div{border-color:transparent !important;background:light-dark(#f1f1f0,rgba(255,255,255,.045)) !important;box-shadow:none !important}
+[data-projgrid] > article:hover,[data-projgrid] > article:focus-visible{background:light-dark(#eaeae9,rgba(255,255,255,.068)) !important;box-shadow:none !important}
+@media (min-width:721px){
+  section[data-chapter]{padding-top:96px !important}
+  section[data-chapter] > div:first-child{margin-bottom:36px !important}
+  section[data-chapter] > div:first-child > h2{font-size:29px !important;letter-spacing:-.032em !important}
+  [data-chaprule]{background:transparent !important}
+}
+@media (max-width:720px){
+  /* the name's ink-fill is the reading indicator — a rail as well is noise */
+  html{scrollbar-width:none}
+  html::-webkit-scrollbar{width:0;height:0;display:none}
+  [data-bar]{padding:11px 0 13px !important;gap:8px !important}
+  [data-bar] > nav,[data-bar] [data-barspacer]{display:none !important}
+  [data-bar] > button:first-of-type{margin-right:auto !important}
+  [data-bar] > button:first-of-type{-webkit-background-clip:text !important;background-clip:text !important;-webkit-text-fill-color:transparent !important}
+  [data-contact]{gap:0 !important}
+  [data-contact] > a{min-height:46px;align-items:center !important;padding-bottom:0 !important}
+  [data-kpi]{grid-template-columns:1fr 1fr !important}
+  /* one continuous axis — same proportions and same start/end positions as
+     desktop, just without the labels that could not fit inside 104px */
+  [data-tlbar]{height:12px !important}
+  [data-tlbar] > div{padding:0 !important;box-sizing:border-box !important}
+  [data-tlbar] span{display:none !important}
+  [data-cardate]{display:block !important;margin-top:5px !important}
+  /* toolbar back to a compact size — the bar padding carries the touch area */
+  [data-bar] > div > button{min-width:34px !important;padding:0 9px !important;font-size:12.5px !important}
+  [data-bar] > div,[data-bar] > button[aria-label],[data-bar] > button[title]{height:32px !important}
+  [data-bar] > button[aria-label]{width:32px !important}
+  [data-bar] > button[aria-label="PDF"]{display:none !important}
+  /* footer: one left-aligned column */
+  [data-footer]{padding:34px 22px 20px !important;border-radius:20px !important}
+  [data-footgrid]{gap:28px !important;align-items:start !important}
+  [data-footcontact]{justify-self:start !important;text-align:left !important}
+  [data-footmail]{font-size:19px !important}
+  [data-footmeta]{margin-top:30px !important}
+
+  /* ─── density: three weights instead of one ─── */
+  /* 1. stats become a full-bleed band, not another card */
+  [data-kpisec]{padding:30px 0 !important}
+  [data-kpi]{margin:0 calc(-1*clamp(18px,4vw,32px)) !important}
+  [data-kpi] > div{padding:18px clamp(18px,4vw,32px) 16px !important}
+  [data-kpi] > div > div:first-child{font-size:30px !important}
+
+  /* 2. the stack becomes a spec table: label left, items flowing right.
+     thirty bordered pills was a wall; one long middot line was a blob */
+  [data-stackgrid]{gap:0 !important}
+  [data-stackgrid] > div{padding:14px 0 16px !important;border-top:1px solid light-dark(#e5e4e0,#232329) !important}
+  [data-stackgrid] > div > div:first-child{margin-bottom:11px !important}
+  [data-stackgroup]{display:grid !important;grid-template-columns:1fr 1fr !important;gap:9px 16px !important;font-family:inherit !important}
+  [data-stackgroup] > span{display:block !important;padding:0 !important;border:0 !important;background:none !important;font-family:inherit !important;font-size:13.5px !important;font-weight:500 !important;color:inherit !important;line-height:1.3 !important;white-space:normal !important}
+
+  /* 3. projects keep the desktop plane — same fill, same 20px squircle */
+  [data-projgrid]{gap:12px !important}
+  [data-projgrid] > article{corner-shape:squircle !important;border-radius:20px !important;transform:none !important;padding:20px 22px 22px !important}
+
+  /* 4. company cards keep the same plane as the project cards */
+  [data-cocards]{gap:12px !important;margin-top:18px !important}
+  [data-cocards] > div{corner-shape:squircle !important;border-radius:20px !important;padding:17px 19px !important}
+
+  /* 5. chapter rhythm: tighter blocks, clearer breaks */
+  [data-chapter]{padding-top:46px !important}
+  [data-edugrid]{gap:24px 0 !important}
+  /* the chapter header rule already opens the stack table — no second line */
+  [data-stackgrid] > div:first-child{border-top:0 !important;padding-top:0 !important}
+
+  /* ─── project rows rebuilt: numbered, title-first, two-line blurb ─── */
+  [data-projgrid] > article{padding:20px 46px 22px 22px !important}
+  [data-projgrid] > article > h3{order:1 !important;margin:0 0 7px !important;font-size:19.5px !important;line-height:1.28 !important;letter-spacing:-.025em !important}
+  [data-cardmeta]{order:2 !important;justify-content:flex-start !important;gap:0 !important;margin:0 0 10px !important;font-size:10.5px !important}
+  [data-cardmeta] > span:last-child::before{content:'·';margin:0 7px;opacity:.55}
+  [data-projgrid] > article > p{order:3 !important;margin:0 !important;font-size:13.5px !important;line-height:1.6 !important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  [data-cardlink]{order:4 !important;margin-top:14px !important}
+  [data-rowarrow]{top:46px !important;right:20px !important}
+
+  /* cards must announce themselves without hover — press, not lift */
+  [data-projgrid] > article{position:relative !important;transition:transform .18s cubic-bezier(.4,0,.2,1),background .18s ease !important}
+  [data-projgrid] > article:hover,[data-projgrid] > article:focus-visible{transform:none !important}
+  [data-projgrid] > article:active{background:light-dark(#eaeae9,rgba(255,255,255,.068)) !important;transform:scale(.986) !important}
+  [data-projgrid] > article:focus-visible{outline-offset:-2px}
+  [data-rowarrow]{display:block !important;position:absolute;top:26px;right:0;font-size:22px;line-height:1;font-weight:300;color:light-dark(#9a9a92,#6a6a73)}
+  /* one rule per row — the internal action divider is redundant here */
+  [data-projgrid] > article > div:last-of-type[style*="border-top"]{border-top:0 !important;padding-top:0 !important;margin-top:14px !important}
+
+  /* the band bleeds, so its section rule must not stop short */
+  [data-kpisec]{border-bottom:0 !important}
+  [data-filters]{gap:5px !important;margin-bottom:18px !important}
+  [data-filters] button{min-height:30px !important;padding:0 9px !important;font-size:10.5px !important;letter-spacing:0 !important}
+  [data-sheetclose]{min-height:44px !important;padding:0 2px !important;margin-bottom:20px !important}
+  [data-modal]{padding:0 !important;align-items:stretch !important}
+  [data-modalcard]{max-width:none !important;width:100% !important;aspect-ratio:auto !important;min-height:100% !important;border-radius:0 !important;border-left:0 !important;border-right:0 !important;box-shadow:none !important}
+  [data-modalcard] > div{overflow:visible !important;padding-right:0 !important}
+}
+@media print{
+  :root{color-scheme:light only}
+  [data-noprint]{display:none !important}
+  body{background:#fff}
+}
+
+[data-modallayout]{display:grid;grid-template-columns:1fr;gap:28px}
+@media (min-width:680px){[data-modallayout]{grid-template-columns:1fr 220px;gap:36px;align-items:start}}
+[data-modalsidebar]{position:sticky;top:0}
+[data-contrib-item]{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-top:1px solid light-dark(rgba(21,21,20,.08),rgba(255,255,255,.06))}
+[data-contrib-item]:first-child{border-top:none;padding-top:0}
+</style>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#151514"/><text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#fbfbf9" letter-spacing="-1">장민규</text></svg></template>
+</helmet>
+
+<main style="max-width:1100px;margin:0 auto;padding:0 clamp(18px,4vw,32px) 96px">
+
+<div data-noprint data-bar style="position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:flex-end;gap:10px 8px;padding:14px 0;background:light-dark(#fbfbf9,#0c0c0d)">
+  <button onClick="{{ toTop }}" style="flex:none;align-self:flex-end;display:flex;align-items:center;height:27px;padding:0;margin-right:clamp(14px,2.4vw,26px);border:0;background:transparent;cursor:pointer;color:light-dark(#4a4a45,#a5a5ad);transition:opacity .2s ease;line-height:.85;white-space:nowrap;font-weight:700;background-image:{{ logoBg }};background-repeat:no-repeat;background-size:100% 100%" style-hover="opacity:.62"><span style="display:{{ ki }};font-size:22.5px;letter-spacing:-.055em">장민규</span><span style="display:{{ ei }};font-size:18px;letter-spacing:-.045em">Min-gyu Jang</span><span style="display:{{ ji }};font-size:17px;letter-spacing:-.05em">チャン・ミンギュ</span></button>
+  <nav style="display:flex;align-items:flex-end;gap:12px;flex:8 1 320px;min-width:0;max-width:586px;overflow-x:auto;scrollbar-width:none;padding-bottom:1px">
+    <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+      <button onClick="{{ n.go }}" style="flex:{{ n.grow }} 1 auto;min-width:max-content;display:flex;flex-direction:column;gap:7px;padding:0 8px 0 0;border:0;background:transparent;cursor:pointer;white-space:nowrap;color:{{ n.fg }};transition:color .2s ease">
+        <span style="display:flex;align-items:baseline;gap:7px">
+          <span class="mono" style="font-size:9.5px;letter-spacing:.1em;transition:color .2s ease;color:{{ n.nfg }}">{{ n.num }}</span>
+          <span style="font-size:12.5px;font-weight:{{ n.w }};letter-spacing:-.01em">{{ n.label }}</span>
+        </span>
+        <span style="display:block;height:2px;background:light-dark(#e5e4e0,#232329)"><span style="display:block;height:2px;background:currentColor;transition:width .12s linear;width:{{ n.fill }}"></span></span>
+      </button>
+    </sc-for>
+  </nav>
+  <span data-barspacer style="flex:1 1 20px;min-width:20px"></span>
+
+  <div style="height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#dedcd6,#2a2a30);corner-shape:squircle;border-radius:10px;overflow:hidden">
+    <button onClick="{{ setKo }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:40px;padding:0 11px;font-size:15.5px;font-weight:500;line-height:1.25;background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
+    <button onClick="{{ setEn }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:40px;padding:0 11px;font-size:12.5px;font-weight:500;line-height:1.25;background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
+    <button onClick="{{ setJa }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:40px;padding:0 11px;font-size:12.5px;font-weight:500;line-height:1.25;background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
+  </div>
+  <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="height:32px;width:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#e2e1dd,#2a2a30);background:transparent;color:inherit;cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="display:block;transition:transform .45s cubic-bezier(.65,0,.35,1);transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg></button>
+  <button onClick="{{ doPrint }}" aria-label="PDF" title="PDF" style="height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;width:32px;border:1px solid light-dark(#e2e1dd,#2a2a30);background:transparent;color:inherit;cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8"></path><path d="M4.5 7L8 10.5 11.5 7"></path><path d="M2.5 13.5h11"></path></svg></button>
+</div>
+
+<header id="s-intro" style="padding:66px 0 54px;border-bottom:1px solid light-dark(#e5e4e0,#232329)">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:clamp(28px,4vw,48px);align-items:end">
+    <div>
+      <h1 data-inverted style="display:inline-block;max-width:100%;box-sizing:border-box;margin:0;padding:.1em .1em .13em;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);border-radius:3px;font-size:clamp(38px,9vw,86px);line-height:.93;font-weight:600;letter-spacing:-.042em;overflow-wrap:break-word;word-break:keep-all">
+        <span style="display:{{ kb }}">장민규</span><span style="display:{{ eb }}">Min&#8209;gyu Jang</span><span style="display:{{ jb }};font-size:.8em;letter-spacing:-.03em">チャン・ミンギュ</span>
+      </h1>
+      <p style="margin:20px 0 0;font-size:19px;font-weight:500;letter-spacing:-.01em">
+        <span style="display:{{ ki }}">C#/.NET 개발자 · 8년차</span><span style="display:{{ ei }}">C#/.NET Developer · 8 years</span><span style="display:{{ ji }}">C#/.NET エンジニア · 8年目</span>
+      </p>
+      <p class="mono" style="margin:7px 0 0;font-size:12.5px;letter-spacing:.02em;color:light-dark(#63635d,#9b9ba4)">
+        Windows Desktop &nbsp;/&nbsp; Cross&#8209;platform &nbsp;/&nbsp; Backend
+      </p>
+    </div>
+
+    <div data-contact class="mono" style="display:flex;flex-direction:column;gap:9px;font-size:clamp(11px,2.6vw,12.5px);padding-bottom:6px">
+      <a href="mailto:a9090618693@gmail.com" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding-bottom:9px;border-bottom:1px solid light-dark(#e9e8e4,#1e1e23);overflow-wrap:anywhere"><span style="color:light-dark(#6f6f68,#8e8e98)">EMAIL</span><span>a9090618693@gmail.com</span></a>
+      <a href="tel:+821090618693" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding-bottom:9px;border-bottom:1px solid light-dark(#e9e8e4,#1e1e23);overflow-wrap:anywhere"><span style="color:light-dark(#6f6f68,#8e8e98)">PHONE</span><span>010-9061-8693</span></a>
+      <a href="https://github.com/jjang010103" target="_blank" rel="noopener" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding-bottom:9px;border-bottom:1px solid light-dark(#e9e8e4,#1e1e23);overflow-wrap:anywhere"><span style="color:light-dark(#6f6f68,#8e8e98)">GITHUB</span><span style="white-space:nowrap">jjang010103 &#8599;</span></a>
+      <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;overflow-wrap:anywhere"><span style="color:light-dark(#6f6f68,#8e8e98)">LINKEDIN</span><span style="white-space:nowrap">민규-장 &#8599;</span></a>
+    </div>
+  </div>
+</header>
+
+<section style="padding:54px 0;border-bottom:1px solid light-dark(#e5e4e0,#232329)">
+  <p style="margin:0;max-width:88ch;font-size:17.5px;line-height:1.8;font-weight:300;letter-spacing:-.004em;color:light-dark(#33322e,#c9c9cf)">
+    <span style="display:{{ kb }}">고등학교 재학 중 소프트웨어 개발을 시작하여 8년차 C#/.NET 개발자로 성장했습니다.<br><br>Windows 데스크톱 애플리케이션 및 Avalonia 크로스플랫폼 개발을 주력으로 하며, C++ Native 연동부터 Java/Spring Boot 대용량 분산 환경까지 폭넓은 실무 경험을 보유하고 있습니다.<br><br>단순히 기능 구현에 그치지 않고 성능 최적화, 사용자 경험, 장기적인 유지보수성을 같은 설계의 핵심 가치로 여깁니다.<br>정량적인 목표를 명확히 세우고, 기술적 집요함으로 결과를 증명하는 개발을 지향합니다.</span>
+    <span style="display:{{ eb }}">I started my software development career during high school and have grown into a C#/.NET developer with 8 years of experience.<br><br>My core expertise lies in .NET Windows desktop software and Avalonia cross-platform apps, with extensive hands-on experience spanning C++ native interop and high-volume Java/Spring Boot distributed environments.<br><br>I don't stop where a feature simply works — usability, performance optimization, and long-term maintainability are integral parts of the same design.<br>I enjoy defining measurable goals and systematically delivering quantifiable results.</span>
+    <span style="display:{{ jb }}">高校在学中にソフトウェア開発を始め、8年目のC#/.NETエンジニアへと成長しました。<br><br>主戦場は.NETベースのWindowsデスクトップアプリとAvaloniaによるクロスプラットフォームアプリで、C++ Native連携からJava/Spring Bootによる大容量分散環境まで幅広い実務経験を有しています。<br><br>機能が単に動く地点で止めず、使いやすさ・性能最適化・長期保守性を同じ設計の核心価値として追求します。<br>定性的な目標を数値で明確に設定し、技術的な粘り強さでその数値を実現する開発を大切にしています。</span>
+  </p>
+</section>
+
+<section data-kpisec style="padding:40px 0;border-bottom:1px solid light-dark(#e5e4e0,#232329)">
+  <div data-kpi style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:2px;background:light-dark(#e9e8e4,#1e1e23)">
+    <div style="background:light-dark(#fbfbf9,#0c0c0d);padding:26px 22px 24px">
+      <div class="mono" style="font-size:44px;font-weight:500;letter-spacing:-.035em">60K</div>
+      <div style="margin-top:10px;font-size:12.5px;color:light-dark(#63635d,#9b9ba4)"><span style="display:{{ ki }}">ezZip 일 활성 사용자</span><span style="display:{{ ei }}">ezZip daily active users</span><span style="display:{{ ji }}">ezZip 一日あたりアクティブユーザー</span></div>
+    </div>
+    <div style="background:light-dark(#fbfbf9,#0c0c0d);padding:26px 22px 24px">
+      <div class="mono" style="font-size:44px;font-weight:500;letter-spacing:-.035em">&minus;50%</div>
+      <div style="margin-top:10px;font-size:12.5px;color:light-dark(#63635d,#9b9ba4)"><span style="display:{{ ki }}">실행 파일 크기 (AOT·Trimming)</span><span style="display:{{ ei }}">binary size (AOT + trimming)</span><span style="display:{{ ji }}">実行ファイルサイズ (AOT・Trimming)</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-chapter id="s-career" style="display:flex;flex-direction:column;padding:66px 0 0">
+  <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:30px">
+    <span class="mono" style="flex:none;font-size:11px;letter-spacing:.16em;color:light-dark(#6f6f68,#8e8e98)">01</span>
+    <h2 style="flex:none;margin:0;font-size:17px;font-weight:600;letter-spacing:-.018em;white-space:nowrap"><span style="display:{{ ki }}">경력 타임라인</span><span style="display:{{ ei }}">Career timeline</span><span style="display:{{ ji }}">職務経歴タイムライン</span></h2>
+    <span data-chaprule style="flex:1;height:1px;background:light-dark(#e5e4e0,#232329)"></span>
+    <span class="mono" style="font-size:11px;color:light-dark(#6f6f68,#8e8e98)">2018.09 → NOW</span>
+  </div>
+
+  <div data-tlbar style="display:flex;gap:3px;height:52px;align-items:stretch">
+    <div class="sq" style="flex:0 0 calc(65.6% - 4px);box-sizing:border-box;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);border-radius:10px;padding:9px 14px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden">
+      <span style="font-size:12.5px;font-weight:500;white-space:nowrap"><span style="display:{{ ki }}">㈜휴엔시스템</span><span style="display:{{ ei }}">Huensystem</span><span style="display:{{ ji }}">ヒュエンシステム</span></span>
+      <span class="mono" style="font-size:10.5px;opacity:.62">2018.09 — 2023.11 · 5y 3m</span>
+    </div>
+    <div class="sq" style="flex:0 0 3.1%;background:repeating-linear-gradient(135deg,light-dark(#dedcd6,#26262b) 0 3px,transparent 3px 6px);border-radius:10px" title="2023.12 — 2024.02"></div>
+    <div class="sq" style="flex:0 0 calc(31.3% - 2px);box-sizing:border-box;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);border-radius:10px;padding:9px 14px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden">
+      <span style="font-size:12.5px;font-weight:500;white-space:nowrap"><span style="display:{{ ki }}">㈜인라이플</span><span style="display:{{ ei }}">Enliple</span><span style="display:{{ ji }}">インライフル</span></span>
+      <span class="mono" style="font-size:10.5px;opacity:.62">2024.03 — <span style="display:{{ ki }}">재직중</span><span style="display:{{ ei }}">present</span><span style="display:{{ ji }}">在職中</span></span>
+    </div>
+  </div>
+
+  <div data-cocards style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;margin-top:22px">
+    <div class="sq" style="border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:18px 20px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span class="sq" style="flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:14px;font-weight:600;letter-spacing:-.02em;color:light-dark(#4a4a45,#a5a5ad)">휴</span><div style="font-size:14px;font-weight:600"><span style="display:{{ ki }}">㈜휴엔시스템 · EIS · 주임</span><span style="display:{{ ei }}">Huensystem · EIS · Associate</span><span style="display:{{ ji }}">ヒュエンシステム · EIS · 主任</span></div></div>
+      <div data-cardate class="mono" style="display:none;margin-top:6px;font-size:11px;color:light-dark(#6f6f68,#8e8e98)">2018.09 — 2023.11 &nbsp;·&nbsp; 5<span style="display:{{ ki }}">년</span><span style="display:{{ ei }}">y</span><span style="display:{{ ji }}">年</span> 3<span style="display:{{ ki }}">개월</span><span style="display:{{ ei }}">m</span><span style="display:{{ ji }}">ヶ月</span></div>
+      <div style="font-size:13.5px;line-height:1.7;margin-bottom:7px"><span style="display:{{ kb }}">플랜트 배관 도면 자동화 제품군의 Windows 클라이언트를 전담했습니다.<br>도면 검색 속도를 98% 개선하고 심볼 좌표 추출을 자동화해 수작업 계산 공수를 70% 절감했으며, 현대엔지니어링 8개 현장과 삼성물산 평택 현장의 기술 지원 및 운영 이슈를 직접 대응했습니다.</span><span style="display:{{ eb }}">Led the Windows client development for the piping drawing automation suite.<br>Improved drawing search speed by 98%, reduced manual calculations by 70% via automated symbol extraction, and handled on-site technical support across 8 Hyundai E&amp;C sites and Samsung C&amp;T Pyeongtaek.</span><span style="display:{{ jb }}">配管図面自動化製品群のWindowsクライアント開発を担当。<br>図面検索速度を98%改善し、シンボル座標抽出の自動化で手作業の計算工数を70%削減、現代エンジニアリング8現場およびサムスン物産・平沢現場の運用課題と技術支援に直接対応しました。</span></div>
+      <div style="font-size:12.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98)"><span style="display:{{ kb }}">플랜트 건설·엔지니어링 특화 솔루션 기업</span><span style="display:{{ eb }}">Solutions vendor for plant construction &amp; engineering</span><span style="display:{{ jb }}">プラント建設・エンジニアリング特化のソリューション企業</span></div>
+    </div>
+    <div class="sq" style="border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:18px 20px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span class="sq" style="flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:14px;font-weight:600;letter-spacing:-.02em;color:light-dark(#4a4a45,#a5a5ad)">인</span><div style="font-size:14px;font-weight:600"><span style="display:{{ ki }}">㈜인라이플 · 이지랩사업부 · 주임</span><span style="display:{{ ei }}">Enliple · ezLab Division · Associate</span><span style="display:{{ ji }}">インライフル · ezLab事業部 · 主任</span></div></div>
+      <div data-cardate class="mono" style="display:none;margin-top:6px;font-size:11px;color:light-dark(#6f6f68,#8e8e98)">2024.03 — <span style="display:{{ ki }}">재직중</span><span style="display:{{ ei }}">present</span><span style="display:{{ ji }}">在職中</span></div>
+      <div style="font-size:13.5px;line-height:1.7;margin-bottom:7px"><span style="display:{{ kb }}">자사 PC 제품군 전체에 적용되는 공통 모듈 및 통합 인스톨러 플랫폼을 설계·구축했습니다.<br>해당 플랫폼 기반 첫 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발·운영을 총괄해 DAU 6만 명을 달성했으며, 이전에는 Java/Spring 기반 대용량 마케팅 메시지 발송 플랫폼(iSend)의 백엔드 개발을 담당했습니다.</span><span style="display:{{ eb }}">Designed and built the shared module and installer platform for all company PC products.<br>Led ezZip — the first product built on this platform — from concept to operations, reaching 60K DAU. Previously engineered backend systems for the Java/Spring marketing message delivery platform (iSend).</span><span style="display:{{ jb }}">自社PC製品群全体に適用される共通モジュールおよびインストーラープラットフォームを設計・構築。<br>その最初の製品である圧縮ソフトezZipの企画からエンジン開発・運用までを統括してDAU6万人を達成。以前はJava/Springベースの大容量メッセージ配信プラットフォーム(iSend)のバックエンド開発を担当しました。</span></div>
+      <div style="font-size:12.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98)"><span style="display:{{ kb }}">국내 1위 리타겟팅 광고 플랫폼과 국내 최초 PC형 앱스토어를 운영하는 데이터 테크 기업</span><span style="display:{{ eb }}">Data-tech company behind Korea's top retargeting ad platform and first PC app store</span><span style="display:{{ jb }}">韓国最大のリターゲティング広告プラットフォームと韓国初のPC向けアプリストアを運営するデータテック企業</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-chapter id="s-stack" style="padding:66px 0 0">
+  <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:24px">
+    <span class="mono" style="flex:none;font-size:11px;letter-spacing:.16em;color:light-dark(#6f6f68,#8e8e98)">02</span>
+    <h2 style="flex:none;margin:0;font-size:17px;font-weight:600;letter-spacing:-.018em;white-space:nowrap"><span style="display:{{ ki }}">기술 스택</span><span style="display:{{ ei }}">Tech stack</span><span style="display:{{ ji }}">技術スタック</span></h2>
+    <span data-chaprule style="flex:1;height:1px;background:light-dark(#e5e4e0,#232329)"></span>
+  </div>
+
+  <div data-stackgrid style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:26px 34px">
+    <sc-for list="{{ stack }}" as="g" hint-placeholder-count="4">
+      <div>
+        <div class="mono eyebrow" style="margin-bottom:11px">{{ g.label }}</div>
+        <div data-stackgroup style="display:flex;flex-wrap:wrap;gap:7px">
+          <sc-for list="{{ g.items }}" as="t" hint-placeholder-count="6">
+            <span class="mono sq pill {{ g.cls }}" data-inverted="{{ g.inv }}">{{ t }}</span>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section data-chapter id="s-projects" style="padding:66px 0 0">
+  <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:22px">
+    <span class="mono" style="flex:none;font-size:11px;letter-spacing:.16em;color:light-dark(#6f6f68,#8e8e98)">03</span>
+    <h2 style="flex:none;margin:0;font-size:17px;font-weight:600;letter-spacing:-.018em;white-space:nowrap"><span style="display:{{ ki }}">프로젝트</span><span style="display:{{ ei }}">Projects</span><span style="display:{{ ji }}">プロジェクト</span></h2>
+    <span data-chaprule style="flex:1;height:1px;background:light-dark(#e5e4e0,#232329)"></span>
+    <span class="mono" style="font-size:11px;color:light-dark(#6f6f68,#8e8e98)">{{ shownCount }}/6</span>
+  </div>
+
+  <div data-noprint data-filters style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px">
+    <sc-for list="{{ filters }}" as="f" hint-placeholder-count="7">
+      <button onClick="{{ f.onClick }}" data-inverted="{{ f.inv }}" class="mono sq" style="cursor:pointer;font-size:11.5px;letter-spacing:.02em;padding:6px 12px;border-radius:10px;white-space:nowrap;border:1px solid {{ f.bc }};background:{{ f.bg }};color:{{ f.fg }}">{{ f.label }}</button>
+    </sc-for>
+  </div>
+
+  <div data-projgrid style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,370px),1fr));gap:16px">
+    <sc-for list="{{ cards }}" as="p" hint-placeholder-count="6">
+      <article onClick="{{ open }}" onKeyDown="{{ open }}" data-pid="{{ p.id }}" role="button" tabIndex="0" aria-haspopup="dialog" class="sq" style="display:flex;flex-direction:column;cursor:pointer;border:1px solid light-dark(rgba(21,21,20,.115),rgba(236,236,237,.088));border-radius:20px;padding:clamp(20px,3vw,26px) clamp(18px,3vw,26px) clamp(18px,3vw,24px);background:light-dark(rgba(255,255,255,.92),rgba(255,255,255,.013));backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);box-shadow:inset 0 1px 0 light-dark(rgba(255,255,255,1),rgba(255,255,255,.024))">
+        <span data-rowarrow aria-hidden="true" style="display:none">&#8250;</span>
+        <div data-cardmeta class="mono" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:14px;font-size:11px;color:light-dark(#6f6f68,#8e8e98)">
+          <span style="letter-spacing:.1em">{{ p.co }}</span>
+          <span>{{ p.date }}</span>
+        </div>
+        <h3 style="{{ p.h3 }}">{{ p.title }}</h3>
+        <p style="margin:0 0 18px;font-size:14px;font-weight:300;line-height:1.72;color:light-dark(#5e5e58,#9a9aa2)">{{ p.blurb }}</p>
+        <sc-if value="{{ p.url }}">
+          <div data-cardlink class="mono" style="margin-top:auto;padding-top:15px;display:flex;align-items:center;justify-content:flex-end;font-size:11.5px">
+            <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:7px;color:light-dark(#151514,#ececed);white-space:nowrap">{{ linkLabel }}<span>&#8599;</span></a>
+          </div>
+        </sc-if>
+      </article>
+    </sc-for>
+  </div>
+
+  <p class="mono" style="display:{{ emptyMsg }};margin:36px 0 0;text-align:center;font-size:12.5px;color:light-dark(#6f6f68,#8e8e98)">No projects match this filter.</p>
+</section>
+
+<section data-chapter id="s-education" style="padding:66px 0 0">
+  <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:24px">
+    <span class="mono" style="flex:none;font-size:11px;letter-spacing:.16em;color:light-dark(#6f6f68,#8e8e98)">04</span>
+    <h2 style="flex:none;margin:0;font-size:17px;font-weight:600;letter-spacing:-.018em;white-space:nowrap"><span style="display:{{ ki }}">학력 · 자격 · 병역</span><span style="display:{{ ei }}">Education · Certifications · Service</span><span style="display:{{ ji }}">学歴 · 資格 · 兵役</span></h2>
+    <span data-chaprule style="flex:1;height:1px;background:light-dark(#e5e4e0,#232329)"></span>
+  </div>
+
+  <div data-edugrid style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:34px">
+    <sc-for list="{{ edu }}" as="g" hint-placeholder-count="3">
+      <div>
+        <div class="mono eyebrow" style="margin-bottom:14px">{{ g.label }}</div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="2">
+            <div style="display:flex;align-items:flex-start;gap:12px">
+              <span class="sq" style="flex:none;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:13px;font-weight:600;color:light-dark(#4a4a45,#a5a5ad)">{{ it.badge }}</span>
+              <div style="min-width:0">
+                <div style="font-size:14.5px;font-weight:500">{{ it.name }}</div>
+                <div class="mono" style="margin-top:3px;font-size:11.5px;color:light-dark(#6f6f68,#8e8e98)">{{ it.meta }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<footer data-footer class="sq" style="margin-top:84px;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);border-radius:20px;padding:48px 44px 26px">
+  <div data-footgrid style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;align-items:end">
+    <div>
+      <div style="font-size:clamp(30px,4vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1.05"><span style="display:{{ kb }}">장민규</span><span style="display:{{ eb }}">Min-gyu Jang</span><span style="display:{{ jb }}">チャン・ミンギュ</span></div>
+      <div style="margin-top:8px;font-size:15px;opacity:.62"><span style="display:{{ ki }}">C#/.NET 개발자 · 8년차</span><span style="display:{{ ei }}">C#/.NET Developer · 8 years</span><span style="display:{{ ji }}">C#/.NET エンジニア · 8年目</span></div>
+      <div class="mono" style="display:flex;gap:18px;margin-top:20px;font-size:13.5px">
+        <a href="https://github.com/jjang010103" target="_blank" rel="noopener" style="color:light-dark(#fbfbf9,#0c0c0d)">GitHub &#8599;</a>
+        <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" style="color:light-dark(#fbfbf9,#0c0c0d)">LinkedIn &#8599;</a>
+      </div>
+    </div>
+    <div data-footcontact style="justify-self:end;text-align:right">
+      <div class="mono" style="font-size:10.5px;letter-spacing:.16em;opacity:.68;margin-bottom:14px"><span style="display:{{ ki }}">연락처</span><span style="display:{{ ei }}">CONTACT</span><span style="display:{{ ji }}">連絡先</span></div>
+      <a data-footmail href="mailto:a9090618693@gmail.com" style="color:light-dark(#fbfbf9,#0c0c0d);font-size:clamp(19px,2.4vw,25px);font-weight:500;letter-spacing:-.02em;line-height:1.2;word-break:break-all">a9090618693@gmail.com</a>
+      <div class="mono" style="margin-top:9px;font-size:14px;opacity:.62"><a href="tel:+821090618693" style="color:light-dark(#fbfbf9,#0c0c0d)">010-9061-8693</a></div>
+    </div>
+  </div>
+  <div data-footmeta class="mono" style="margin-top:44px;padding-top:16px;border-top:1px solid currentColor;opacity:.7;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;font-size:11px">
+    <span>© 2026 <span style="display:{{ ki }}">장민규</span><span style="display:{{ ei }}">Min-gyu Jang</span><span style="display:{{ ji }}">チャン・ミンギュ</span></span>
+    <span><span style="display:{{ ki }}">최종 수정 2026.08</span><span style="display:{{ ei }}">Last updated 2026.08</span><span style="display:{{ ji }}">最終更新 2026.08</span></span>
+  </div>
+</footer>
+
+<div data-modal onClick="{{ closeModal }}" style="display:{{ modal }};position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:4vh clamp(12px,3vw,24px);background:light-dark(rgba(20,20,18,.45),rgba(0,0,0,.72));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow:auto">
+  <div data-modalcard onClick="{{ stop }}" class="sq" style="position:relative;box-sizing:border-box;width:min(100%,820px);max-height:min(90vh,860px);display:flex;flex-direction:column;overflow:hidden;background:light-dark(#fbfbf9,#131317);border:1px solid light-dark(rgba(21,21,20,.12),rgba(255,255,255,.08));border-radius:24px;padding:clamp(22px,3.8vw,34px);box-shadow:0 30px 90px rgba(0,0,0,.4)">
+
+    <div style="flex:none;display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid light-dark(#e5e4e0,#232329);margin-bottom:20px">
+      <div class="mono" style="font-size:11px;letter-spacing:.14em;color:light-dark(#7a7972,#858590);font-weight:600">
+        <span style="display:{{ ki }}">PROJECT SPECIFICATION // 상세 이력</span><span style="display:{{ ei }}">PROJECT SPECIFICATION // DETAILS</span><span style="display:{{ ji }}">PROJECT SPECIFICATION // 詳細</span>
+      </div>
+      <button data-sheetclose onClick="{{ closeModal }}" aria-label="Close" class="mono sq" style="padding:5px 12px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;background:light-dark(#f1f0ec,#1e1e24);border:1px solid light-dark(#dedcd6,#2c2c34);border-radius:10px;color:light-dark(#6f6f68,#9a9aa2);font-size:11px;letter-spacing:.08em;line-height:1;transition:all .15s ease" style-hover="background:light-dark(#e5e4de,#26262d);color:light-dark(#151514,#ececed)">
+        <span style="display:{{ ki }}">닫기</span><span style="display:{{ ei }}">CLOSE</span><span style="display:{{ ji }}">閉じる</span>
+        <span aria-hidden="true" style="font-size:13px;line-height:1">&#215;</span>
+      </button>
+    </div>
+
+    <div data-modalbody>
+      <sc-for list="{{ openCard }}" as="p" hint-placeholder-count="1">
+        <div style="display:flex;flex-direction:column">
+          <div data-modallayout>
+            <div style="min-width:0">
+              <h3 style="margin:0 0 12px;font-size:clamp(22px,2.8vw,28px);font-weight:600;line-height:1.24;letter-spacing:-.028em;color:light-dark(#151514,#ececed)">{{ p.mtitle }}</h3>
+              <p style="margin:0 0 28px;font-size:15px;font-weight:300;line-height:1.75;color:light-dark(#4a4a45,#a8a8b2)">{{ p.blurb }}</p>
+
+              <div class="mono" style="font-size:11px;letter-spacing:.14em;color:light-dark(#6f6f68,#8e8e98);margin-bottom:14px;font-weight:600">{{ contribHeading }}</div>
+
+              <div style="display:flex;flex-direction:column">
+                <sc-for list="{{ p.items }}" as="c" hint-placeholder-count="4">
+                  <div data-contrib-item>
+                    <span class="mono" style="flex:none;font-size:11.5px;font-weight:600;color:light-dark(#7a7972,#858590);padding-top:2px">{{ c.n }}</span>
+                    <div style="font-size:14.5px;line-height:1.7;color:light-dark(#2b2a27,#dcdcdf)">{{ c.text }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div data-modalsidebar class="sq" style="display:flex;flex-direction:column;gap:18px;padding:20px;border-radius:16px;background:light-dark(#f4f3ef,rgba(255,255,255,.04));border:1px solid light-dark(#dedcd6,rgba(255,255,255,.07))">
+              <div>
+                <div class="mono speclabel">COMPANY</div>
+                <div style="font-size:13.5px;font-weight:500;color:light-dark(#151514,#ececed)">{{ p.coFull }}</div>
+              </div>
+              <div>
+                <div class="mono speclabel">TIMELINE</div>
+                <div class="mono" style="font-size:12.5px;color:light-dark(#2b2a27,#dcdcdf)">{{ p.date }}</div>
+              </div>
+              <div>
+                <div class="mono speclabel">ROLE</div>
+                <div style="font-size:13px;color:light-dark(#33322e,#c9c9cf)">{{ p.role }}</div>
+              </div>
+              <div>
+                <div class="mono speclabel" style="margin-bottom:8px">TECH STACK</div>
+                <div style="display:flex;flex-wrap:wrap;gap:5px">
+                  <sc-for list="{{ p.stack }}" as="t" hint-placeholder-count="5">
+                    <span class="mono sq tag">{{ t }}</span>
+                  </sc-for>
+                </div>
+              </div>
+              <sc-if value="{{ p.url }}">
+                <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" class="mono sq" style="margin-top:4px;width:100%;box-sizing:border-box;font-size:12px;padding:9px 12px;border-radius:10px;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;transition:opacity .15s" style-hover="opacity:.85">{{ siteLabel }}<span>&#8599;</span></a>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const FILTERS = ['ALL', 'C#/.NET', 'WPF·Avalonia', 'Java·Spring', 'C++·Native', 'DB·SQL', 'CAD·3D'];
+
+const STACK = [
+  { label: { ko: '핵심 스택', en: 'CORE', ja: 'コア' }, core: true,
+    items: ['C#', '.NET 8', 'WPF', 'Avalonia UI', 'MVVM'] },
+  { label: { ko: '플랫폼 · 네이티브', en: 'PLATFORM & NATIVE', ja: 'プラットフォーム・ネイティブ' },
+    items: ['Native AOT', 'COM Interop', 'C++ / VC++', 'Win32 API', 'WiX Toolset', 'MSIX', 'WinForm', 'Xamarin'] },
+  { label: { ko: '백엔드 · 데이터', en: 'BACKEND & DATA', ja: 'バックエンド・データ' },
+    items: ['Java', 'Spring Boot', 'MyBatis', 'REST API', 'MSSQL', 'MariaDB', 'ASP.NET', 'WCF'] },
+  { label: { ko: '도메인 · 툴', en: 'DOMAIN & TOOLS', ja: 'ドメイン・ツール' },
+    items: ['Navisworks API', 'Revit Add-in', 'EyeShot / LiteCad', 'DevExpress', 'CefSharp', 'Git / GitHub'] }
+];
+
+const EDU = [
+  { label: { ko: '학력', en: 'EDUCATION', ja: '学歴' }, items: [
+    { badge: '배',
+      name: { ko: '배화여자대학교 모바일소프트웨어과', en: "Baewha Women's University, Mobile Software", ja: '培花女子大学 モバイルソフトウェア学科' },
+      meta: { ko: '2020.02 — 2022.02 · 편입 / 졸업', en: '2020.02 — 2022.02 · transferred / graduated', ja: '2020.02 — 2022.02 · 編入 / 卒業' } },
+    { badge: '세',
+      name: { ko: '세명컴퓨터고등학교 스마트보안솔루션과', en: 'Semyung Computer High School, Smart Security Solutions', ja: '世明コンピュータ高等学校 スマートセキュリティ学科' },
+      meta: { ko: '2016.01 — 2019.01 · 도제학교 / 졸업', en: '2016.01 — 2019.01 · apprenticeship track / graduated', ja: '2016.01 — 2019.01 · デュアル教育課程 / 卒業' } }
+  ] },
+  { label: { ko: '자격증', en: 'CERTIFICATIONS', ja: '資格' }, items: [
+    { badge: '산',
+      name: { ko: '정보처리산업기사', en: 'Industrial Engineer Information Processing', ja: '情報処理産業技士' },
+      meta: { ko: '2018.09 · 한국산업인력공단', en: '2018.09 · HRD Korea', ja: '2018.09 · 韓国産業人力公団' } },
+    { badge: '기',
+      name: { ko: '정보기기운용기능사', en: 'Craftsman Information Equipment Operation', ja: '情報機器運用技能士' },
+      meta: { ko: '2018.07 · 한국산업인력공단', en: '2018.07 · HRD Korea', ja: '2018.07 · 韓国産業人力公団' } }
+  ] },
+  { label: { ko: '병역', en: 'MILITARY SERVICE', ja: '兵役' }, items: [
+    { badge: '군',
+      name: { ko: '산업기능요원 · 만기전역', en: 'Industrial Technical Personnel · completed', ja: '産業技能要員 · 満了' },
+      meta: { ko: '2020.02 — 2022.12', en: '2020.02 — 2022.12', ja: '2020.02 — 2022.12' } }
+  ] }
+];
+
+const CO = {
+  enliple: { ko: '인라이플', en: 'ENLIPLE', ja: 'インライフル' },
+  enlipleFull: { ko: '㈜인라이플', en: 'ENLIPLE', ja: 'インライフル' },
+  huen: { ko: '휴엔시스템', en: 'HUENSYSTEM', ja: 'ヒュエンシステム' },
+  huenFull: { ko: '㈜휴엔시스템', en: 'HUENSYSTEM', ja: 'ヒュエンシステム' }
+};
+
+// **…** marks the emphasised run; `bold()` turns it into <strong> at render time.
+const PROJECTS = [
+  {
+    id: 'ezzip', feature: true,
+    tech: ['C#/.NET', 'WPF·Avalonia', 'C++·Native'],
+    co: CO.enliple, coFull: CO.enlipleFull, date: '2025.02 — NOW',
+    url: 'https://ezlab.im/ko/tool/ezzip',
+    title: { ko: '압축 프로그램 ezZip', en: 'ezZip & shared PC platform', ja: '圧縮ソフト ezZip · 共通プラットフォーム' },
+    mtitle: { ko: '압축 프로그램 ezZip · 공통 플랫폼', en: 'ezZip — Compression Tool & Platform', ja: '圧縮ソフト ezZip・共通プラットフォーム' },
+    blurb: {
+      ko: '자사 PC 제품군 전체에 적용되는 공통 모듈·통합 인스톨러 플랫폼과, 그 위에 구축된 첫 제품인 압축 소프트웨어 ezZip을 기획부터 엔진 개발·운영까지 총괄.',
+      en: 'Owned the shared module & installer platform for all company PC products, and led ezZip — the first product built on it — from concept to operations.',
+      ja: '自社PC製品群全体に適用される共通モジュール・インストーラープラットフォームと、その最初の製品である圧縮ソフトezZipを企画からエンジン開発・運用まで統括。'
+    },
+    role: { ko: '총괄 & 엔진 개발', en: 'Lead & Engine Dev', ja: '統括・エンジン開発' },
+    stack: ['C#', '.NET 8', 'WPF', 'Avalonia', 'VC++', 'Native AOT', 'WiX'],
+    items: [
+      { ko: '최초 기획부터 엔진 개발·운영을 총괄하여 **일 평균 설치 1,800건, DAU 6만 명** 달성 — 자사 PC 제품군 중 최다 다운로드 및 최고 활성 사용자 수 기록',
+        en: 'Led the product end-to-end to **1,800 daily installs and 60K DAU** — becoming the company’s most downloaded and active PC product',
+        ja: '企画・開発・運用を一貫して主導し、**1日平均インストール1,800件、DAU6万人**を達成 — 自社PC製品で最多ダウンロード・最多アクティブユーザーを記録' },
+      { ko: '7z.dll을 .NET 8 Source-Generated COM Interop 기반 C# 엔진으로 재구현하고 Span 기반 제로 카피 마샬링으로 **네이티브 동등 수준의 처리 성능** 확보',
+        en: 'Reimplemented 7z.dll with .NET 8 source-generated COM interop; Span-based zero-copy marshalling reached **parity with native engine performance**',
+        ja: '7z.dllを.NET 8のSource-Generated COM Interopに基づくC#ラッパーエンジンとして再実装し、Spanによるゼロコピーマーシャリングで**ネイティブと同等の高処理性能**を実現' },
+      { ko: 'Native AOT·Trimming 최적화와 Avalonia 기반 경량 인스톨러 구축으로 **실행 바이너리 크기 50% 이상 감축**, WiX Bundle 통합 설치 시스템 전사 표준화',
+        en: 'Reduced **binary size by 50%+** through Native AOT, trimming and an Avalonia installer; rolled out a shared WiX Bundle across every company product',
+        ja: 'Native AOT・Trimming最適化とAvaloniaベースの軽量インストーラー構築により**実行ファイルサイズを50%以上削減**、WiX Bundle統合インストーラーを全製品へ標準適用' },
+      { ko: '반복 기능을 공통 모듈 아키텍처로 분리하고 Directory.Build.props 기반 멀티 프로덕트 빌드 시스템을 구축해 **단일 코드베이스에서 다수 제품 빌드** 체계 확립',
+        en: 'Decoupled shared features into a common modular architecture and Directory.Build.props build system — establishing **multi-product builds from a single codebase**',
+        ja: '共通機能をモジュールアーキテクチャへ分離し、.propsベースのマルチプロダクトビルドを構築して**単一ソースからの複数製品ビルド体制**を確立' }
+    ]
+  },
+  {
+    id: 'isend',
+    tech: ['Java·Spring', 'DB·SQL'],
+    co: CO.enliple, coFull: CO.enlipleFull, date: '2024.06 — 2025.02',
+    url: 'https://www.isend.co.kr/',
+    title: { ko: '마케팅 메시지 발송 플랫폼 아이센드', en: 'iSend — marketing message platform', ja: 'マーケティング配信プラットフォーム iSend' },
+    mtitle: { ko: '마케팅 메시지 발송 플랫폼 아이센드', en: 'iSend — Marketing Message Platform', ja: 'マーケティング配信プラットフォーム iSend' },
+    blurb: {
+      ko: '카카오톡·SMS/LMS·이메일 발송 채널을 통합 관리하고 CRM 타겟팅 광고와 연계되는 대용량 백엔드 메시징 플랫폼.',
+      en: 'High-throughput backend messaging platform unifying KakaoTalk, SMS/LMS and email channels, wired into CRM targeting ad systems.',
+      ja: 'KakaoTalk・SMS/LMS・メール配信チャネルを統合管理し、CRMターゲティング広告と連携する大容量バックエンドプラットフォーム。'
+    },
+    role: { ko: '백엔드 개발', en: 'Backend Dev', ja: 'バックエンド開発' },
+    stack: ['Java', 'Spring Boot', 'MariaDB', 'MyBatis', 'REST API'],
+    items: [
+      { ko: '**일 90만 건 이상** 규모의 대용량 마케팅 메시지 발송 트랜잭션 및 데이터 안정적 처리',
+        en: 'Handled **900K+ daily message deliveries** and transaction records with high reliability',
+        ja: '**1日90万件以上**規模の大容量メッセージ配信トランザクションおよびデータを安定処理' },
+      { ko: '대규모 통계·배치 쿼리 실행 계획 튜닝을 통해 주요 **조회 성능 30% 개선**',
+        en: 'Optimised execution plans for high-load queries, **cutting core query latency by 30%**',
+        ja: '大規模統計・バッチクエリの実行計画チューニングにより主要**照会性能を30%短縮**' },
+      { ko: '톡포인트 지급·광고주 잔액 관리·정산 리포트 등 핵심 비즈니스 API 및 최고관리자 어드민 백엔드 개발',
+        en: 'Engineered mission-critical APIs — point grants, advertiser balance control, billing reports — and super-admin backend',
+        ja: 'ポイント付与・広告主残高管理・精算レポート等の主要APIおよび最高管理者向けバックエンドを開発' },
+      { ko: '수기 검증 및 반복적인 수작업 운영 프로세스를 자동화 시스템으로 구축하여 운영 리소스 절감',
+        en: 'Automated repetitive manual review and operational workflows, drastically reducing ops overhead',
+        ja: '手動検証や反復的な運用作業を自動化システムへ転換し、運用工数を大幅に削減' }
+    ]
+  },
+  {
+    id: 'maketapp',
+    tech: ['C#/.NET', 'WPF·Avalonia'],
+    co: CO.enliple, coFull: CO.enlipleFull, date: '2024.03 — 2024.06',
+    url: '',
+    title: { ko: 'PC 앱 제작 서비스 MakeTApp', en: 'MakeTApp — PC app builder', ja: 'PCアプリ制作サービス MakeTApp' },
+    mtitle: { ko: 'PC 앱 제작 서비스 MakeTApp', en: 'MakeTApp — PC App Builder', ja: 'PCアプリ制作サービス MakeTApp' },
+    blurb: {
+      ko: '국내 최초 PC형 앱스토어(TAppStore) 생태계에 유통되는 웹 하이브리드 데스크톱 앱 대량 자동 생성 솔루션.',
+      en: "Automated generation solution that builds and packages hybrid desktop apps for TAppStore, Korea's first PC app store.",
+      ja: '韓国初のPC向けアプリストア(TAppStore)に流通するハイブリッドデスクトップアプリを大量自動生成する制作ソリューション。'
+    },
+    role: { ko: '데스크톱 솔루션 개발', en: 'Desktop Solution Dev', ja: 'デスクトップ開発' },
+    stack: ['C#', 'WPF', 'MVVM', 'CefSharp'],
+    items: [
+      { ko: '약 **800개 앱을 자동 빌드**하는 일괄 파이프라인을 구축해 1일 소요되던 제작 공수를 1시간으로 대폭 단축',
+        en: 'Built an automated pipeline that **auto-builds ~800 apps**, reducing build time from a full day to 1 hour',
+        ja: '約**800個のアプリを自動ビルド**する一括パイプラインを構築し、1日要していた作業時間を1時間へ大幅短縮' },
+      { ko: '쇼핑몰·뉴스·웹툰 등 카테고리별로 파편화되어 있던 솔루션을 단일 통합 코어로 재구축',
+        en: 'Consolidated category-fragmented solutions (commerce, news, webtoons) into a unified single-core product',
+        ja: 'EC・ニュース・ウェブトゥーンなどカテゴリごとに分散していたソリューションを、単一の統合コアプロダクトへ再構築' },
+      { ko: 'CefSharp 브라우저 렌더링 및 캐싱 최적화로 웹페이지 이동 시 **체감 로딩 시간 75% 단축**',
+        en: '**Reduced perceived in-app page load times by 75%** through CefSharp caching and rendering tuning',
+        ja: 'CefSharpブラウザのレンダリングおよびキャッシュ最適化により、ページ遷移時の**体感ローディング時間を75%短縮**' }
+    ]
+  },
+  {
+    id: 'ezspool',
+    tech: ['C#/.NET', 'DB·SQL', 'CAD·3D'],
+    co: CO.huen, coFull: CO.huenFull, date: '2019.02 — 2023.10',
+    url: 'https://www.huensystem.com/ez-solutions/solutions/ez-spool',
+    title: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool / Ez-ISO — piping drawing automation', ja: '配管図面自動化 Ez-Spool / Ez-ISO' },
+    mtitle: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool — Piping Drawing Automation', ja: '配管図面自動化 Ez-Spool' },
+    blurb: {
+      ko: '플랜트 배관 시공용 Spool 제작 도면·BOM·용접 리포트 자동 산출 시스템 및 Revit 기반 ISO 도면 추출 엔진.',
+      en: 'Automated generation of spool fabrication drawings, BOMs and welding reports for plant piping, plus a Revit-based ISO drawing extraction engine.',
+      ja: 'プラント配管施工向けのSpool製作図面・BOM・溶接レポート自動生成システムと、RevitベースのISO図面抽出エンジン。'
+    },
+    role: { ko: '도면 솔루션 개발', en: 'CAD Solution Dev', ja: '図面開発' },
+    stack: ['C#', 'ASP.NET', 'VB.NET', 'MSSQL', 'EyeShot', 'LiteCad'],
+    items: [
+      { ko: '도면 인덱싱 및 검색 알고리즘을 개선해 **도면 검색 속도 98% 향상**',
+        en: 'Optimised drawing indexing and search algorithms, achieving a **98% speedup**',
+        ja: '図面インデックスと検索アルゴリズムを改善し、**検索速度を98%向上**' },
+      { ko: 'CAD 도면 형상 기반 심볼 좌표 추출 도구를 개발해 **수작업 계산 공수 70% 단축**',
+        en: 'Engineered automated coordinate extraction from CAD geometries, **reducing manual calculation time by 70%**',
+        ja: 'CAD図面形状からのシンボル座標自動抽出ツールを開発し、**手作業の計算工数を70%短縮**' },
+      { ko: '사용자 정의 리포트 포맷 및 데이터 매핑 화면을 개발해 고객사별 커스터마이징 대응 효율 극대화',
+        en: 'Delivered customisable report formats and data mapping views, maximising client-specific adaptation efficiency',
+        ja: 'ユーザー定義レポート書式およびデータマッピング画面を開発し、顧客ごとの個別カスタマイズ対応効率を最大化' },
+      { ko: '현대엔지니어링 8개 현장 및 삼성물산 평택 현장의 기술 지원과 실시간 운영 이슈 전담 대응',
+        en: 'Directly managed technical support and live production issues for 8+ Hyundai E&C sites and Samsung C&T Pyeongtaek',
+        ja: '現代エンジニアリング8現場以上およびサムスン物産・平沢現場の技術支援とリアルタイム運用課題に直接対応' }
+    ]
+  },
+  {
+    id: 'pc3d',
+    tech: ['C#/.NET', 'C++·Native', 'CAD·3D'],
+    co: CO.huen, coFull: CO.huenFull, date: '2023.01 — 2023.05',
+    url: 'https://www.huensystem.com/ez-solutions/solutions/ez-cc',
+    title: { ko: '배관 시공 모니터링 PC3D', en: 'PC3D — piping construction monitoring', ja: '配管施工モニタリング PC3D' },
+    mtitle: { ko: '배관 시공 모니터링 PC3D', en: 'PC3D — Piping Construction Monitoring', ja: '配管施工モニタリング PC3D' },
+    blurb: {
+      ko: 'Autodesk Navisworks Add-in 기반으로 3D 모델 위에 배관 시공 공정을 실시간 컬러링 모니터링하는 솔루션.',
+      en: 'Autodesk Navisworks add-in colour-coding piping construction status in real time across complex 3D plant models.',
+      ja: 'Autodesk Navisworksアドインとして、3Dモデル上に配管施工工程をリアルタイム色分け表示するモニタリングシステム。'
+    },
+    role: { ko: '3D 플러그인 개발', en: '3D Plugin Dev', ja: '3D開発' },
+    stack: ['C#', 'C++', 'Navisworks'],
+    items: [
+      { ko: '대용량 3D 모델 연산 시 발생하던 **메모리 오류를 C++ Native 레이어에서 해결**해 시스템 안정성 확보',
+        en: '**Eliminated memory faults in the C++ native layer** when processing large 3D models, ensuring rock-solid stability',
+        ja: '大容量3Dモデル演算時に発生していた**メモリエラーをC++ Nativeレイヤーで解決**し、システムの安定性を確保' },
+      { ko: '개념 검증(PoC) 수준의 코드를 지속 확장 및 유지보수 가능한 컴포넌트 아키텍처로 리팩토링',
+        en: 'Refactored proof-of-concept codebase into an extensible, highly maintainable component architecture',
+        ja: 'PoC(概念検証)レベルのコードを、継続的な拡張と保守が可能なコンポーネント設計へとリファクタリング' }
+    ]
+  },
+  {
+    id: 'mobile',
+    tech: ['C#/.NET'],
+    co: CO.huen, coFull: CO.huenFull, date: '2020.01 — 2020.06',
+    url: '',
+    title: { ko: '보운이피씨 자재관리 ERP 모바일 앱', en: 'Bowoon EPC — materials management app', ja: 'ボウンEPC 資材管理モバイルアプリ' },
+    mtitle: { ko: '보운이피씨 자재관리 ERP 모바일 앱', en: 'Bowoon EPC — Materials Management ERP App', ja: 'ボウンEPC 資材管理ERPモバイルアプリ' },
+    blurb: {
+      ko: '기존 윈도우 ERP의 핵심 자재 수불 및 현장 관리 기능을 모바일로 이식한 크로스플랫폼 앱. 단독 개발.',
+      en: 'Cross-platform mobile app porting core inventory and site logistics from an existing Windows ERP. Sole developer.',
+      ja: '既存Windows ERPの主要な資材受払・現場管理機能をモバイルへ移植したクロスプラットフォームアプリ。単独開発。'
+    },
+    role: { ko: '모바일 단독 개발', en: 'Sole Mobile Dev', ja: 'モバイル単独開発' },
+    stack: ['C#', 'Xamarin', 'MVVM', 'Firebase'],
+    items: [
+      { ko: 'Xamarin·MVVM·XAML 기반으로 iOS/Android 동시 지원 크로스플랫폼 앱을 **단독 설계 및 개발**',
+        en: '**Solely architected and delivered** a Xamarin/MVVM/XAML cross-platform app supporting both iOS and Android',
+        ja: 'Xamarin・MVVM・XAMLを用いてiOS/Android両対応のクロスプラットフォームアプリを**単独で設計・開発**' },
+      { ko: 'Google Firebase Cloud Messaging(FCM) 기반 공지사항 및 긴급 불출 Push 알림 구현',
+        en: 'Implemented urgent notice and inventory dispatch push notifications via Google Firebase Cloud Messaging',
+        ja: 'Google Firebase Cloud Messaging(FCM)を用いたお知らせ・緊急受払Push通知機能を実装' }
+    ]
+  }
+];
+
+const NAV = [
+  { id: 'intro', num: '00', label: { ko: '프로필', en: 'Profile', ja: 'プロフィール' } },
+  { id: 'career', num: '01', label: { ko: '경력', en: 'Career', ja: '経歴' } },
+  { id: 'stack', num: '02', label: { ko: '스택', en: 'Stack', ja: 'スタック' } },
+  { id: 'projects', num: '03', label: { ko: '프로젝트', en: 'Projects', ja: '実績' } },
+  { id: 'education', num: '04', label: { ko: '학력', en: 'Education', ja: '学歴' } }
+];
+
+const CARD_H3 = 'margin:0 0 6px;font-weight:600;font-size:19.5px;line-height:1.32;letter-spacing:-.026em';
+const CARD_H3_FEATURE = 'margin:0 0 6px;font-weight:600;font-size:22px;line-height:1.28;letter-spacing:-.028em';
+
+const T = {
+  link: { ko: '제품 링크', en: 'Product page', ja: '製品ページ' },
+  site: { ko: '공식 웹사이트', en: 'Official Website', ja: '公式サイト' },
+  contrib: { ko: '// 주요 성과 및 엔지니어링 하이라이트', en: '// KEY CONTRIBUTIONS & IMPACT', ja: '// 主な成果・エンジニアリングハイライト' }
+};
+
+const bold = (s) => s.indexOf('**') < 0 ? s : s.split('**').map((t, i) =>
+  i & 1 ? React.createElement('strong', { key: i, style: { fontWeight: 600 } }, t) : t);
+
+class Component extends DCLogic {
+  state = { lang: 'ko', theme: 'light', filter: 'ALL', openId: null, scrollY: 0, vw: 0, geo: '' };
+
+  componentDidMount() {
+    let theme = null, lang = null;
+    try {
+      theme = localStorage.getItem('mj-resume-theme');
+      lang = localStorage.getItem('mj-resume-lang');
+    } catch (e) {}
+    if (!theme) {
+      theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    if (!lang) lang = 'ko';
+    document.documentElement.style.colorScheme = theme;
+    document.documentElement.lang = lang;
+    this.setState({ theme, lang });
+    window.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll);
+    this.onScroll();
+    // nav fills depend on final layout — fonts, images and reflow all land here
+    this._ro = new ResizeObserver(() => this.onScroll());
+    this._ro.observe(document.documentElement);
+  }
+
+  componentWillUnmount() {
+    if (this._ro) this._ro.disconnect();
+    window.removeEventListener('keydown', this.onKeyDown);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onScroll);
+    document.body.style.overflow = '';
+  }
+
+  navState(dark) {
+    const keys = NAV.map(n => n.id);
+    const bar = document.querySelector('[data-noprint]');
+    const barH = bar ? bar.getBoundingClientRect().height : 60;
+    const top = (window.scrollY || 0) + barH + 4;
+    const settled = (document.documentElement.scrollHeight || 0) > window.innerHeight + 1;
+    const active = { fg: dark ? '#ececed' : '#151514', nfg: dark ? '#ececed' : '#151514', w: '500' };
+    const idle = { fg: dark ? '#8e8e98' : '#6f6f68', nfg: dark ? '#5f5f68' : '#a9a89f', w: '400' };
+    if (!settled) {
+      const flat = {};
+      keys.forEach((k, i) => { flat[k] = { ...(i === 0 ? active : idle), fill: '0%', grow: 1 }; });
+      return flat;
+    }
+    const docEnd = Math.max(0, (document.documentElement.scrollHeight || 0) - window.innerHeight) + barH + 4;
+    const raw = keys.map(k => {
+      const el = document.getElementById('s-' + k);
+      return el ? el.getBoundingClientRect().top + (window.scrollY || 0) : null;
+    });
+    const bounds = raw.map(v => v == null ? null : Math.min(v, docEnd - 1));
+    const last = bounds.length - 1;
+    if (bounds[last] != null && raw[last] > docEnd - 320) {
+      bounds[last] = Math.max((bounds[last - 1] || 0) + 40, docEnd - 320);
+    }
+
+    const scrollTop = window.scrollY || 0;
+    const maxY = Math.max(0, (document.documentElement.scrollHeight || 0) - window.innerHeight);
+    let liveActive = 's-' + keys[0];
+    keys.forEach((k, i) => { if (raw[i] != null && raw[i] <= top) liveActive = 's-' + k; });
+    if (maxY > 0 && maxY - scrollTop <= 2) liveActive = 's-education';
+
+    const out = {};
+    keys.forEach((k, i) => {
+      const start = bounds[i];
+      const end = Math.min(bounds[i + 1] != null ? bounds[i + 1] : docEnd, docEnd);
+      let p = 0;
+      if (start != null) {
+        p = end > start
+          ? Math.min(1, Math.max(0, (top - start) / (end - start)))
+          : (top >= start - 1 ? 1 : 0);
+      }
+      const rawEnd = raw[i + 1] != null ? raw[i + 1] : (document.documentElement.scrollHeight || 0);
+      const span = (raw[i] != null && rawEnd > raw[i]) ? rawEnd - raw[i] : 120;
+      out[k] = { ...(liveActive === 's-' + k ? active : idle), fill: (p * 100).toFixed(1) + '%', grow: span };
+    });
+
+    out.education.grow = (out.career.grow + out.stack.grow) / 2;
+    out.career.grow *= 1.1;
+    out.stack.grow *= 1.1;
+    const total = keys.reduce((t, k) => t + out[k].grow, 0) || 1;
+    keys.forEach(k => { out[k].grow = Math.max(0.6, (out[k].grow / total) * keys.length); });
+    return out;
+  }
+
+  onScroll = () => {
+    const sy = Math.round(window.scrollY || 0);
+    const vw = window.innerWidth;
+    const edu = document.getElementById('s-education');
+    const geo = Math.round(document.documentElement.scrollHeight) + ':' +
+                (edu ? Math.round(edu.getBoundingClientRect().top + sy) : 0);
+    if (Math.abs(sy - (this.state.scrollY || 0)) >= 1 || vw !== this.state.vw || geo !== this.state.geo) {
+      this.setState({ scrollY: sy, vw, geo });
+    }
+  };
+
+  goTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView();
+  };
+
+  onKeyDown = (e) => { if (e.key === 'Escape' && this.state.openId) this.closeModal(); };
+
+  open = (e) => {
+    if (e.type === 'keydown') {
+      if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+      e.preventDefault();
+    }
+    document.body.style.overflow = 'hidden';
+    this.setState({ openId: e.currentTarget.dataset.pid });
+  };
+
+  closeModal = () => {
+    document.body.style.overflow = '';
+    this.setState({ openId: null });
+  };
+
+  setLang = (lang) => {
+    try { localStorage.setItem('mj-resume-lang', lang); } catch (e) {}
+    document.documentElement.lang = lang;
+    this.setState({ lang });
+  };
+
+  applyTheme(theme) {
+    return new Promise(resolve => {
+      this.setState({ theme }, () => {
+        document.documentElement.style.colorScheme = theme;
+        const tc = document.querySelector('meta[name="theme-color"]');
+        if (tc) tc.setAttribute('content', theme === 'dark' ? '#0c0c0d' : '#fbfbf9');
+        try { localStorage.setItem('mj-resume-theme', theme); } catch (e) {}
+        resolve();
+      });
+    });
+  }
+
+  toggleTheme = (e) => {
+    const theme = this.state.theme === 'dark' ? 'light' : 'dark';
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!document.startViewTransition || reduced) { this.applyTheme(theme); return; }
+
+    let x = e && e.clientX, y = e && e.clientY;
+    if (!x && !y && e && e.currentTarget && e.currentTarget.getBoundingClientRect) {
+      const r = e.currentTarget.getBoundingClientRect();
+      x = r.left + r.width / 2;
+      y = r.top + r.height / 2;
+    }
+    const w = window.innerWidth, h = window.innerHeight;
+    const radius = Math.hypot(Math.max(x, w - x), Math.max(y, h - y));
+
+    const root = document.documentElement;
+    const inward = this.inward = !this.inward;
+    root.setAttribute('data-vt', inward ? 'in' : 'out');
+    root.style.setProperty('--vtx', x + 'px');
+    root.style.setProperty('--vty', y + 'px');
+    root.style.setProperty('--vtr', radius + 'px');
+
+    const clear = () => root.removeAttribute('data-vt');
+    document.startViewTransition(() => this.applyTheme(theme)).finished.then(clear, clear);
+  };
+
+  renderVals() {
+    const lang = this.state.lang;
+    const dark = this.state.theme === 'dark';
+    const f = this.state.filter;
+    const t = (o) => o[lang];
+
+    const on  = { bg: dark ? '#ececef' : '#151514', fg: dark ? '#0c0c0d' : '#fbfbf9', bc: dark ? '#ececef' : '#151514', inv: true };
+    const off = { bg: 'transparent', fg: dark ? '#9a9aa2' : '#5e5e58', bc: dark ? '#2a2a30' : '#dedcd6', inv: null };
+
+    const view = (p) => ({
+      id: p.id,
+      co: t(p.co),
+      coFull: t(p.coFull),
+      date: p.date,
+      url: p.url,
+      title: t(p.title),
+      mtitle: t(p.mtitle),
+      blurb: t(p.blurb),
+      role: t(p.role),
+      stack: p.stack,
+      h3: p.feature ? CARD_H3_FEATURE : CARD_H3,
+      items: p.items.map((c, i) => ({ n: String(i + 1).padStart(2, '0'), text: bold(t(c)) }))
+    });
+
+    const shown = PROJECTS.filter(p => f === 'ALL' || p.tech.indexOf(f) !== -1);
+    const opened = PROJECTS.find(p => p.id === this.state.openId);
+    const nv = this.navState(dark);
+
+    const inl = (l) => lang === l ? 'inline' : 'none';
+    const blk = (l) => lang === l ? 'block' : 'none';
+
+    return {
+      ki: inl('ko'), ei: inl('en'), ji: inl('ja'),
+      kb: blk('ko'), eb: blk('en'), jb: blk('ja'),
+      lk: lang === 'ko' ? on : off,
+      le: lang === 'en' ? on : off,
+      lj: lang === 'ja' ? on : off,
+      themeLabel: dark ? 'Light mode' : 'Dark mode',
+      themeIcon: dark ? 'rotate(180deg)' : 'rotate(0deg)',
+      navItems: NAV.map(n => ({ num: n.num, label: t(n.label), go: () => this.goTo('s-' + n.id), ...nv[n.id] })),
+      logoBg: (() => {
+        if ((this.state.vw || window.innerWidth) > 720) return 'none';
+        if ((document.documentElement.scrollHeight || 0) <= window.innerHeight + 1) return 'none';
+        const max = Math.max(1, (document.documentElement.scrollHeight || 0) - window.innerHeight);
+        const p = (Math.min(1, Math.max(0, (window.scrollY || 0) / max)) * 100).toFixed(1) + '%';
+        const ink = dark ? '#a5a5ad' : '#4a4a45';
+        const rest = dark ? '#4a4a53' : '#d3d2cc';
+        return 'linear-gradient(90deg, ' + ink + ' 0 ' + p + ', ' + rest + ' ' + p + ' 100%)';
+      })(),
+      stack: STACK.map(g => ({
+        label: t(g.label),
+        items: g.items,
+        cls: g.core ? 'pill-on' : 'pill-off',
+        inv: g.core ? true : null
+      })),
+      edu: EDU.map(g => ({
+        label: t(g.label),
+        items: g.items.map(it => ({ badge: it.badge, name: t(it.name), meta: t(it.meta) }))
+      })),
+      cards: shown.map(view),
+      openCard: opened ? [view(opened)] : [],
+      linkLabel: t(T.link),
+      siteLabel: t(T.site),
+      contribHeading: t(T.contrib),
+      setKo: () => this.setLang('ko'),
+      setEn: () => this.setLang('en'),
+      setJa: () => this.setLang('ja'),
+      toggleTheme: this.toggleTheme,
+      doPrint: () => window.print(),
+      open: this.open,
+      modal: this.state.openId ? 'flex' : 'none',
+      closeModal: this.closeModal,
+      toTop: () => this.goTo('s-intro'),
+      stop: (e) => e.stopPropagation(),
+      shownCount: String(shown.length),
+      emptyMsg: shown.length === 0 ? 'block' : 'none',
+      filters: FILTERS.map(label => {
+        const s = label === f ? on : off;
+        return { label, bg: s.bg, fg: s.fg, bc: s.bc, inv: s.inv, onClick: () => this.setState({ filter: label }) };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>
