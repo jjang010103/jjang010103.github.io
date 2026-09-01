@@ -66,17 +66,13 @@ html{scroll-behavior:smooth}
 :focus-visible{outline:2px solid light-dark(#151514,#ececef);outline-offset:3px;border-radius:4px}
 nav::-webkit-scrollbar{display:none}
 @media (min-width:721px){[data-bar] > button:first-of-type{background-image:none !important}}
-[data-modalcard] > div{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:4px}
-[data-modalcard] > div > div:first-child{margin-bottom:14px !important}
-[data-modalcard] > div > h3{margin:0 0 14px !important;font-size:clamp(21px,2.6vw,25px) !important;line-height:1.26 !important}
-[data-modalcard] > div > p{margin:0 0 24px !important;font-size:15.5px !important;line-height:1.76 !important}
-[data-modalcard] > div > ul{order:1;gap:15px !important;background:light-dark(#f1f1f0,rgba(255,255,255,.055));corner-shape:squircle;border-radius:20px;padding:24px 26px !important}
-[data-modalcard] > div > div:nth-of-type(2){order:2;margin:18px 0 0 !important}
-[data-modalcard] > div > div:nth-of-type(2) > span{background:light-dark(#f1f1f0,rgba(255,255,255,.055)) !important}
-[data-modalcard] > div > div:nth-of-type(3){order:3;margin-top:26px !important}
+[data-modalbody]::-webkit-scrollbar{width:6px}
+[data-modalbody]::-webkit-scrollbar-track{background:transparent}
+[data-modalbody]::-webkit-scrollbar-thumb{background:light-dark(#dedcd5,#30303a);border-radius:6px}
+[data-modalbody]::-webkit-scrollbar-thumb:hover{background:light-dark(#c8c6bd,#444452)}
 
-[data-projgrid] > article,[data-cocards] > div{border-color:transparent !important;background:light-dark(#f1f1f0,rgba(255,255,255,.045)) !important;box-shadow:none !important}
-[data-projgrid] > article:hover,[data-projgrid] > article:focus-visible{background:light-dark(#eaeae9,rgba(255,255,255,.068)) !important;box-shadow:none !important}
+[data-projgrid] > article,[data-cocards] > div{border-color:transparent !important;background:light-dark(#f1f1f0,#161618) !important;box-shadow:none !important}
+[data-projgrid] > article:hover,[data-projgrid] > article:focus-visible{background:light-dark(#eaeae9,#1c1c1e) !important;box-shadow:none !important}
 @media (min-width:721px){
   section[data-chapter]{padding-top:96px !important}
   section[data-chapter] > div:first-child{margin-bottom:36px !important}
@@ -153,7 +149,7 @@ nav::-webkit-scrollbar{display:none}
   /* cards must announce themselves without hover — press, not lift */
   [data-projgrid] > article{position:relative !important;transition:transform .18s cubic-bezier(.4,0,.2,1),background .18s ease !important}
   [data-projgrid] > article:hover,[data-projgrid] > article:focus-visible{transform:none !important}
-  [data-projgrid] > article:active{background:light-dark(#eaeae9,rgba(255,255,255,.068)) !important;transform:scale(.986) !important}
+  [data-projgrid] > article:active{background:light-dark(#eaeae9,#1c1c1e) !important;transform:scale(.986) !important}
   [data-projgrid] > article:focus-visible{outline-offset:-2px}
   [data-rowarrow]{display:block !important;position:absolute;top:26px;right:0;font-size:22px;line-height:1;font-weight:300;color:light-dark(#9a9a92,#6a6a73)}
   /* one rule per row — the internal action divider is redundant here */
@@ -163,10 +159,11 @@ nav::-webkit-scrollbar{display:none}
   [data-kpisec]{border-bottom:0 !important}
   [data-filters]{gap:5px !important;margin-bottom:18px !important}
   [data-filters] button{min-height:30px !important;padding:0 9px !important;font-size:12px !important;letter-spacing:0 !important}
-  [data-sheetclose]{min-height:44px !important;padding:0 2px !important;margin-bottom:20px !important}
+  [data-sheetclose]{min-height:34px !important;padding:0 !important;margin-bottom:0 !important}
   [data-modal]{padding:0 !important;align-items:stretch !important}
-  [data-modalcard]{max-width:none !important;width:100% !important;aspect-ratio:auto !important;min-height:100% !important;border-radius:0 !important;border-left:0 !important;border-right:0 !important;box-shadow:none !important}
+  [data-modalcard]{max-width:none !important;width:100% !important;aspect-ratio:auto !important;min-height:100% !important;border-radius:0 !important;border-left:0 !important;border-right:0 !important;box-shadow:none !important;padding:24px 20px 32px !important}
   [data-modalcard] > div{overflow:visible !important;padding-right:0 !important}
+  [data-contrib-item]{padding:12px 14px !important}
 }
 @media print{
   :root{color-scheme:light only}
@@ -174,11 +171,11 @@ nav::-webkit-scrollbar{display:none}
   body{background:#fff}
 }
 
-[data-modallayout]{display:grid;grid-template-columns:1fr;gap:28px}
-@media (min-width:680px){[data-modallayout]{grid-template-columns:1fr 220px;gap:36px;align-items:start}}
-[data-modalsidebar]{position:sticky;top:0}
-[data-contrib-item]{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-top:1px solid light-dark(rgba(21,21,20,.08),rgba(255,255,255,.06))}
-[data-contrib-item]:first-child{border-top:none;padding-top:0}
+[data-contrib-list]{display:flex;flex-direction:column;gap:9px}
+[data-contrib-item]{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:14px;corner-shape:squircle;background:light-dark(#fbfbf9,#1e1e22);border:1px solid light-dark(#e5e4e0,#26262c);transition:background .15s}
+[data-contrib-badge]{flex:none;width:24px;height:24px;border-radius:7px;corner-shape:squircle;background:light-dark(#eae8e2,#282830);color:light-dark(#4a4943,#a2a2ad);font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:2px}
+[data-contrib-text]{font-size:14.5px;line-height:1.72;color:light-dark(#2b2a27,#dcdcdf);font-weight:300}
+[data-contrib-text] strong{background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);padding:.08em .32em .12em;margin:0 .04em;border-radius:3px;font-weight:600;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 </style>
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#151514"/><text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#fbfbf9" letter-spacing="-1">장민규</text></svg></template>
 </helmet>
@@ -233,7 +230,7 @@ nav::-webkit-scrollbar{display:none}
 </header>
 
 <section style="padding:54px 0;border-bottom:1px solid light-dark(#e5e4e0,#232329)">
-  <p style="margin:0;max-width:88ch;font-size:18px;line-height:2.05;font-weight:300;letter-spacing:0;color:light-dark(#33322e,#c9c9cf)">
+  <p style="margin:0;max-width:88ch;font-size:17.5px;line-height:1.8;font-weight:300;letter-spacing:-.004em;color:light-dark(#33322e,#c9c9cf)">
     <span style="display:{{ kb }}">고등학교 재학 중 소프트웨어 개발을 시작하여 8년차 C#/.NET 개발자로 성장했습니다.<br>Windows 데스크톱 애플리케이션 및 Avalonia 크로스플랫폼 개발을 주력으로 하며, C++ Native 연동부터 Java/Spring Boot 대용량 분산 환경까지 폭넓은 실무 경험을 보유하고 있습니다.<br>단순히 기능 구현에 그치지 않고 성능 최적화, 사용자 경험, 장기적인 유지보수성을 같은 설계의 핵심 가치로 여깁니다.<br>정량적인 목표를 명확히 세우고, 기술적 집요함으로 결과를 증명하는 개발을 지향합니다.</span>
     <span style="display:{{ eb }}">I started my software development career during high school and have grown into a C#/.NET developer with 8 years of experience.<br>My core expertise lies in .NET Windows desktop software and Avalonia cross-platform apps, with extensive hands-on experience spanning C++ native interop and high-volume Java/Spring Boot distributed environments.<br>I don't stop where a feature simply works — usability, performance optimization, and long-term maintainability are integral parts of the same design.<br>I enjoy defining measurable goals and systematically delivering quantifiable results.</span>
     <span style="display:{{ jb }}">高校在学中にソフトウェア開発を始め、8年目のC#/.NETエンジニアへと成長しました。<br>主戦場は.NETベースのWindowsデスクトップアプリとAvaloniaによるクロスプラットフォームアプリで、C++ Native連携からJava/Spring Bootによる大容量分散環境まで幅広い実務経験を有しています。<br>機能が単に動く地点で止めず、使いやすさ・性能最適化・長期保守性を同じ設計の核心価値として追求します。<br>定性的な目標を数値で明確に設定し、技術的な粘り強さでその数値を実現する開発を大切にしています。</span>
@@ -283,7 +280,7 @@ nav::-webkit-scrollbar{display:none}
     <div class="sq" style="border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:18px 20px">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span class="sq" style="flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:14.5px;font-weight:600;letter-spacing:-.02em;color:light-dark(#4a4a45,#a5a5ad)">인</span><div style="font-size:15px;font-weight:600"><span style="display:{{ ki }}">㈜인라이플 · 이지랩사업부 · 주임</span><span style="display:{{ ei }}">Enliple · ezLab Division · Associate</span><span style="display:{{ ji }}">インライフル · ezLab事業部 · 主任</span></div></div>
       <div data-cardate class="mono" style="display:none;margin-top:6px;font-size:12px;color:light-dark(#6f6f68,#8e8e98)">2024.03 — <span style="display:{{ ki }}">재직중</span><span style="display:{{ ei }}">present</span><span style="display:{{ ji }}">在職中</span></div>
-      <div style="font-size:14.5px;line-height:1.75;margin-bottom:8px"><span style="display:{{ kb }}">자사 PC 제품군 전체에 적용되는 공통 모듈 및 통합 인스톨러 플랫폼을 설계·구축했습니다.<br>해당 플랫폼 기반 첫 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발·운영을 총괄해 DAU 6만 명을 달성했으며, 이전에는 Java/Spring 기반 대용량 마케팅 메시지 발송 플랫폼(iSend)의 백엔드 개발을 담당했습니다.</span><span style="display:{{ eb }}">Designed and built the shared module and installer platform for all company PC products.<br>Led ezZip — the first product built on this platform — from concept to operations, reaching 60K DAU. Previously engineered backend systems for the Java/Spring marketing message delivery platform (iSend).</span><span style="display:{{ jb }}">自社PC製品群全体に適用される共通モジュールおよびインストーラープラットフォームを設計・構築。<br>その最初の製品である圧縮ソフトezZipの企画からエンジン開発・運用までを統括してDAU6万人を達成。以前はJava/Springベースの大容量メッセージ配信プラットフォーム(iSend)のバックエンド開発を担当しました。</span></div>
+      <div style="font-size:14.5px;line-height:1.75;margin-bottom:8px"><span style="display:{{ kb }}">자사 PC 제품군 전체에 적용되는 공통 모듈 및 통합 인스톨러 플랫폼을 설계·구축했습니다.<br>해당 플랫폼 기반 첫 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발·운영을 주도해 DAU 6만 명을 달성했으며, 이전에는 Java/Spring 기반 대용량 마케팅 메시지 발송 플랫폼(iSend)의 백엔드 개발을 담당했습니다.</span><span style="display:{{ eb }}">Designed and built the shared module and installer platform for all company PC products.<br>Led ezZip — the first product built on this platform — from concept to operations, reaching 60K DAU. Previously engineered backend systems for the Java/Spring marketing message delivery platform (iSend).</span><span style="display:{{ jb }}">自社PC製品群全体に適用される共通モジュールおよびインストーラープラットフォームを設計・構築。<br>その最初の製品である圧縮ソフトezZipの企画からエンジン開発・運用までを主導してDAU6万人を達成。以前はJava/Springベースの大容量メッセージ配信プラットフォーム(iSend)のバックエンド開発を担当しました。</span></div>
       <div style="font-size:13.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98)"><span style="display:{{ kb }}">국내 1위 리타겟팅 광고 플랫폼과 국내 최초 PC형 앱스토어를 운영하는 데이터 테크 기업</span><span style="display:{{ eb }}">Data-tech company behind Korea's top retargeting ad platform and first PC app store</span><span style="display:{{ jb }}">韓国最大のリターゲティング広告プラットフォームと韓国初のPC向けアプリストアを運営するデータテック企業</span></div>
     </div>
   </div>
@@ -326,7 +323,7 @@ nav::-webkit-scrollbar{display:none}
 
   <div data-projgrid style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,370px),1fr));gap:16px">
     <sc-for list="{{ cards }}" as="p" hint-placeholder-count="6">
-      <article onClick="{{ open }}" onKeyDown="{{ open }}" data-pid="{{ p.id }}" role="button" tabIndex="0" aria-haspopup="dialog" class="sq" style="display:flex;flex-direction:column;cursor:pointer;border:1px solid light-dark(rgba(21,21,20,.115),rgba(236,236,237,.088));border-radius:20px;padding:clamp(20px,3vw,26px) clamp(18px,3vw,26px) clamp(18px,3vw,24px);background:light-dark(rgba(255,255,255,.92),rgba(255,255,255,.013));backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);box-shadow:inset 0 1px 0 light-dark(rgba(255,255,255,1),rgba(255,255,255,.024))">
+      <article onClick="{{ open }}" onKeyDown="{{ open }}" data-pid="{{ p.id }}" role="button" tabIndex="0" aria-haspopup="dialog" class="sq" style="display:flex;flex-direction:column;cursor:pointer;border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:clamp(20px,3vw,26px) clamp(18px,3vw,26px) clamp(18px,3vw,24px);background:light-dark(#f1f1f0,#161618)">
         <span data-rowarrow aria-hidden="true" style="display:none">&#8250;</span>
         <div data-cardmeta class="mono" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:14px;font-size:12px;color:light-dark(#6f6f68,#8e8e98)">
           <span style="letter-spacing:.1em">{{ p.co }}</span>
@@ -336,7 +333,7 @@ nav::-webkit-scrollbar{display:none}
         <p style="margin:0 0 18px;font-size:14.5px;font-weight:300;line-height:1.72;color:light-dark(#5e5e58,#9a9aa2)">{{ p.blurb }}</p>
         <sc-if value="{{ p.url }}">
           <div data-cardlink class="mono" style="margin-top:auto;padding-top:15px;display:flex;align-items:center;justify-content:flex-end;font-size:12.5px">
-            <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:7px;color:light-dark(#151514,#ececed);white-space:nowrap">{{ linkLabel }}<span>&#8599;</span></a>
+            <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:7px;color:light-dark(#151514,#ececed);white-space:nowrap;text-decoration:none" style-hover="text-decoration:underline;text-underline-offset:3px">{{ linkLabel }}<span>&#8599;</span></a>
           </div>
         </sc-if>
       </article>
@@ -395,64 +392,61 @@ nav::-webkit-scrollbar{display:none}
   </div>
 </footer>
 
-<div data-modal onClick="{{ closeModal }}" style="display:{{ modal }};position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:4vh clamp(12px,3vw,24px);background:light-dark(rgba(20,20,18,.45),rgba(0,0,0,.72));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow:auto">
-  <div data-modalcard onClick="{{ stop }}" class="sq" style="position:relative;box-sizing:border-box;width:min(100%,820px);max-height:min(90vh,860px);display:flex;flex-direction:column;overflow:hidden;background:light-dark(#fbfbf9,#131317);border:1px solid light-dark(rgba(21,21,20,.12),rgba(255,255,255,.08));border-radius:24px;padding:clamp(22px,3.8vw,34px);box-shadow:0 30px 90px rgba(0,0,0,.4)">
+<div data-modal onClick="{{ closeModal }}" style="display:{{ modal }};position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:light-dark(rgba(20,20,18,.45),rgba(0,0,0,.72));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow:auto">
+  <div data-modalcard onClick="{{ stop }}" class="sq" style="position:relative;box-sizing:border-box;width:min(100%,1070px);min-height:min(92vh,1140px);max-height:min(94vh,1220px);display:flex;flex-direction:column;overflow:hidden;background:light-dark(#f1f1f0,#161618);border:1px solid light-dark(#e5e4de,#26262c);border-radius:24px;padding:clamp(28px,4.2vw,48px);box-shadow:0 30px 90px rgba(0,0,0,.45)">
 
-    <div style="flex:none;display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid light-dark(#e5e4e0,#232329);margin-bottom:20px">
-      <div class="mono" style="font-size:12px;letter-spacing:.12em;color:light-dark(#7a7972,#858590);font-weight:600">
-        <span style="display:{{ ki }}">PROJECT SPECIFICATION // 상세 이력</span><span style="display:{{ ei }}">PROJECT SPECIFICATION // DETAILS</span><span style="display:{{ ji }}">PROJECT SPECIFICATION // 詳細</span>
-      </div>
-      <button data-sheetclose onClick="{{ closeModal }}" aria-label="Close" class="mono sq" style="padding:5px 12px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;background:light-dark(#f1f0ec,#1e1e24);border:1px solid light-dark(#dedcd6,#2c2c34);border-radius:10px;color:light-dark(#6f6f68,#9a9aa2);font-size:12px;letter-spacing:.06em;line-height:1;transition:all .15s ease" style-hover="background:light-dark(#e5e4de,#26262d);color:light-dark(#151514,#ececed)">
-        <span style="display:{{ ki }}">닫기</span><span style="display:{{ ei }}">CLOSE</span><span style="display:{{ ji }}">閉じる</span>
-        <span aria-hidden="true" style="font-size:13px;line-height:1">&#215;</span>
-      </button>
-    </div>
-
-    <div data-modalbody>
+    <div data-modalbody style="flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:4px">
       <sc-for list="{{ openCard }}" as="p" hint-placeholder-count="1">
         <div style="display:flex;flex-direction:column">
-          <div data-modallayout>
-            <div style="min-width:0">
-              <h3 style="margin:0 0 12px;font-size:clamp(22px,2.8vw,28px);font-weight:600;line-height:1.24;letter-spacing:-.028em;color:light-dark(#151514,#ececed)">{{ p.mtitle }}</h3>
-              <p style="margin:0 0 28px;font-size:15.5px;font-weight:300;line-height:1.75;color:light-dark(#4a4a45,#a8a8b2)">{{ p.blurb }}</p>
+          <div style="flex:none;display:flex;justify-content:flex-end;margin-bottom:8px">
+            <button data-sheetclose onClick="{{ closeModal }}" aria-label="닫기" title="닫기" class="sq" style="height:32px;width:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#dedcd6,#2a2a30);background:light-dark(#fbfbf9,#1e1e22);color:light-dark(#55544e,#a2a2ad);cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px;transition:all .18s ease" style-hover="background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);border-color:transparent">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12"></path></svg>
+            </button>
+          </div>
 
-              <div class="mono" style="font-size:12px;letter-spacing:.12em;color:light-dark(#6f6f68,#8e8e98);margin-bottom:14px;font-weight:600">{{ contribHeading }}</div>
+          <h3 style="margin:0 0 10px;font-size:clamp(22px,2.8vw,28px);font-weight:600;line-height:1.24;letter-spacing:-.028em;color:light-dark(#151514,#ececed)">{{ p.mtitle }}</h3>
+          <p style="margin:0 0 20px;font-size:15px;font-weight:300;line-height:1.75;color:light-dark(#4a4a45,#a8a8b2)">{{ p.blurb }}</p>
 
-              <div style="display:flex;flex-direction:column">
-                <sc-for list="{{ p.items }}" as="c" hint-placeholder-count="4">
-                  <div data-contrib-item>
-                    <span class="mono" style="flex:none;font-size:12.5px;font-weight:600;color:light-dark(#7a7972,#858590);padding-top:2px">{{ c.n }}</span>
-                    <div style="font-size:15px;line-height:1.72;color:light-dark(#2b2a27,#dcdcdf)">{{ c.text }}</div>
-                  </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px 20px;padding-top:18px;border-top:1px solid light-dark(#e5e4de,#26262c);margin-bottom:26px">
+            <div>
+              <div class="mono speclabel">COMPANY</div>
+              <div style="font-size:14px;font-weight:600;color:light-dark(#151514,#ececed)">{{ p.coFull }}</div>
+            </div>
+            <div>
+              <div class="mono speclabel">TIMELINE</div>
+              <div class="mono" style="font-size:12.5px;color:light-dark(#2b2a27,#dcdcdf)">{{ p.date }}</div>
+            </div>
+            <div>
+              <div class="mono speclabel">ROLE</div>
+              <div style="font-size:13px;color:light-dark(#33322e,#c9c9cf)">{{ p.role }}</div>
+            </div>
+
+            <div style="grid-column:1/-1;padding-top:10px;border-top:1px solid light-dark(#e5e4de,#26262c)">
+              <div class="mono speclabel" style="margin-bottom:6px">TECH STACK</div>
+              <div style="display:flex;flex-wrap:wrap;gap:5px">
+                <sc-for list="{{ p.stack }}" as="t" hint-placeholder-count="5">
+                  <span class="mono sq tag" style="background:light-dark(#fbfbf9,#1e1e22)">{{ t }}</span>
                 </sc-for>
               </div>
             </div>
 
-            <div data-modalsidebar class="sq" style="display:flex;flex-direction:column;gap:18px;padding:20px;border-radius:16px;background:light-dark(#f4f3ef,rgba(255,255,255,.04));border:1px solid light-dark(#dedcd6,rgba(255,255,255,.07))">
-              <div>
-                <div class="mono speclabel">COMPANY</div>
-                <div style="font-size:14px;font-weight:500;color:light-dark(#151514,#ececed)">{{ p.coFull }}</div>
+            <sc-if value="{{ p.url }}">
+              <div style="grid-column:1/-1;padding-top:10px;border-top:1px solid light-dark(#e5e4de,#26262c);display:flex;align-items:center;gap:10px">
+                <span class="mono speclabel" style="margin-bottom:0">LINK</span>
+                <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" class="mono" style="font-size:13px;font-weight:500;color:light-dark(#151514,#ececed);display:inline-flex;align-items:center;gap:4px;text-decoration:none;transition:all .15s" style-hover="text-decoration:underline;text-underline-offset:3px;opacity:.75">{{ siteLabel }}<span>&#8599;</span></a>
               </div>
-              <div>
-                <div class="mono speclabel">TIMELINE</div>
-                <div class="mono" style="font-size:13.5px;color:light-dark(#2b2a27,#dcdcdf)">{{ p.date }}</div>
+            </sc-if>
+          </div>
+
+          <div class="mono eyebrow" style="margin-bottom:14px;font-weight:600">{{ contribHeading }}</div>
+
+          <div data-contrib-list>
+            <sc-for list="{{ p.items }}" as="c" hint-placeholder-count="4">
+              <div data-contrib-item>
+                <span data-contrib-badge class="mono">{{ c.n }}</span>
+                <div data-contrib-text>{{ c.text }}</div>
               </div>
-              <div>
-                <div class="mono speclabel">ROLE</div>
-                <div style="font-size:13.5px;color:light-dark(#33322e,#c9c9cf)">{{ p.role }}</div>
-              </div>
-              <div>
-                <div class="mono speclabel" style="margin-bottom:8px">TECH STACK</div>
-                <div style="display:flex;flex-wrap:wrap;gap:5px">
-                  <sc-for list="{{ p.stack }}" as="t" hint-placeholder-count="5">
-                    <span class="mono sq tag">{{ t }}</span>
-                  </sc-for>
-                </div>
-              </div>
-              <sc-if value="{{ p.url }}">
-                <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" class="mono sq" style="margin-top:4px;width:100%;box-sizing:border-box;font-size:13px;padding:9px 12px;border-radius:10px;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;transition:opacity .15s" style-hover="opacity:.85">{{ siteLabel }}<span>&#8599;</span></a>
-              </sc-if>
-            </div>
+            </sc-for>
           </div>
         </div>
       </sc-for>
@@ -517,14 +511,14 @@ const PROJECTS = [
     title: { ko: '압축 프로그램 ezZip', en: 'ezZip & shared PC platform', ja: '圧縮ソフト ezZip · 共通プラットフォーム' },
     mtitle: { ko: '압축 프로그램 ezZip · 공통 플랫폼', en: 'ezZip — Compression Tool & Platform', ja: '圧縮ソフト ezZip・共通プラットフォーム' },
     blurb: {
-      ko: '자사 PC 제품군 전체에 적용되는 공통 모듈·통합 인스톨러 플랫폼과, 그 위에 구축된 첫 제품인 압축 소프트웨어 ezZip을 기획부터 엔진 개발·운영까지 총괄.',
-      en: 'Owned the shared module & installer platform for all company PC products, and led ezZip — the first product built on it — from concept to operations.',
-      ja: '自社PC製品群全体に適用される共通モジュール・インストーラープラットフォームと、その最初の製品である圧縮ソフトezZipを企画からエンジン開発・運用まで統括。'
+      ko: '자사 PC 제품군 전체에 적용되는 공통 모듈·통합 인스톨러 플랫폼을 설계하고, 첫 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발 및 배포·운영을 주도.',
+      en: 'Designed the shared module & installer platform for all company PC products, and spearheaded ezZip from initial design to engine dev and operations.',
+      ja: '自社PC製品群全体に適用される共通モジュール・インストーラープラットフォームを設計し、圧縮ソフトezZipの企画からエンジン開発・運用まで主導。'
     },
-    role: { ko: '총괄 & 엔진 개발', en: 'Lead & Engine Dev', ja: '統括・エンジン開発' },
+    role: { ko: '설계 & 엔진 개발', en: 'Core Architecture & Engine Dev', ja: '設計・エンジン開発' },
     stack: ['C#', '.NET 8', 'WPF', 'Avalonia', 'VC++', 'Native AOT', 'WiX'],
     items: [
-      { ko: '최초 기획부터 엔진 개발·운영을 총괄하여 **일 평균 설치 1,800건, DAU 6만 명** 달성 — 자사 PC 제품군 중 최다 다운로드 및 최고 활성 사용자 수 기록',
+      { ko: '최초 기획부터 엔진 개발·운영을 주도하여 **일 평균 설치 1,800건, DAU 6만 명** 달성 — 자사 PC 제품군 중 최다 다운로드 및 최고 활성 사용자 수 기록',
         en: 'Led the product end-to-end to **1,800 daily installs and 60K DAU** — becoming the company’s most downloaded and active PC product',
         ja: '企画・開発・運用を一貫して主導し、**1日平均インストール1,800件、DAU6万人**を達成 — 自社PC製品で最多ダウンロード・最多アクティブユーザーを記録' },
       { ko: '7z.dll을 .NET 8 Source-Generated COM Interop 기반 C# 엔진으로 재구현하고 Span 기반 제로 카피 마샬링으로 **네이티브 동등 수준의 처리 성능** 확보',
@@ -682,9 +676,9 @@ const CARD_H3 = 'margin:0 0 6px;font-weight:600;font-size:19.5px;line-height:1.3
 const CARD_H3_FEATURE = 'margin:0 0 6px;font-weight:600;font-size:22px;line-height:1.28;letter-spacing:-.028em';
 
 const T = {
-  link: { ko: '제품 링크', en: 'Product page', ja: '製品ページ' },
+  link: { ko: '공식 웹사이트', en: 'Official Website', ja: '公式サイト' },
   site: { ko: '공식 웹사이트', en: 'Official Website', ja: '公式サイト' },
-  contrib: { ko: '// 주요 성과 및 엔지니어링 하이라이트', en: '// KEY CONTRIBUTIONS & IMPACT', ja: '// 主な成果・エンジニアリングハイライト' }
+  contrib: { ko: '주요 성과 및 구현 내용', en: 'Key Engineering Highlights & Impact', ja: '主な成果・エンジニアリング実績' }
 };
 
 const bold = (s) => s.indexOf('**') < 0 ? s : s.split('**').map((t, i) =>
