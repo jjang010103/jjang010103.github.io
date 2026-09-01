@@ -3,12 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>장민규</title>
+<!-- 부트스트랩(테마/언어/제목)은 반드시 실제 <head>에 둔다.
+     helmet 안에 두면 프레임워크가 <title>을 관리 대상으로 삼아
+     매 렌더마다 정적 제목으로 되돌리고, 테마 적용도 첫 페인트보다 늦어진다. -->
+<script>(function(){var t=null,l=null;try{t=localStorage.getItem('mj-resume-theme');l=localStorage.getItem('mj-resume-lang')}catch(e){}
+window.NAMES={ko:'장민규',en:'Min-gyu Jang',ja:'チャン・ミンギュ'};
+document.documentElement.lang=l||'ko';
+document.title=window.NAMES[document.documentElement.lang];
+if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
+document.documentElement.style.colorScheme=t;})()</script>
 <script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet data-dc-atomics>
-<title>장민규 · C#/.NET 개발자 이력서</title>
 <meta name="description" content="8년차 C#/.NET 개발자 장민규입니다. .NET 기반 윈도우 데스크톱과 Avalonia 크로스플랫폼 앱을 개발합니다. 압축 프로그램 ezZip을 기획·개발·운영해 DAU 6만 명을 달성했습니다.">
 <meta name="author" content="장민규">
 <meta property="og:type" content="profile">
@@ -22,36 +31,65 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-jp-dynamic-subset.min.css">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<script>(function(){var t=null;try{t=localStorage.getItem('mj-resume-theme')}catch(e){}
-if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
-document.documentElement.style.colorScheme=t;
-var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='dark'?'#0c0c0d':'#fbfbf9');})()</script>
+<script>(function(){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',document.documentElement.style.colorScheme==='dark'?'#0c0c0d':'#fbfbf9')})()</script>
 <style>
-:root{color-scheme:light dark}
-body{margin:0;background:light-dark(#fbfbf9,#0c0c0d);color:light-dark(#1c1b19,#ececed);font-family:'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+/* ============================================================
+   LAYOUT ARCHITECTURE
+   - 모든 정적 스타일은 이 시트의 클래스/데이터 속성 규칙에 있다.
+     인라인 style은 JS가 계산하는 동적 값({{ }})만 가진다.
+   - 데스크톱 값이 기본(base), 모바일은 파일 하단의
+     @media (max-width:720px) 블록 하나에서만 재정의한다.
+     인라인 정적 스타일이 없으므로 !important는 쓰지 않는다.
+   - 색은 :root 토큰으로 관리한다. 새 색이 필요하면 토큰부터 추가할 것.
+   ============================================================ */
+:root{
+  color-scheme:light dark;
+  --bg:light-dark(#fbfbf9,#0c0c0d);
+  --fg:light-dark(#1c1b19,#ececed);
+  --ink:light-dark(#151514,#ececef);        /* 반전 블록 배경 */
+  --ink-fg:light-dark(#fbfbf9,#0c0c0d);     /* 반전 블록 글자 */
+  --card:light-dark(#f1f1f0,#161618);       /* 카드 면 */
+  --card-hover:light-dark(#eaeae9,#1c1c1e);
+  --card-item:light-dark(#fbfbf9,#1e1e22);  /* 카드 위의 한 단계 밝은 면 */
+  --line:light-dark(#e5e4e0,#232329);       /* 기본 헤어라인 */
+  --line-soft:light-dark(#e9e8e4,#1e1e23);
+  --line-card:light-dark(#e5e4de,#26262c);  /* 모달 내부 구분선 */
+  --line-ui:light-dark(#dedcd6,#2a2a30);    /* 버튼/세그먼트 테두리 */
+  --muted:light-dark(#6f6f68,#8e8e98);
+  --muted-2:light-dark(#63635d,#9b9ba4);
+  --chip-bg:light-dark(#f7f6f3,#1a1a1f);    /* 이니셜 배지 */
+  --chip-bc:light-dark(#e5e4e0,#2a2a30);
+  --chip-fg:light-dark(#4a4a45,#a5a5ad);
+}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;letter-spacing:inherit}
 a:hover{color:light-dark(#000,#fff);text-decoration:underline;text-underline-offset:3px}
 ::selection{background:light-dark(#151514,#f2f2f2);color:light-dark(#fff,#111)}
-[data-modalcard] li strong{background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);padding:.08em .3em .12em;margin:0 .04em;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+[data-modalcard] li strong{background:var(--ink);color:var(--ink-fg);padding:.08em .3em .12em;margin:0 .04em;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 [data-modalcard] li strong::selection{background:light-dark(#f2f2f2,#151514);color:light-dark(#111,#fff)}
 [data-footer]::selection,[data-footer] ::selection,[data-tlbar]::selection,[data-tlbar] ::selection,[data-inverted]::selection,[data-inverted] ::selection{background:light-dark(#f2f2f2,#151514);color:light-dark(#111,#fff)}
 html[lang="ko"] body{word-break:keep-all;overflow-wrap:break-word}
+/* language visibility: static attrs, not 87 per-render display bindings */
+[data-l],[data-lb]{display:none}
+html[lang="ko"] [data-l="ko"],html[lang="en"] [data-l="en"],html[lang="ja"] [data-l="ja"]{display:inline}
+html[lang="ko"] [data-lb="ko"],html[lang="en"] [data-lb="en"],html[lang="ja"] [data-lb="ja"]{display:block}
 
-/* shared atoms — these were 164 copies of the mono stack and 56 identical pills inline */
+/* shared atoms */
 .mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace}
 .sq{corner-shape:squircle}
+.nowrap{white-space:nowrap}
 .pill{font-size:13px;padding:5px 11px;border-radius:10px;white-space:nowrap}
-.pill-on{background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d)}
-.pill-off{border:1px solid light-dark(#dedcd6,#2a2a30)}
+.pill-on{background:var(--ink);color:var(--ink-fg)}
+.pill-off{border:1px solid var(--line-ui)}
 .tag{font-size:12px;padding:3px 8px;border-radius:6px;background:light-dark(#eae8e2,#1b1b20);border:1px solid light-dark(#d8d6ce,#282830);color:light-dark(#2b2a27,#dcdcdf)}
-.eyebrow{font-size:12px;letter-spacing:.12em;color:light-dark(#6f6f68,#8e8e98)}
+.tag--card{background:var(--card-item)}
+.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--muted)}
 .speclabel{font-size:11.5px;letter-spacing:.11em;color:light-dark(#7a7972,#858590);margin-bottom:4px}
 
-/* native smooth scroll replaces the hand-rolled setInterval tween */
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-#s-intro,section[data-chapter],[data-kpisec]{scroll-margin-top:64px}
+section[id],header[id]{scroll-margin-top:76px}
 
 ::view-transition-group(root){animation-duration:620ms}
 ::view-transition-image-pair(root){isolation:auto}
@@ -63,258 +101,386 @@ html{scroll-behavior:smooth}
 @keyframes mj-vt-out{from{clip-path:circle(0px at var(--vtx,50%) var(--vty,50%))}to{clip-path:circle(var(--vtr,150vmax) at var(--vtx,50%) var(--vty,50%))}}
 @keyframes mj-vt-in{from{clip-path:circle(var(--vtr,150vmax) at var(--vtx,50%) var(--vty,50%))}to{clip-path:circle(0px at var(--vtx,50%) var(--vty,50%))}}
 :focus{outline:none}
-:focus-visible{outline:2px solid light-dark(#151514,#ececef);outline-offset:3px;border-radius:4px}
-[data-modal], [data-modalcard], [data-modalbody], nav {
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
-}
-[data-modal]::-webkit-scrollbar,
-[data-modalcard]::-webkit-scrollbar,
-[data-modalbody]::-webkit-scrollbar,
-nav::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:4px}
+[data-modal],[data-modalcard],[data-modalbody],nav{scrollbar-width:none}
+[data-modal]::-webkit-scrollbar,[data-modalcard]::-webkit-scrollbar,[data-modalbody]::-webkit-scrollbar,nav::-webkit-scrollbar{display:none}
 
-[data-projgrid] > article,[data-cocards] > div{border-color:transparent !important;background:light-dark(#f1f1f0,#161618) !important;box-shadow:none !important}
-[data-projgrid] > article:hover,[data-projgrid] > article:focus-visible{background:light-dark(#eaeae9,#1c1c1e) !important;box-shadow:none !important}
-@media (min-width:721px){
-  [data-bar] > button:first-of-type{background-image:none !important}
-  section[data-chapter]{padding-top:96px !important}
-  section[data-chapter] > div:first-child{margin-bottom:36px !important}
-  section[data-chapter] > div:first-child > h2{font-size:29px !important;letter-spacing:-.032em !important}
-  [data-chaprule]{background:transparent !important}
-}
+/* ── page frame ─────────────────────────────────────────── */
+.page{max-width:1100px;margin:0 auto;padding:0 clamp(18px,4vw,32px) 96px}
+
+/* ── top bar ────────────────────────────────────────────── */
+[data-bar]{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:flex-end;gap:12px 10px;padding:14px 0;background:var(--bg)}
+.logo-btn{flex:none;align-self:flex-end;display:flex;align-items:center;height:27px;padding:0;margin-right:clamp(14px,2.2vw,26px);border:0;background-color:transparent;background-repeat:no-repeat;background-size:100% 100%;cursor:pointer;color:light-dark(#4a4a45,#a5a5ad);transition:opacity .2s ease;line-height:.85;white-space:nowrap;font-weight:700}
+.logo-btn:hover{opacity:.62}
+.logo-btn [data-l="ko"]{font-size:22.5px;letter-spacing:-.055em}
+.logo-btn [data-l="en"]{font-size:18px;letter-spacing:-.045em}
+.logo-btn [data-l="ja"]{font-size:17px;letter-spacing:-.05em}
+.bar-nav{display:flex;align-items:flex-end;gap:clamp(8px,1.2vw,14px);flex:8 1 380px;max-width:640px;min-width:0;overflow-x:auto;scrollbar-width:none;padding-bottom:1px}
+.nav-btn{min-width:max-content;display:flex;flex-direction:column;gap:7px;padding:0 4px 0 0;border:0;background:transparent;cursor:pointer;white-space:nowrap;transition:color .2s ease}
+.nav-top{display:flex;align-items:baseline;gap:6px}
+.nav-num{font-size:11.5px;letter-spacing:.08em;transition:color .2s ease}
+.nav-label{font-size:13.5px;letter-spacing:-.01em}
+.nav-rail{display:block;height:2px;background:var(--line)}
+.nav-fill{display:block;height:2px;background:currentColor;transition:width .12s linear}
+[data-barspacer]{flex:1 1 20px;min-width:12px}
+.seg{height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid var(--line-ui);corner-shape:squircle;border-radius:10px;overflow:hidden}
+.seg--card{background:var(--card-item)}
+.seg-btn{border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:38px;padding:0 10px;font-size:13px;font-weight:500;line-height:1.25}
+.seg-btn--ko{font-size:15px}
+.seg--card .seg-btn{min-width:36px;padding:0 9px;font-size:12.5px}
+.seg--card .seg-btn--ko{font-size:14.5px}
+.icon-btn{height:32px;width:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#e2e1dd,#2a2a30);background:transparent;color:inherit;cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px}
+.icon-btn--card{border-color:var(--line-ui);background:var(--card-item)}
+.icon-btn--close{color:light-dark(#55544e,#a2a2ad);transition:all .18s ease}
+.icon-btn--close:hover{background:var(--ink);color:var(--ink-fg);border-color:transparent}
+.theme-ico{display:block;transition:transform .45s cubic-bezier(.65,0,.35,1)}
+
+/* ── intro ──────────────────────────────────────────────── */
+.intro{padding:66px 0 54px;border-bottom:1px solid var(--line)}
+.intro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:clamp(28px,4vw,48px);align-items:end}
+.intro-name{display:inline-block;max-width:100%;box-sizing:border-box;margin:0;padding:.1em .1em .13em;background:var(--ink);color:var(--ink-fg);border-radius:3px;font-size:clamp(38px,9vw,86px);line-height:.93;font-weight:600;letter-spacing:-.042em;overflow-wrap:break-word;word-break:keep-all}
+.intro-name [data-lb="ja"]{font-size:.8em;letter-spacing:-.03em}
+.intro-role{margin:20px 0 0;font-size:19px;font-weight:500;letter-spacing:-.01em}
+.intro-sub{margin:7px 0 0;font-size:13.5px;letter-spacing:.02em;color:var(--muted-2)}
+[data-contact]{display:flex;flex-direction:column;gap:9px;font-size:clamp(12px,2.6vw,13.5px);padding-bottom:6px}
+.contact-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding-bottom:9px;border-bottom:1px solid var(--line-soft);overflow-wrap:anywhere}
+.contact-row:last-child{padding-bottom:0;border-bottom:0}
+.contact-k{color:var(--muted)}
+
+/* ── about ──────────────────────────────────────────────── */
+.about{padding:54px 0;border-bottom:1px solid var(--line)}
+.about-body{width:100%;min-height:clamp(90px,10vw,120px);display:flex;flex-direction:column;gap:12px;font-size:17px;line-height:1.82;font-weight:300;letter-spacing:-.004em;color:light-dark(#33322e,#c9c9cf);word-break:keep-all;overflow-wrap:break-word}
+.about-body p{margin:0}
+.about-body p+p{margin-top:10px}
+
+/* ── KPI band ───────────────────────────────────────────── */
+[data-kpisec]{padding:40px 0;border-bottom:1px solid var(--line)}
+[data-kpi]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:2px;background:var(--line-soft)}
+.kpi-cell{background:var(--bg);padding:26px 22px 24px}
+.kpi-num{font-size:44px;font-weight:500;letter-spacing:-.035em}
+.kpi-label{margin-top:10px;font-size:13.5px;color:var(--muted-2)}
+
+/* ── chapters ───────────────────────────────────────────── */
+section[data-chapter]{padding:96px 0 0}
+#s-career{display:flex;flex-direction:column}
+.chap-head{display:flex;align-items:baseline;gap:14px;margin-bottom:36px}
+.chap-num{flex:none;font-size:12px;letter-spacing:.14em;color:var(--muted)}
+.chap-title{flex:none;margin:0;font-size:29px;font-weight:600;letter-spacing:-.032em;white-space:nowrap}
+[data-chaprule]{flex:1;height:1px;background:transparent}
+.chap-meta{font-size:12px;color:var(--muted)}
+
+/* ── career timeline ────────────────────────────────────── */
+[data-tlbar]{display:flex;gap:3px;height:52px;align-items:stretch}
+.tl-seg{box-sizing:border-box;background:var(--ink);color:var(--ink-fg);corner-shape:squircle;border-radius:10px;padding:9px 14px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.tl-gap{background:repeating-linear-gradient(135deg,light-dark(#dedcd6,#26262b) 0 3px,transparent 3px 6px);corner-shape:squircle;border-radius:10px}
+.tl-co{font-size:13.5px;font-weight:500;white-space:nowrap}
+.tl-date{font-size:11.5px;opacity:.68}
+
+/* ── company cards ──────────────────────────────────────── */
+[data-cocards]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;margin-top:22px}
+.co-card{corner-shape:squircle;border:1px solid transparent;border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;background:var(--card)}
+.co-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.badge{flex:none;display:flex;align-items:center;justify-content:center;corner-shape:squircle;border-radius:10px;border:1px solid var(--chip-bc);background:var(--chip-bg);font-weight:600;color:var(--chip-fg)}
+.badge--co{width:34px;height:34px;font-size:14.5px;letter-spacing:-.02em}
+.badge--edu{width:30px;height:30px;font-size:13.5px}
+.co-title{font-size:15px;font-weight:600}
+[data-cardate]{display:none;margin-top:6px;font-size:12px;color:var(--muted)}
+.co-desc{font-size:14.5px;line-height:1.75;margin-bottom:8px;min-height:clamp(96px,11vw,120px);word-break:keep-all;overflow-wrap:break-word}
+.co-note{font-size:13.5px;line-height:1.6;font-weight:300;color:var(--muted);margin-top:auto;word-break:keep-all;overflow-wrap:break-word}
+
+/* ── tech stack ─────────────────────────────────────────── */
+[data-stackgrid]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:26px 34px}
+.stack-label{margin-bottom:11px}
+[data-stackgroup]{display:flex;flex-wrap:wrap;gap:7px}
+
+/* ── projects ───────────────────────────────────────────── */
+[data-filters]{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px}
+.filter-btn{cursor:pointer;font-size:12.5px;letter-spacing:.02em;padding:6px 13px;border-radius:10px;white-space:nowrap;border-width:1px;border-style:solid}
+[data-projgrid]{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,370px),1fr));gap:16px}
+.proj-card{display:flex;flex-direction:column;cursor:pointer;corner-shape:squircle;border:1px solid transparent;border-radius:20px;padding:clamp(20px,3vw,26px) clamp(18px,3vw,26px) clamp(18px,3vw,24px);background:var(--card)}
+.proj-card:hover,.proj-card:focus-visible{background:var(--card-hover)}
+[data-rowarrow]{display:none}
+[data-cardmeta]{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:14px;font-size:12px;color:var(--muted)}
+.card-co{letter-spacing:.1em}
+.card-title{margin:0 0 6px;font-weight:600;font-size:19.5px;line-height:1.32;letter-spacing:-.026em;min-height:2.6em;word-break:keep-all;overflow-wrap:break-word}
+.card-title--feature{font-size:22px;line-height:1.28;letter-spacing:-.028em}
+.card-blurb{margin:0 0 18px;font-size:14.5px;font-weight:300;line-height:1.72;color:light-dark(#5e5e58,#9a9aa2);min-height:4.8em;word-break:keep-all;overflow-wrap:break-word}
+[data-cardlink]{margin-top:auto;padding-top:15px;display:flex;align-items:center;justify-content:flex-end;font-size:12.5px}
+[data-cardlink] a{display:flex;align-items:center;gap:7px;color:light-dark(#151514,#ececed);white-space:nowrap;text-decoration:none}
+[data-cardlink] a:hover{text-decoration:underline;text-underline-offset:3px}
+.proj-empty{margin:36px 0 0;text-align:center;font-size:13.5px;color:var(--muted)}
+
+/* ── education ──────────────────────────────────────────── */
+[data-edugrid]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:34px}
+.edu-label{margin-bottom:14px}
+.edu-list{display:flex;flex-direction:column;gap:16px}
+.edu-item{display:flex;align-items:flex-start;gap:12px}
+.edu-body{min-width:0}
+.edu-name{font-size:15px;font-weight:500}
+.edu-meta{margin-top:3px;font-size:12.5px;color:var(--muted)}
+
+/* ── footer ─────────────────────────────────────────────── */
+[data-footer]{margin-top:84px;background:var(--ink);color:var(--ink-fg);corner-shape:squircle;border-radius:20px;padding:48px 44px 26px}
+[data-footer] a{color:var(--ink-fg)}
+[data-footgrid]{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;align-items:end}
+.foot-name{font-size:clamp(30px,4vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1.05}
+.foot-role{margin-top:8px;font-size:15px;opacity:.62}
+.foot-links{display:flex;gap:18px;margin-top:20px;font-size:14px}
+[data-footcontact]{justify-self:end;text-align:right}
+.foot-contact-label{font-size:12px;letter-spacing:.14em;opacity:.68;margin-bottom:14px}
+[data-footmail]{font-size:clamp(19px,2.4vw,25px);font-weight:500;letter-spacing:-.02em;line-height:1.2;word-break:break-all}
+.foot-tel{margin-top:9px;font-size:14px;opacity:.62}
+[data-footmeta]{margin-top:44px;padding-top:16px;border-top:1px solid currentColor;opacity:.7;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;font-size:12px}
+
+/* ── project modal ──────────────────────────────────────── */
+[data-modal]{position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:light-dark(rgba(20,20,18,.56),rgba(0,0,0,.76));backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);overflow:hidden}
+[data-modalcard]{position:relative;box-sizing:border-box;width:min(100%,1070px);height:min(90vh,1100px);max-height:min(92vh,1140px);display:flex;flex-direction:column;overflow:hidden;background:var(--card);border:1px solid var(--line-card);corner-shape:squircle;border-radius:24px;padding:clamp(28px,4.2vw,48px);box-shadow:0 30px 90px rgba(0,0,0,.45)}
+[data-modalhead]{flex:none;display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px}
+[data-modalbody]{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:6px;margin-bottom:16px}
+.mbody-col{display:flex;flex-direction:column}
+.modal-title{margin:0 0 10px;font-size:clamp(22px,2.8vw,28px);font-weight:600;line-height:1.24;letter-spacing:-.028em;color:light-dark(#151514,#ececed);word-break:keep-all;overflow-wrap:break-word}
+.modal-blurb{margin:0 0 20px;font-size:15px;font-weight:300;line-height:1.75;color:light-dark(#4a4a45,#a8a8b2);word-break:keep-all;overflow-wrap:break-word}
+.modal-spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px 20px;padding-top:18px;border-top:1px solid var(--line-card);margin-bottom:26px}
+.spec-co{font-size:14px;font-weight:600;color:light-dark(#151514,#ececed)}
+.spec-date{font-size:12.5px;color:light-dark(#2b2a27,#dcdcdf)}
+.spec-role{font-size:13px;color:light-dark(#33322e,#c9c9cf)}
+.spec-wide{grid-column:1/-1;padding-top:10px;border-top:1px solid var(--line-card)}
+.spec-stack .speclabel{margin-bottom:6px}
+.spec-tags{display:flex;flex-wrap:wrap;gap:5px}
+.spec-linkrow{display:flex;align-items:center;gap:10px}
+.spec-linkrow .speclabel{margin-bottom:0}
+.spec-linkrow a{font-size:13px;font-weight:500;color:light-dark(#151514,#ececed);display:inline-flex;align-items:center;gap:4px;text-decoration:none;transition:all .15s}
+.spec-linkrow a:hover{text-decoration:underline;text-underline-offset:3px;opacity:.75}
+.contrib-head{margin-bottom:14px;font-weight:600}
+[data-contrib-list]{display:flex;flex-direction:column;gap:9px}
+[data-contrib-item]{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:14px;corner-shape:squircle;background:var(--card-item);border:1px solid var(--line-card);transition:background .15s}
+[data-contrib-badge]{flex:none;width:24px;height:24px;border-radius:7px;corner-shape:squircle;background:light-dark(#eae8e2,#282830);color:light-dark(#4a4943,#a2a2ad);font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:2px}
+[data-contrib-text]{font-size:14.5px;line-height:1.72;color:light-dark(#2b2a27,#dcdcdf);font-weight:300;word-break:keep-all;overflow-wrap:break-word}
+[data-contrib-text] strong{background:var(--ink);color:var(--ink-fg);padding:.08em .32em .12em;margin:0 .04em;border-radius:3px;font-weight:600;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+[data-modalfoot]{flex:none;border-top:1px solid var(--line-card);padding-top:14px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px}
+.mfoot-id{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.mfoot-name{font-size:14.5px;font-weight:600;color:light-dark(#151514,#ececed);white-space:nowrap}
+.mfoot-role{font-size:12px;color:var(--muted);white-space:nowrap}
+.mfoot-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;font-size:12px}
+.mfoot-links a{color:light-dark(#151514,#ececed);text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.mfoot-links a.tight{gap:2px}
+.mfoot-links a:hover{text-decoration:underline;text-underline-offset:3px}
+.mfoot-k{color:var(--muted)}
+
+/* ============================================================
+   MOBILE (≤720px) — 모든 모바일 재정의는 이 블록 안에만 둔다.
+   base 규칙과 같은 선택자를 쓰면 뒤에 오는 이 블록이 이긴다.
+   ============================================================ */
 @media (max-width:720px){
   /* the name's ink-fill is the reading indicator — a rail as well is noise */
   html{scrollbar-width:none}
   html::-webkit-scrollbar{width:0;height:0;display:none}
-  [data-bar]{padding:11px 0 13px !important;gap:8px !important}
-  [data-bar] > nav,[data-bar] [data-barspacer]{display:none !important}
-  [data-bar] > button:first-of-type{margin-right:auto !important}
-  [data-bar] > button:first-of-type{-webkit-background-clip:text !important;background-clip:text !important;-webkit-text-fill-color:transparent !important}
-  [data-contact]{gap:0 !important}
-  [data-contact] > a{min-height:46px;align-items:center !important;padding-bottom:0 !important}
-  [data-kpi]{grid-template-columns:1fr 1fr !important}
-  /* one continuous axis — same proportions and same start/end positions as
-     desktop, just without the labels that could not fit inside 104px */
-  [data-tlbar]{height:12px !important}
-  [data-tlbar] > div{padding:0 !important;box-sizing:border-box !important}
-  [data-tlbar] span{display:none !important}
-  [data-cardate]{display:block !important;margin-top:5px !important}
-  /* toolbar back to a compact size — the bar padding carries the touch area */
-  [data-bar] > div > button{min-width:34px !important;padding:0 9px !important;font-size:13.5px !important}
-  [data-bar] > div,[data-bar] > button[aria-label],[data-bar] > button[title]{height:32px !important}
-  [data-bar] > button[aria-label]{width:32px !important}
-  [data-bar] > button[aria-label="PDF"]{display:none !important}
+
+  [data-bar]{padding:11px 0 13px;gap:8px}
+  .bar-nav,[data-barspacer]{display:none}
+  .logo-btn{margin-right:auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  [data-bar] .seg-btn{min-width:34px;padding:0 9px;font-size:13.5px}
+  .bar-pdf{display:none}
+
+  [data-contact]{gap:0}
+  .contact-row{min-height:46px;align-items:center;padding-bottom:0}
+
+  /* stats become a full-bleed band, not another card */
+  [data-kpisec]{padding:30px 0;border-bottom:0}
+  [data-kpi]{grid-template-columns:1fr 1fr;margin:0 calc(-1*clamp(18px,4vw,32px))}
+  .kpi-cell{padding:18px clamp(18px,4vw,32px) 16px}
+  .kpi-num{font-size:30px}
+
+  /* chapter rhythm: tighter blocks, clearer breaks */
+  section[data-chapter]{padding-top:46px}
+  .chap-head{margin-bottom:24px}
+  #s-career .chap-head{margin-bottom:30px}
+  #s-projects .chap-head{margin-bottom:22px}
+  .chap-title{font-size:17px;letter-spacing:-.018em}
+  [data-chaprule]{background:var(--line)}
+
+  /* one continuous axis — same proportions as desktop, without labels */
+  [data-tlbar]{height:12px}
+  .tl-seg{padding:0}
+  .tl-co,.tl-date{display:none}
+  [data-cardate]{display:block;margin-top:5px}
+
+  [data-cocards]{gap:12px;margin-top:18px}
+  .co-card{padding:17px 19px}
+
+  /* the stack becomes a spec table: label left, items flowing right */
+  [data-stackgrid]{gap:0}
+  .stack-cell{padding:14px 0 16px;border-top:1px solid var(--line)}
+  .stack-cell:first-child{border-top:0;padding-top:0}
+  [data-stackgroup]{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px;font-family:inherit}
+  [data-stackgroup] > span{display:block;padding:0;border:0;background:none;font-family:inherit;font-size:14px;font-weight:500;color:inherit;line-height:1.35;white-space:normal}
+
+  /* project rows rebuilt: title-first, two-line blurb, press not lift */
+  [data-projgrid]{gap:12px}
+  .proj-card{position:relative;padding:20px 46px 22px 22px;transition:transform .18s cubic-bezier(.4,0,.2,1),background .18s ease}
+  .proj-card:active{background:var(--card-hover);transform:scale(.986)}
+  .proj-card:focus-visible{outline-offset:-2px}
+  .card-title{order:1;margin:0 0 7px;font-size:19.5px;line-height:1.28;letter-spacing:-.025em}
+  [data-cardmeta]{order:2;justify-content:flex-start;gap:0;margin:0 0 10px}
+  .card-date::before{content:'·';margin:0 7px;opacity:.55}
+  .card-blurb{order:3;margin:0;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  [data-cardlink]{order:4;margin-top:14px}
+  [data-rowarrow]{display:block;position:absolute;top:46px;right:20px;font-size:22px;line-height:1;font-weight:300;color:light-dark(#9a9a92,#6a6a73)}
+
+  [data-edugrid]{gap:24px 0}
+
   /* footer: one left-aligned column */
-  [data-footer]{padding:34px 22px 20px !important;border-radius:20px !important}
-  [data-footgrid]{gap:28px !important;align-items:start !important}
-  [data-footcontact]{justify-self:start !important;text-align:left !important}
-  [data-footmail]{font-size:19px !important}
-  [data-footmeta]{margin-top:30px !important}
+  [data-footer]{padding:34px 22px 20px}
+  [data-footgrid]{gap:28px;align-items:start}
+  [data-footcontact]{justify-self:start;text-align:left}
+  [data-footmail]{font-size:19px}
+  [data-footmeta]{margin-top:30px}
 
-  /* ─── density: three weights instead of one ─── */
-  /* 1. stats become a full-bleed band, not another card */
-  [data-kpisec]{padding:30px 0 !important}
-  [data-kpi]{margin:0 calc(-1*clamp(18px,4vw,32px)) !important}
-  [data-kpi] > div{padding:18px clamp(18px,4vw,32px) 16px !important}
-  [data-kpi] > div > div:first-child{font-size:30px !important}
-
-  /* 2. the stack becomes a spec table: label left, items flowing right.
-     thirty bordered pills was a wall; one long middot line was a blob */
-  [data-stackgrid]{gap:0 !important}
-  [data-stackgrid] > div{padding:14px 0 16px !important;border-top:1px solid light-dark(#e5e4e0,#232329) !important}
-  [data-stackgrid] > div > div:first-child{margin-bottom:11px !important}
-  [data-stackgroup]{display:grid !important;grid-template-columns:1fr 1fr !important;gap:9px 16px !important;font-family:inherit !important}
-  [data-stackgroup] > span{display:block !important;padding:0 !important;border:0 !important;background:none !important;font-family:inherit !important;font-size:14px !important;font-weight:500 !important;color:inherit !important;line-height:1.35 !important;white-space:normal !important}
-
-  /* 3. projects keep the desktop plane — same fill, same 20px squircle */
-  [data-projgrid]{gap:12px !important}
-  [data-projgrid] > article{corner-shape:squircle !important;border-radius:20px !important;transform:none !important;padding:20px 22px 22px !important}
-
-  /* 4. company cards keep the same plane as the project cards */
-  [data-cocards]{gap:12px !important;margin-top:18px !important}
-  [data-cocards] > div{corner-shape:squircle !important;border-radius:20px !important;padding:17px 19px !important}
-
-  /* 5. chapter rhythm: tighter blocks, clearer breaks */
-  [data-chapter]{padding-top:46px !important}
-  [data-edugrid]{gap:24px 0 !important}
-  /* the chapter header rule already opens the stack table — no second line */
-  [data-stackgrid] > div:first-child{border-top:0 !important;padding-top:0 !important}
-
-  /* ─── project rows rebuilt: numbered, title-first, two-line blurb ─── */
-  [data-projgrid] > article{padding:20px 46px 22px 22px !important}
-  [data-projgrid] > article > h3{order:1 !important;margin:0 0 7px !important;font-size:19.5px !important;line-height:1.28 !important;letter-spacing:-.025em !important}
-  [data-cardmeta]{order:2 !important;justify-content:flex-start !important;gap:0 !important;margin:0 0 10px !important;font-size:12px !important}
-  [data-cardmeta] > span:last-child::before{content:'·';margin:0 7px;opacity:.55}
-  [data-projgrid] > article > p{order:3 !important;margin:0 !important;font-size:14.5px !important;line-height:1.65 !important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  [data-cardlink]{order:4 !important;margin-top:14px !important}
-  [data-rowarrow]{top:46px !important;right:20px !important}
-
-  /* cards must announce themselves without hover — press, not lift */
-  [data-projgrid] > article{position:relative !important;transition:transform .18s cubic-bezier(.4,0,.2,1),background .18s ease !important}
-  [data-projgrid] > article:hover,[data-projgrid] > article:focus-visible{transform:none !important}
-  [data-projgrid] > article:active{background:light-dark(#eaeae9,#1c1c1e) !important;transform:scale(.986) !important}
-  [data-projgrid] > article:focus-visible{outline-offset:-2px}
-  [data-rowarrow]{display:block !important;position:absolute;top:26px;right:0;font-size:22px;line-height:1;font-weight:300;color:light-dark(#9a9a92,#6a6a73)}
-  /* one rule per row — the internal action divider is redundant here */
-  [data-projgrid] > article > div:last-of-type[style*="border-top"]{border-top:0 !important;padding-top:0 !important;margin-top:14px !important}
-
-  /* the band bleeds, so its section rule must not stop short */
-  [data-kpisec]{border-bottom:0 !important}
-  [data-modal]{padding:0 !important;align-items:flex-start !important;overflow-y:auto !important;-webkit-overflow-scrolling:touch !important}
-  [data-modalcard]{width:100% !important;max-width:100% !important;min-height:100dvh !important;height:auto !important;max-height:none !important;border-radius:0 !important;border:0 !important;box-shadow:none !important;padding:16px 14px 28px !important;display:flex !important;flex-direction:column !important;box-sizing:border-box !important;overflow:visible !important}
-  [data-modalhead]{position:sticky !important;top:0 !important;z-index:10 !important;background:light-dark(#f1f1f0,#161618) !important;padding-top:4px !important;padding-bottom:10px !important;margin-bottom:14px !important;border-bottom:1px solid light-dark(#e5e4de,#26262c) !important}
-  [data-modalbody]{flex:1 0 auto !important;overflow:visible !important;height:auto !important;min-height:auto !important;margin-bottom:0 !important;padding-right:0 !important}
-  [data-modalfoot]{flex:none !important;margin-top:36px !important;padding-top:18px !important;border-top:1px solid light-dark(#e5e4de,#26262c) !important}
-  [data-contrib-item]{padding:12px 14px !important;gap:10px !important}
-  [data-contrib-text]{font-size:14px !important;line-height:1.7 !important}
+  /* modal becomes a full-height sheet */
+  [data-modal]{padding:0;align-items:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  [data-modalcard]{width:100%;max-width:100%;min-height:100dvh;height:auto;max-height:none;border-radius:0;border:0;box-shadow:none;padding:16px 14px 28px;overflow:visible}
+  [data-modalhead]{position:sticky;top:0;z-index:10;background:var(--card);padding-top:4px;padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--line-card)}
+  [data-modalbody]{flex:1 0 auto;overflow:visible;height:auto;min-height:auto;margin-bottom:0;padding-right:0}
+  [data-modalfoot]{margin-top:36px;padding-top:18px}
+  [data-contrib-item]{padding:12px 14px;gap:10px}
+  [data-contrib-text]{font-size:14px;line-height:1.7}
 }
 @media print{
   :root{color-scheme:light only}
-  [data-noprint]{display:none !important}
+  [data-noprint]{display:none}
   body{background:#fff}
 }
-
-[data-contrib-list]{display:flex;flex-direction:column;gap:9px}
-[data-contrib-item]{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:14px;corner-shape:squircle;background:light-dark(#fbfbf9,#1e1e22);border:1px solid light-dark(#e5e4e0,#26262c);transition:background .15s}
-[data-contrib-badge]{flex:none;width:24px;height:24px;border-radius:7px;corner-shape:squircle;background:light-dark(#eae8e2,#282830);color:light-dark(#4a4943,#a2a2ad);font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:2px}
-[data-contrib-text]{font-size:14.5px;line-height:1.72;color:light-dark(#2b2a27,#dcdcdf);font-weight:300;word-break:keep-all;overflow-wrap:break-word}
-[data-contrib-text] strong{background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);padding:.08em .32em .12em;margin:0 .04em;border-radius:3px;font-weight:600;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-section[id], header[id]{scroll-margin-top:76px}
 </style>
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#151514"/><text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#fbfbf9" letter-spacing="-1">장민규</text></svg></template>
 </helmet>
 
-<main style="max-width:1100px;margin:0 auto;padding:0 clamp(18px,4vw,32px) 96px">
+<main class="page">
 
-<div data-noprint data-bar style="position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:flex-end;gap:12px 10px;padding:14px 0;background:light-dark(#fbfbf9,#0c0c0d)">
-  <button onClick="{{ toTop }}" style="flex:none;align-self:flex-end;display:flex;align-items:center;height:27px;padding:0;margin-right:clamp(14px,2.2vw,26px);border:0;background:transparent;cursor:pointer;color:light-dark(#4a4a45,#a5a5ad);transition:opacity .2s ease;line-height:.85;white-space:nowrap;font-weight:700;background-image:{{ logoBg }};background-repeat:no-repeat;background-size:100% 100%" style-hover="opacity:.62"><span style="display:{{ ki }};font-size:22.5px;letter-spacing:-.055em">장민규</span><span style="display:{{ ei }};font-size:18px;letter-spacing:-.045em">Min&#8209;gyu Jang</span><span style="display:{{ ji }};font-size:17px;letter-spacing:-.05em">チャン・ミンギュ</span></button>
-  <nav style="display:flex;align-items:flex-end;gap:clamp(8px,1.2vw,14px);flex:8 1 380px;max-width:640px;min-width:0;overflow-x:auto;scrollbar-width:none;padding-bottom:1px">
+<div data-noprint data-bar>
+  <button onClick="{{ toTop }}" class="logo-btn" style="background-image:{{ logoBg }}"><span data-l="ko">장민규</span><span data-l="en">Min&#8209;gyu Jang</span><span data-l="ja">チャン・ミンギュ</span></button>
+  <nav class="bar-nav">
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
-      <button onClick="{{ n.go }}" style="flex:{{ n.grow }} 1 0;min-width:max-content;display:flex;flex-direction:column;gap:7px;padding:0 4px 0 0;border:0;background:transparent;cursor:pointer;white-space:nowrap;color:{{ n.fg }};transition:color .2s ease">
-        <span style="display:flex;align-items:baseline;gap:6px">
-          <span class="mono" style="font-size:11.5px;letter-spacing:.08em;transition:color .2s ease;color:{{ n.nfg }}">{{ n.num }}</span>
-          <span style="font-size:13.5px;font-weight:{{ n.w }};letter-spacing:-.01em">{{ n.label }}</span>
+      <button onClick="{{ n.go }}" class="nav-btn" style="flex:{{ n.grow }} 1 0;color:{{ n.fg }}">
+        <span class="nav-top">
+          <span class="mono nav-num" style="color:{{ n.nfg }}">{{ n.num }}</span>
+          <span class="nav-label" style="font-weight:{{ n.w }}">{{ n.label }}</span>
         </span>
-        <span style="display:block;height:2px;background:light-dark(#e5e4e0,#232329)"><span style="display:block;height:2px;background:currentColor;transition:width .12s linear;width:{{ n.fill }}"></span></span>
+        <span class="nav-rail"><span class="nav-fill" style="width:{{ n.fill }}"></span></span>
       </button>
     </sc-for>
   </nav>
-  <span data-barspacer style="flex:1 1 20px;min-width:12px"></span>
+  <span data-barspacer></span>
 
-  <div style="height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#dedcd6,#2a2a30);corner-shape:squircle;border-radius:10px;overflow:hidden">
-    <button onClick="{{ setKo }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:38px;padding:0 10px;font-size:15px;font-weight:500;line-height:1.25;background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
-    <button onClick="{{ setEn }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:38px;padding:0 10px;font-size:13px;font-weight:500;line-height:1.25;background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
-    <button onClick="{{ setJa }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:38px;padding:0 10px;font-size:13px;font-weight:500;line-height:1.25;background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
+  <div class="seg">
+    <button onClick="{{ setKo }}" class="seg-btn seg-btn--ko" style="background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
+    <button onClick="{{ setEn }}" class="seg-btn" style="background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
+    <button onClick="{{ setJa }}" class="seg-btn" style="background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
   </div>
-  <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="height:32px;width:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#e2e1dd,#2a2a30);background:transparent;color:inherit;cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="display:block;transition:transform .45s cubic-bezier(.65,0,.35,1);transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg></button>
-  <button onClick="{{ doPrint }}" aria-label="PDF" title="PDF" style="height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;width:32px;border:1px solid light-dark(#e2e1dd,#2a2a30);background:transparent;color:inherit;cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8"></path><path d="M4.5 7L8 10.5 11.5 7"></path><path d="M2.5 13.5h11"></path></svg></button>
+  <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" class="icon-btn"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" class="theme-ico" style="transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg></button>
+  <button onClick="{{ doPrint }}" aria-label="PDF" title="PDF" class="icon-btn bar-pdf"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8"></path><path d="M4.5 7L8 10.5 11.5 7"></path><path d="M2.5 13.5h11"></path></svg></button>
 </div>
 
-<header id="s-intro" style="padding:66px 0 54px;border-bottom:1px solid light-dark(#e5e4e0,#232329)">
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:clamp(28px,4vw,48px);align-items:end">
+<header id="s-intro" class="intro">
+  <div class="intro-grid">
     <div>
-      <h1 data-inverted style="display:inline-block;max-width:100%;box-sizing:border-box;margin:0;padding:.1em .1em .13em;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);border-radius:3px;font-size:clamp(38px,9vw,86px);line-height:.93;font-weight:600;letter-spacing:-.042em;overflow-wrap:break-word;word-break:keep-all">
-        <span style="display:{{ kb }}">장민규</span><span style="display:{{ eb }}">Min&#8209;gyu Jang</span><span style="display:{{ jb }};font-size:.8em;letter-spacing:-.03em">チャン・ミンギュ</span>
+      <h1 data-inverted class="intro-name">
+        <span data-lb="ko">장민규</span><span data-lb="en">Min&#8209;gyu Jang</span><span data-lb="ja">チャン・ミンギュ</span>
       </h1>
-      <p style="margin:20px 0 0;font-size:19px;font-weight:500;letter-spacing:-.01em">
-        <span style="display:{{ ki }}">C#/.NET 개발자 · 8년차</span><span style="display:{{ ei }}">C#/.NET Developer · 8 years</span><span style="display:{{ ji }}">C#/.NET エンジニア · 8年目</span>
+      <p class="intro-role">
+        <span data-l="ko">C#/.NET 개발자 · 8년차</span><span data-l="en">C#/.NET Developer · 8 years</span><span data-l="ja">C#/.NET エンジニア · 8年目</span>
       </p>
-      <p class="mono" style="margin:7px 0 0;font-size:13.5px;letter-spacing:.02em;color:light-dark(#63635d,#9b9ba4)">
+      <p class="mono intro-sub">
         Windows Desktop &nbsp;/&nbsp; Cross&#8209;platform &nbsp;/&nbsp; Backend
       </p>
     </div>
 
-    <div data-contact class="mono" style="display:flex;flex-direction:column;gap:9px;font-size:clamp(12px,2.6vw,13.5px);padding-bottom:6px">
-      <a href="mailto:a9090618693@gmail.com" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding-bottom:9px;border-bottom:1px solid light-dark(#e9e8e4,#1e1e23);overflow-wrap:anywhere"><span style="color:light-dark(#6f6f68,#8e8e98)">EMAIL</span><span>a9090618693@gmail.com</span></a>
-      <a href="tel:+821090618693" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding-bottom:9px;border-bottom:1px solid light-dark(#e9e8e4,#1e1e23);overflow-wrap:anywhere"><span style="color:light-dark(#6f6f68,#8e8e98)">PHONE</span><span>010-9061-8693</span></a>
-      <a href="https://github.com/jjang010103" target="_blank" rel="noopener" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding-bottom:9px;border-bottom:1px solid light-dark(#e9e8e4,#1e1e23);overflow-wrap:anywhere"><span style="color:light-dark(#6f6f68,#8e8e98)">GITHUB</span><span style="white-space:nowrap">jjang010103 &#8599;</span></a>
-      <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;overflow-wrap:anywhere"><span style="color:light-dark(#6f6f68,#8e8e98)">LINKEDIN</span><span style="white-space:nowrap">민규-장 &#8599;</span></a>
+    <div data-contact class="mono">
+      <a href="mailto:a9090618693@gmail.com" class="contact-row"><span class="contact-k">EMAIL</span><span>a9090618693@gmail.com</span></a>
+      <a href="tel:+821090618693" class="contact-row"><span class="contact-k">PHONE</span><span>010-9061-8693</span></a>
+      <a href="https://github.com/jjang010103" target="_blank" rel="noopener" class="contact-row"><span class="contact-k">GITHUB</span><span class="nowrap">jjang010103 &#8599;</span></a>
+      <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" class="contact-row"><span class="contact-k">LINKEDIN</span><span class="nowrap">민규-장 &#8599;</span></a>
     </div>
   </div>
 </header>
 
-<section style="padding:54px 0;border-bottom:1px solid light-dark(#e5e4e0,#232329)">
-  <div style="width:100%;min-height:clamp(90px,10vw,120px);display:flex;flex-direction:column;gap:12px;font-size:17px;line-height:1.82;font-weight:300;letter-spacing:-.004em;color:light-dark(#33322e,#c9c9cf);word-break:keep-all;overflow-wrap:break-word">
-    <div style="display:{{ kb }}">
-      <p style="margin:0 0 10px">고등학교 재학 중 개발을 시작하여 8년차 C#/.NET 엔지니어로 성장했습니다. Windows 데스크톱 애플리케이션 및 Avalonia 크로스플랫폼을 주력으로 하며, C++ Native 연동부터 Java/Spring Boot 대용량 분산 환경까지 폭넓은 실무 경험을 갖추고 있습니다.</p>
-      <p style="margin:0">단순한 기능 구현을 넘어 성능 최적화, 사용자 경험, 장기적인 유지보수성을 설계의 핵심 가치로 여기며, 명확한 정량적 목표와 기술적 집요함으로 결과를 증명하는 개발을 지향합니다.</p>
+<section class="about">
+  <div class="about-body">
+    <div data-lb="ko">
+      <p>고등학교 재학 중 개발을 시작하여 8년차 C#/.NET 엔지니어로 성장했습니다. Windows 데스크톱 애플리케이션 및 Avalonia 크로스플랫폼을 주력으로 하며, C++ Native 연동부터 Java/Spring Boot 대용량 분산 환경까지 폭넓은 실무 경험을 갖추고 있습니다.</p>
+      <p>단순한 기능 구현을 넘어 성능 최적화, 사용자 경험, 장기적인 유지보수성을 설계의 핵심 가치로 여기며, 명확한 정량적 목표와 기술적 집요함으로 결과를 증명하는 개발을 지향합니다.</p>
     </div>
-    <div style="display:{{ eb }}">
-      <p style="margin:0 0 10px">I started my software development career during high school and have grown into a C#/.NET engineer with 8 years of experience. My core expertise centers on Windows desktop software and Avalonia cross-platform apps, backed by extensive hands-on experience spanning C++ native interop and high-volume Java/Spring Boot environments.</p>
-      <p style="margin:0">I don't stop where a feature simply works — usability, performance tuning, and long-term maintainability are integral parts of every design decision. I strive to deliver measurable results driven by clear quantitative goals and technical tenacity.</p>
+    <div data-lb="en">
+      <p>I started my software development career during high school and have grown into a C#/.NET engineer with 8 years of experience. My core expertise centers on Windows desktop software and Avalonia cross-platform apps, backed by extensive hands-on experience spanning C++ native interop and high-volume Java/Spring Boot environments.</p>
+      <p>I don't stop where a feature simply works — usability, performance tuning, and long-term maintainability are integral parts of every design decision. I strive to deliver measurable results driven by clear quantitative goals and technical tenacity.</p>
     </div>
-    <div style="display:{{ jb }}">
-      <p style="margin:0 0 10px">高校在学中に開発を始め、8年目のC#/.NETエンジニアへと成長しました。WindowsデスクトップおよびAvaloniaによるクロスプラットフォーム開発を主軸とし、C++ Native連携からJava/Spring Bootによる大容量分散環境まで幅広い実務経験を有しています。</p>
-      <p style="margin:0">単なる機能実装にとどまらず、性能最適化・ユーザー体験・長期保守性を設計の核心価値とし、明確な定量的目標と技術的な粘り強さで結果を証明する開発を追求しています。</p>
-    </div>
-  </div>
-</section>
-
-<section data-kpisec style="padding:40px 0;border-bottom:1px solid light-dark(#e5e4e0,#232329)">
-  <div data-kpi style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:2px;background:light-dark(#e9e8e4,#1e1e23)">
-    <div style="background:light-dark(#fbfbf9,#0c0c0d);padding:26px 22px 24px">
-      <div class="mono" style="font-size:44px;font-weight:500;letter-spacing:-.035em">60K</div>
-      <div style="margin-top:10px;font-size:13.5px;color:light-dark(#63635d,#9b9ba4)"><span style="display:{{ ki }}">ezZip 일 활성 사용자</span><span style="display:{{ ei }}">ezZip daily active users</span><span style="display:{{ ji }}">ezZip 一日あたりアクティブユーザー</span></div>
-    </div>
-    <div style="background:light-dark(#fbfbf9,#0c0c0d);padding:26px 22px 24px">
-      <div class="mono" style="font-size:44px;font-weight:500;letter-spacing:-.035em">&minus;50%</div>
-      <div style="margin-top:10px;font-size:13.5px;color:light-dark(#63635d,#9b9ba4)"><span style="display:{{ ki }}">실행 파일 크기 (AOT·Trimming)</span><span style="display:{{ ei }}">binary size (AOT + trimming)</span><span style="display:{{ ji }}">実行ファイルサイズ (AOT・Trimming)</span></div>
+    <div data-lb="ja">
+      <p>高校在学中に開発を始め、8年目のC#/.NETエンジニアへと成長しました。WindowsデスクトップおよびAvaloniaによるクロスプラットフォーム開発を主軸とし、C++ Native連携からJava/Spring Bootによる大容量分散環境まで幅広い実務経験を有しています。</p>
+      <p>単なる機能実装にとどまらず、性能最適化・ユーザー体験・長期保守性を設計の核心価値とし、明確な定量的目標と技術的な粘り強さで結果を証明する開発を追求しています。</p>
     </div>
   </div>
 </section>
 
-<section data-chapter id="s-career" style="display:flex;flex-direction:column;padding:66px 0 0">
-  <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:30px">
-    <span class="mono" style="flex:none;font-size:12px;letter-spacing:.14em;color:light-dark(#6f6f68,#8e8e98)">01</span>
-    <h2 style="flex:none;margin:0;font-size:17px;font-weight:600;letter-spacing:-.018em;white-space:nowrap"><span style="display:{{ ki }}">경력 타임라인</span><span style="display:{{ ei }}">Career timeline</span><span style="display:{{ ji }}">職務経歴タイムライン</span></h2>
-    <span data-chaprule style="flex:1;height:1px;background:light-dark(#e5e4e0,#232329)"></span>
-    <span class="mono" style="font-size:12px;color:light-dark(#6f6f68,#8e8e98)">2018.09 → NOW</span>
-  </div>
-
-  <div data-tlbar style="display:flex;gap:3px;height:52px;align-items:stretch">
-    <div class="sq" style="flex:0 0 calc(65.6% - 4px);box-sizing:border-box;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);border-radius:10px;padding:9px 14px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden">
-      <span style="font-size:13.5px;font-weight:500;white-space:nowrap"><span style="display:{{ ki }}">㈜휴엔시스템</span><span style="display:{{ ei }}">Huensystem</span><span style="display:{{ ji }}">ヒュエンシステム</span></span>
-      <span class="mono" style="font-size:11.5px;opacity:.68">2018.09 — 2023.11 · 5y 3m</span>
+<section data-kpisec>
+  <div data-kpi>
+    <div class="kpi-cell">
+      <div class="mono kpi-num">60K</div>
+      <div class="kpi-label"><span data-l="ko">ezZip 일 활성 사용자</span><span data-l="en">ezZip daily active users</span><span data-l="ja">ezZip 一日あたりアクティブユーザー</span></div>
     </div>
-    <div class="sq" style="flex:0 0 3.1%;background:repeating-linear-gradient(135deg,light-dark(#dedcd6,#26262b) 0 3px,transparent 3px 6px);border-radius:10px" title="2023.12 — 2024.02"></div>
-    <div class="sq" style="flex:0 0 calc(31.3% - 2px);box-sizing:border-box;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);border-radius:10px;padding:9px 14px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden">
-      <span style="font-size:13.5px;font-weight:500;white-space:nowrap"><span style="display:{{ ki }}">㈜인라이플</span><span style="display:{{ ei }}">Enliple</span><span style="display:{{ ji }}">インライフル</span></span>
-      <span class="mono" style="font-size:11.5px;opacity:.68">2024.03 — <span style="display:{{ ki }}">재직중</span><span style="display:{{ ei }}">present</span><span style="display:{{ ji }}">在職中</span></span>
-    </div>
-  </div>
-
-  <div data-cocards style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;margin-top:22px">
-    <div class="sq" style="border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:18px 20px;display:flex;flex-direction:column">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span class="sq" style="flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:14.5px;font-weight:600;letter-spacing:-.02em;color:light-dark(#4a4a45,#a5a5ad)">휴</span><div style="font-size:15px;font-weight:600"><span style="display:{{ ki }}">㈜휴엔시스템 · EIS · 주임</span><span style="display:{{ ei }}">Huensystem · EIS · Associate</span><span style="display:{{ ji }}">ヒュエンシステム · EIS · 主任</span></div></div>
-      <div data-cardate class="mono" style="display:none;margin-top:6px;font-size:12px;color:light-dark(#6f6f68,#8e8e98)">2018.09 — 2023.11 &nbsp;·&nbsp; 5<span style="display:{{ ki }}">년</span><span style="display:{{ ei }}">y</span><span style="display:{{ ji }}">年</span> 3<span style="display:{{ ki }}">개월</span><span style="display:{{ ei }}">m</span><span style="display:{{ ji }}">ヶ月</span></div>
-      <div style="font-size:14.5px;line-height:1.75;margin-bottom:8px;min-height:clamp(96px,11vw,120px);word-break:keep-all;overflow-wrap:break-word"><span style="display:{{ kb }}">플랜트 배관 도면 자동화 제품군의 Windows 클라이언트를 전담했습니다.<br>도면 검색 속도를 98% 개선하고 심볼 좌표 추출을 자동화해 수작업 계산 공수를 70% 절감했으며, 현대엔지니어링 8개 현장과 삼성물산 평택 현장의 기술 지원 및 운영 이슈를 직접 대응했습니다.</span><span style="display:{{ eb }}">Led the Windows client development for the piping drawing automation suite.<br>Improved drawing search speed by 98%, reduced manual calculations by 70% via automated symbol extraction, and handled on-site technical support across 8 Hyundai E&amp;C sites and Samsung C&amp;T Pyeongtaek.</span><span style="display:{{ jb }}">配管図面自動化製品群のWindowsクライアント開発を担当。<br>図面検索速度を98%改善し、シンボル座標抽出の自動化で手作業の計算工数を70%削減、現代エンジニアリング8現場およびサムスン物産・平沢現場の運用課題と技術支援に直接対応しました。</span></div>
-      <div style="font-size:13.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98);margin-top:auto;word-break:keep-all;overflow-wrap:break-word"><span style="display:{{ kb }}">플랜트 건설·엔지니어링 특화 솔루션 기업</span><span style="display:{{ eb }}">Solutions vendor for plant construction &amp; engineering</span><span style="display:{{ jb }}">プラント建設・エンジニアリング特化のソリューション企業</span></div>
-    </div>
-    <div class="sq" style="border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:18px 20px;display:flex;flex-direction:column">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span class="sq" style="flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:14.5px;font-weight:600;letter-spacing:-.02em;color:light-dark(#4a4a45,#a5a5ad)">인</span><div style="font-size:15px;font-weight:600"><span style="display:{{ ki }}">㈜인라이플 · 이지랩사업부 · 주임</span><span style="display:{{ ei }}">Enliple · ezLab Division · Associate</span><span style="display:{{ ji }}">インライフル · ezLab事業部 · 主任</span></div></div>
-      <div data-cardate class="mono" style="display:none;margin-top:6px;font-size:12px;color:light-dark(#6f6f68,#8e8e98)">2024.03 — <span style="display:{{ ki }}">재직중</span><span style="display:{{ ei }}">present</span><span style="display:{{ ji }}">在職中</span></div>
-      <div style="font-size:14.5px;line-height:1.75;margin-bottom:8px;min-height:clamp(96px,11vw,120px);word-break:keep-all;overflow-wrap:break-word"><span style="display:{{ kb }}">자사 PC 제품군 전체에 적용되는 공통 모듈 및 통합 인스톨러 플랫폼을 설계·구축했습니다.<br>해당 플랫폼 기반 첫 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발·운영을 주도해 DAU 6만 명을 달성했으며, 이전에는 Java/Spring 기반 대용량 마케팅 메시지 발송 플랫폼(iSend)의 백엔드 개발을 담당했습니다.</span><span style="display:{{ eb }}">Designed and built the shared module and installer platform for all company PC products.<br>Led ezZip — the first product built on this platform — from concept to operations, reaching 60K DAU. Previously engineered backend systems for the Java/Spring marketing message delivery platform (iSend).</span><span style="display:{{ jb }}">自社PC製品群全体に適用される共通モジュールおよびインストーラープラットフォームを設計・構築。<br>その最初の製品である圧縮ソフトezZipの企画からエンジン開発・運用までを主導してDAU6万人を達成。以前はJava/Springベースの大容量メッセージ配信プラットフォーム(iSend)のバックエンド開発を担当しました。</span></div>
-      <div style="font-size:13.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98);margin-top:auto;word-break:keep-all;overflow-wrap:break-word"><span style="display:{{ kb }}">국내 1위 리타겟팅 광고 플랫폼과 국내 최초 PC형 앱스토어를 운영하는 데이터 테크 기업</span><span style="display:{{ eb }}">Data-tech company behind Korea's top retargeting ad platform and first PC app store</span><span style="display:{{ jb }}">韓国最大のリターゲティング広告プラットフォームと韓国初のPC向けアプリストアを運営するデータテック企業</span></div>
+    <div class="kpi-cell">
+      <div class="mono kpi-num">&minus;50%</div>
+      <div class="kpi-label"><span data-l="ko">실행 파일 크기 (AOT·Trimming)</span><span data-l="en">binary size (AOT + trimming)</span><span data-l="ja">実行ファイルサイズ (AOT・Trimming)</span></div>
     </div>
   </div>
 </section>
 
-<section data-chapter id="s-stack" style="padding:66px 0 0">
-  <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:24px">
-    <span class="mono" style="flex:none;font-size:12px;letter-spacing:.14em;color:light-dark(#6f6f68,#8e8e98)">02</span>
-    <h2 style="flex:none;margin:0;font-size:17px;font-weight:600;letter-spacing:-.018em;white-space:nowrap"><span style="display:{{ ki }}">기술 스택</span><span style="display:{{ ei }}">Tech stack</span><span style="display:{{ ji }}">技術スタック</span></h2>
-    <span data-chaprule style="flex:1;height:1px;background:light-dark(#e5e4e0,#232329)"></span>
+<section data-chapter id="s-career">
+  <div class="chap-head">
+    <span class="mono chap-num">01</span>
+    <h2 class="chap-title"><span data-l="ko">경력 타임라인</span><span data-l="en">Career timeline</span><span data-l="ja">職務経歴タイムライン</span></h2>
+    <span data-chaprule></span>
+    <span class="mono chap-meta">2018.09 → NOW</span>
   </div>
 
-  <div data-stackgrid style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:26px 34px">
+  <div data-tlbar>
+    <div class="tl-seg" style="flex:0 0 calc(65.6% - 4px)">
+      <span class="tl-co"><span data-l="ko">㈜휴엔시스템</span><span data-l="en">Huensystem</span><span data-l="ja">ヒュエンシステム</span></span>
+      <span class="mono tl-date">2018.09 — 2023.11 · 5y 3m</span>
+    </div>
+    <div class="tl-gap" style="flex:0 0 3.1%" title="2023.12 — 2024.02"></div>
+    <div class="tl-seg" style="flex:0 0 calc(31.3% - 2px)">
+      <span class="tl-co"><span data-l="ko">㈜인라이플</span><span data-l="en">Enliple</span><span data-l="ja">インライフル</span></span>
+      <span class="mono tl-date">2024.03 — <span data-l="ko">재직중</span><span data-l="en">present</span><span data-l="ja">在職中</span></span>
+    </div>
+  </div>
+
+  <div data-cocards>
+    <div class="co-card">
+      <div class="co-head"><span class="badge badge--co">휴</span><div class="co-title"><span data-l="ko">㈜휴엔시스템 · EIS · 주임</span><span data-l="en">Huensystem · EIS · Associate</span><span data-l="ja">ヒュエンシステム · EIS · 主任</span></div></div>
+      <div data-cardate class="mono">2018.09 — 2023.11 &nbsp;·&nbsp; 5<span data-l="ko">년</span><span data-l="en">y</span><span data-l="ja">年</span> 3<span data-l="ko">개월</span><span data-l="en">m</span><span data-l="ja">ヶ月</span></div>
+      <div class="co-desc"><span data-lb="ko">플랜트 배관 도면 자동화 제품군의 Windows 클라이언트를 전담했습니다.<br>도면 검색 속도를 98% 개선하고 심볼 좌표 추출을 자동화해 수작업 계산 공수를 70% 절감했으며, 현대엔지니어링 8개 현장과 삼성물산 평택 현장의 기술 지원 및 운영 이슈를 직접 대응했습니다.</span><span data-lb="en">Led the Windows client development for the piping drawing automation suite.<br>Improved drawing search speed by 98%, reduced manual calculations by 70% via automated symbol extraction, and handled on-site technical support across 8 Hyundai E&amp;C sites and Samsung C&amp;T Pyeongtaek.</span><span data-lb="ja">配管図面自動化製品群のWindowsクライアント開発を担当。<br>図面検索速度を98%改善し、シンボル座標抽出の自動化で手作業の計算工数を70%削減、現代エンジニアリング8現場およびサムスン物産・平沢現場の運用課題と技術支援に直接対応しました。</span></div>
+      <div class="co-note"><span data-lb="ko">플랜트 건설·엔지니어링 특화 솔루션 기업</span><span data-lb="en">Solutions vendor for plant construction &amp; engineering</span><span data-lb="ja">プラント建設・エンジニアリング特化のソリューション企業</span></div>
+    </div>
+    <div class="co-card">
+      <div class="co-head"><span class="badge badge--co">인</span><div class="co-title"><span data-l="ko">㈜인라이플 · 이지랩사업부 · 주임</span><span data-l="en">Enliple · ezLab Division · Associate</span><span data-l="ja">インライフル · ezLab事業部 · 主任</span></div></div>
+      <div data-cardate class="mono">2024.03 — <span data-l="ko">재직중</span><span data-l="en">present</span><span data-l="ja">在職中</span></div>
+      <div class="co-desc"><span data-lb="ko">자사 PC 제품군 전체에 적용되는 공통 모듈 및 통합 인스톨러 플랫폼을 설계·구축했습니다.<br>해당 플랫폼 기반 첫 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발·운영을 주도해 DAU 6만 명을 달성했으며, 이전에는 Java/Spring 기반 대용량 마케팅 메시지 발송 플랫폼(iSend)의 백엔드 개발을 담당했습니다.</span><span data-lb="en">Designed and built the shared module and installer platform for all company PC products.<br>Led ezZip — the first product built on this platform — from concept to operations, reaching 60K DAU. Previously engineered backend systems for the Java/Spring marketing message delivery platform (iSend).</span><span data-lb="ja">自社PC製品群全体に適用される共通モジュールおよびインストーラープラットフォームを設計・構築。<br>その最初の製品である圧縮ソフトezZipの企画からエンジン開発・運用までを主導してDAU6万人を達成。以前はJava/Springベースの大容量メッセージ配信プラットフォーム(iSend)のバックエンド開発を担当しました。</span></div>
+      <div class="co-note"><span data-lb="ko">국내 1위 리타겟팅 광고 플랫폼과 국내 최초 PC형 앱스토어를 운영하는 데이터 테크 기업</span><span data-lb="en">Data-tech company behind Korea's top retargeting ad platform and first PC app store</span><span data-lb="ja">韓国最大のリターゲティング広告プラットフォームと韓国初のPC向けアプリストアを運営するデータテック企業</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-chapter id="s-stack">
+  <div class="chap-head">
+    <span class="mono chap-num">02</span>
+    <h2 class="chap-title"><span data-l="ko">기술 스택</span><span data-l="en">Tech stack</span><span data-l="ja">技術スタック</span></h2>
+    <span data-chaprule></span>
+  </div>
+
+  <div data-stackgrid>
     <sc-for list="{{ stack }}" as="g" hint-placeholder-count="4">
-      <div>
-        <div class="mono eyebrow" style="margin-bottom:11px">{{ g.label }}</div>
-        <div data-stackgroup style="display:flex;flex-wrap:wrap;gap:7px">
+      <div class="stack-cell">
+        <div class="mono eyebrow stack-label">{{ g.label }}</div>
+        <div data-stackgroup>
           <sc-for list="{{ g.items }}" as="t" hint-placeholder-count="6">
             <span class="mono sq pill {{ g.cls }}" data-inverted="{{ g.inv }}">{{ t }}</span>
           </sc-for>
@@ -324,60 +490,60 @@ section[id], header[id]{scroll-margin-top:76px}
   </div>
 </section>
 
-<section data-chapter id="s-projects" style="padding:66px 0 0">
-  <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:22px">
-    <span class="mono" style="flex:none;font-size:12px;letter-spacing:.14em;color:light-dark(#6f6f68,#8e8e98)">03</span>
-    <h2 style="flex:none;margin:0;font-size:17px;font-weight:600;letter-spacing:-.018em;white-space:nowrap"><span style="display:{{ ki }}">프로젝트</span><span style="display:{{ ei }}">Projects</span><span style="display:{{ ji }}">プロジェクト</span></h2>
-    <span data-chaprule style="flex:1;height:1px;background:light-dark(#e5e4e0,#232329)"></span>
-    <span class="mono" style="font-size:12px;color:light-dark(#6f6f68,#8e8e98)">{{ shownCount }}/6</span>
+<section data-chapter id="s-projects">
+  <div class="chap-head">
+    <span class="mono chap-num">03</span>
+    <h2 class="chap-title"><span data-l="ko">프로젝트</span><span data-l="en">Projects</span><span data-l="ja">プロジェクト</span></h2>
+    <span data-chaprule></span>
+    <span class="mono chap-meta">{{ shownCount }}/6</span>
   </div>
 
-  <div data-noprint data-filters style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px">
+  <div data-noprint data-filters>
     <sc-for list="{{ filters }}" as="f" hint-placeholder-count="7">
-      <button onClick="{{ f.onClick }}" data-inverted="{{ f.inv }}" class="mono sq" style="cursor:pointer;font-size:12.5px;letter-spacing:.02em;padding:6px 13px;border-radius:10px;white-space:nowrap;border:1px solid {{ f.bc }};background:{{ f.bg }};color:{{ f.fg }}">{{ f.label }}</button>
+      <button onClick="{{ f.onClick }}" data-inverted="{{ f.inv }}" class="mono sq filter-btn" style="border-color:{{ f.bc }};background:{{ f.bg }};color:{{ f.fg }}">{{ f.label }}</button>
     </sc-for>
   </div>
 
-  <div data-projgrid style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,370px),1fr));gap:16px">
+  <div data-projgrid>
     <sc-for list="{{ cards }}" as="p" hint-placeholder-count="6">
-      <article onClick="{{ open }}" onKeyDown="{{ open }}" data-pid="{{ p.id }}" role="button" tabIndex="0" aria-haspopup="dialog" class="sq" style="display:flex;flex-direction:column;cursor:pointer;border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:clamp(20px,3vw,26px) clamp(18px,3vw,26px) clamp(18px,3vw,24px);background:light-dark(#f1f1f0,#161618)">
-        <span data-rowarrow aria-hidden="true" style="display:none">&#8250;</span>
-        <div data-cardmeta class="mono" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:14px;font-size:12px;color:light-dark(#6f6f68,#8e8e98)">
-          <span style="letter-spacing:.1em">{{ p.co }}</span>
-          <span>{{ p.date }}</span>
+      <article onClick="{{ open }}" onKeyDown="{{ open }}" data-pid="{{ p.id }}" role="button" tabIndex="0" aria-haspopup="dialog" class="proj-card">
+        <span data-rowarrow aria-hidden="true">&#8250;</span>
+        <div data-cardmeta class="mono">
+          <span class="card-co">{{ p.co }}</span>
+          <span class="card-date">{{ p.date }}</span>
         </div>
-        <h3 style="{{ p.h3 }};min-height:2.6em;word-break:keep-all;overflow-wrap:break-word">{{ p.title }}</h3>
-        <p style="margin:0 0 18px;font-size:14.5px;font-weight:300;line-height:1.72;color:light-dark(#5e5e58,#9a9aa2);min-height:4.8em;word-break:keep-all;overflow-wrap:break-word">{{ p.blurb }}</p>
+        <h3 class="card-title {{ p.h3cls }}">{{ p.title }}</h3>
+        <p class="card-blurb">{{ p.blurb }}</p>
         <sc-if value="{{ p.url }}">
-          <div data-cardlink class="mono" style="margin-top:auto;padding-top:15px;display:flex;align-items:center;justify-content:flex-end;font-size:12.5px">
-            <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:7px;color:light-dark(#151514,#ececed);white-space:nowrap;text-decoration:none" style-hover="text-decoration:underline;text-underline-offset:3px">{{ linkLabel }}<span>&#8599;</span></a>
+          <div data-cardlink class="mono">
+            <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener">{{ linkLabel }}<span>&#8599;</span></a>
           </div>
         </sc-if>
       </article>
     </sc-for>
   </div>
 
-  <p class="mono" style="display:{{ emptyMsg }};margin:36px 0 0;text-align:center;font-size:13.5px;color:light-dark(#6f6f68,#8e8e98)">No projects match this filter.</p>
+  <p class="mono proj-empty" style="display:{{ emptyMsg }}">No projects match this filter.</p>
 </section>
 
-<section data-chapter id="s-education" style="padding:66px 0 0">
-  <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:24px">
-    <span class="mono" style="flex:none;font-size:12px;letter-spacing:.14em;color:light-dark(#6f6f68,#8e8e98)">04</span>
-    <h2 style="flex:none;margin:0;font-size:17px;font-weight:600;letter-spacing:-.018em;white-space:nowrap"><span style="display:{{ ki }}">학력 · 자격 · 병역</span><span style="display:{{ ei }}">Education · Certifications · Service</span><span style="display:{{ ji }}">学歴 · 資格 · 兵役</span></h2>
-    <span data-chaprule style="flex:1;height:1px;background:light-dark(#e5e4e0,#232329)"></span>
+<section data-chapter id="s-education">
+  <div class="chap-head">
+    <span class="mono chap-num">04</span>
+    <h2 class="chap-title"><span data-l="ko">학력 · 자격 · 병역</span><span data-l="en">Education · Certifications · Service</span><span data-l="ja">学歴 · 資格 · 兵役</span></h2>
+    <span data-chaprule></span>
   </div>
 
-  <div data-edugrid style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:34px">
+  <div data-edugrid>
     <sc-for list="{{ edu }}" as="g" hint-placeholder-count="3">
       <div>
-        <div class="mono eyebrow" style="margin-bottom:14px">{{ g.label }}</div>
-        <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="mono eyebrow edu-label">{{ g.label }}</div>
+        <div class="edu-list">
           <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="2">
-            <div style="display:flex;align-items:flex-start;gap:12px">
-              <span class="sq" style="flex:none;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:13.5px;font-weight:600;color:light-dark(#4a4a45,#a5a5ad)">{{ it.badge }}</span>
-              <div style="min-width:0">
-                <div style="font-size:15px;font-weight:500">{{ it.name }}</div>
-                <div class="mono" style="margin-top:3px;font-size:12.5px;color:light-dark(#6f6f68,#8e8e98)">{{ it.meta }}</div>
+            <div class="edu-item">
+              <span class="badge badge--edu">{{ it.badge }}</span>
+              <div class="edu-body">
+                <div class="edu-name">{{ it.name }}</div>
+                <div class="mono edu-meta">{{ it.meta }}</div>
               </div>
             </div>
           </sc-for>
@@ -387,83 +553,83 @@ section[id], header[id]{scroll-margin-top:76px}
   </div>
 </section>
 
-<footer data-footer class="sq" style="margin-top:84px;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);border-radius:20px;padding:48px 44px 26px">
-  <div data-footgrid style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;align-items:end">
+<footer data-footer>
+  <div data-footgrid>
     <div>
-      <div style="font-size:clamp(30px,4vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1.05"><span style="display:{{ kb }}">장민규</span><span style="display:{{ eb }}">Min-gyu Jang</span><span style="display:{{ jb }}">チャン・ミンギュ</span></div>
-      <div style="margin-top:8px;font-size:15px;opacity:.62"><span style="display:{{ ki }}">C#/.NET 개발자 · 8년차</span><span style="display:{{ ei }}">C#/.NET Developer · 8 years</span><span style="display:{{ ji }}">C#/.NET エンジニア · 8年目</span></div>
-      <div class="mono" style="display:flex;gap:18px;margin-top:20px;font-size:14px">
-        <a href="https://github.com/jjang010103" target="_blank" rel="noopener" style="color:light-dark(#fbfbf9,#0c0c0d)">GitHub &#8599;</a>
-        <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" style="color:light-dark(#fbfbf9,#0c0c0d)">LinkedIn &#8599;</a>
+      <div class="foot-name"><span data-lb="ko">장민규</span><span data-lb="en">Min-gyu Jang</span><span data-lb="ja">チャン・ミンギュ</span></div>
+      <div class="foot-role"><span data-l="ko">C#/.NET 개발자 · 8년차</span><span data-l="en">C#/.NET Developer · 8 years</span><span data-l="ja">C#/.NET エンジニア · 8年目</span></div>
+      <div class="mono foot-links">
+        <a href="https://github.com/jjang010103" target="_blank" rel="noopener">GitHub &#8599;</a>
+        <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener">LinkedIn &#8599;</a>
       </div>
     </div>
-    <div data-footcontact style="justify-self:end;text-align:right">
-      <div class="mono" style="font-size:12px;letter-spacing:.14em;opacity:.68;margin-bottom:14px"><span style="display:{{ ki }}">연락처</span><span style="display:{{ ei }}">CONTACT</span><span style="display:{{ ji }}">連絡先</span></div>
-      <a data-footmail href="mailto:a9090618693@gmail.com" style="color:light-dark(#fbfbf9,#0c0c0d);font-size:clamp(19px,2.4vw,25px);font-weight:500;letter-spacing:-.02em;line-height:1.2;word-break:break-all">a9090618693@gmail.com</a>
-      <div class="mono" style="margin-top:9px;font-size:14px;opacity:.62"><a href="tel:+821090618693" style="color:light-dark(#fbfbf9,#0c0c0d)">010-9061-8693</a></div>
+    <div data-footcontact>
+      <div class="mono foot-contact-label"><span data-l="ko">연락처</span><span data-l="en">CONTACT</span><span data-l="ja">連絡先</span></div>
+      <a data-footmail href="mailto:a9090618693@gmail.com">a9090618693@gmail.com</a>
+      <div class="mono foot-tel"><a href="tel:+821090618693">010-9061-8693</a></div>
     </div>
   </div>
-  <div data-footmeta class="mono" style="margin-top:44px;padding-top:16px;border-top:1px solid currentColor;opacity:.7;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;font-size:12px">
-    <span>© 2026 <span style="display:{{ ki }}">장민규</span><span style="display:{{ ei }}">Min-gyu Jang</span><span style="display:{{ ji }}">チャン・ミンギュ</span></span>
-    <span><span style="display:{{ ki }}">최종 수정 2026.08</span><span style="display:{{ ei }}">Last updated 2026.08</span><span style="display:{{ ji }}">最終更新 2026.08</span></span>
+  <div data-footmeta class="mono">
+    <span>© 2026 <span data-l="ko">장민규</span><span data-l="en">Min-gyu Jang</span><span data-l="ja">チャン・ミンギュ</span></span>
+    <span><span data-l="ko">최종 수정 2026.08</span><span data-l="en">Last updated 2026.08</span><span data-l="ja">最終更新 2026.08</span></span>
   </div>
 </footer>
 
-<div data-modal onClick="{{ closeModal }}" style="display:{{ modal }};position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:light-dark(rgba(20,20,18,.56),rgba(0,0,0,.76));backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);overflow:hidden">
-  <div data-modalcard onClick="{{ stop }}" class="sq" style="position:relative;box-sizing:border-box;width:min(100%,1070px);height:min(90vh,1100px);max-height:min(92vh,1140px);display:flex;flex-direction:column;overflow:hidden;background:light-dark(#f1f1f0,#161618);border:1px solid light-dark(#e5e4de,#26262c);border-radius:24px;padding:clamp(28px,4.2vw,48px);box-shadow:0 30px 90px rgba(0,0,0,.45)">
+<div data-modal onClick="{{ closeModal }}" style="display:{{ modal }}">
+  <div data-modalcard onClick="{{ stop }}">
 
-    <div data-modalhead style="flex:none;display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px">
-      <div style="height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#dedcd6,#2a2a30);background:light-dark(#fbfbf9,#1e1e22);corner-shape:squircle;border-radius:10px;overflow:hidden">
-        <button onClick="{{ setKo }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:36px;padding:0 9px;font-size:14.5px;font-weight:500;line-height:1.25;background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
-        <button onClick="{{ setEn }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:36px;padding:0 9px;font-size:12.5px;font-weight:500;line-height:1.25;background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
-        <button onClick="{{ setJa }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:36px;padding:0 9px;font-size:12.5px;font-weight:500;line-height:1.25;background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
+    <div data-modalhead>
+      <div class="seg seg--card">
+        <button onClick="{{ setKo }}" class="seg-btn seg-btn--ko" style="background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
+        <button onClick="{{ setEn }}" class="seg-btn" style="background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
+        <button onClick="{{ setJa }}" class="seg-btn" style="background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
       </div>
-      <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" class="sq" style="height:32px;width:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#dedcd6,#2a2a30);background:light-dark(#fbfbf9,#1e1e22);color:inherit;cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px">
-        <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true" style="display:block;transition:transform .45s cubic-bezier(.65,0,.35,1);transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg>
+      <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" class="icon-btn icon-btn--card">
+        <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true" class="theme-ico" style="transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg>
       </button>
-      <button data-sheetclose onClick="{{ closeModal }}" aria-label="닫기" title="닫기" class="sq" style="height:32px;width:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#dedcd6,#2a2a30);background:light-dark(#fbfbf9,#1e1e22);color:light-dark(#55544e,#a2a2ad);cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px;transition:all .18s ease" style-hover="background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);border-color:transparent">
+      <button data-sheetclose onClick="{{ closeModal }}" aria-label="닫기" title="닫기" class="icon-btn icon-btn--card icon-btn--close">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12"></path></svg>
       </button>
     </div>
 
-    <div data-modalbody style="flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:6px;margin-bottom:16px">
+    <div data-modalbody>
       <sc-for list="{{ openCard }}" as="p" hint-placeholder-count="1">
-        <div style="display:flex;flex-direction:column">
-          <h3 style="margin:0 0 10px;font-size:clamp(22px,2.8vw,28px);font-weight:600;line-height:1.24;letter-spacing:-.028em;color:light-dark(#151514,#ececed);word-break:keep-all;overflow-wrap:break-word">{{ p.mtitle }}</h3>
-          <p style="margin:0 0 20px;font-size:15px;font-weight:300;line-height:1.75;color:light-dark(#4a4a45,#a8a8b2);word-break:keep-all;overflow-wrap:break-word">{{ p.blurb }}</p>
+        <div class="mbody-col">
+          <h3 class="modal-title">{{ p.mtitle }}</h3>
+          <p class="modal-blurb">{{ p.blurb }}</p>
 
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px 20px;padding-top:18px;border-top:1px solid light-dark(#e5e4de,#26262c);margin-bottom:26px">
+          <div class="modal-spec">
             <div>
               <div class="mono speclabel">COMPANY</div>
-              <div style="font-size:14px;font-weight:600;color:light-dark(#151514,#ececed)">{{ p.coFull }}</div>
+              <div class="spec-co">{{ p.coFull }}</div>
             </div>
             <div>
               <div class="mono speclabel">TIMELINE</div>
-              <div class="mono" style="font-size:12.5px;color:light-dark(#2b2a27,#dcdcdf)">{{ p.date }}</div>
+              <div class="mono spec-date">{{ p.date }}</div>
             </div>
             <div>
               <div class="mono speclabel">ROLE</div>
-              <div style="font-size:13px;color:light-dark(#33322e,#c9c9cf)">{{ p.role }}</div>
+              <div class="spec-role">{{ p.role }}</div>
             </div>
 
-            <div style="grid-column:1/-1;padding-top:10px;border-top:1px solid light-dark(#e5e4de,#26262c)">
-              <div class="mono speclabel" style="margin-bottom:6px">TECH STACK</div>
-              <div style="display:flex;flex-wrap:wrap;gap:5px">
+            <div class="spec-wide spec-stack">
+              <div class="mono speclabel">TECH STACK</div>
+              <div class="spec-tags">
                 <sc-for list="{{ p.stack }}" as="t" hint-placeholder-count="5">
-                  <span class="mono sq tag" style="background:light-dark(#fbfbf9,#1e1e22)">{{ t }}</span>
+                  <span class="mono sq tag tag--card">{{ t }}</span>
                 </sc-for>
               </div>
             </div>
 
             <sc-if value="{{ p.url }}">
-              <div style="grid-column:1/-1;padding-top:10px;border-top:1px solid light-dark(#e5e4de,#26262c);display:flex;align-items:center;gap:10px">
-                <span class="mono speclabel" style="margin-bottom:0">LINK</span>
-                <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" class="mono" style="font-size:13px;font-weight:500;color:light-dark(#151514,#ececed);display:inline-flex;align-items:center;gap:4px;text-decoration:none;transition:all .15s" style-hover="text-decoration:underline;text-underline-offset:3px;opacity:.75">{{ siteLabel }}<span>&#8599;</span></a>
+              <div class="spec-wide spec-linkrow">
+                <span class="mono speclabel">LINK</span>
+                <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" class="mono">{{ linkLabel }}<span>&#8599;</span></a>
               </div>
             </sc-if>
           </div>
 
-          <div class="mono eyebrow" style="margin-bottom:14px;font-weight:600">{{ contribHeading }}</div>
+          <div class="mono eyebrow contrib-head">{{ contribHeading }}</div>
 
           <div data-contrib-list>
             <sc-for list="{{ p.items }}" as="c" hint-placeholder-count="4">
@@ -477,27 +643,27 @@ section[id], header[id]{scroll-margin-top:76px}
       </sc-for>
     </div>
 
-    <div data-modalfoot style="flex:none;border-top:1px solid light-dark(#e5e4de,#26262c);padding-top:14px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px">
-      <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
-        <span style="font-size:14.5px;font-weight:600;color:light-dark(#151514,#ececed);white-space:nowrap">
-          <span style="display:{{ kb }}">장민규</span><span style="display:{{ eb }}">Min-gyu Jang</span><span style="display:{{ jb }}">チャン・ミンギュ</span>
+    <div data-modalfoot>
+      <div class="mfoot-id">
+        <span class="mfoot-name">
+          <span data-lb="ko">장민규</span><span data-lb="en">Min-gyu Jang</span><span data-lb="ja">チャン・ミンギュ</span>
         </span>
-        <span class="mono" style="font-size:12px;color:light-dark(#6f6f68,#8e8e98);white-space:nowrap">
-          <span style="display:{{ kb }}">· C#/.NET 개발자 (8년차)</span><span style="display:{{ eb }}">· C#/.NET Dev (8y)</span><span style="display:{{ jb }}">· C#/.NET エンジニア (8年目)</span>
+        <span class="mono mfoot-role">
+          <span data-lb="ko">· C#/.NET 개발자 (8년차)</span><span data-lb="en">· C#/.NET Dev (8y)</span><span data-lb="ja">· C#/.NET エンジニア (8年目)</span>
         </span>
       </div>
 
-      <div class="mono" style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;font-size:12px">
-        <a href="mailto:a9090618693@gmail.com" style="color:light-dark(#151514,#ececed);text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap" style-hover="text-decoration:underline;text-underline-offset:3px">
-          <span style="color:light-dark(#6f6f68,#8e8e98)">EMAIL</span> a9090618693@gmail.com
+      <div class="mono mfoot-links">
+        <a href="mailto:a9090618693@gmail.com">
+          <span class="mfoot-k">EMAIL</span> a9090618693@gmail.com
         </a>
-        <a href="tel:+821090618693" style="color:light-dark(#151514,#ececed);text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap" style-hover="text-decoration:underline;text-underline-offset:3px">
-          <span style="color:light-dark(#6f6f68,#8e8e98)">TEL</span> 010-9061-8693
+        <a href="tel:+821090618693">
+          <span class="mfoot-k">TEL</span> 010-9061-8693
         </a>
-        <a href="https://github.com/jjang010103" target="_blank" rel="noopener" style="color:light-dark(#151514,#ececed);text-decoration:none;display:inline-flex;align-items:center;gap:2px;white-space:nowrap" style-hover="text-decoration:underline;text-underline-offset:3px">
+        <a href="https://github.com/jjang010103" target="_blank" rel="noopener" class="tight">
           GITHUB<span>&#8599;</span>
         </a>
-        <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" style="color:light-dark(#151514,#ececed);text-decoration:none;display:inline-flex;align-items:center;gap:2px;white-space:nowrap" style-hover="text-decoration:underline;text-underline-offset:3px">
+        <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" class="tight">
           LINKEDIN<span>&#8599;</span>
         </a>
       </div>
@@ -723,12 +889,8 @@ const NAV = [
   { id: 'education', num: '04', label: { ko: '학력', en: 'Education', ja: '学歴' } }
 ];
 
-const CARD_H3 = 'margin:0 0 6px;font-weight:600;font-size:19.5px;line-height:1.32;letter-spacing:-.026em';
-const CARD_H3_FEATURE = 'margin:0 0 6px;font-weight:600;font-size:22px;line-height:1.28;letter-spacing:-.028em';
-
 const T = {
   link: { ko: '공식 웹사이트', en: 'Official Website', ja: '公式サイト' },
-  site: { ko: '공식 웹사이트', en: 'Official Website', ja: '公式サイト' },
   contrib: { ko: '주요 성과 및 구현 내용', en: 'Key Engineering Highlights & Impact', ja: '主な成果・エンジニアリング実績' }
 };
 
@@ -866,6 +1028,7 @@ class Component extends DCLogic {
   setLang = (lang) => {
     try { localStorage.setItem('mj-resume-lang', lang); } catch (e) {}
     document.documentElement.lang = lang;
+    document.title = window.NAMES[lang];
     this.setState({ lang });
   };
 
@@ -927,7 +1090,7 @@ class Component extends DCLogic {
       blurb: t(p.blurb),
       role: t(p.role),
       stack: p.stack,
-      h3: p.feature ? CARD_H3_FEATURE : CARD_H3,
+      h3cls: p.feature ? 'card-title--feature' : '',
       items: p.items.map((c, i) => ({ n: String(i + 1).padStart(2, '0'), text: bold(t(c)) }))
     });
 
@@ -935,12 +1098,7 @@ class Component extends DCLogic {
     const opened = PROJECTS.find(p => p.id === this.state.openId);
     const nv = this.navState(dark);
 
-    const inl = (l) => lang === l ? 'inline' : 'none';
-    const blk = (l) => lang === l ? 'block' : 'none';
-
     return {
-      ki: inl('ko'), ei: inl('en'), ji: inl('ja'),
-      kb: blk('ko'), eb: blk('en'), jb: blk('ja'),
       lk: lang === 'ko' ? on : off,
       le: lang === 'en' ? on : off,
       lj: lang === 'ja' ? on : off,
@@ -969,7 +1127,6 @@ class Component extends DCLogic {
       cards: shown.map(view),
       openCard: opened ? [view(opened)] : [],
       linkLabel: t(T.link),
-      siteLabel: t(T.site),
       contribHeading: t(T.contrib),
       setKo: () => this.setLang('ko'),
       setEn: () => this.setLang('en'),
