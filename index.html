@@ -41,12 +41,12 @@ html[lang="ko"] body{word-break:keep-all;overflow-wrap:break-word}
 /* shared atoms — these were 164 copies of the mono stack and 56 identical pills inline */
 .mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace}
 .sq{corner-shape:squircle}
-.pill{font-size:12px;padding:5px 10px;border-radius:10px;white-space:nowrap}
+.pill{font-size:13px;padding:5px 11px;border-radius:10px;white-space:nowrap}
 .pill-on{background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d)}
 .pill-off{border:1px solid light-dark(#dedcd6,#2a2a30)}
-.tag{font-size:11px;padding:2px 7px;border-radius:6px;background:light-dark(#eae8e2,#1b1b20);border:1px solid light-dark(#d8d6ce,#282830);color:light-dark(#2b2a27,#dcdcdf)}
-.eyebrow{font-size:10.5px;letter-spacing:.14em;color:light-dark(#6f6f68,#8e8e98)}
-.speclabel{font-size:10.5px;letter-spacing:.12em;color:light-dark(#7a7972,#858590);margin-bottom:4px}
+.tag{font-size:12px;padding:3px 8px;border-radius:6px;background:light-dark(#eae8e2,#1b1b20);border:1px solid light-dark(#d8d6ce,#282830);color:light-dark(#2b2a27,#dcdcdf)}
+.eyebrow{font-size:12px;letter-spacing:.12em;color:light-dark(#6f6f68,#8e8e98)}
+.speclabel{font-size:11.5px;letter-spacing:.11em;color:light-dark(#7a7972,#858590);margin-bottom:4px}
 
 /* native smooth scroll replaces the hand-rolled setInterval tween */
 html{scroll-behavior:smooth}
@@ -69,7 +69,7 @@ nav::-webkit-scrollbar{display:none}
 [data-modalcard] > div{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:4px}
 [data-modalcard] > div > div:first-child{margin-bottom:14px !important}
 [data-modalcard] > div > h3{margin:0 0 14px !important;font-size:clamp(21px,2.6vw,25px) !important;line-height:1.26 !important}
-[data-modalcard] > div > p{margin:0 0 24px !important;font-size:14.5px !important;line-height:1.76 !important}
+[data-modalcard] > div > p{margin:0 0 24px !important;font-size:15.5px !important;line-height:1.76 !important}
 [data-modalcard] > div > ul{order:1;gap:15px !important;background:light-dark(#f1f1f0,rgba(255,255,255,.055));corner-shape:squircle;border-radius:20px;padding:24px 26px !important}
 [data-modalcard] > div > div:nth-of-type(2){order:2;margin:18px 0 0 !important}
 [data-modalcard] > div > div:nth-of-type(2) > span{background:light-dark(#f1f1f0,rgba(255,255,255,.055)) !important}
@@ -101,7 +101,7 @@ nav::-webkit-scrollbar{display:none}
   [data-tlbar] span{display:none !important}
   [data-cardate]{display:block !important;margin-top:5px !important}
   /* toolbar back to a compact size — the bar padding carries the touch area */
-  [data-bar] > div > button{min-width:34px !important;padding:0 9px !important;font-size:12.5px !important}
+  [data-bar] > div > button{min-width:34px !important;padding:0 9px !important;font-size:13.5px !important}
   [data-bar] > div,[data-bar] > button[aria-label],[data-bar] > button[title]{height:32px !important}
   [data-bar] > button[aria-label]{width:32px !important}
   [data-bar] > button[aria-label="PDF"]{display:none !important}
@@ -125,7 +125,7 @@ nav::-webkit-scrollbar{display:none}
   [data-stackgrid] > div{padding:14px 0 16px !important;border-top:1px solid light-dark(#e5e4e0,#232329) !important}
   [data-stackgrid] > div > div:first-child{margin-bottom:11px !important}
   [data-stackgroup]{display:grid !important;grid-template-columns:1fr 1fr !important;gap:9px 16px !important;font-family:inherit !important}
-  [data-stackgroup] > span{display:block !important;padding:0 !important;border:0 !important;background:none !important;font-family:inherit !important;font-size:13.5px !important;font-weight:500 !important;color:inherit !important;line-height:1.3 !important;white-space:normal !important}
+  [data-stackgroup] > span{display:block !important;padding:0 !important;border:0 !important;background:none !important;font-family:inherit !important;font-size:14px !important;font-weight:500 !important;color:inherit !important;line-height:1.35 !important;white-space:normal !important}
 
   /* 3. projects keep the desktop plane — same fill, same 20px squircle */
   [data-projgrid]{gap:12px !important}
@@ -144,9 +144,9 @@ nav::-webkit-scrollbar{display:none}
   /* ─── project rows rebuilt: numbered, title-first, two-line blurb ─── */
   [data-projgrid] > article{padding:20px 46px 22px 22px !important}
   [data-projgrid] > article > h3{order:1 !important;margin:0 0 7px !important;font-size:19.5px !important;line-height:1.28 !important;letter-spacing:-.025em !important}
-  [data-cardmeta]{order:2 !important;justify-content:flex-start !important;gap:0 !important;margin:0 0 10px !important;font-size:10.5px !important}
+  [data-cardmeta]{order:2 !important;justify-content:flex-start !important;gap:0 !important;margin:0 0 10px !important;font-size:12px !important}
   [data-cardmeta] > span:last-child::before{content:'·';margin:0 7px;opacity:.55}
-  [data-projgrid] > article > p{order:3 !important;margin:0 !important;font-size:13.5px !important;line-height:1.6 !important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  [data-projgrid] > article > p{order:3 !important;margin:0 !important;font-size:14.5px !important;line-height:1.65 !important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   [data-cardlink]{order:4 !important;margin-top:14px !important}
   [data-rowarrow]{top:46px !important;right:20px !important}
 
@@ -162,7 +162,7 @@ nav::-webkit-scrollbar{display:none}
   /* the band bleeds, so its section rule must not stop short */
   [data-kpisec]{border-bottom:0 !important}
   [data-filters]{gap:5px !important;margin-bottom:18px !important}
-  [data-filters] button{min-height:30px !important;padding:0 9px !important;font-size:10.5px !important;letter-spacing:0 !important}
+  [data-filters] button{min-height:30px !important;padding:0 9px !important;font-size:12px !important;letter-spacing:0 !important}
   [data-sheetclose]{min-height:44px !important;padding:0 2px !important;margin-bottom:20px !important}
   [data-modal]{padding:0 !important;align-items:stretch !important}
   [data-modalcard]{max-width:none !important;width:100% !important;aspect-ratio:auto !important;min-height:100% !important;border-radius:0 !important;border-left:0 !important;border-right:0 !important;box-shadow:none !important}
@@ -191,8 +191,8 @@ nav::-webkit-scrollbar{display:none}
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
       <button onClick="{{ n.go }}" style="flex:{{ n.grow }} 1 auto;min-width:max-content;display:flex;flex-direction:column;gap:7px;padding:0 8px 0 0;border:0;background:transparent;cursor:pointer;white-space:nowrap;color:{{ n.fg }};transition:color .2s ease">
         <span style="display:flex;align-items:baseline;gap:7px">
-          <span class="mono" style="font-size:9.5px;letter-spacing:.1em;transition:color .2s ease;color:{{ n.nfg }}">{{ n.num }}</span>
-          <span style="font-size:12.5px;font-weight:{{ n.w }};letter-spacing:-.01em">{{ n.label }}</span>
+          <span class="mono" style="font-size:11.5px;letter-spacing:.08em;transition:color .2s ease;color:{{ n.nfg }}">{{ n.num }}</span>
+          <span style="font-size:13.5px;font-weight:{{ n.w }};letter-spacing:-.01em">{{ n.label }}</span>
         </span>
         <span style="display:block;height:2px;background:light-dark(#e5e4e0,#232329)"><span style="display:block;height:2px;background:currentColor;transition:width .12s linear;width:{{ n.fill }}"></span></span>
       </button>
@@ -202,8 +202,8 @@ nav::-webkit-scrollbar{display:none}
 
   <div style="height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#dedcd6,#2a2a30);corner-shape:squircle;border-radius:10px;overflow:hidden">
     <button onClick="{{ setKo }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:40px;padding:0 11px;font-size:15.5px;font-weight:500;line-height:1.25;background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
-    <button onClick="{{ setEn }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:40px;padding:0 11px;font-size:12.5px;font-weight:500;line-height:1.25;background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
-    <button onClick="{{ setJa }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:40px;padding:0 11px;font-size:12.5px;font-weight:500;line-height:1.25;background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
+    <button onClick="{{ setEn }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:40px;padding:0 11px;font-size:13.5px;font-weight:500;line-height:1.25;background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
+    <button onClick="{{ setJa }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:40px;padding:0 11px;font-size:13.5px;font-weight:500;line-height:1.25;background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
   </div>
   <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="height:32px;width:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#e2e1dd,#2a2a30);background:transparent;color:inherit;cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="display:block;transition:transform .45s cubic-bezier(.65,0,.35,1);transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg></button>
   <button onClick="{{ doPrint }}" aria-label="PDF" title="PDF" style="height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;width:32px;border:1px solid light-dark(#e2e1dd,#2a2a30);background:transparent;color:inherit;cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8"></path><path d="M4.5 7L8 10.5 11.5 7"></path><path d="M2.5 13.5h11"></path></svg></button>
@@ -218,12 +218,12 @@ nav::-webkit-scrollbar{display:none}
       <p style="margin:20px 0 0;font-size:19px;font-weight:500;letter-spacing:-.01em">
         <span style="display:{{ ki }}">C#/.NET 개발자 · 8년차</span><span style="display:{{ ei }}">C#/.NET Developer · 8 years</span><span style="display:{{ ji }}">C#/.NET エンジニア · 8年目</span>
       </p>
-      <p class="mono" style="margin:7px 0 0;font-size:12.5px;letter-spacing:.02em;color:light-dark(#63635d,#9b9ba4)">
+      <p class="mono" style="margin:7px 0 0;font-size:13.5px;letter-spacing:.02em;color:light-dark(#63635d,#9b9ba4)">
         Windows Desktop &nbsp;/&nbsp; Cross&#8209;platform &nbsp;/&nbsp; Backend
       </p>
     </div>
 
-    <div data-contact class="mono" style="display:flex;flex-direction:column;gap:9px;font-size:clamp(11px,2.6vw,12.5px);padding-bottom:6px">
+    <div data-contact class="mono" style="display:flex;flex-direction:column;gap:9px;font-size:clamp(12px,2.6vw,13.5px);padding-bottom:6px">
       <a href="mailto:a9090618693@gmail.com" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding-bottom:9px;border-bottom:1px solid light-dark(#e9e8e4,#1e1e23);overflow-wrap:anywhere"><span style="color:light-dark(#6f6f68,#8e8e98)">EMAIL</span><span>a9090618693@gmail.com</span></a>
       <a href="tel:+821090618693" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding-bottom:9px;border-bottom:1px solid light-dark(#e9e8e4,#1e1e23);overflow-wrap:anywhere"><span style="color:light-dark(#6f6f68,#8e8e98)">PHONE</span><span>010-9061-8693</span></a>
       <a href="https://github.com/jjang010103" target="_blank" rel="noopener" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding-bottom:9px;border-bottom:1px solid light-dark(#e9e8e4,#1e1e23);overflow-wrap:anywhere"><span style="color:light-dark(#6f6f68,#8e8e98)">GITHUB</span><span style="white-space:nowrap">jjang010103 &#8599;</span></a>
@@ -233,10 +233,10 @@ nav::-webkit-scrollbar{display:none}
 </header>
 
 <section style="padding:54px 0;border-bottom:1px solid light-dark(#e5e4e0,#232329)">
-  <p style="margin:0;max-width:88ch;font-size:17.5px;line-height:1.8;font-weight:300;letter-spacing:-.004em;color:light-dark(#33322e,#c9c9cf)">
-    <span style="display:{{ kb }}">고등학교 재학 중 소프트웨어 개발을 시작하여 8년차 C#/.NET 개발자로 성장했습니다.<br><br>Windows 데스크톱 애플리케이션 및 Avalonia 크로스플랫폼 개발을 주력으로 하며, C++ Native 연동부터 Java/Spring Boot 대용량 분산 환경까지 폭넓은 실무 경험을 보유하고 있습니다.<br><br>단순히 기능 구현에 그치지 않고 성능 최적화, 사용자 경험, 장기적인 유지보수성을 같은 설계의 핵심 가치로 여깁니다.<br>정량적인 목표를 명확히 세우고, 기술적 집요함으로 결과를 증명하는 개발을 지향합니다.</span>
-    <span style="display:{{ eb }}">I started my software development career during high school and have grown into a C#/.NET developer with 8 years of experience.<br><br>My core expertise lies in .NET Windows desktop software and Avalonia cross-platform apps, with extensive hands-on experience spanning C++ native interop and high-volume Java/Spring Boot distributed environments.<br><br>I don't stop where a feature simply works — usability, performance optimization, and long-term maintainability are integral parts of the same design.<br>I enjoy defining measurable goals and systematically delivering quantifiable results.</span>
-    <span style="display:{{ jb }}">高校在学中にソフトウェア開発を始め、8年目のC#/.NETエンジニアへと成長しました。<br><br>主戦場は.NETベースのWindowsデスクトップアプリとAvaloniaによるクロスプラットフォームアプリで、C++ Native連携からJava/Spring Bootによる大容量分散環境まで幅広い実務経験を有しています。<br><br>機能が単に動く地点で止めず、使いやすさ・性能最適化・長期保守性を同じ設計の核心価値として追求します。<br>定性的な目標を数値で明確に設定し、技術的な粘り強さでその数値を実現する開発を大切にしています。</span>
+  <p style="margin:0;max-width:88ch;font-size:18px;line-height:2.05;font-weight:300;letter-spacing:0;color:light-dark(#33322e,#c9c9cf)">
+    <span style="display:{{ kb }}">고등학교 재학 중 소프트웨어 개발을 시작하여 8년차 C#/.NET 개발자로 성장했습니다.<br>Windows 데스크톱 애플리케이션 및 Avalonia 크로스플랫폼 개발을 주력으로 하며, C++ Native 연동부터 Java/Spring Boot 대용량 분산 환경까지 폭넓은 실무 경험을 보유하고 있습니다.<br>단순히 기능 구현에 그치지 않고 성능 최적화, 사용자 경험, 장기적인 유지보수성을 같은 설계의 핵심 가치로 여깁니다.<br>정량적인 목표를 명확히 세우고, 기술적 집요함으로 결과를 증명하는 개발을 지향합니다.</span>
+    <span style="display:{{ eb }}">I started my software development career during high school and have grown into a C#/.NET developer with 8 years of experience.<br>My core expertise lies in .NET Windows desktop software and Avalonia cross-platform apps, with extensive hands-on experience spanning C++ native interop and high-volume Java/Spring Boot distributed environments.<br>I don't stop where a feature simply works — usability, performance optimization, and long-term maintainability are integral parts of the same design.<br>I enjoy defining measurable goals and systematically delivering quantifiable results.</span>
+    <span style="display:{{ jb }}">高校在学中にソフトウェア開発を始め、8年目のC#/.NETエンジニアへと成長しました。<br>主戦場は.NETベースのWindowsデスクトップアプリとAvaloniaによるクロスプラットフォームアプリで、C++ Native連携からJava/Spring Bootによる大容量分散環境まで幅広い実務経験を有しています。<br>機能が単に動く地点で止めず、使いやすさ・性能最適化・長期保守性を同じ設計の核心価値として追求します。<br>定性的な目標を数値で明確に設定し、技術的な粘り強さでその数値を実現する開発を大切にしています。</span>
   </p>
 </section>
 
@@ -244,54 +244,54 @@ nav::-webkit-scrollbar{display:none}
   <div data-kpi style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:2px;background:light-dark(#e9e8e4,#1e1e23)">
     <div style="background:light-dark(#fbfbf9,#0c0c0d);padding:26px 22px 24px">
       <div class="mono" style="font-size:44px;font-weight:500;letter-spacing:-.035em">60K</div>
-      <div style="margin-top:10px;font-size:12.5px;color:light-dark(#63635d,#9b9ba4)"><span style="display:{{ ki }}">ezZip 일 활성 사용자</span><span style="display:{{ ei }}">ezZip daily active users</span><span style="display:{{ ji }}">ezZip 一日あたりアクティブユーザー</span></div>
+      <div style="margin-top:10px;font-size:13.5px;color:light-dark(#63635d,#9b9ba4)"><span style="display:{{ ki }}">ezZip 일 활성 사용자</span><span style="display:{{ ei }}">ezZip daily active users</span><span style="display:{{ ji }}">ezZip 一日あたりアクティブユーザー</span></div>
     </div>
     <div style="background:light-dark(#fbfbf9,#0c0c0d);padding:26px 22px 24px">
       <div class="mono" style="font-size:44px;font-weight:500;letter-spacing:-.035em">&minus;50%</div>
-      <div style="margin-top:10px;font-size:12.5px;color:light-dark(#63635d,#9b9ba4)"><span style="display:{{ ki }}">실행 파일 크기 (AOT·Trimming)</span><span style="display:{{ ei }}">binary size (AOT + trimming)</span><span style="display:{{ ji }}">実行ファイルサイズ (AOT・Trimming)</span></div>
+      <div style="margin-top:10px;font-size:13.5px;color:light-dark(#63635d,#9b9ba4)"><span style="display:{{ ki }}">실행 파일 크기 (AOT·Trimming)</span><span style="display:{{ ei }}">binary size (AOT + trimming)</span><span style="display:{{ ji }}">実行ファイルサイズ (AOT・Trimming)</span></div>
     </div>
   </div>
 </section>
 
 <section data-chapter id="s-career" style="display:flex;flex-direction:column;padding:66px 0 0">
   <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:30px">
-    <span class="mono" style="flex:none;font-size:11px;letter-spacing:.16em;color:light-dark(#6f6f68,#8e8e98)">01</span>
+    <span class="mono" style="flex:none;font-size:12px;letter-spacing:.14em;color:light-dark(#6f6f68,#8e8e98)">01</span>
     <h2 style="flex:none;margin:0;font-size:17px;font-weight:600;letter-spacing:-.018em;white-space:nowrap"><span style="display:{{ ki }}">경력 타임라인</span><span style="display:{{ ei }}">Career timeline</span><span style="display:{{ ji }}">職務経歴タイムライン</span></h2>
     <span data-chaprule style="flex:1;height:1px;background:light-dark(#e5e4e0,#232329)"></span>
-    <span class="mono" style="font-size:11px;color:light-dark(#6f6f68,#8e8e98)">2018.09 → NOW</span>
+    <span class="mono" style="font-size:12px;color:light-dark(#6f6f68,#8e8e98)">2018.09 → NOW</span>
   </div>
 
   <div data-tlbar style="display:flex;gap:3px;height:52px;align-items:stretch">
     <div class="sq" style="flex:0 0 calc(65.6% - 4px);box-sizing:border-box;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);border-radius:10px;padding:9px 14px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden">
-      <span style="font-size:12.5px;font-weight:500;white-space:nowrap"><span style="display:{{ ki }}">㈜휴엔시스템</span><span style="display:{{ ei }}">Huensystem</span><span style="display:{{ ji }}">ヒュエンシステム</span></span>
-      <span class="mono" style="font-size:10.5px;opacity:.62">2018.09 — 2023.11 · 5y 3m</span>
+      <span style="font-size:13.5px;font-weight:500;white-space:nowrap"><span style="display:{{ ki }}">㈜휴엔시스템</span><span style="display:{{ ei }}">Huensystem</span><span style="display:{{ ji }}">ヒュエンシステム</span></span>
+      <span class="mono" style="font-size:11.5px;opacity:.68">2018.09 — 2023.11 · 5y 3m</span>
     </div>
     <div class="sq" style="flex:0 0 3.1%;background:repeating-linear-gradient(135deg,light-dark(#dedcd6,#26262b) 0 3px,transparent 3px 6px);border-radius:10px" title="2023.12 — 2024.02"></div>
     <div class="sq" style="flex:0 0 calc(31.3% - 2px);box-sizing:border-box;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);border-radius:10px;padding:9px 14px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden">
-      <span style="font-size:12.5px;font-weight:500;white-space:nowrap"><span style="display:{{ ki }}">㈜인라이플</span><span style="display:{{ ei }}">Enliple</span><span style="display:{{ ji }}">インライフル</span></span>
-      <span class="mono" style="font-size:10.5px;opacity:.62">2024.03 — <span style="display:{{ ki }}">재직중</span><span style="display:{{ ei }}">present</span><span style="display:{{ ji }}">在職中</span></span>
+      <span style="font-size:13.5px;font-weight:500;white-space:nowrap"><span style="display:{{ ki }}">㈜인라이플</span><span style="display:{{ ei }}">Enliple</span><span style="display:{{ ji }}">インライフル</span></span>
+      <span class="mono" style="font-size:11.5px;opacity:.68">2024.03 — <span style="display:{{ ki }}">재직중</span><span style="display:{{ ei }}">present</span><span style="display:{{ ji }}">在職中</span></span>
     </div>
   </div>
 
   <div data-cocards style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;margin-top:22px">
     <div class="sq" style="border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:18px 20px">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span class="sq" style="flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:14px;font-weight:600;letter-spacing:-.02em;color:light-dark(#4a4a45,#a5a5ad)">휴</span><div style="font-size:14px;font-weight:600"><span style="display:{{ ki }}">㈜휴엔시스템 · EIS · 주임</span><span style="display:{{ ei }}">Huensystem · EIS · Associate</span><span style="display:{{ ji }}">ヒュエンシステム · EIS · 主任</span></div></div>
-      <div data-cardate class="mono" style="display:none;margin-top:6px;font-size:11px;color:light-dark(#6f6f68,#8e8e98)">2018.09 — 2023.11 &nbsp;·&nbsp; 5<span style="display:{{ ki }}">년</span><span style="display:{{ ei }}">y</span><span style="display:{{ ji }}">年</span> 3<span style="display:{{ ki }}">개월</span><span style="display:{{ ei }}">m</span><span style="display:{{ ji }}">ヶ月</span></div>
-      <div style="font-size:13.5px;line-height:1.7;margin-bottom:7px"><span style="display:{{ kb }}">플랜트 배관 도면 자동화 제품군의 Windows 클라이언트를 전담했습니다.<br>도면 검색 속도를 98% 개선하고 심볼 좌표 추출을 자동화해 수작업 계산 공수를 70% 절감했으며, 현대엔지니어링 8개 현장과 삼성물산 평택 현장의 기술 지원 및 운영 이슈를 직접 대응했습니다.</span><span style="display:{{ eb }}">Led the Windows client development for the piping drawing automation suite.<br>Improved drawing search speed by 98%, reduced manual calculations by 70% via automated symbol extraction, and handled on-site technical support across 8 Hyundai E&amp;C sites and Samsung C&amp;T Pyeongtaek.</span><span style="display:{{ jb }}">配管図面自動化製品群のWindowsクライアント開発を担当。<br>図面検索速度を98%改善し、シンボル座標抽出の自動化で手作業の計算工数を70%削減、現代エンジニアリング8現場およびサムスン物産・平沢現場の運用課題と技術支援に直接対応しました。</span></div>
-      <div style="font-size:12.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98)"><span style="display:{{ kb }}">플랜트 건설·엔지니어링 특화 솔루션 기업</span><span style="display:{{ eb }}">Solutions vendor for plant construction &amp; engineering</span><span style="display:{{ jb }}">プラント建設・エンジニアリング特化のソリューション企業</span></div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span class="sq" style="flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:14.5px;font-weight:600;letter-spacing:-.02em;color:light-dark(#4a4a45,#a5a5ad)">휴</span><div style="font-size:15px;font-weight:600"><span style="display:{{ ki }}">㈜휴엔시스템 · EIS · 주임</span><span style="display:{{ ei }}">Huensystem · EIS · Associate</span><span style="display:{{ ji }}">ヒュエンシステム · EIS · 主任</span></div></div>
+      <div data-cardate class="mono" style="display:none;margin-top:6px;font-size:12px;color:light-dark(#6f6f68,#8e8e98)">2018.09 — 2023.11 &nbsp;·&nbsp; 5<span style="display:{{ ki }}">년</span><span style="display:{{ ei }}">y</span><span style="display:{{ ji }}">年</span> 3<span style="display:{{ ki }}">개월</span><span style="display:{{ ei }}">m</span><span style="display:{{ ji }}">ヶ月</span></div>
+      <div style="font-size:14.5px;line-height:1.75;margin-bottom:8px"><span style="display:{{ kb }}">플랜트 배관 도면 자동화 제품군의 Windows 클라이언트를 전담했습니다.<br>도면 검색 속도를 98% 개선하고 심볼 좌표 추출을 자동화해 수작업 계산 공수를 70% 절감했으며, 현대엔지니어링 8개 현장과 삼성물산 평택 현장의 기술 지원 및 운영 이슈를 직접 대응했습니다.</span><span style="display:{{ eb }}">Led the Windows client development for the piping drawing automation suite.<br>Improved drawing search speed by 98%, reduced manual calculations by 70% via automated symbol extraction, and handled on-site technical support across 8 Hyundai E&amp;C sites and Samsung C&amp;T Pyeongtaek.</span><span style="display:{{ jb }}">配管図面自動化製品群のWindowsクライアント開発を担当。<br>図面検索速度を98%改善し、シンボル座標抽出の自動化で手作業の計算工数を70%削減、現代エンジニアリング8現場およびサムスン物産・平沢現場の運用課題と技術支援に直接対応しました。</span></div>
+      <div style="font-size:13.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98)"><span style="display:{{ kb }}">플랜트 건설·엔지니어링 특화 솔루션 기업</span><span style="display:{{ eb }}">Solutions vendor for plant construction &amp; engineering</span><span style="display:{{ jb }}">プラント建設・エンジニアリング特化의 ソリューション企業</span></div>
     </div>
     <div class="sq" style="border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:18px 20px">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span class="sq" style="flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:14px;font-weight:600;letter-spacing:-.02em;color:light-dark(#4a4a45,#a5a5ad)">인</span><div style="font-size:14px;font-weight:600"><span style="display:{{ ki }}">㈜인라이플 · 이지랩사업부 · 주임</span><span style="display:{{ ei }}">Enliple · ezLab Division · Associate</span><span style="display:{{ ji }}">インライフル · ezLab事業部 · 主任</span></div></div>
-      <div data-cardate class="mono" style="display:none;margin-top:6px;font-size:11px;color:light-dark(#6f6f68,#8e8e98)">2024.03 — <span style="display:{{ ki }}">재직중</span><span style="display:{{ ei }}">present</span><span style="display:{{ ji }}">在職中</span></div>
-      <div style="font-size:13.5px;line-height:1.7;margin-bottom:7px"><span style="display:{{ kb }}">자사 PC 제품군 전체에 적용되는 공통 모듈 및 통합 인스톨러 플랫폼을 설계·구축했습니다.<br>해당 플랫폼 기반 첫 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발·운영을 총괄해 DAU 6만 명을 달성했으며, 이전에는 Java/Spring 기반 대용량 마케팅 메시지 발송 플랫폼(iSend)의 백엔드 개발을 담당했습니다.</span><span style="display:{{ eb }}">Designed and built the shared module and installer platform for all company PC products.<br>Led ezZip — the first product built on this platform — from concept to operations, reaching 60K DAU. Previously engineered backend systems for the Java/Spring marketing message delivery platform (iSend).</span><span style="display:{{ jb }}">自社PC製品群全体に適用される共通モジュールおよびインストーラープラットフォームを設計・構築。<br>その最初の製品である圧縮ソフトezZipの企画からエンジン開発・運用までを統括してDAU6万人を達成。以前はJava/Springベースの大容量メッセージ配信プラットフォーム(iSend)のバックエンド開発を担当しました。</span></div>
-      <div style="font-size:12.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98)"><span style="display:{{ kb }}">국내 1위 리타겟팅 광고 플랫폼과 국내 최초 PC형 앱스토어를 운영하는 데이터 테크 기업</span><span style="display:{{ eb }}">Data-tech company behind Korea's top retargeting ad platform and first PC app store</span><span style="display:{{ jb }}">韓国最大のリターゲティング広告プラットフォームと韓国初のPC向けアプリストアを運営するデータテック企業</span></div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span class="sq" style="flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:14.5px;font-weight:600;letter-spacing:-.02em;color:light-dark(#4a4a45,#a5a5ad)">인</span><div style="font-size:15px;font-weight:600"><span style="display:{{ ki }}">㈜인라이플 · 이지랩사업부 · 주임</span><span style="display:{{ ei }}">Enliple · ezLab Division · Associate</span><span style="display:{{ ji }}">インライフル · ezLab事業部 · 主任</span></div></div>
+      <div data-cardate class="mono" style="display:none;margin-top:6px;font-size:12px;color:light-dark(#6f6f68,#8e8e98)">2024.03 — <span style="display:{{ ki }}">재직중</span><span style="display:{{ ei }}">present</span><span style="display:{{ ji }}">在職中</span></div>
+      <div style="font-size:14.5px;line-height:1.75;margin-bottom:8px"><span style="display:{{ kb }}">자사 PC 제품군 전체에 적용되는 공통 모듈 및 통합 인스톨러 플랫폼을 설계·구축했습니다.<br>해당 플랫폼 기반 첫 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발·운영을 총괄해 DAU 6만 명을 달성했으며, 이전에는 Java/Spring 기반 대용량 마케팅 메시지 발송 플랫폼(iSend)의 백엔드 개발을 담당했습니다.</span><span style="display:{{ eb }}">Designed and built the shared module and installer platform for all company PC products.<br>Led ezZip — the first product built on this platform — from concept to operations, reaching 60K DAU. Previously engineered backend systems for the Java/Spring marketing message delivery platform (iSend).</span><span style="display:{{ jb }}">自社PC製品群全体に適用される共通モジュールおよびインストーラープラットフォームを設計・構築。<br>その最初の製品である圧縮ソフトezZipの企画からエンジン開発・運用までを統括してDAU6万人を達成。以前はJava/Springベースの大容量メッセージ配信プラットフォーム(iSend)のバックエンド開発を担当しました。</span></div>
+      <div style="font-size:13.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98)"><span style="display:{{ kb }}">국내 1위 리타겟팅 광고 플랫폼과 국내 최초 PC형 앱스토어를 운영하는 데이터 테크 기업</span><span style="display:{{ eb }}">Data-tech company behind Korea's top retargeting ad platform and first PC app store</span><span style="display:{{ jb }}">韓国最大のリターゲティング広告プラットフォームと韓国初のPC向けアプリストアを運営するデータテック企業</span></div>
     </div>
   </div>
 </section>
 
 <section data-chapter id="s-stack" style="padding:66px 0 0">
   <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:24px">
-    <span class="mono" style="flex:none;font-size:11px;letter-spacing:.16em;color:light-dark(#6f6f68,#8e8e98)">02</span>
+    <span class="mono" style="flex:none;font-size:12px;letter-spacing:.14em;color:light-dark(#6f6f68,#8e8e98)">02</span>
     <h2 style="flex:none;margin:0;font-size:17px;font-weight:600;letter-spacing:-.018em;white-space:nowrap"><span style="display:{{ ki }}">기술 스택</span><span style="display:{{ ei }}">Tech stack</span><span style="display:{{ ji }}">技術スタック</span></h2>
     <span data-chaprule style="flex:1;height:1px;background:light-dark(#e5e4e0,#232329)"></span>
   </div>
@@ -312,15 +312,15 @@ nav::-webkit-scrollbar{display:none}
 
 <section data-chapter id="s-projects" style="padding:66px 0 0">
   <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:22px">
-    <span class="mono" style="flex:none;font-size:11px;letter-spacing:.16em;color:light-dark(#6f6f68,#8e8e98)">03</span>
+    <span class="mono" style="flex:none;font-size:12px;letter-spacing:.14em;color:light-dark(#6f6f68,#8e8e98)">03</span>
     <h2 style="flex:none;margin:0;font-size:17px;font-weight:600;letter-spacing:-.018em;white-space:nowrap"><span style="display:{{ ki }}">프로젝트</span><span style="display:{{ ei }}">Projects</span><span style="display:{{ ji }}">プロジェクト</span></h2>
     <span data-chaprule style="flex:1;height:1px;background:light-dark(#e5e4e0,#232329)"></span>
-    <span class="mono" style="font-size:11px;color:light-dark(#6f6f68,#8e8e98)">{{ shownCount }}/6</span>
+    <span class="mono" style="font-size:12px;color:light-dark(#6f6f68,#8e8e98)">{{ shownCount }}/6</span>
   </div>
 
   <div data-noprint data-filters style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px">
     <sc-for list="{{ filters }}" as="f" hint-placeholder-count="7">
-      <button onClick="{{ f.onClick }}" data-inverted="{{ f.inv }}" class="mono sq" style="cursor:pointer;font-size:11.5px;letter-spacing:.02em;padding:6px 12px;border-radius:10px;white-space:nowrap;border:1px solid {{ f.bc }};background:{{ f.bg }};color:{{ f.fg }}">{{ f.label }}</button>
+      <button onClick="{{ f.onClick }}" data-inverted="{{ f.inv }}" class="mono sq" style="cursor:pointer;font-size:12.5px;letter-spacing:.02em;padding:6px 13px;border-radius:10px;white-space:nowrap;border:1px solid {{ f.bc }};background:{{ f.bg }};color:{{ f.fg }}">{{ f.label }}</button>
     </sc-for>
   </div>
 
@@ -328,14 +328,14 @@ nav::-webkit-scrollbar{display:none}
     <sc-for list="{{ cards }}" as="p" hint-placeholder-count="6">
       <article onClick="{{ open }}" onKeyDown="{{ open }}" data-pid="{{ p.id }}" role="button" tabIndex="0" aria-haspopup="dialog" class="sq" style="display:flex;flex-direction:column;cursor:pointer;border:1px solid light-dark(rgba(21,21,20,.115),rgba(236,236,237,.088));border-radius:20px;padding:clamp(20px,3vw,26px) clamp(18px,3vw,26px) clamp(18px,3vw,24px);background:light-dark(rgba(255,255,255,.92),rgba(255,255,255,.013));backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);box-shadow:inset 0 1px 0 light-dark(rgba(255,255,255,1),rgba(255,255,255,.024))">
         <span data-rowarrow aria-hidden="true" style="display:none">&#8250;</span>
-        <div data-cardmeta class="mono" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:14px;font-size:11px;color:light-dark(#6f6f68,#8e8e98)">
+        <div data-cardmeta class="mono" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:14px;font-size:12px;color:light-dark(#6f6f68,#8e8e98)">
           <span style="letter-spacing:.1em">{{ p.co }}</span>
           <span>{{ p.date }}</span>
         </div>
         <h3 style="{{ p.h3 }}">{{ p.title }}</h3>
-        <p style="margin:0 0 18px;font-size:14px;font-weight:300;line-height:1.72;color:light-dark(#5e5e58,#9a9aa2)">{{ p.blurb }}</p>
+        <p style="margin:0 0 18px;font-size:14.5px;font-weight:300;line-height:1.72;color:light-dark(#5e5e58,#9a9aa2)">{{ p.blurb }}</p>
         <sc-if value="{{ p.url }}">
-          <div data-cardlink class="mono" style="margin-top:auto;padding-top:15px;display:flex;align-items:center;justify-content:flex-end;font-size:11.5px">
+          <div data-cardlink class="mono" style="margin-top:auto;padding-top:15px;display:flex;align-items:center;justify-content:flex-end;font-size:12.5px">
             <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:7px;color:light-dark(#151514,#ececed);white-space:nowrap">{{ linkLabel }}<span>&#8599;</span></a>
           </div>
         </sc-if>
@@ -343,12 +343,12 @@ nav::-webkit-scrollbar{display:none}
     </sc-for>
   </div>
 
-  <p class="mono" style="display:{{ emptyMsg }};margin:36px 0 0;text-align:center;font-size:12.5px;color:light-dark(#6f6f68,#8e8e98)">No projects match this filter.</p>
+  <p class="mono" style="display:{{ emptyMsg }};margin:36px 0 0;text-align:center;font-size:13.5px;color:light-dark(#6f6f68,#8e8e98)">No projects match this filter.</p>
 </section>
 
 <section data-chapter id="s-education" style="padding:66px 0 0">
   <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:24px">
-    <span class="mono" style="flex:none;font-size:11px;letter-spacing:.16em;color:light-dark(#6f6f68,#8e8e98)">04</span>
+    <span class="mono" style="flex:none;font-size:12px;letter-spacing:.14em;color:light-dark(#6f6f68,#8e8e98)">04</span>
     <h2 style="flex:none;margin:0;font-size:17px;font-weight:600;letter-spacing:-.018em;white-space:nowrap"><span style="display:{{ ki }}">학력 · 자격 · 병역</span><span style="display:{{ ei }}">Education · Certifications · Service</span><span style="display:{{ ji }}">学歴 · 資格 · 兵役</span></h2>
     <span data-chaprule style="flex:1;height:1px;background:light-dark(#e5e4e0,#232329)"></span>
   </div>
@@ -360,10 +360,10 @@ nav::-webkit-scrollbar{display:none}
         <div style="display:flex;flex-direction:column;gap:16px">
           <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="2">
             <div style="display:flex;align-items:flex-start;gap:12px">
-              <span class="sq" style="flex:none;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:13px;font-weight:600;color:light-dark(#4a4a45,#a5a5ad)">{{ it.badge }}</span>
+              <span class="sq" style="flex:none;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:13.5px;font-weight:600;color:light-dark(#4a4a45,#a5a5ad)">{{ it.badge }}</span>
               <div style="min-width:0">
-                <div style="font-size:14.5px;font-weight:500">{{ it.name }}</div>
-                <div class="mono" style="margin-top:3px;font-size:11.5px;color:light-dark(#6f6f68,#8e8e98)">{{ it.meta }}</div>
+                <div style="font-size:15px;font-weight:500">{{ it.name }}</div>
+                <div class="mono" style="margin-top:3px;font-size:12.5px;color:light-dark(#6f6f68,#8e8e98)">{{ it.meta }}</div>
               </div>
             </div>
           </sc-for>
@@ -378,18 +378,18 @@ nav::-webkit-scrollbar{display:none}
     <div>
       <div style="font-size:clamp(30px,4vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1.05"><span style="display:{{ kb }}">장민규</span><span style="display:{{ eb }}">Min-gyu Jang</span><span style="display:{{ jb }}">チャン・ミンギュ</span></div>
       <div style="margin-top:8px;font-size:15px;opacity:.62"><span style="display:{{ ki }}">C#/.NET 개발자 · 8년차</span><span style="display:{{ ei }}">C#/.NET Developer · 8 years</span><span style="display:{{ ji }}">C#/.NET エンジニア · 8年目</span></div>
-      <div class="mono" style="display:flex;gap:18px;margin-top:20px;font-size:13.5px">
+      <div class="mono" style="display:flex;gap:18px;margin-top:20px;font-size:14px">
         <a href="https://github.com/jjang010103" target="_blank" rel="noopener" style="color:light-dark(#fbfbf9,#0c0c0d)">GitHub &#8599;</a>
         <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" style="color:light-dark(#fbfbf9,#0c0c0d)">LinkedIn &#8599;</a>
       </div>
     </div>
     <div data-footcontact style="justify-self:end;text-align:right">
-      <div class="mono" style="font-size:10.5px;letter-spacing:.16em;opacity:.68;margin-bottom:14px"><span style="display:{{ ki }}">연락처</span><span style="display:{{ ei }}">CONTACT</span><span style="display:{{ ji }}">連絡先</span></div>
+      <div class="mono" style="font-size:12px;letter-spacing:.14em;opacity:.68;margin-bottom:14px"><span style="display:{{ ki }}">연락처</span><span style="display:{{ ei }}">CONTACT</span><span style="display:{{ ji }}">連絡先</span></div>
       <a data-footmail href="mailto:a9090618693@gmail.com" style="color:light-dark(#fbfbf9,#0c0c0d);font-size:clamp(19px,2.4vw,25px);font-weight:500;letter-spacing:-.02em;line-height:1.2;word-break:break-all">a9090618693@gmail.com</a>
       <div class="mono" style="margin-top:9px;font-size:14px;opacity:.62"><a href="tel:+821090618693" style="color:light-dark(#fbfbf9,#0c0c0d)">010-9061-8693</a></div>
     </div>
   </div>
-  <div data-footmeta class="mono" style="margin-top:44px;padding-top:16px;border-top:1px solid currentColor;opacity:.7;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;font-size:11px">
+  <div data-footmeta class="mono" style="margin-top:44px;padding-top:16px;border-top:1px solid currentColor;opacity:.7;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;font-size:12px">
     <span>© 2026 <span style="display:{{ ki }}">장민규</span><span style="display:{{ ei }}">Min-gyu Jang</span><span style="display:{{ ji }}">チャン・ミンギュ</span></span>
     <span><span style="display:{{ ki }}">최종 수정 2026.08</span><span style="display:{{ ei }}">Last updated 2026.08</span><span style="display:{{ ji }}">最終更新 2026.08</span></span>
   </div>
@@ -399,10 +399,10 @@ nav::-webkit-scrollbar{display:none}
   <div data-modalcard onClick="{{ stop }}" class="sq" style="position:relative;box-sizing:border-box;width:min(100%,820px);max-height:min(90vh,860px);display:flex;flex-direction:column;overflow:hidden;background:light-dark(#fbfbf9,#131317);border:1px solid light-dark(rgba(21,21,20,.12),rgba(255,255,255,.08));border-radius:24px;padding:clamp(22px,3.8vw,34px);box-shadow:0 30px 90px rgba(0,0,0,.4)">
 
     <div style="flex:none;display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid light-dark(#e5e4e0,#232329);margin-bottom:20px">
-      <div class="mono" style="font-size:11px;letter-spacing:.14em;color:light-dark(#7a7972,#858590);font-weight:600">
+      <div class="mono" style="font-size:12px;letter-spacing:.12em;color:light-dark(#7a7972,#858590);font-weight:600">
         <span style="display:{{ ki }}">PROJECT SPECIFICATION // 상세 이력</span><span style="display:{{ ei }}">PROJECT SPECIFICATION // DETAILS</span><span style="display:{{ ji }}">PROJECT SPECIFICATION // 詳細</span>
       </div>
-      <button data-sheetclose onClick="{{ closeModal }}" aria-label="Close" class="mono sq" style="padding:5px 12px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;background:light-dark(#f1f0ec,#1e1e24);border:1px solid light-dark(#dedcd6,#2c2c34);border-radius:10px;color:light-dark(#6f6f68,#9a9aa2);font-size:11px;letter-spacing:.08em;line-height:1;transition:all .15s ease" style-hover="background:light-dark(#e5e4de,#26262d);color:light-dark(#151514,#ececed)">
+      <button data-sheetclose onClick="{{ closeModal }}" aria-label="Close" class="mono sq" style="padding:5px 12px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;background:light-dark(#f1f0ec,#1e1e24);border:1px solid light-dark(#dedcd6,#2c2c34);border-radius:10px;color:light-dark(#6f6f68,#9a9aa2);font-size:12px;letter-spacing:.06em;line-height:1;transition:all .15s ease" style-hover="background:light-dark(#e5e4de,#26262d);color:light-dark(#151514,#ececed)">
         <span style="display:{{ ki }}">닫기</span><span style="display:{{ ei }}">CLOSE</span><span style="display:{{ ji }}">閉じる</span>
         <span aria-hidden="true" style="font-size:13px;line-height:1">&#215;</span>
       </button>
@@ -414,15 +414,15 @@ nav::-webkit-scrollbar{display:none}
           <div data-modallayout>
             <div style="min-width:0">
               <h3 style="margin:0 0 12px;font-size:clamp(22px,2.8vw,28px);font-weight:600;line-height:1.24;letter-spacing:-.028em;color:light-dark(#151514,#ececed)">{{ p.mtitle }}</h3>
-              <p style="margin:0 0 28px;font-size:15px;font-weight:300;line-height:1.75;color:light-dark(#4a4a45,#a8a8b2)">{{ p.blurb }}</p>
+              <p style="margin:0 0 28px;font-size:15.5px;font-weight:300;line-height:1.75;color:light-dark(#4a4a45,#a8a8b2)">{{ p.blurb }}</p>
 
-              <div class="mono" style="font-size:11px;letter-spacing:.14em;color:light-dark(#6f6f68,#8e8e98);margin-bottom:14px;font-weight:600">{{ contribHeading }}</div>
+              <div class="mono" style="font-size:12px;letter-spacing:.12em;color:light-dark(#6f6f68,#8e8e98);margin-bottom:14px;font-weight:600">{{ contribHeading }}</div>
 
               <div style="display:flex;flex-direction:column">
                 <sc-for list="{{ p.items }}" as="c" hint-placeholder-count="4">
                   <div data-contrib-item>
-                    <span class="mono" style="flex:none;font-size:11.5px;font-weight:600;color:light-dark(#7a7972,#858590);padding-top:2px">{{ c.n }}</span>
-                    <div style="font-size:14.5px;line-height:1.7;color:light-dark(#2b2a27,#dcdcdf)">{{ c.text }}</div>
+                    <span class="mono" style="flex:none;font-size:12.5px;font-weight:600;color:light-dark(#7a7972,#858590);padding-top:2px">{{ c.n }}</span>
+                    <div style="font-size:15px;line-height:1.72;color:light-dark(#2b2a27,#dcdcdf)">{{ c.text }}</div>
                   </div>
                 </sc-for>
               </div>
@@ -431,15 +431,15 @@ nav::-webkit-scrollbar{display:none}
             <div data-modalsidebar class="sq" style="display:flex;flex-direction:column;gap:18px;padding:20px;border-radius:16px;background:light-dark(#f4f3ef,rgba(255,255,255,.04));border:1px solid light-dark(#dedcd6,rgba(255,255,255,.07))">
               <div>
                 <div class="mono speclabel">COMPANY</div>
-                <div style="font-size:13.5px;font-weight:500;color:light-dark(#151514,#ececed)">{{ p.coFull }}</div>
+                <div style="font-size:14px;font-weight:500;color:light-dark(#151514,#ececed)">{{ p.coFull }}</div>
               </div>
               <div>
                 <div class="mono speclabel">TIMELINE</div>
-                <div class="mono" style="font-size:12.5px;color:light-dark(#2b2a27,#dcdcdf)">{{ p.date }}</div>
+                <div class="mono" style="font-size:13.5px;color:light-dark(#2b2a27,#dcdcdf)">{{ p.date }}</div>
               </div>
               <div>
                 <div class="mono speclabel">ROLE</div>
-                <div style="font-size:13px;color:light-dark(#33322e,#c9c9cf)">{{ p.role }}</div>
+                <div style="font-size:13.5px;color:light-dark(#33322e,#c9c9cf)">{{ p.role }}</div>
               </div>
               <div>
                 <div class="mono speclabel" style="margin-bottom:8px">TECH STACK</div>
@@ -450,7 +450,7 @@ nav::-webkit-scrollbar{display:none}
                 </div>
               </div>
               <sc-if value="{{ p.url }}">
-                <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" class="mono sq" style="margin-top:4px;width:100%;box-sizing:border-box;font-size:12px;padding:9px 12px;border-radius:10px;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;transition:opacity .15s" style-hover="opacity:.85">{{ siteLabel }}<span>&#8599;</span></a>
+                <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" class="mono sq" style="margin-top:4px;width:100%;box-sizing:border-box;font-size:13px;padding:9px 12px;border-radius:10px;background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;transition:opacity .15s" style-hover="opacity:.85">{{ siteLabel }}<span>&#8599;</span></a>
               </sc-if>
             </div>
           </div>
