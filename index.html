@@ -64,16 +64,23 @@ html{scroll-behavior:smooth}
 @keyframes mj-vt-in{from{clip-path:circle(var(--vtr,150vmax) at var(--vtx,50%) var(--vty,50%))}to{clip-path:circle(0px at var(--vtx,50%) var(--vty,50%))}}
 :focus{outline:none}
 :focus-visible{outline:2px solid light-dark(#151514,#ececef);outline-offset:3px;border-radius:4px}
-nav::-webkit-scrollbar{display:none}
-@media (min-width:721px){[data-bar] > button:first-of-type{background-image:none !important}}
-[data-modalbody]::-webkit-scrollbar{width:6px}
-[data-modalbody]::-webkit-scrollbar-track{background:transparent}
-[data-modalbody]::-webkit-scrollbar-thumb{background:light-dark(#dedcd5,#30303a);border-radius:6px}
-[data-modalbody]::-webkit-scrollbar-thumb:hover{background:light-dark(#c8c6bd,#444452)}
+[data-modal], [data-modalcard], [data-modalbody], nav {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+[data-modal]::-webkit-scrollbar,
+[data-modalcard]::-webkit-scrollbar,
+[data-modalbody]::-webkit-scrollbar,
+nav::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
 
 [data-projgrid] > article,[data-cocards] > div{border-color:transparent !important;background:light-dark(#f1f1f0,#161618) !important;box-shadow:none !important}
 [data-projgrid] > article:hover,[data-projgrid] > article:focus-visible{background:light-dark(#eaeae9,#1c1c1e) !important;box-shadow:none !important}
 @media (min-width:721px){
+  [data-bar] > button:first-of-type{background-image:none !important}
   section[data-chapter]{padding-top:96px !important}
   section[data-chapter] > div:first-child{margin-bottom:36px !important}
   section[data-chapter] > div:first-child > h2{font-size:29px !important;letter-spacing:-.032em !important}
@@ -157,13 +164,13 @@ nav::-webkit-scrollbar{display:none}
 
   /* the band bleeds, so its section rule must not stop short */
   [data-kpisec]{border-bottom:0 !important}
-  [data-filters]{gap:5px !important;margin-bottom:18px !important}
-  [data-filters] button{min-height:30px !important;padding:0 9px !important;font-size:12px !important;letter-spacing:0 !important}
-  [data-sheetclose]{min-height:34px !important;padding:0 !important;margin-bottom:0 !important}
-  [data-modal]{padding:0 !important;align-items:stretch !important}
-  [data-modalcard]{max-width:none !important;width:100% !important;aspect-ratio:auto !important;min-height:100% !important;border-radius:0 !important;border-left:0 !important;border-right:0 !important;box-shadow:none !important;padding:24px 20px 32px !important}
-  [data-modalcard] > div{overflow:visible !important;padding-right:0 !important}
-  [data-contrib-item]{padding:12px 14px !important}
+  [data-modal]{padding:0 !important;align-items:flex-start !important;overflow-y:auto !important;-webkit-overflow-scrolling:touch !important}
+  [data-modalcard]{width:100% !important;max-width:100% !important;min-height:100dvh !important;height:auto !important;max-height:none !important;border-radius:0 !important;border:0 !important;box-shadow:none !important;padding:16px 14px 28px !important;display:flex !important;flex-direction:column !important;box-sizing:border-box !important;overflow:visible !important}
+  [data-modalhead]{position:sticky !important;top:0 !important;z-index:10 !important;background:light-dark(#f1f1f0,#161618) !important;padding-top:4px !important;padding-bottom:10px !important;margin-bottom:14px !important;border-bottom:1px solid light-dark(#e5e4de,#26262c) !important}
+  [data-modalbody]{flex:1 0 auto !important;overflow:visible !important;height:auto !important;min-height:auto !important;margin-bottom:0 !important;padding-right:0 !important}
+  [data-modalfoot]{flex:none !important;margin-top:36px !important;padding-top:18px !important;border-top:1px solid light-dark(#e5e4de,#26262c) !important}
+  [data-contrib-item]{padding:12px 14px !important;gap:10px !important}
+  [data-contrib-text]{font-size:14px !important;line-height:1.7 !important}
 }
 @media print{
   :root{color-scheme:light only}
@@ -176,18 +183,19 @@ nav::-webkit-scrollbar{display:none}
 [data-contrib-badge]{flex:none;width:24px;height:24px;border-radius:7px;corner-shape:squircle;background:light-dark(#eae8e2,#282830);color:light-dark(#4a4943,#a2a2ad);font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:2px}
 [data-contrib-text]{font-size:14.5px;line-height:1.72;color:light-dark(#2b2a27,#dcdcdf);font-weight:300;word-break:keep-all;overflow-wrap:break-word}
 [data-contrib-text] strong{background:light-dark(#151514,#ececef);color:light-dark(#fbfbf9,#0c0c0d);padding:.08em .32em .12em;margin:0 .04em;border-radius:3px;font-weight:600;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+section[id], header[id]{scroll-margin-top:76px}
 </style>
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#151514"/><text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#fbfbf9" letter-spacing="-1">장민규</text></svg></template>
 </helmet>
 
 <main style="max-width:1100px;margin:0 auto;padding:0 clamp(18px,4vw,32px) 96px">
 
-<div data-noprint data-bar style="position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:flex-end;gap:10px 8px;padding:14px 0;background:light-dark(#fbfbf9,#0c0c0d)">
-  <button onClick="{{ toTop }}" style="flex:none;align-self:flex-end;display:flex;align-items:center;height:27px;padding:0;margin-right:clamp(14px,2.4vw,26px);border:0;background:transparent;cursor:pointer;color:light-dark(#4a4a45,#a5a5ad);transition:opacity .2s ease;line-height:.85;white-space:nowrap;font-weight:700;background-image:{{ logoBg }};background-repeat:no-repeat;background-size:100% 100%" style-hover="opacity:.62"><span style="display:{{ ki }};font-size:22.5px;letter-spacing:-.055em">장민규</span><span style="display:{{ ei }};font-size:18px;letter-spacing:-.045em">Min-gyu Jang</span><span style="display:{{ ji }};font-size:17px;letter-spacing:-.05em">チャン・ミンギュ</span></button>
-  <nav style="display:flex;align-items:flex-end;gap:12px;flex:8 1 320px;min-width:0;max-width:586px;overflow-x:auto;scrollbar-width:none;padding-bottom:1px">
+<div data-noprint data-bar style="position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:flex-end;gap:12px 10px;padding:14px 0;background:light-dark(#fbfbf9,#0c0c0d)">
+  <button onClick="{{ toTop }}" style="flex:none;align-self:flex-end;display:flex;align-items:center;height:27px;padding:0;margin-right:clamp(14px,2.2vw,26px);border:0;background:transparent;cursor:pointer;color:light-dark(#4a4a45,#a5a5ad);transition:opacity .2s ease;line-height:.85;white-space:nowrap;font-weight:700;background-image:{{ logoBg }};background-repeat:no-repeat;background-size:100% 100%" style-hover="opacity:.62"><span style="display:{{ ki }};font-size:22.5px;letter-spacing:-.055em">장민규</span><span style="display:{{ ei }};font-size:18px;letter-spacing:-.045em">Min&#8209;gyu Jang</span><span style="display:{{ ji }};font-size:17px;letter-spacing:-.05em">チャン・ミンギュ</span></button>
+  <nav style="display:flex;align-items:flex-end;gap:clamp(8px,1.2vw,14px);flex:8 1 380px;max-width:640px;min-width:0;overflow-x:auto;scrollbar-width:none;padding-bottom:1px">
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
-      <button onClick="{{ n.go }}" style="flex:{{ n.grow }} 1 auto;min-width:max-content;display:flex;flex-direction:column;gap:7px;padding:0 8px 0 0;border:0;background:transparent;cursor:pointer;white-space:nowrap;color:{{ n.fg }};transition:color .2s ease">
-        <span style="display:flex;align-items:baseline;gap:7px">
+      <button onClick="{{ n.go }}" style="flex:{{ n.grow }} 1 0;min-width:max-content;display:flex;flex-direction:column;gap:7px;padding:0 4px 0 0;border:0;background:transparent;cursor:pointer;white-space:nowrap;color:{{ n.fg }};transition:color .2s ease">
+        <span style="display:flex;align-items:baseline;gap:6px">
           <span class="mono" style="font-size:11.5px;letter-spacing:.08em;transition:color .2s ease;color:{{ n.nfg }}">{{ n.num }}</span>
           <span style="font-size:13.5px;font-weight:{{ n.w }};letter-spacing:-.01em">{{ n.label }}</span>
         </span>
@@ -195,12 +203,12 @@ nav::-webkit-scrollbar{display:none}
       </button>
     </sc-for>
   </nav>
-  <span data-barspacer style="flex:1 1 20px;min-width:20px"></span>
+  <span data-barspacer style="flex:1 1 20px;min-width:12px"></span>
 
   <div style="height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#dedcd6,#2a2a30);corner-shape:squircle;border-radius:10px;overflow:hidden">
-    <button onClick="{{ setKo }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:40px;padding:0 11px;font-size:15.5px;font-weight:500;line-height:1.25;background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
-    <button onClick="{{ setEn }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:40px;padding:0 11px;font-size:13.5px;font-weight:500;line-height:1.25;background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
-    <button onClick="{{ setJa }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:40px;padding:0 11px;font-size:13.5px;font-weight:500;line-height:1.25;background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
+    <button onClick="{{ setKo }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:38px;padding:0 10px;font-size:15px;font-weight:500;line-height:1.25;background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
+    <button onClick="{{ setEn }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:38px;padding:0 10px;font-size:13px;font-weight:500;line-height:1.25;background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
+    <button onClick="{{ setJa }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:38px;padding:0 10px;font-size:13px;font-weight:500;line-height:1.25;background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
   </div>
   <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="height:32px;width:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#e2e1dd,#2a2a30);background:transparent;color:inherit;cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="display:block;transition:transform .45s cubic-bezier(.65,0,.35,1);transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg></button>
   <button onClick="{{ doPrint }}" aria-label="PDF" title="PDF" style="height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;width:32px;border:1px solid light-dark(#e2e1dd,#2a2a30);background:transparent;color:inherit;cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8"></path><path d="M4.5 7L8 10.5 11.5 7"></path><path d="M2.5 13.5h11"></path></svg></button>
@@ -230,11 +238,20 @@ nav::-webkit-scrollbar{display:none}
 </header>
 
 <section style="padding:54px 0;border-bottom:1px solid light-dark(#e5e4e0,#232329)">
-  <p style="margin:0;max-width:88ch;font-size:17.5px;line-height:1.8;font-weight:300;letter-spacing:-.004em;color:light-dark(#33322e,#c9c9cf)">
-    <span style="display:{{ kb }}">고등학교 재학 중 소프트웨어 개발을 시작하여 8년차 C#/.NET 개발자로 성장했습니다.<br>Windows 데스크톱 애플리케이션 및 Avalonia 크로스플랫폼 개발을 주력으로 하며, C++ Native 연동부터 Java/Spring Boot 대용량 분산 환경까지 폭넓은 실무 경험을 보유하고 있습니다.<br>단순히 기능 구현에 그치지 않고 성능 최적화, 사용자 경험, 장기적인 유지보수성을 같은 설계의 핵심 가치로 여깁니다.<br>정량적인 목표를 명확히 세우고, 기술적 집요함으로 결과를 증명하는 개발을 지향합니다.</span>
-    <span style="display:{{ eb }}">I started my software development career during high school and have grown into a C#/.NET developer with 8 years of experience.<br>My core expertise lies in .NET Windows desktop software and Avalonia cross-platform apps, with extensive hands-on experience spanning C++ native interop and high-volume Java/Spring Boot distributed environments.<br>I don't stop where a feature simply works — usability, performance optimization, and long-term maintainability are integral parts of the same design.<br>I enjoy defining measurable goals and systematically delivering quantifiable results.</span>
-    <span style="display:{{ jb }}">高校在学中にソフトウェア開発を始め、8年目のC#/.NETエンジニアへと成長しました。<br>主戦場は.NETベースのWindowsデスクトップアプリとAvaloniaによるクロスプラットフォームアプリで、C++ Native連携からJava/Spring Bootによる大容量分散環境まで幅広い実務経験を有しています。<br>機能が単に動く地点で止めず、使いやすさ・性能最適化・長期保守性を同じ設計の核心価値として追求します。<br>定性的な目標を数値で明確に設定し、技術的な粘り強さでその数値を実現する開発を大切にしています。</span>
-  </p>
+  <div style="width:100%;min-height:clamp(90px,10vw,120px);display:flex;flex-direction:column;gap:12px;font-size:17px;line-height:1.82;font-weight:300;letter-spacing:-.004em;color:light-dark(#33322e,#c9c9cf);word-break:keep-all;overflow-wrap:break-word">
+    <div style="display:{{ kb }}">
+      <p style="margin:0 0 10px">고등학교 재학 중 개발을 시작하여 8년차 C#/.NET 엔지니어로 성장했습니다. Windows 데스크톱 애플리케이션 및 Avalonia 크로스플랫폼을 주력으로 하며, C++ Native 연동부터 Java/Spring Boot 대용량 분산 환경까지 폭넓은 실무 경험을 갖추고 있습니다.</p>
+      <p style="margin:0">단순한 기능 구현을 넘어 성능 최적화, 사용자 경험, 장기적인 유지보수성을 설계의 핵심 가치로 여기며, 명확한 정량적 목표와 기술적 집요함으로 결과를 증명하는 개발을 지향합니다.</p>
+    </div>
+    <div style="display:{{ eb }}">
+      <p style="margin:0 0 10px">I started my software development career during high school and have grown into a C#/.NET engineer with 8 years of experience. My core expertise centers on Windows desktop software and Avalonia cross-platform apps, backed by extensive hands-on experience spanning C++ native interop and high-volume Java/Spring Boot environments.</p>
+      <p style="margin:0">I don't stop where a feature simply works — usability, performance tuning, and long-term maintainability are integral parts of every design decision. I strive to deliver measurable results driven by clear quantitative goals and technical tenacity.</p>
+    </div>
+    <div style="display:{{ jb }}">
+      <p style="margin:0 0 10px">高校在学中に開発を始め、8年目のC#/.NETエンジニアへと成長しました。WindowsデスクトップおよびAvaloniaによるクロスプラットフォーム開発を主軸とし、C++ Native連携からJava/Spring Bootによる大容量分散環境まで幅広い実務経験を有しています。</p>
+      <p style="margin:0">単なる機能実装にとどまらず、性能最適化・ユーザー体験・長期保守性を設計の核心価値とし、明確な定量的目標と技術的な粘り強さで結果を証明する開発を追求しています。</p>
+    </div>
+  </div>
 </section>
 
 <section data-kpisec style="padding:40px 0;border-bottom:1px solid light-dark(#e5e4e0,#232329)">
@@ -271,17 +288,17 @@ nav::-webkit-scrollbar{display:none}
   </div>
 
   <div data-cocards style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;margin-top:22px">
-    <div class="sq" style="border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:18px 20px">
+    <div class="sq" style="border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:18px 20px;display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span class="sq" style="flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:14.5px;font-weight:600;letter-spacing:-.02em;color:light-dark(#4a4a45,#a5a5ad)">휴</span><div style="font-size:15px;font-weight:600"><span style="display:{{ ki }}">㈜휴엔시스템 · EIS · 주임</span><span style="display:{{ ei }}">Huensystem · EIS · Associate</span><span style="display:{{ ji }}">ヒュエンシステム · EIS · 主任</span></div></div>
       <div data-cardate class="mono" style="display:none;margin-top:6px;font-size:12px;color:light-dark(#6f6f68,#8e8e98)">2018.09 — 2023.11 &nbsp;·&nbsp; 5<span style="display:{{ ki }}">년</span><span style="display:{{ ei }}">y</span><span style="display:{{ ji }}">年</span> 3<span style="display:{{ ki }}">개월</span><span style="display:{{ ei }}">m</span><span style="display:{{ ji }}">ヶ月</span></div>
-      <div style="font-size:14.5px;line-height:1.75;margin-bottom:8px"><span style="display:{{ kb }}">플랜트 배관 도면 자동화 제품군의 Windows 클라이언트를 전담했습니다.<br>도면 검색 속도를 98% 개선하고 심볼 좌표 추출을 자동화해 수작업 계산 공수를 70% 절감했으며, 현대엔지니어링 8개 현장과 삼성물산 평택 현장의 기술 지원 및 운영 이슈를 직접 대응했습니다.</span><span style="display:{{ eb }}">Led the Windows client development for the piping drawing automation suite.<br>Improved drawing search speed by 98%, reduced manual calculations by 70% via automated symbol extraction, and handled on-site technical support across 8 Hyundai E&amp;C sites and Samsung C&amp;T Pyeongtaek.</span><span style="display:{{ jb }}">配管図面自動化製品群のWindowsクライアント開発を担当。<br>図面検索速度を98%改善し、シンボル座標抽出の自動化で手作業の計算工数を70%削減、現代エンジニアリング8現場およびサムスン物産・平沢現場の運用課題と技術支援に直接対応しました。</span></div>
-      <div style="font-size:13.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98)"><span style="display:{{ kb }}">플랜트 건설·엔지니어링 특화 솔루션 기업</span><span style="display:{{ eb }}">Solutions vendor for plant construction &amp; engineering</span><span style="display:{{ jb }}">プラント建設・エンジニアリング特化의 ソリューション企業</span></div>
+      <div style="font-size:14.5px;line-height:1.75;margin-bottom:8px;min-height:clamp(96px,11vw,120px);word-break:keep-all;overflow-wrap:break-word"><span style="display:{{ kb }}">플랜트 배관 도면 자동화 제품군의 Windows 클라이언트를 전담했습니다.<br>도면 검색 속도를 98% 개선하고 심볼 좌표 추출을 자동화해 수작업 계산 공수를 70% 절감했으며, 현대엔지니어링 8개 현장과 삼성물산 평택 현장의 기술 지원 및 운영 이슈를 직접 대응했습니다.</span><span style="display:{{ eb }}">Led the Windows client development for the piping drawing automation suite.<br>Improved drawing search speed by 98%, reduced manual calculations by 70% via automated symbol extraction, and handled on-site technical support across 8 Hyundai E&amp;C sites and Samsung C&amp;T Pyeongtaek.</span><span style="display:{{ jb }}">配管図面自動化製品群のWindowsクライアント開発を担当。<br>図面検索速度を98%改善し、シンボル座標抽出の自動化で手作業の計算工数を70%削減、現代エンジニアリング8現場およびサムスン物産・平沢現場の運用課題と技術支援に直接対応しました。</span></div>
+      <div style="font-size:13.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98);margin-top:auto;word-break:keep-all;overflow-wrap:break-word"><span style="display:{{ kb }}">플랜트 건설·엔지니어링 특화 솔루션 기업</span><span style="display:{{ eb }}">Solutions vendor for plant construction &amp; engineering</span><span style="display:{{ jb }}">プラント建設・エンジニアリング特化のソリューション企業</span></div>
     </div>
-    <div class="sq" style="border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:18px 20px">
+    <div class="sq" style="border:1px solid light-dark(#e5e4e0,#232329);border-radius:20px;padding:18px 20px;display:flex;flex-direction:column">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><span class="sq" style="flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid light-dark(#e5e4e0,#2a2a30);background:light-dark(#f7f6f3,#1a1a1f);font-size:14.5px;font-weight:600;letter-spacing:-.02em;color:light-dark(#4a4a45,#a5a5ad)">인</span><div style="font-size:15px;font-weight:600"><span style="display:{{ ki }}">㈜인라이플 · 이지랩사업부 · 주임</span><span style="display:{{ ei }}">Enliple · ezLab Division · Associate</span><span style="display:{{ ji }}">インライフル · ezLab事業部 · 主任</span></div></div>
       <div data-cardate class="mono" style="display:none;margin-top:6px;font-size:12px;color:light-dark(#6f6f68,#8e8e98)">2024.03 — <span style="display:{{ ki }}">재직중</span><span style="display:{{ ei }}">present</span><span style="display:{{ ji }}">在職中</span></div>
-      <div style="font-size:14.5px;line-height:1.75;margin-bottom:8px"><span style="display:{{ kb }}">자사 PC 제품군 전체에 적용되는 공통 모듈 및 통합 인스톨러 플랫폼을 설계·구축했습니다.<br>해당 플랫폼 기반 첫 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발·운영을 주도해 DAU 6만 명을 달성했으며, 이전에는 Java/Spring 기반 대용량 마케팅 메시지 발송 플랫폼(iSend)의 백엔드 개발을 담당했습니다.</span><span style="display:{{ eb }}">Designed and built the shared module and installer platform for all company PC products.<br>Led ezZip — the first product built on this platform — from concept to operations, reaching 60K DAU. Previously engineered backend systems for the Java/Spring marketing message delivery platform (iSend).</span><span style="display:{{ jb }}">自社PC製品群全体に適用される共通モジュールおよびインストーラープラットフォームを設計・構築。<br>その最初の製品である圧縮ソフトezZipの企画からエンジン開発・運用までを主導してDAU6万人を達成。以前はJava/Springベースの大容量メッセージ配信プラットフォーム(iSend)のバックエンド開発を担当しました。</span></div>
-      <div style="font-size:13.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98)"><span style="display:{{ kb }}">국내 1위 리타겟팅 광고 플랫폼과 국내 최초 PC형 앱스토어를 운영하는 데이터 테크 기업</span><span style="display:{{ eb }}">Data-tech company behind Korea's top retargeting ad platform and first PC app store</span><span style="display:{{ jb }}">韓国最大のリターゲティング広告プラットフォームと韓国初のPC向けアプリストアを運営するデータテック企業</span></div>
+      <div style="font-size:14.5px;line-height:1.75;margin-bottom:8px;min-height:clamp(96px,11vw,120px);word-break:keep-all;overflow-wrap:break-word"><span style="display:{{ kb }}">자사 PC 제품군 전체에 적용되는 공통 모듈 및 통합 인스톨러 플랫폼을 설계·구축했습니다.<br>해당 플랫폼 기반 첫 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발·운영을 주도해 DAU 6만 명을 달성했으며, 이전에는 Java/Spring 기반 대용량 마케팅 메시지 발송 플랫폼(iSend)의 백엔드 개발을 담당했습니다.</span><span style="display:{{ eb }}">Designed and built the shared module and installer platform for all company PC products.<br>Led ezZip — the first product built on this platform — from concept to operations, reaching 60K DAU. Previously engineered backend systems for the Java/Spring marketing message delivery platform (iSend).</span><span style="display:{{ jb }}">自社PC製品群全体に適用される共通モジュールおよびインストーラープラットフォームを設計・構築。<br>その最初の製品である圧縮ソフトezZipの企画からエンジン開発・運用までを主導してDAU6万人を達成。以前はJava/Springベースの大容量メッセージ配信プラットフォーム(iSend)のバックエンド開発を担当しました。</span></div>
+      <div style="font-size:13.5px;line-height:1.6;font-weight:300;color:light-dark(#6f6f68,#8e8e98);margin-top:auto;word-break:keep-all;overflow-wrap:break-word"><span style="display:{{ kb }}">국내 1위 리타겟팅 광고 플랫폼과 국내 최초 PC형 앱스토어를 운영하는 데이터 테크 기업</span><span style="display:{{ eb }}">Data-tech company behind Korea's top retargeting ad platform and first PC app store</span><span style="display:{{ jb }}">韓国最大のリターゲティング広告プラットフォームと韓国初のPC向けアプリストアを運営するデータテック企業</span></div>
     </div>
   </div>
 </section>
@@ -329,8 +346,8 @@ nav::-webkit-scrollbar{display:none}
           <span style="letter-spacing:.1em">{{ p.co }}</span>
           <span>{{ p.date }}</span>
         </div>
-        <h3 style="{{ p.h3 }}">{{ p.title }}</h3>
-        <p style="margin:0 0 18px;font-size:14.5px;font-weight:300;line-height:1.72;color:light-dark(#5e5e58,#9a9aa2)">{{ p.blurb }}</p>
+        <h3 style="{{ p.h3 }};min-height:2.6em;word-break:keep-all;overflow-wrap:break-word">{{ p.title }}</h3>
+        <p style="margin:0 0 18px;font-size:14.5px;font-weight:300;line-height:1.72;color:light-dark(#5e5e58,#9a9aa2);min-height:4.8em;word-break:keep-all;overflow-wrap:break-word">{{ p.blurb }}</p>
         <sc-if value="{{ p.url }}">
           <div data-cardlink class="mono" style="margin-top:auto;padding-top:15px;display:flex;align-items:center;justify-content:flex-end;font-size:12.5px">
             <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:7px;color:light-dark(#151514,#ececed);white-space:nowrap;text-decoration:none" style-hover="text-decoration:underline;text-underline-offset:3px">{{ linkLabel }}<span>&#8599;</span></a>
@@ -392,10 +409,10 @@ nav::-webkit-scrollbar{display:none}
   </div>
 </footer>
 
-<div data-modal onClick="{{ closeModal }}" style="display:{{ modal }};position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:light-dark(rgba(20,20,18,.56),rgba(0,0,0,.76));backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);overflow:auto">
-  <div data-modalcard onClick="{{ stop }}" class="sq" style="position:relative;box-sizing:border-box;width:min(100%,1070px);min-height:min(92vh,1140px);max-height:min(94vh,1220px);display:flex;flex-direction:column;overflow:hidden;background:light-dark(#f1f1f0,#161618);border:1px solid light-dark(#e5e4de,#26262c);border-radius:24px;padding:clamp(28px,4.2vw,48px);box-shadow:0 30px 90px rgba(0,0,0,.45)">
+<div data-modal onClick="{{ closeModal }}" style="display:{{ modal }};position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:light-dark(rgba(20,20,18,.56),rgba(0,0,0,.76));backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);overflow:hidden">
+  <div data-modalcard onClick="{{ stop }}" class="sq" style="position:relative;box-sizing:border-box;width:min(100%,1070px);height:min(90vh,1100px);max-height:min(92vh,1140px);display:flex;flex-direction:column;overflow:hidden;background:light-dark(#f1f1f0,#161618);border:1px solid light-dark(#e5e4de,#26262c);border-radius:24px;padding:clamp(28px,4.2vw,48px);box-shadow:0 30px 90px rgba(0,0,0,.45)">
 
-    <div style="flex:none;display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px">
+    <div data-modalhead style="flex:none;display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px">
       <div style="height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#dedcd6,#2a2a30);background:light-dark(#fbfbf9,#1e1e22);corner-shape:squircle;border-radius:10px;overflow:hidden">
         <button onClick="{{ setKo }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:36px;padding:0 9px;font-size:14.5px;font-weight:500;line-height:1.25;background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
         <button onClick="{{ setEn }}" style="border:0;cursor:pointer;align-self:stretch;box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-width:36px;padding:0 9px;font-size:12.5px;font-weight:500;line-height:1.25;background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
@@ -460,7 +477,7 @@ nav::-webkit-scrollbar{display:none}
       </sc-for>
     </div>
 
-    <div style="flex:none;border-top:1px solid light-dark(#e5e4de,#26262c);padding-top:14px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px">
+    <div data-modalfoot style="flex:none;border-top:1px solid light-dark(#e5e4de,#26262c);padding-top:14px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px">
       <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
         <span style="font-size:14.5px;font-weight:600;color:light-dark(#151514,#ececed);white-space:nowrap">
           <span style="display:{{ kb }}">장민규</span><span style="display:{{ eb }}">Min-gyu Jang</span><span style="display:{{ jb }}">チャン・ミンギュ</span>
@@ -755,16 +772,16 @@ class Component extends DCLogic {
     const keys = NAV.map(n => n.id);
     const bar = document.querySelector('[data-noprint]');
     const barH = bar ? bar.getBoundingClientRect().height : 60;
-    const top = (window.scrollY || 0) + barH + 4;
+    const top = (window.scrollY || 0) + barH + 24;
     const settled = (document.documentElement.scrollHeight || 0) > window.innerHeight + 1;
-    const active = { fg: dark ? '#ececed' : '#151514', nfg: dark ? '#ececed' : '#151514', w: '500' };
+    const active = { fg: dark ? '#ececed' : '#151514', nfg: dark ? '#ececed' : '#151514', w: '600' };
     const idle = { fg: dark ? '#8e8e98' : '#6f6f68', nfg: dark ? '#5f5f68' : '#a9a89f', w: '400' };
     if (!settled) {
       const flat = {};
-      keys.forEach((k, i) => { flat[k] = { ...(i === 0 ? active : idle), fill: '0%', grow: 1 }; });
+      keys.forEach((k, i) => { flat[k] = { ...(i === 0 ? active : idle), fill: i === 0 ? '100%' : '0%', grow: 1 }; });
       return flat;
     }
-    const docEnd = Math.max(0, (document.documentElement.scrollHeight || 0) - window.innerHeight) + barH + 4;
+    const docEnd = Math.max(0, (document.documentElement.scrollHeight || 0) - window.innerHeight) + barH + 24;
     const raw = keys.map(k => {
       const el = document.getElementById('s-' + k);
       return el ? el.getBoundingClientRect().top + (window.scrollY || 0) : null;
@@ -775,32 +792,42 @@ class Component extends DCLogic {
       bounds[last] = Math.max((bounds[last - 1] || 0) + 40, docEnd - 320);
     }
 
+    // 각 챕터가 본문에서 차지하는 실제 높이(span)를 기반으로 비례 너비(grow) 계산
+    const docH = document.documentElement.scrollHeight || 0;
+    const rawEnd = raw.map((r, i) => raw[i + 1] != null ? raw[i + 1] : docH);
+    const spans = raw.map((r, i) => (r != null && rawEnd[i] > r) ? rawEnd[i] - r : 250);
+    const smoothed = spans.map(s => Math.pow(Math.max(s, 150), 0.55));
+    const totalSmoothed = smoothed.reduce((a, b) => a + b, 0) || 1;
+    const grows = smoothed.map(s => ((s / totalSmoothed) * keys.length).toFixed(2));
+
     const scrollTop = window.scrollY || 0;
     const maxY = Math.max(0, (document.documentElement.scrollHeight || 0) - window.innerHeight);
-    let liveActive = 's-' + keys[0];
-    keys.forEach((k, i) => { if (raw[i] != null && raw[i] <= top) liveActive = 's-' + k; });
-    if (maxY > 0 && maxY - scrollTop <= 2) liveActive = 's-education';
+    let activeIdx = 0;
+    keys.forEach((k, i) => { if (raw[i] != null && raw[i] <= top) activeIdx = i; });
+    if (maxY > 0 && maxY - scrollTop <= 12) activeIdx = keys.length - 1;
 
     const out = {};
     keys.forEach((k, i) => {
-      const start = bounds[i];
-      const end = Math.min(bounds[i + 1] != null ? bounds[i + 1] : docEnd, docEnd);
-      let p = 0;
-      if (start != null) {
-        p = end > start
-          ? Math.min(1, Math.max(0, (top - start) / (end - start)))
-          : (top >= start - 1 ? 1 : 0);
+      const g = grows[i];
+      if (i < activeIdx) {
+        // 지나온 챕터: 100% 게이지 누적 완료 표시
+        out[k] = { ...idle, fill: '100%', grow: g };
+      } else if (i === activeIdx) {
+        // 현재 활성 챕터: 강조 색상 및 실시간 읽기 진행도 게이지
+        const start = bounds[i];
+        const end = Math.min(bounds[i + 1] != null ? bounds[i + 1] : docEnd, docEnd);
+        let p = 0;
+        if (start != null && end > start) {
+          p = Math.min(1, Math.max(0, (top - start) / (end - start)));
+        }
+        const fillStr = Math.max(8, Math.min(100, p * 100)).toFixed(1) + '%';
+        out[k] = { ...active, fill: fillStr, grow: g };
+      } else {
+        // 아직 도달하지 않은 챕터: 0% 게이지
+        out[k] = { ...idle, fill: '0%', grow: g };
       }
-      const rawEnd = raw[i + 1] != null ? raw[i + 1] : (document.documentElement.scrollHeight || 0);
-      const span = (raw[i] != null && rawEnd > raw[i]) ? rawEnd - raw[i] : 120;
-      out[k] = { ...(liveActive === 's-' + k ? active : idle), fill: (p * 100).toFixed(1) + '%', grow: span };
     });
 
-    out.education.grow = (out.career.grow + out.stack.grow) / 2;
-    out.career.grow *= 1.1;
-    out.stack.grow *= 1.1;
-    const total = keys.reduce((t, k) => t + out[k].grow, 0) || 1;
-    keys.forEach(k => { out[k].grow = Math.max(0.6, (out[k].grow / total) * keys.length); });
     return out;
   }
 
@@ -817,7 +844,7 @@ class Component extends DCLogic {
 
   goTo = (id) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView();
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   onKeyDown = (e) => { if (e.key === 'Escape' && this.state.openId) this.closeModal(); };
