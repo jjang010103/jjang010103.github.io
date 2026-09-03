@@ -202,7 +202,14 @@ grep -c '@media (max-width:720px){' index.html
 grep -cE ':first-of-type|:last-of-type|> *div:first-child|style\*=' index.html
 ```
 
-**2026-09-03 기준 통과값:** 1 → `data-l` 18/18/18 · `data-lb` 9/9/9 | 2 → 111/111/111 | 3 → 출력 없음 | 4 → `0`, `1`, `0`.
+**2026-09-03 기준 통과값:** 1 → `data-l` 20/20/20 · `data-lb` 16/16/16 | 2 → 111/111/111 | 3 → 출력 없음 | 4 → `0`, `1`, `0`.
+
+5번째 검증 — **시트에 다크 리터럴이 남지 않았는가.** 색은 토큰에서만 온다(§7). `::selection`과 `a:hover`의 흑백 쌍만 예외다.
+
+```bash
+awk '/<style>/,/<\/style>/' index.html | grep -oE 'light-dark\(#[0-9a-f]{3,6},#[0-9a-f]{3,6}\)' | sort | uniq -c
+```
+→ `light-dark(#000,#fff)` 1 · `light-dark(#111,#fff)` 2 · `light-dark(#151514,#f2f2f2)` 1 · `light-dark(#f2f2f2,#151514)` 2 만 남아야 한다.
 
 숫자가 어긋나면 **거기서 멈춘다.** 3번은 필터에서 프로젝트가 조용히 사라지는 버그를, 1·2번은 한 언어만 고치고 커밋하는 사고를 잡는다.
 
