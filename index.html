@@ -1074,6 +1074,10 @@ class Component extends DCLogic {
   }
 
   onScroll = () => {
+    // 테마 전환 중에는 재측정하지 않는다. View Transition이 만드는 스냅샷 때문에
+    // scrollHeight가 잠깐 달라지고, 그 렌더에서 navState가 '아직 안 앉음' 경로로 빠져
+    // 내비 번호(00)가 한 번 깜빡인다.
+    if (this._vtBusy) return;
     const sy = Math.round(window.scrollY || 0);
     const vw = window.innerWidth;
     const edu = document.getElementById('s-education');
@@ -1161,7 +1165,12 @@ class Component extends DCLogic {
     root.style.setProperty('--vty', fy + '%');
     root.style.setProperty('--vtr', fr + '%');
 
-    const clear = () => root.removeAttribute('data-vt');
+    this._vtBusy = true;
+    const clear = () => {
+      root.removeAttribute('data-vt');
+      this._vtBusy = false;
+      this.onScroll();
+    };
     document.startViewTransition(() => this.applyTheme(theme)).finished.then(clear, clear);
   };
 
