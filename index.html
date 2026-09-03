@@ -104,10 +104,7 @@ section[id],header[id]{scroll-margin-top:76px}
 ::view-transition-old(root),::view-transition-new(root){mix-blend-mode:normal;backdrop-filter:none;animation:none}
 :root[data-vt="out"]::view-transition-old(root){z-index:1}
 :root[data-vt="out"]::view-transition-new(root){z-index:2;animation:mj-vt-out 620ms cubic-bezier(.4,0,.2,1) both}
-:root[data-vt="in"]::view-transition-new(root){z-index:1}
-:root[data-vt="in"]::view-transition-old(root){z-index:2;animation:mj-vt-in 620ms cubic-bezier(.4,0,.2,1) both}
 @keyframes mj-vt-out{from{clip-path:circle(0px at var(--vtx,50%) var(--vty,50%))}to{clip-path:circle(var(--vtr,150vmax) at var(--vtx,50%) var(--vty,50%))}}
-@keyframes mj-vt-in{from{clip-path:circle(var(--vtr,150vmax) at var(--vtx,50%) var(--vty,50%))}to{clip-path:circle(0px at var(--vtx,50%) var(--vty,50%))}}
 :focus{outline:none}
 :focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:4px}
 [data-modal],[data-modalcard],[data-modalbody],nav{scrollbar-width:none}
@@ -149,10 +146,11 @@ section[id],header[id]{scroll-margin-top:76px}
 .hero-name [data-lb="ja"]{font-size:.8em;letter-spacing:-.03em}
 .hero-lead{margin:30px 0 0;font-size:24px;line-height:1.5;letter-spacing:-.018em;color:var(--fg);max-width:820px;text-wrap:pretty;word-break:keep-all}
 .hero-lead a{color:var(--fg);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;text-decoration-thickness:1px}
-.hero-sub{margin:16px 0 0;font-size:17px;line-height:1.7;color:var(--muted);max-width:720px;word-break:keep-all}
+.hero-sub{margin:16px 0 0;font-size:17px;line-height:1.7;color:var(--fg);max-width:720px;word-break:keep-all}
 .hero-contact{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 20px;margin:26px 0 0;font-size:15px;color:var(--muted-2)}
-.hero-contact a{color:var(--muted-2);text-decoration:none;white-space:nowrap}
-.hero-contact a:hover{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
+.hero-contact a,.hero-contact button{padding:0;border:0;background:none;font:inherit;letter-spacing:inherit;color:var(--muted-2);text-decoration:none;white-space:nowrap;cursor:pointer}
+.hero-contact a:hover,.hero-contact button:hover{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
+.hero-contact button:focus-visible{outline:1px solid var(--line-ui);outline-offset:3px}
 
 
 /* ── chapters ───────────────────────────────────────────── */
@@ -386,8 +384,8 @@ section[data-chapter]{padding:80px 0 0}
     <span data-lb="ja">Windowsデスクトップ・Avaloniaクロスプラットフォームが主力。C++ Native連携からJava / Spring Boot大容量バックエンドまで担当。定量目標を先に定め、数値で結果を証明。</span>
   </p>
   <p class="mono hero-contact">
-    <a href="mailto:a9090618693@gmail.com">a9090618693@gmail.com</a>
-    <a href="tel:+821090618693">010-9061-8693</a>
+    <button type="button" onClick="{{ copyEmail }}" aria-label="Copy email address">{{ emailLabel }}</button>
+    <button type="button" onClick="{{ copyPhone }}" aria-label="Copy phone number">{{ phoneLabel }}</button>
     <a href="https://github.com/jjang010103" target="_blank" rel="noopener">GITHUB &#8599;</a>
     <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener">LINKEDIN &#8599;</a>
   </p>
@@ -953,7 +951,7 @@ const bold = (s) => s.indexOf('**') < 0 ? s : s.split('**').map((t, i) =>
   i & 1 ? React.createElement('strong', { key: i, style: { fontWeight: 600 } }, t) : t);
 
 class Component extends DCLogic {
-  state = { lang: 'ko', theme: 'light', openId: null, scrollY: 0, vw: 0, geo: '' };
+  state = { lang: 'ko', theme: 'light', openId: null, scrollY: 0, vw: 0, geo: '', copied: '' };
 
   componentDidMount() {
     let theme = null, lang = null;
@@ -977,8 +975,32 @@ class Component extends DCLogic {
     this._ro.observe(document.documentElement);
   }
 
+
+  // 히어로 연락처: 값 대신 라벨을 보여주고 누르면 클립보드에 넣는다.
+  // file://이나 http에서는 navigator.clipboard가 없으므로 execCommand로 떨어진다.
+  copyText(text, key) {
+    const done = () => {
+      this.setState({ copied: key });
+      clearTimeout(this._copyTimer);
+      this._copyTimer = setTimeout(() => this.setState({ copied: '' }), 1400);
+    };
+    const fallback = () => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      ta.remove();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else fallback();
+  }
   componentWillUnmount() {
     if (this._ro) this._ro.disconnect();
+    clearTimeout(this._copyTimer);
     window.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('scroll', this.onScroll);
     window.removeEventListener('resize', this.onScroll);
@@ -1120,8 +1142,9 @@ class Component extends DCLogic {
     const radius = Math.hypot(Math.max(x, w - x), Math.max(y, h - y));
 
     const root = document.documentElement;
-    const inward = this.inward = !this.inward;
-    root.setAttribute('data-vt', inward ? 'in' : 'out');
+    // 항상 'out' — 새 테마가 버튼 중앙에서 퍼져 나온다.
+    // 방향을 번갈아 주면 한 번 걸러 화면 가장자리에서 시작하는 것처럼 보인다.
+    root.setAttribute('data-vt', 'out');
     root.style.setProperty('--vtx', x + 'px');
     root.style.setProperty('--vty', y + 'px');
     root.style.setProperty('--vtr', radius + 'px');
@@ -1210,6 +1233,10 @@ class Component extends DCLogic {
       closeModal: this.closeModal,
       toTop: () => this.goTo('s-intro'),
       stop: (e) => e.stopPropagation(),
+      copyEmail: () => this.copyText('a9090618693@gmail.com', 'email'),
+      copyPhone: () => this.copyText('010-9061-8693', 'phone'),
+      emailLabel: this.state.copied === 'email' ? 'COPIED' : 'EMAIL',
+      phoneLabel: this.state.copied === 'phone' ? 'COPIED' : 'PHONE',
     };
   }
 }
