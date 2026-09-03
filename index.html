@@ -62,8 +62,10 @@ document.documentElement.style.colorScheme=t;})()</script>
   --dot:light-dark(#6f6f68,#9a9aa3);        /* 불릿 점 */
   --stripe:light-dark(#d3d1ca,#3c3c44);     /* 타임라인 공백 스트라이프 */
   --ai:light-dark(#4f46e5,#a5b4fc);         /* 모달 AI 섹션 강조 */
-  /* 다크는 배경이 이미 검어서 검은 그림자가 얼룩으로만 보인다. 면 대비와 테두리가 그 역할을 한다. */
-  --shadow:light-dark(rgba(0,0,0,.45),transparent);
+  /* 그림자는 2겹이다. 좁고 진한 접지 그림자가 카드 모서리를 만들고,
+     넓고 옅은 환경 그림자가 깊이를 준다. 한 겹짜리 넓은 블러는 어두운 배경에서 얼룩으로 보인다. */
+  --shadow-1:light-dark(rgba(0,0,0,.10),rgba(0,0,0,.62));
+  --shadow-2:light-dark(rgba(0,0,0,.35),rgba(0,0,0,.44));
 }
 body{margin:0;background:var(--bg);color:var(--fg);font-family:'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
 a{color:inherit;text-decoration:none}
@@ -215,7 +217,7 @@ section[data-chapter]{padding:80px 0 0}
 
 /* ── project modal ──────────────────────────────────────── */
 [data-modal]{position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:var(--bg);overflow:hidden}
-[data-modalcard]{position:relative;box-sizing:border-box;width:min(720px,calc(100vw - 32px));height:min(90vh,1100px);max-height:min(92vh,1140px);display:flex;flex-direction:column;overflow:hidden;background:var(--card);border:1px solid var(--line-soft);corner-shape:squircle;border-radius:24px;padding:22px 44px 40px;box-shadow:0 30px 90px var(--shadow)}
+[data-modalcard]{position:relative;box-sizing:border-box;width:min(720px,calc(100vw - 32px));height:min(90vh,1100px);max-height:min(92vh,1140px);display:flex;flex-direction:column;overflow:hidden;background:var(--card);border:1px solid var(--line-soft);corner-shape:squircle;border-radius:24px;padding:22px 44px 40px;box-shadow:0 4px 10px var(--shadow-1),0 24px 60px var(--shadow-2)}
 [data-modalhead]{flex:none;display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px}
 [data-modalbody]{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:6px}
 .mbody-col{display:flex;flex-direction:column}
