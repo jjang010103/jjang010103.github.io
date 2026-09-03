@@ -31,7 +31,7 @@ document.documentElement.style.colorScheme=t;})()</script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-jp-dynamic-subset.min.css">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<script>(function(){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',document.documentElement.style.colorScheme==='dark'?'#0c0c0d':'#fbfbf9')})()</script>
+<script>(function(){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',document.documentElement.style.colorScheme==='dark'?'#0d0d0e':'#fbfbf9')})()</script>
 <style>
 /* ============================================================
    LAYOUT ARCHITECTURE
@@ -44,23 +44,23 @@ document.documentElement.style.colorScheme=t;})()</script>
    ============================================================ */
 :root{
   color-scheme:light dark;
-  --bg:light-dark(#fbfbf9,#0c0c0d);
-  --fg:light-dark(#1c1b19,#ececed);
-  --ink:light-dark(#151514,#ececef);        /* 반전 블록 배경 */
-  --ink-fg:light-dark(#fbfbf9,#0c0c0d);     /* 반전 블록 글자 */
-  --card:light-dark(#f1f1f0,#161618);       /* 카드 면 */
-  --card-hover:light-dark(#eaeae9,#1c1c1e);
-  --card-item:light-dark(#fbfbf9,#1e1e22);  /* 카드 위의 한 단계 밝은 면 */
-  --line:light-dark(#e5e4e0,#232329);       /* 기본 헤어라인 */
-  --line-soft:light-dark(#e9e8e4,#1e1e23);
-  --line-card:light-dark(#e5e4de,#26262c);  /* 모달 내부 구분선 */
-  --line-ui:light-dark(#dedcd6,#2a2a30);    /* 버튼/세그먼트 테두리 */
-  --muted:light-dark(#6f6f68,#8e8e98);
-  --muted-2:light-dark(#63635d,#9b9ba4);
-  --chip-bg:light-dark(#f7f6f3,#1a1a1f);    /* 이니셜 배지 */
-  --chip-bc:light-dark(#e5e4e0,#2a2a30);
-  --chip-fg:light-dark(#4a4a45,#a5a5ad);
-  --ai:light-dark(#4f46e5,#818cf8);         /* AI 협업 섹션 강조 */
+  --bg:light-dark(#fbfbf9,#0d0d0e);
+  --fg:light-dark(#1c1b19,#f1f1f3);
+  --ink:light-dark(#151514,#f1f1f3);        /* 반전 블록 배경 */
+  --ink-fg:light-dark(#fbfbf9,#0d0d0e);     /* 반전 블록 글자 */
+  --card:light-dark(#f1f1f0,#1c1c20);       /* 카드 면 */
+  --card-hover:light-dark(#eaeae9,#222227);
+  --card-item:light-dark(#fbfbf9,#292930);  /* 카드 위의 한 단계 밝은 면 */
+  --line:light-dark(#e5e4e0,#41414a);       /* 기본 헤어라인 */
+  --line-soft:light-dark(#e9e8e4,#232328);
+  --line-card:light-dark(#e5e4de,#35353d);  /* 모달 내부 구분선 */
+  --line-ui:light-dark(#dedcd6,#41414a);    /* 버튼/세그먼트 테두리 */
+  --muted:light-dark(#6f6f68,#a9a9b3);
+  --muted-2:light-dark(#63635d,#b9b9c2);
+  --chip-bg:light-dark(#f7f6f3,#24242a);    /* 이니셜 배지 */
+  --chip-bc:light-dark(#e5e4e0,#41414a);
+  --chip-fg:light-dark(#4a4a45,#c6c6ce);
+  --ai:light-dark(#4f46e5,#a5b4fc);         /* AI 협업 섹션 강조 */
 }
 body{margin:0;background:var(--bg);color:var(--fg);font-family:'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
 a{color:inherit;text-decoration:none}
@@ -83,10 +83,10 @@ html[lang="ko"] [data-lb="ko"],html[lang="en"] [data-lb="en"],html[lang="ja"] [d
 .pill{font-size:13px;padding:5px 11px;border-radius:10px;white-space:nowrap}
 .pill-on{background:var(--ink);color:var(--ink-fg)}
 .pill-off{border:1px solid var(--line-ui)}
-.tag{font-size:12px;padding:3px 8px;border-radius:6px;background:light-dark(#eae8e2,#1b1b20);border:1px solid light-dark(#d8d6ce,#282830);color:light-dark(#2b2a27,#dcdcdf)}
+.tag{font-size:12px;padding:3px 8px;border-radius:6px;background:light-dark(#eae8e2,#292930);border:1px solid light-dark(#d8d6ce,#454550);color:light-dark(#2b2a27,#e6e6ea)}
 .tag--card{background:var(--card-item)}
 .eyebrow{font-size:12px;letter-spacing:.12em;color:var(--muted)}
-.speclabel{font-size:11.5px;letter-spacing:.11em;color:light-dark(#7a7972,#858590);margin-bottom:4px}
+.speclabel{font-size:11.5px;letter-spacing:.11em;color:light-dark(#7a7972,#9c9ca6);margin-bottom:4px}
 
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -111,7 +111,7 @@ section[id],header[id]{scroll-margin-top:76px}
 
 /* ── top bar ────────────────────────────────────────────── */
 [data-bar]{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:flex-end;gap:12px 10px;padding:14px 0;background:var(--bg)}
-.logo-btn{flex:none;align-self:flex-end;display:flex;align-items:center;height:27px;padding:0;margin-right:clamp(14px,2.2vw,26px);border:0;background-color:transparent;background-repeat:no-repeat;background-size:100% 100%;cursor:pointer;color:light-dark(#4a4a45,#a5a5ad);transition:opacity .2s ease;line-height:.85;white-space:nowrap;font-weight:700}
+.logo-btn{flex:none;align-self:flex-end;display:flex;align-items:center;height:27px;padding:0;margin-right:clamp(14px,2.2vw,26px);border:0;background-color:transparent;background-repeat:no-repeat;background-size:100% 100%;cursor:pointer;color:light-dark(#4a4a45,#c6c6ce);transition:opacity .2s ease;line-height:.85;white-space:nowrap;font-weight:700}
 .logo-btn:hover{opacity:.62}
 .logo-btn [data-l="ko"]{font-size:22.5px;letter-spacing:-.055em}
 .logo-btn [data-l="en"]{font-size:18px;letter-spacing:-.045em}
@@ -130,9 +130,9 @@ section[id],header[id]{scroll-margin-top:76px}
 .seg-btn--ko{font-size:15px}
 .seg--card .seg-btn{min-width:36px;padding:0 9px;font-size:12.5px}
 .seg--card .seg-btn--ko{font-size:14.5px}
-.icon-btn{height:32px;width:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#e2e1dd,#2a2a30);background:transparent;color:inherit;cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px}
+.icon-btn{height:32px;width:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid light-dark(#e2e1dd,#41414a);background:transparent;color:inherit;cursor:pointer;padding:0;corner-shape:squircle;border-radius:10px}
 .icon-btn--card{border-color:var(--line-ui);background:var(--card-item)}
-.icon-btn--close{color:light-dark(#55544e,#a2a2ad);transition:all .18s ease}
+.icon-btn--close{color:light-dark(#55544e,#a9a9b3);transition:all .18s ease}
 .icon-btn--close:hover{background:var(--ink);color:var(--ink-fg);border-color:transparent}
 .theme-ico{display:block;transition:transform .45s cubic-bezier(.65,0,.35,1)}
 
@@ -150,7 +150,7 @@ section[id],header[id]{scroll-margin-top:76px}
 
 /* ── about ──────────────────────────────────────────────── */
 .about{padding:54px 0;border-bottom:1px solid var(--line)}
-.about-body{width:100%;min-height:clamp(90px,10vw,120px);display:flex;flex-direction:column;gap:12px;font-size:17px;line-height:1.82;font-weight:300;letter-spacing:-.004em;color:light-dark(#33322e,#c9c9cf);word-break:keep-all;overflow-wrap:break-word}
+.about-body{width:100%;min-height:clamp(90px,10vw,120px);display:flex;flex-direction:column;gap:12px;font-size:17px;line-height:1.82;font-weight:300;letter-spacing:-.004em;color:light-dark(#33322e,#d9d9de);word-break:keep-all;overflow-wrap:break-word}
 .about-body p{margin:0}
 .about-body p+p{margin-top:10px}
 
@@ -167,13 +167,13 @@ section[data-chapter]{padding:96px 0 0}
 /* ── career timeline ────────────────────────────────────── */
 [data-tlbar]{display:flex;gap:3px;height:52px;align-items:stretch}
 .tl-seg{box-sizing:border-box;background:var(--ink);color:var(--ink-fg);corner-shape:squircle;border-radius:10px;padding:9px 14px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
-.tl-gap{background:repeating-linear-gradient(135deg,light-dark(#dedcd6,#26262b) 0 3px,transparent 3px 6px);corner-shape:squircle;border-radius:10px}
+.tl-gap{background:repeating-linear-gradient(135deg,light-dark(#dedcd6,#33333a) 0 3px,transparent 3px 6px);corner-shape:squircle;border-radius:10px}
 .tl-co{font-size:13.5px;font-weight:500;white-space:nowrap}
 .tl-date{font-size:11.5px;opacity:.68}
 
 /* ── company cards ──────────────────────────────────────── */
 [data-cocards]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;margin-top:22px}
-.co-card{corner-shape:squircle;border:1px solid transparent;border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;background:var(--card)}
+.co-card{corner-shape:squircle;border:1px solid var(--line-soft);border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;background:var(--card)}
 .co-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
 .badge{flex:none;display:flex;align-items:center;justify-content:center;corner-shape:squircle;border-radius:10px;border:1px solid var(--chip-bc);background:var(--chip-bg);font-weight:600;color:var(--chip-fg)}
 .badge--co{width:34px;height:34px;font-size:14.5px;letter-spacing:-.02em}
@@ -192,16 +192,16 @@ section[data-chapter]{padding:96px 0 0}
 [data-filters]{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px}
 .filter-btn{cursor:pointer;font-size:12.5px;letter-spacing:.02em;padding:6px 13px;border-radius:10px;white-space:nowrap;border-width:1px;border-style:solid}
 [data-projgrid]{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,370px),1fr));gap:16px}
-.proj-card{display:flex;flex-direction:column;cursor:pointer;corner-shape:squircle;border:1px solid transparent;border-radius:20px;padding:clamp(20px,3vw,26px) clamp(18px,3vw,26px) clamp(18px,3vw,24px);background:var(--card)}
+.proj-card{display:flex;flex-direction:column;cursor:pointer;corner-shape:squircle;border:1px solid var(--line-soft);border-radius:20px;padding:clamp(20px,3vw,26px) clamp(18px,3vw,26px) clamp(18px,3vw,24px);background:var(--card)}
 .proj-card:hover,.proj-card:focus-visible{background:var(--card-hover)}
 [data-rowarrow]{display:none}
 [data-cardmeta]{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:14px;font-size:12px;color:var(--muted)}
 .card-co{letter-spacing:.1em}
 .card-title{margin:0 0 6px;font-weight:600;font-size:19.5px;line-height:1.32;letter-spacing:-.026em;min-height:2.6em;word-break:keep-all;overflow-wrap:break-word}
 .card-title--feature{font-size:22px;line-height:1.28;letter-spacing:-.028em}
-.card-blurb{margin:0 0 18px;font-size:14.5px;font-weight:300;line-height:1.72;color:light-dark(#5e5e58,#9a9aa2);min-height:4.8em;word-break:keep-all;overflow-wrap:break-word}
+.card-blurb{margin:0 0 18px;font-size:14.5px;font-weight:300;line-height:1.72;color:light-dark(#5e5e58,#a4a4ae);min-height:4.8em;word-break:keep-all;overflow-wrap:break-word}
 [data-cardlink]{margin-top:auto;padding-top:15px;display:flex;align-items:center;justify-content:flex-end;font-size:12.5px}
-[data-cardlink] a{display:flex;align-items:center;gap:7px;color:light-dark(#151514,#ececed);white-space:nowrap;text-decoration:none}
+[data-cardlink] a{display:flex;align-items:center;gap:7px;color:light-dark(#151514,#f6f6f8);white-space:nowrap;text-decoration:none}
 [data-cardlink] a:hover{text-decoration:underline;text-underline-offset:3px}
 .proj-empty{margin:36px 0 0;text-align:center;font-size:13.5px;color:var(--muted)}
 
@@ -228,23 +228,23 @@ section[data-chapter]{padding:96px 0 0}
 [data-footmeta]{margin-top:44px;padding-top:16px;border-top:1px solid currentColor;opacity:.7;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;font-size:12px}
 
 /* ── project modal ──────────────────────────────────────── */
-[data-modal]{position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:light-dark(rgba(20,20,18,.56),rgba(0,0,0,.76));backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);overflow:hidden}
+[data-modal]{position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:light-dark(rgba(20,20,18,.56),rgba(0,0,0,.7));backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);overflow:hidden}
 [data-modalcard]{position:relative;box-sizing:border-box;width:min(100%,1070px);height:min(90vh,1100px);max-height:min(92vh,1140px);display:flex;flex-direction:column;overflow:hidden;background:var(--card);border:1px solid var(--line-card);corner-shape:squircle;border-radius:24px;padding:clamp(28px,4.2vw,48px);box-shadow:0 30px 90px rgba(0,0,0,.45)}
 [data-modalhead]{flex:none;display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px}
 [data-modalbody]{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:6px;margin-bottom:16px}
 .mbody-col{display:flex;flex-direction:column}
-.modal-title{margin:0 0 10px;font-size:clamp(22px,2.8vw,28px);font-weight:600;line-height:1.24;letter-spacing:-.028em;color:light-dark(#151514,#ececed);word-break:keep-all;overflow-wrap:break-word}
-.modal-blurb{margin:0 0 20px;font-size:15px;font-weight:300;line-height:1.75;color:light-dark(#4a4a45,#a8a8b2);word-break:keep-all;overflow-wrap:break-word}
+.modal-title{margin:0 0 10px;font-size:clamp(22px,2.8vw,28px);font-weight:600;line-height:1.24;letter-spacing:-.028em;color:light-dark(#151514,#f6f6f8);word-break:keep-all;overflow-wrap:break-word}
+.modal-blurb{margin:0 0 20px;font-size:15px;font-weight:300;line-height:1.75;color:light-dark(#4a4a45,#b4b4be);word-break:keep-all;overflow-wrap:break-word}
 .modal-spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px 20px;padding-top:18px;border-top:1px solid var(--line-card);margin-bottom:26px}
-.spec-co{font-size:14px;font-weight:600;color:light-dark(#151514,#ececed)}
-.spec-date{font-size:12.5px;color:light-dark(#2b2a27,#dcdcdf)}
-.spec-role{font-size:13px;color:light-dark(#33322e,#c9c9cf)}
+.spec-co{font-size:14px;font-weight:600;color:light-dark(#151514,#f6f6f8)}
+.spec-date{font-size:12.5px;color:light-dark(#2b2a27,#e6e6ea)}
+.spec-role{font-size:13px;color:light-dark(#33322e,#d9d9de)}
 .spec-wide{grid-column:1/-1;padding-top:10px;border-top:1px solid var(--line-card)}
 .spec-stack .speclabel{margin-bottom:6px}
 .spec-tags{display:flex;flex-wrap:wrap;gap:5px}
 .spec-linkrow{display:flex;align-items:center;gap:10px}
 .spec-linkrow .speclabel{margin-bottom:0}
-.spec-linkrow a{font-size:13px;font-weight:500;color:light-dark(#151514,#ececed);display:inline-flex;align-items:center;gap:4px;text-decoration:none;transition:all .15s}
+.spec-linkrow a{font-size:13px;font-weight:500;color:light-dark(#151514,#f6f6f8);display:inline-flex;align-items:center;gap:4px;text-decoration:none;transition:all .15s}
 .spec-linkrow a:hover{text-decoration:underline;text-underline-offset:3px;opacity:.75}
 .m-flow{display:flex;flex-direction:column}
 .m-flow-sec{display:grid;grid-template-columns:44px 1fr;gap:0 18px}
@@ -254,24 +254,24 @@ section[data-chapter]{padding:96px 0 0}
 [data-flowlast] .m-flow-line{display:none}
 .m-flow-body{display:flex;flex-direction:column;gap:12px;padding-bottom:30px}
 [data-flowlast] .m-flow-body{padding-bottom:0}
-.m-flow-title{font-size:16px;font-weight:600;letter-spacing:-.02em;line-height:22px;color:light-dark(#151514,#ececed)}
-.m-flow-text{margin:0;font-size:15px;line-height:1.75;font-weight:300;color:light-dark(#2b2a27,#dcdcdf);word-break:keep-all}
+.m-flow-title{font-size:16px;font-weight:600;letter-spacing:-.02em;line-height:22px;color:light-dark(#151514,#f6f6f8)}
+.m-flow-text{margin:0;font-size:15px;line-height:1.75;font-weight:300;color:light-dark(#2b2a27,#e6e6ea);word-break:keep-all}
 .m-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px;margin-bottom:2px}
 .m-stat{display:flex;flex-direction:column;gap:5px;padding:14px 16px 13px;background:var(--card-item);border:1px solid var(--line-card);corner-shape:squircle;border-radius:14px}
-.m-stat-v{font-size:26px;font-weight:600;letter-spacing:-.03em;line-height:1;color:light-dark(#151514,#ececed)}
+.m-stat-v{font-size:26px;font-weight:600;letter-spacing:-.03em;line-height:1;color:light-dark(#151514,#f6f6f8)}
 .m-stat-k{font-size:11px;letter-spacing:.08em;color:var(--muted)}
 .m-flow-list{display:flex;flex-direction:column;gap:8px;list-style:none;padding:0;margin:0}
-.m-flow-item{position:relative;padding-left:14px;font-size:14.5px;line-height:1.72;font-weight:300;color:light-dark(#2b2a27,#dcdcdf);word-break:keep-all}
-.m-flow-item::before{content:"";position:absolute;left:0;top:10px;width:4px;height:4px;border-radius:50%;background:light-dark(#8c8b85,#76757d)}
+.m-flow-item{position:relative;padding-left:14px;font-size:14.5px;line-height:1.72;font-weight:300;color:light-dark(#2b2a27,#e6e6ea);word-break:keep-all}
+.m-flow-item::before{content:"";position:absolute;left:0;top:10px;width:4px;height:4px;border-radius:50%;background:light-dark(#8c8b85,#8d8d97)}
 .m-flow-item strong{background:var(--ink);color:var(--ink-fg);padding:.08em .32em .12em;margin:0 .04em;border-radius:3px;font-weight:600;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .m-flow-sec--ai .m-flow-num{color:var(--ai)}
 .m-flow-sec--ai .m-flow-item::before{background:var(--ai)}
 [data-modalfoot]{flex:none;border-top:1px solid var(--line-card);padding-top:14px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px}
 .mfoot-id{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.mfoot-name{font-size:14.5px;font-weight:600;color:light-dark(#151514,#ececed);white-space:nowrap}
+.mfoot-name{font-size:14.5px;font-weight:600;color:light-dark(#151514,#f6f6f8);white-space:nowrap}
 .mfoot-role{font-size:12px;color:var(--muted);white-space:nowrap}
 .mfoot-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;font-size:12px}
-.mfoot-links a{color:light-dark(#151514,#ececed);text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.mfoot-links a{color:light-dark(#151514,#f6f6f8);text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
 .mfoot-links a.tight{gap:2px}
 .mfoot-links a:hover{text-decoration:underline;text-underline-offset:3px}
 .mfoot-k{color:var(--muted)}
@@ -328,7 +328,7 @@ section[data-chapter]{padding:96px 0 0}
   .card-date::before{content:'·';margin:0 7px;opacity:.55}
   .card-blurb{order:3;margin:0;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   [data-cardlink]{order:4;margin-top:14px}
-  [data-rowarrow]{display:block;position:absolute;top:46px;right:20px;font-size:22px;line-height:1;font-weight:300;color:light-dark(#9a9a92,#6a6a73)}
+  [data-rowarrow]{display:block;position:absolute;top:46px;right:20px;font-size:22px;line-height:1;font-weight:300;color:light-dark(#9a9a92,#7c7c86)}
 
   [data-edugrid]{gap:24px 0}
 
@@ -452,7 +452,7 @@ section[data-chapter]{padding:96px 0 0}
     <div class="co-card">
       <div class="co-head"><span class="badge badge--co">휴</span><div class="co-title"><span data-l="ko">㈜휴엔시스템 · EIS · 주임</span><span data-l="en">Huensystem · EIS · Associate</span><span data-l="ja">ヒュエンシステム · EIS · 主任</span></div></div>
       <div data-cardate class="mono">2018.09 — 2023.11 &nbsp;·&nbsp; 5<span data-l="ko">년</span><span data-l="en">y</span><span data-l="ja">年</span> 3<span data-l="ko">개월</span><span data-l="en">m</span><span data-l="ja">ヶ月</span></div>
-      <div class="co-desc"><span data-lb="ko">플랜트 배관 도면 자동화 제품군의 Windows 클라이언트를 전담했습니다.<br>도면 검색 속도를 98% 개선하고 심볼 좌표 추출을 자동화해 수작업 계산 공수를 70% 절감했으며, 현대엔지니어링 8개 현장과 삼성물산 평택 현장의 기술 지원 및 운영 이슈를 직접 대응했습니다.</span><span data-lb="en">Led the Windows client development for the piping drawing automation suite.<br>Improved drawing search speed by 98%, reduced manual calculations by 70% via automated symbol extraction, and handled on-site technical support across 8 Hyundai E&amp;C sites and Samsung C&amp;T Pyeongtaek.</span><span data-lb="ja">配管図面自動化製品群のWindowsクライアント開発を担当。<br>図面検索速度を98%改善し、シンボル座標抽出の自動化で手作業の計算工数を70%削減、現代エンジニアリング8現場およびサムスン物産・平沢現場の運用課題と技術支援に直接対応しました。</span></div>
+      <div class="co-desc"><span data-lb="ko">플랜트 배관 도면 자동화 제품군의 Windows 클라이언트를 전담했습니다.<br>도면 검색 속도를 98% 개선하고 심볼 좌표 추출을 자동화해 수작업 계산 공수를 70% 절감했으며, 현대엔지니어링 8개 이상 현장과 삼성물산 평택 현장의 기술 지원 및 운영 이슈를 직접 대응했습니다.</span><span data-lb="en">Led the Windows client development for the piping drawing automation suite.<br>Improved drawing search speed by 98%, reduced manual calculations by 70% via automated symbol extraction, and handled on-site technical support across 8+ Hyundai E&amp;C sites and Samsung C&amp;T Pyeongtaek.</span><span data-lb="ja">配管図面自動化製品群のWindowsクライアント開発を担当。<br>図面検索速度を98%改善し、シンボル座標抽出の自動化で手作業の計算工数を70%削減、現代エンジニアリング8箇所以上の現場およびサムスン物産・平沢現場の運用課題と技術支援に直接対応しました。</span></div>
       <div class="co-note"><span data-lb="ko">플랜트 건설·엔지니어링 특화 솔루션 기업</span><span data-lb="en">Solutions vendor for plant construction &amp; engineering</span><span data-lb="ja">プラント建設・エンジニアリング特化のソリューション企業</span></div>
     </div>
     <div class="co-card">
@@ -742,9 +742,9 @@ const PROJECTS = [
     title: { ko: '압축 프로그램 ezZip', en: 'ezZip & shared PC platform', ja: '圧縮ソフト ezZip · 共通プラットフォーム' },
     mtitle: { ko: '압축 프로그램 ezZip · 공통 플랫폼', en: 'ezZip — Compression Tool & Platform', ja: '圧縮ソフト ezZip・共通プラットフォーム' },
     blurb: {
-      ko: '자사 PC 제품군 전체에 적용되는 공통 모듈·통합 인스톨러 플랫폼을 설계하고, 첫 상용 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발 및 배포·운영을 총괄.',
-      en: 'Architected the shared desktop platform for all company PC apps and led flagship compression tool ezZip from concept to operations.',
-      ja: '自社PC製品群全体に適用される共通モジュール基盤を設計し、第1弾製品である圧縮ソフトezZipの企画からエンジン開発・運用まで統括。'
+      ko: '자사 PC 제품군 공통 모듈·인스톨러 플랫폼을 설계하고, 첫 상용 제품인 ezZip의 고성능 C# 엔진 개발 및 배포를 총괄하여 DAU 6만 명 달성.',
+      en: 'Architected the shared desktop platform and engineered the high-performance C# engine for ezZip, scaling the flagship app to 60K DAU.',
+      ja: '自社PC製品の共通基盤を設計し、第1弾製品ezZipの高性能C#エンジン開発と配信を統括してDAU 6万人を達成。'
     },
     role: { ko: '설계 & 엔진 개발', en: 'Core Architecture & Engine Dev', ja: '設計・エンジン開発' },
     stack: ['C#', '.NET 8', 'WPF', 'Avalonia', 'VC++', 'Native AOT', 'WiX'],
@@ -796,9 +796,9 @@ const PROJECTS = [
     title: { ko: '마케팅 메시지 발송 플랫폼 아이센드', en: 'iSend — marketing message platform', ja: 'マーケティング配信プラットフォーム iSend' },
     mtitle: { ko: '마케팅 메시지 발송 플랫폼 아이센드', en: 'iSend — Marketing Message Platform', ja: 'マーケティング配信プラットフォーム iSend' },
     blurb: {
-      ko: '카카오톡·SMS/LMS·이메일 발송 채널을 통합 관리하고 CRM 타겟팅 광고와 연계되는 대용량 백엔드 메시징 플랫폼.',
-      en: 'High-throughput backend messaging platform unifying KakaoTalk, SMS/LMS, and email channels with CRM targeting ad integration.',
-      ja: 'KakaoTalk・SMS/LMS・メール配信チャネルを統合管理し、CRMターゲティング広告と連携する大容量バックエンドプラットフォーム。'
+      ko: '다채널 마케팅 메시징과 CRM 타겟팅을 연계한 대용량 백엔드 플랫폼. 일 90만 건 트랜잭션을 무장애로 처리하고 쿼리 튜닝으로 주요 조회를 30% 개선.',
+      en: 'High-throughput backend integrating multi-channel messaging with CRM ad targeting. Handled 900K+ daily transactions and improved queries by 30%.',
+      ja: '多チャネル配信とCRM広告を連携する大容量バックエンド。日90万件超のトランザクションを無障害処理し、照会性能を30%改善。'
     },
     role: { ko: '백엔드 개발', en: 'Backend Dev', ja: 'バックエンド開発' },
     stack: ['Java', 'Spring Boot', 'MariaDB', 'MyBatis', 'REST API'],
@@ -828,9 +828,9 @@ const PROJECTS = [
         ja: '大規模集計・バッチクエリの実行計画チューニングにより**主要照会性能を30%改善**' }
     ],
     challenges: [
-      { ko: '수기 검증 및 반복적인 수작업 운영 프로세스를 **자동화 시스템으로 전환하여 운영 리소스 절감**',
-        en: 'Automated manual validation and repetitive workflows, **substantially reducing operational overhead**',
-        ja: '手動検証や反復的な運用作業を**自動化システムへ転換し、運用工数を大幅に削減**' }
+      { ko: '반복적인 수기 운영 요청을 **최고관리자 API 및 기능 시스템화로 전환하여 운영 부담 대폭 감소**',
+        en: 'Engineered super-admin APIs and self-service features, **substantially reducing recurring operational overhead**',
+        ja: '頻繁な運用要請を**最高管理者APIおよびセルフ機能へシステム化し、運用負荷を大幅に削減**' }
     ],
     ai: []
   },
@@ -842,9 +842,9 @@ const PROJECTS = [
     title: { ko: 'PC 앱 제작 서비스 MakeTApp', en: 'MakeTApp — PC app builder', ja: 'PCアプリ制作サービス MakeTApp' },
     mtitle: { ko: 'PC 앱 제작 서비스 MakeTApp', en: 'MakeTApp — PC App Builder', ja: 'PCアプリ制作サービス MakeTApp' },
     blurb: {
-      ko: '국내 최초 PC형 앱스토어(TAppStore) 생태계에 유통되는 웹 하이브리드 데스크톱 앱 대량 자동 생성 솔루션.',
-      en: "Automated mass-generation solution for hybrid desktop apps distributed across Korea's first PC-based app store ecosystem.",
-      ja: '韓国初のPC向けアプリストア(TAppStore)エコシステムに流通するハイブリッドデスクトップアプリを自動生成する制作ソリューション。'
+      ko: '웹 서비스를 독립된 데스크톱 앱으로 대량 패키징하는 자동화 솔루션. 약 800개 앱 자동 빌드 파이프라인을 구축하고 웹뷰 로딩 시간을 75% 단축.',
+      en: 'Automated hybrid desktop builder for app stores. Engineered a batch pipeline building ~800 apps and cut webview load times by 75%.',
+      ja: 'WebサービスをPCアプリ化する自動生成ソリューション。約800本の自動ビルド環境を構築し、WebViewロード時間を75%短縮。'
     },
     role: { ko: '데스크톱 솔루션 개발', en: 'Desktop Solution Dev', ja: 'デスクトップ開発' },
     stack: ['C#', 'WPF', 'MVVM', 'CefSharp'],
@@ -854,21 +854,25 @@ const PROJECTS = [
       ja: 'PC向けアプリストア流通のため、Webサービスを独立したデスクトップアプリとして一括生成する自動化ソリューションを開発。'
     },
     features: [
-      { ko: '쇼핑몰·뉴스·웹툰 등 카테고리별로 파편화되어 있던 솔루션을 **단일 통합 코어로 재구축**',
-        en: 'Consolidated category-fragmented apps into a **unified single-core desktop runtime**',
-        ja: 'カテゴリ別に分散していたソリューションを**単一の統合コアへ再構築**' },
-      { ko: 'CefSharp 브라우저 렌더링 및 캐싱 최적화로 **웹페이지 이동 시 체감 로딩 시간 75% 단축**',
-        en: 'Optimized CefSharp browser rendering and memory caching, **cutting perceived page load times by 75%**',
-        ja: 'CefSharpブラウザのレンダリングおよびキャッシュ最適化により**体感ロード時間を75%短縮**' }
+      { ko: '쇼핑몰·뉴스·웹툰 등 카테고리별로 분리된 솔루션을 **단일 통합 코어로 일원화**',
+        en: 'Consolidated category-fragmented solutions into a **unified single-core desktop runtime**',
+        ja: 'カテゴリ別に分散していたソリューションを**単一の統合コアへ一本化**' },
+      { ko: 'CefSharp 기반 웹뷰 래퍼 아키텍처 및 **800여 개 앱 자동 대량 빌드 시스템** 설계',
+        en: 'Architected CefSharp webview wrapper and **batch automated build pipeline for ~800 apps**',
+        ja: 'CefSharpベースのWebViewラッパーおよび**約800本アプリの一括自動ビルド環境**を設計' }
     ],
     stats: [
       { v: { ko: '800개', en: '~800', ja: '800本' },          k: { ko: '자동 빌드 앱', en: 'APPS AUTO-BUILT', ja: '自動ビルド' } },
-      { v: { ko: '1일→1시간', en: '1d → 1h', ja: '1日→1時間' }, k: { ko: '제작 소요 시간', en: 'BUILD TIME', ja: '制作時間' } }
+      { v: { ko: '1일→1시간', en: '1d → 1h', ja: '1日→1時間' }, k: { ko: '제작 소요 시간', en: 'BUILD TIME', ja: '制作時間' } },
+      { v: { ko: '75%', en: '75%', ja: '75%' },               k: { ko: '페이지 로딩 단축', en: 'FASTER PAGE LOAD', ja: 'ページロード短縮' } }
     ],
     metrics: [
-      { ko: '약 **800개 앱을 자동 빌드**하는 일괄 파이프라인을 구축해 1일 소요되던 제작 공수를 1시간으로 대폭 단축',
-        en: 'Built a batch pipeline that **auto-builds ~800 apps**, dramatically reducing production time from 1 day to 1 hour',
-        ja: '約**800本のアプリを一括自動ビルド**するパイプラインを構築し、1日要していた制作工数を1時間に大幅短縮' }
+      { ko: '약 **800개 앱 자동 빌드 시스템**을 구축하여 하루 소요되던 제작 작업을 1시간으로 대폭 단축',
+        en: 'Engineered an automated batch pipeline for **~800 apps, slashing production time from 1 day to 1 hour**',
+        ja: '約**800本のアプリを一括自動ビルド**する環境を構築し、1日要していた制作作業を1時間に大幅短縮' },
+      { ko: 'CefSharp 브라우저 렌더링 및 캐시 최적화로 **웹페이지 이동 로딩 시간을 75% 단축**',
+        en: 'Optimized CefSharp rendering and caching, **cutting web page transition loading times by 75%**',
+        ja: 'CefSharpの描画およびキャッシュ最適化により**Webページ遷移時のロード時間を75%短縮**' }
     ],
     challenges: [
       { ko: '카테고리별 다양한 웹 기술 스펙 차이를 **단일 웹뷰 래퍼 환경에서 안정적으로 호환되도록 설계**',
@@ -885,9 +889,9 @@ const PROJECTS = [
     title: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool / Ez-ISO — piping drawing automation', ja: '配管図面自動化 Ez-Spool / Ez-ISO' },
     mtitle: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool — Piping Drawing Automation', ja: '配管図面自動化 Ez-Spool' },
     blurb: {
-      ko: '플랜트 배관 시공용 Spool 제작 도면·BOM·용접 리포트 자동 산출 시스템 및 Revit 기반 ISO 도면 추출 엔진.',
-      en: 'Automated generation of plant piping spool fabrication drawings, BOMs, and welding reports with Revit-based ISO extraction.',
-      ja: 'プラント配管施工向けのSpool製作図面・BOM・溶接レポート自動生成システムおよびRevitベースのISO図面抽出エンジン。'
+      ko: '플랜트 배관 Spool 도면·BOM 자동 산출 및 도면 추출 엔진. 검색 알고리즘 개선으로 도면 조회를 98% 단축하고 현대엔지니어링·삼성물산 현장을 지원.',
+      en: 'Automated plant piping spool drawing and BOM engine. Accelerated drawing search by 98% and led on-site operations for Hyundai E&C and Samsung C&T.',
+      ja: '配管Spool図面・BOM自動算出エンジン。検索処理を98%高速化し、現代エンジニアリングやサムスン物産の施工現場へ直接対応。'
     },
     role: { ko: '도면 솔루션 개발', en: 'CAD Solution Dev', ja: '図面開発' },
     stack: ['C#', 'ASP.NET', 'VB.NET', 'MSSQL', 'EyeShot', 'LiteCad'],
@@ -917,9 +921,12 @@ const PROJECTS = [
         ja: 'CAD図面形状に基づくシンボル座標自動抽出ツールを開発し**手動計算工数を70%削減**' }
     ],
     challenges: [
-      { ko: '현대엔지니어링 8개 현장 및 삼성물산 평택 현장의 **기술 지원과 실시간 운영 이슈 전담 대응**',
+      { ko: '현대엔지니어링 8개 이상 현장 및 삼성물산 평택 현장의 **운영 이슈와 VOC에 실시간 전담 대응**',
         en: 'Handled technical support and real-time operations for **8+ Hyundai E&C and Samsung C&T sites**',
-        ja: '現代エンジニアリング8現場以上およびサムスン物産・平沢現場の**技術支援と運用課題に専任対応**' }
+        ja: '現代エンジニアリング8箇所以上の現場およびサムスン物産・平沢現場の**運用課題に専任対応**' },
+      { ko: '레거시 쿼리를 SP·Function·View 구조로 재구성하여 **리포트 조회 성능과 데이터 정합성 개선**',
+        en: 'Restructured legacy queries into SPs, Functions, and Views, **optimizing report queries and data integrity**',
+        ja: 'レガシークエリをストアドプロシージャやView構造へ再構築し、**レポート照会性能と整合性を改善**' }
     ],
     ai: []
   },
@@ -931,12 +938,12 @@ const PROJECTS = [
     title: { ko: '배관 시공 모니터링 PC3D', en: 'PC3D — piping construction monitoring', ja: '配管施工モニタリング PC3D' },
     mtitle: { ko: '배관 시공 모니터링 PC3D', en: 'PC3D — Piping Construction Monitoring', ja: '配管施工モニタリング PC3D' },
     blurb: {
-      ko: 'Autodesk Navisworks Add-in 기반으로 3D 모델 위에 배관 시공 공정을 실시간 컬러링 모니터링하는 솔루션.',
-      en: 'Autodesk Navisworks Add-in monitoring plant piping construction status via real-time 3D model color-coding.',
-      ja: 'Autodesk Navisworksアドインとして、3Dプラントモデル上に配管施工工程をリアルタイム色分け表示する監視ソリューション。'
+      ko: '대용량 3D 플랜트 모델 위에 배관 시공 공정을 실시간 컬러링 시각화하는 솔루션. C++ Native 연산 최적화로 메모리 누수(Zero Leak)를 해결.',
+      en: 'Real-time 3D plant piping visualization Add-in for Navisworks. Resolved high-load memory leaks (Zero Leak) via C++ native optimization.',
+      ja: '大容量3Dプラントモデル上に配管施工工程を可視化するNavisworksアドイン。C++最適化によりメモリリーク(Zero Leak)を完全解消。'
     },
     role: { ko: '3D 플러그인 개발', en: '3D Plugin Dev', ja: '3D開発' },
-    stack: ['C#', 'C++', 'Navisworks'],
+    stack: ['C#', 'C++', 'Navisworks API'],
     intro: {
       ko: 'Autodesk Navisworks Add-in 환경에서 대용량 3D 플랜트 모델 위에 배관 시공 현황을 실시간 컬러링으로 시각화하는 시스템 개발.',
       en: 'Developed a real-time 3D construction progress visualization Add-in within Autodesk Navisworks.',
@@ -967,9 +974,9 @@ const PROJECTS = [
     title: { ko: '보운이피씨 자재관리 ERP 모바일 앱', en: 'Bowoon EPC — materials management app', ja: 'ボウンEPC 資材管理モバイルアプリ' },
     mtitle: { ko: '보운이피씨 자재관리 ERP 모바일 앱', en: 'Bowoon EPC — Materials Management ERP App', ja: 'ボウンEPC 資材管理ERPモバイルアプリ' },
     blurb: {
-      ko: '기존 윈도우 ERP의 핵심 자재 수불 및 현장 관리 기능을 모바일로 이식한 크로스플랫폼 앱. 단독 설계 및 개발.',
-      en: 'Cross-platform mobile ERP app porting core materials inventory and on-site logistics from desktop ERP. Sole developer.',
-      ja: '既存Windows ERPの主要な資材受払・現場管理機能をモバイルへ移植したクロスプラットフォームアプリ。単独設計・開発。'
+      ko: '윈도우 ERP의 핵심 자재 수불 및 물류 관리 기능을 모바일로 이식한 크로스플랫폼 솔루션. Xamarin·MVVM 아키텍처부터 FCM 푸시까지 100% 단독 개발.',
+      en: 'Cross-platform mobile app porting desktop ERP materials logistics. Solely engineered end-to-end (100%) from Xamarin/MVVM architecture to FCM push.',
+      ja: 'Windows ERPの主要な資材管理機能を移植したモバイルアプリ。Xamarin/MVVM設計からFCM通知まで100%単独開発。'
     },
     role: { ko: '모바일 단독 개발', en: 'Sole Mobile Dev', ja: 'モバイル単独開発' },
     stack: ['C#', 'Xamarin', 'MVVM', 'Firebase'],
@@ -1157,7 +1164,7 @@ class Component extends DCLogic {
       this.setState({ theme }, () => {
         document.documentElement.style.colorScheme = theme;
         const tc = document.querySelector('meta[name="theme-color"]');
-        if (tc) tc.setAttribute('content', theme === 'dark' ? '#0c0c0d' : '#fbfbf9');
+        if (tc) tc.setAttribute('content', theme === 'dark' ? '#0d0d0e' : '#fbfbf9');
         try { localStorage.setItem('mj-resume-theme', theme); } catch (e) {}
         resolve();
       });
@@ -1196,7 +1203,7 @@ class Component extends DCLogic {
     const f = this.state.filter;
     const t = (o) => o[lang];
 
-    const on  = { bg: dark ? '#ececef' : '#151514', fg: dark ? '#0c0c0d' : '#fbfbf9', bc: dark ? '#ececef' : '#151514', inv: true };
+    const on  = { bg: dark ? '#ececef' : '#151514', fg: dark ? '#0d0d0e' : '#fbfbf9', bc: dark ? '#ececef' : '#151514', inv: true };
     const off = { bg: 'transparent', fg: dark ? '#9a9aa2' : '#5e5e58', bc: dark ? '#2a2a30' : '#dedcd6', inv: null };
 
     const view = (p) => {
