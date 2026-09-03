@@ -60,6 +60,7 @@ document.documentElement.style.colorScheme=t;})()</script>
   --chip-bg:light-dark(#f7f6f3,#1a1a1f);    /* 이니셜 배지 */
   --chip-bc:light-dark(#e5e4e0,#2a2a30);
   --chip-fg:light-dark(#4a4a45,#a5a5ad);
+  --ai:light-dark(#4f46e5,#818cf8);         /* AI 협업 섹션 강조 */
 }
 body{margin:0;background:var(--bg);color:var(--fg);font-family:'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
 a{color:inherit;text-decoration:none}
@@ -153,12 +154,6 @@ section[id],header[id]{scroll-margin-top:76px}
 .about-body p{margin:0}
 .about-body p+p{margin-top:10px}
 
-/* ── KPI band ───────────────────────────────────────────── */
-[data-kpisec]{padding:40px 0;border-bottom:1px solid var(--line)}
-[data-kpi]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:2px;background:var(--line-soft)}
-.kpi-cell{background:var(--bg);padding:26px 22px 24px}
-.kpi-num{font-size:44px;font-weight:500;letter-spacing:-.035em}
-.kpi-label{margin-top:10px;font-size:13.5px;color:var(--muted-2)}
 
 /* ── chapters ───────────────────────────────────────────── */
 section[data-chapter]{padding:96px 0 0}
@@ -251,12 +246,26 @@ section[data-chapter]{padding:96px 0 0}
 .spec-linkrow .speclabel{margin-bottom:0}
 .spec-linkrow a{font-size:13px;font-weight:500;color:light-dark(#151514,#ececed);display:inline-flex;align-items:center;gap:4px;text-decoration:none;transition:all .15s}
 .spec-linkrow a:hover{text-decoration:underline;text-underline-offset:3px;opacity:.75}
-.contrib-head{margin-bottom:14px;font-weight:600}
-[data-contrib-list]{display:flex;flex-direction:column;gap:9px}
-[data-contrib-item]{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:14px;corner-shape:squircle;background:var(--card-item);border:1px solid var(--line-card);transition:background .15s}
-[data-contrib-badge]{flex:none;width:24px;height:24px;border-radius:7px;corner-shape:squircle;background:light-dark(#eae8e2,#282830);color:light-dark(#4a4943,#a2a2ad);font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:2px}
-[data-contrib-text]{font-size:14.5px;line-height:1.72;color:light-dark(#2b2a27,#dcdcdf);font-weight:300;word-break:keep-all;overflow-wrap:break-word}
-[data-contrib-text] strong{background:var(--ink);color:var(--ink-fg);padding:.08em .32em .12em;margin:0 .04em;border-radius:3px;font-weight:600;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.m-flow{display:flex;flex-direction:column}
+.m-flow-sec{display:grid;grid-template-columns:44px 1fr;gap:0 18px}
+.m-flow-rail{display:flex;flex-direction:column;align-items:center;gap:10px}
+.m-flow-num{font-size:12px;font-weight:500;letter-spacing:.08em;line-height:22px;color:var(--muted)}
+.m-flow-line{flex:1;width:1px;background:var(--line-ui)}
+[data-flowlast] .m-flow-line{display:none}
+.m-flow-body{display:flex;flex-direction:column;gap:12px;padding-bottom:30px}
+[data-flowlast] .m-flow-body{padding-bottom:0}
+.m-flow-title{font-size:16px;font-weight:600;letter-spacing:-.02em;line-height:22px;color:light-dark(#151514,#ececed)}
+.m-flow-text{margin:0;font-size:15px;line-height:1.75;font-weight:300;color:light-dark(#2b2a27,#dcdcdf);word-break:keep-all}
+.m-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px;margin-bottom:2px}
+.m-stat{display:flex;flex-direction:column;gap:5px;padding:14px 16px 13px;background:var(--card-item);border:1px solid var(--line-card);corner-shape:squircle;border-radius:14px}
+.m-stat-v{font-size:26px;font-weight:600;letter-spacing:-.03em;line-height:1;color:light-dark(#151514,#ececed)}
+.m-stat-k{font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.m-flow-list{display:flex;flex-direction:column;gap:8px;list-style:none;padding:0;margin:0}
+.m-flow-item{position:relative;padding-left:14px;font-size:14.5px;line-height:1.72;font-weight:300;color:light-dark(#2b2a27,#dcdcdf);word-break:keep-all}
+.m-flow-item::before{content:"";position:absolute;left:0;top:10px;width:4px;height:4px;border-radius:50%;background:light-dark(#8c8b85,#76757d)}
+.m-flow-item strong{background:var(--ink);color:var(--ink-fg);padding:.08em .32em .12em;margin:0 .04em;border-radius:3px;font-weight:600;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.m-flow-sec--ai .m-flow-num{color:var(--ai)}
+.m-flow-sec--ai .m-flow-item::before{background:var(--ai)}
 [data-modalfoot]{flex:none;border-top:1px solid var(--line-card);padding-top:14px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px}
 .mfoot-id{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .mfoot-name{font-size:14.5px;font-weight:600;color:light-dark(#151514,#ececed);white-space:nowrap}
@@ -284,12 +293,6 @@ section[data-chapter]{padding:96px 0 0}
 
   [data-contact]{gap:0}
   .contact-row{min-height:46px;align-items:center;padding-bottom:0}
-
-  /* stats become a full-bleed band, not another card */
-  [data-kpisec]{padding:30px 0;border-bottom:0}
-  [data-kpi]{grid-template-columns:1fr 1fr;margin:0 calc(-1*clamp(18px,4vw,32px))}
-  .kpi-cell{padding:18px clamp(18px,4vw,32px) 16px}
-  .kpi-num{font-size:30px}
 
   /* chapter rhythm: tighter blocks, clearer breaks */
   section[data-chapter]{padding-top:46px}
@@ -342,8 +345,13 @@ section[data-chapter]{padding:96px 0 0}
   [data-modalhead]{position:sticky;top:0;z-index:10;background:var(--card);padding-top:4px;padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--line-card)}
   [data-modalbody]{flex:1 0 auto;overflow:visible;height:auto;min-height:auto;margin-bottom:0;padding-right:0}
   [data-modalfoot]{margin-top:36px;padding-top:18px}
-  [data-contrib-item]{padding:12px 14px;gap:10px}
-  [data-contrib-text]{font-size:14px;line-height:1.7}
+  .m-flow-sec{grid-template-columns:28px 1fr;gap:0 12px}
+  .m-flow-body{padding-bottom:24px;gap:10px}
+  .m-flow-title{font-size:15.5px}
+  .m-flow-text{font-size:14.5px}
+  .m-stats{grid-template-columns:1fr 1fr}
+  .m-stat{padding:12px 14px 11px}
+  .m-stat-v{font-size:22px}
 }
 @media print{
   :root{color-scheme:light only}
@@ -416,19 +424,6 @@ section[data-chapter]{padding:96px 0 0}
     <div data-lb="ja">
       <p>高校在学中に開発を始め、8年目のC#/.NETエンジニアへと成長しました。WindowsデスクトップおよびAvaloniaによるクロスプラットフォーム開発を主軸とし、C++ Native連携からJava/Spring Bootによる大容量分散環境まで幅広い実務経験を有しています。</p>
       <p>単なる機能実装にとどまらず、性能最適化・ユーザー体験・長期保守性を設計の核心価値とし、明確な定量的目標と技術的な粘り強さで結果を証明する開発を追求しています。</p>
-    </div>
-  </div>
-</section>
-
-<section data-kpisec>
-  <div data-kpi>
-    <div class="kpi-cell">
-      <div class="mono kpi-num">60K</div>
-      <div class="kpi-label"><span data-l="ko">ezZip 일 활성 사용자</span><span data-l="en">ezZip daily active users</span><span data-l="ja">ezZip 一日あたりアクティブユーザー</span></div>
-    </div>
-    <div class="kpi-cell">
-      <div class="mono kpi-num">&minus;50%</div>
-      <div class="kpi-label"><span data-l="ko">실행 파일 크기 (AOT·Trimming)</span><span data-l="en">binary size (AOT + trimming)</span><span data-l="ja">実行ファイルサイズ (AOT・Trimming)</span></div>
     </div>
   </div>
 </section>
@@ -594,9 +589,8 @@ section[data-chapter]{padding:96px 0 0}
 
     <div data-modalbody>
       <sc-for list="{{ openCard }}" as="p" hint-placeholder-count="1">
-        <div class="mbody-col">
+                <div class="mbody-col">
           <h3 class="modal-title">{{ p.mtitle }}</h3>
-          <p class="modal-blurb">{{ p.blurb }}</p>
 
           <div class="modal-spec">
             <div>
@@ -629,13 +623,33 @@ section[data-chapter]{padding:96px 0 0}
             </sc-if>
           </div>
 
-          <div class="mono eyebrow contrib-head">{{ contribHeading }}</div>
-
-          <div data-contrib-list>
-            <sc-for list="{{ p.items }}" as="c" hint-placeholder-count="4">
-              <div data-contrib-item>
-                <span data-contrib-badge class="mono">{{ c.n }}</span>
-                <div data-contrib-text>{{ c.text }}</div>
+          <div class="m-flow">
+            <sc-for list="{{ p.flow }}" as="s" hint-placeholder-count="5">
+              <div class="m-flow-sec {{ s.cls }}" data-flowlast="{{ s.last }}">
+                <div class="m-flow-rail">
+                  <span class="mono m-flow-num">{{ s.num }}</span>
+                  <span class="m-flow-line"></span>
+                </div>
+                <div class="m-flow-body">
+                  <div class="m-flow-title">{{ s.title }}</div>
+                  <sc-if value="{{ s.isText }}">
+                    <p class="m-flow-text">{{ s.text }}</p>
+                  </sc-if>
+                  <sc-if value="{{ s.hasStats }}">
+                    <div class="m-stats">
+                      <sc-for list="{{ s.stats }}" as="k" hint-placeholder-count="3">
+                        <div class="m-stat"><span class="m-stat-v">{{ k.v }}</span><span class="mono m-stat-k">{{ k.k }}</span></div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ s.isList }}">
+                    <ul class="m-flow-list">
+                      <sc-for list="{{ s.items }}" as="c" hint-placeholder-count="2">
+                        <li class="m-flow-item">{{ c.text }}</li>
+                      </sc-for>
+                    </ul>
+                  </sc-if>
+                </div>
               </div>
             </sc-for>
           </div>
@@ -728,25 +742,50 @@ const PROJECTS = [
     title: { ko: '압축 프로그램 ezZip', en: 'ezZip & shared PC platform', ja: '圧縮ソフト ezZip · 共通プラットフォーム' },
     mtitle: { ko: '압축 프로그램 ezZip · 공통 플랫폼', en: 'ezZip — Compression Tool & Platform', ja: '圧縮ソフト ezZip・共通プラットフォーム' },
     blurb: {
-      ko: '자사 PC 제품군 전체에 적용되는 공통 모듈·통합 인스톨러 플랫폼을 설계하고, 첫 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발 및 배포·운영을 주도.',
-      en: 'Architected the shared module and installer platform for company-wide PC products, and spearheaded ezZip from initial design to engine dev and operations.',
-      ja: '自社PC製品群全体に適用される共通モジュール・インストーラー基盤を設計し、第1弾製品である圧縮ソフトezZipの企画からエンジン開発・運用まで主導。'
+      ko: '자사 PC 제품군 전체에 적용되는 공통 모듈·통합 인스톨러 플랫폼을 설계하고, 첫 상용 제품인 압축 소프트웨어 ezZip의 기획부터 엔진 개발 및 배포·운영을 총괄.',
+      en: 'Architected the shared desktop platform for all company PC apps and led flagship compression tool ezZip from concept to operations.',
+      ja: '自社PC製品群全体に適用される共通モジュール基盤を設計し、第1弾製品である圧縮ソフトezZipの企画からエンジン開発・運用まで統括。'
     },
     role: { ko: '설계 & 엔진 개발', en: 'Core Architecture & Engine Dev', ja: '設計・エンジン開発' },
     stack: ['C#', '.NET 8', 'WPF', 'Avalonia', 'VC++', 'Native AOT', 'WiX'],
-    items: [
-      { ko: '최초 기획부터 엔진 개발·운영을 주도하여 **일 평균 설치 1,800건, DAU 6만 명** 달성 — 자사 PC 제품군 중 최다 다운로드 및 최고 활성 사용자 수 기록',
-        en: 'Led product end-to-end to **1,800 daily installs and 60K DAU**, achieving the highest downloads and active user metrics among internal PC products',
-        ja: '企画・開発・運用を一貫して主導し、**1日平均インストール1,800件・DAU 6万人**を達成（自社PC製品内で最多DL・最高アクティブ数を記録）' },
-      { ko: '7z.dll을 .NET 8 Source-Generated COM Interop 기반 C# 엔진으로 재구현하고 Span 기반 제로 카피 마샬링으로 **네이티브 동등 수준의 처리 성능** 확보',
-        en: 'Re-engineered 7z.dll with .NET 8 source-generated COM interop; Span-based zero-copy marshalling reached **parity with native C++ engine performance**',
-        ja: '7z.dllを.NET 8のSource-Generated COM InteropベースのC#エンジンとして再構築し、Spanゼロコピーで**ネイティブと同等の高処理性能**を達成' },
-      { ko: 'Native AOT·Trimming 최적화와 Avalonia 기반 경량 인스톨러 구축으로 **실행 바이너리 크기 50% 이상 감축**, WiX Bundle 통합 설치 시스템 전사 표준화',
-        en: 'Reduced **binary size by over 50%** via Native AOT, trimming, and a lightweight Avalonia installer; standardized the shared WiX Bundle across products',
-        ja: 'Native AOT・Trimming最適化とAvalonia軽量インストーラーにより**バイナリサイズを50%以上削減**、全社標準WiX Bundle統合インストーラーを確立' },
-      { ko: '반복 기능을 공통 모듈 아키텍처로 분리하고 Directory.Build.props 기반 멀티 프로덕트 빌드 시스템을 구축해 **단일 코드베이스에서 다수 제품 빌드** 체계 확립',
-        en: 'Decoupled shared features into a common modular architecture and unified Directory.Build.props — enabling **multi-product builds from a single codebase**',
-        ja: '共通機能をモジュール設計へ分離し、.propsベースのビルド環境を構築して**単一コードベースからの複数製品ビルド体制**を確立' }
+    intro: {
+      ko: '자사 PC 소프트웨어 전반의 중복 개발을 해소하기 위한 공통 플랫폼을 구축하고, 첫 상용 제품으로 압축 프로그램 ezZip의 기획부터 배포·운영을 총괄.',
+      en: 'Established a shared desktop platform to eliminate duplicate engineering across company PC apps, leading ezZip as the flagship product from concept to operations.',
+      ja: '自社PCソフトウェア全般の重複開発を解消する共通基盤を構築し、第1弾の商用製品として圧縮ソフトezZipの企画から配信・運用までを統括。'
+    },
+    features: [
+      { ko: '7z.dll을 .NET 8 Source-Generated COM Interop 기반 C# 엔진으로 재구현하고 **Span 제로 카피 마샬링** 적용',
+        en: 'Re-engineered 7z.dll with .NET 8 source-generated COM interop and **Span-based zero-copy marshalling**',
+        ja: '7z.dllを.NET 8のSource-Generated COM InteropベースのC#エンジンとして再構築し、**Spanゼロコピー**を適用' },
+      { ko: 'Directory.Build.props 기반 멀티 프로덕트 빌드 시스템 및 **WiX Toolset Bundle 전사 공통 통합 인스톨러** 개발',
+        en: 'Engineered a unified Directory.Build.props build system and **company-wide WiX Toolset Bundle installer**',
+        ja: '.propsベースのマルチプロダクトビルド環境と**全社共通WiX Toolset Bundleインストーラー**を開発' }
+    ],
+    stats: [
+      { v: { ko: '6만 명', en: '60K', ja: '6万人' },      k: { ko: 'DAU', en: 'DAU', ja: 'DAU' } },
+      { v: { ko: '1,800건', en: '1,800', ja: '1,800件' }, k: { ko: '일 평균 설치', en: 'DAILY INSTALLS', ja: '1日平均インストール' } },
+      { v: { ko: '50%+', en: '50%+', ja: '50%+' },        k: { ko: '실행 파일 크기 감축', en: 'SMALLER BINARY', ja: 'バイナリ削減' } }
+    ],
+    metrics: [
+      { ko: '최초 기획부터 엔진 개발·운영을 주도하여 **일 평균 설치 1,800건, DAU 6만 명 달성** (자사 PC 제품군 최다 기록)',
+        en: 'Led product end-to-end to **1,800 daily installs and 60K DAU**, achieving internal records',
+        ja: '企画・開発・運用を一貫して主導し**1日平均インストール1,800件・DAU 6万人を達成**' },
+      { ko: 'Native AOT와 Trimming 최적화 및 경량화 설계로 **실행 파일 크기 50% 이상 감축**',
+        en: 'Reduced **binary size by over 50%** via Native AOT and lightweight architecture',
+        ja: 'Native AOT最適化と軽量設計により**バイナリサイズを50%以上削減**' }
+    ],
+    challenges: [
+      { ko: 'Latin1 터널링 기반 다국어 인코딩 자동 감지 로직으로 **레거시 압축 파일의 파일명 깨짐 문제 해결**',
+        en: 'Resolved **legacy archive filename encoding corruptions** via Latin1 tunnelling autodetection',
+        ja: 'Latin1トンネリング自動文字コード判定により**レガシー圧縮ファイルの文字化けを解消**' },
+      { ko: '윈도우 11 MSIX Sparse Package 및 셸 확장 메뉴와 **AMSI 기반 악성코드 사전 검사 연동**',
+        en: 'Implemented Windows 11 MSIX / shell extensions and **AMSI-based malware inspection**',
+        ja: 'Win11 MSIX・シェル拡張メニューと**AMSI連携のマルウェア事前検査を実装**' }
+    ],
+    ai: [
+      { ko: '7-Zip C++ 레거시 코드베이스 분석 및 최신 C# 변환에 **AI 도구를 적극 활용하여 개발 생산성 극대화**',
+        en: 'Accelerated development by **leveraging AI tools for 7-Zip C++ codebase analysis** and modern C# porting',
+        ja: '7-Zip C++レガシーコードの解析と最新C#移植に**AIツールを積極活用し開発生産性を最大化**' }
     ]
   },
   {
@@ -763,20 +802,37 @@ const PROJECTS = [
     },
     role: { ko: '백엔드 개발', en: 'Backend Dev', ja: 'バックエンド開発' },
     stack: ['Java', 'Spring Boot', 'MariaDB', 'MyBatis', 'REST API'],
-    items: [
-      { ko: '**일 90만 건 이상** 규모의 대용량 마케팅 메시지 발송 트랜잭션 및 발송 데이터를 안정적으로 처리',
-        en: 'Reliably processed high-throughput messaging transactions delivering **over 900K messages daily**',
-        ja: '**1日90万件以上**規模の大容量マーケティングメッセージ配信トランザクションおよびデータを安定処理' },
-      { ko: '대규모 통계·배치 쿼리 실행 계획 튜닝을 통해 주요 **조회 성능 30% 개선**',
+    intro: {
+      ko: '카카오톡·문자·이메일 등 다채널 메시징을 통합 관리하고 자사 CRM 광고 타겟팅과 연계되는 대용량 백엔드 플랫폼 개발 및 운영.',
+      en: 'Engineered high-throughput messaging pipelines unifying KakaoTalk, SMS/LMS, and email with proprietary CRM ad targeting.',
+      ja: 'KakaoTalk・SMS・メール配信を統合管理し、自社CRMターゲティング広告と連携する大容量バックエンド基盤を開発・運用。'
+    },
+    features: [
+      { ko: '카카오톡·SMS·이메일 다채널 메시징 연동 및 **Tune720 연계 CRM 타겟팅 광고 발송 파이프라인** 구축',
+        en: 'Built multi-channel messaging integrations and **Tune720 CRM targeted ad delivery pipelines**',
+        ja: 'KakaoTalk・SMS・メール配信連携および**CRMターゲティング広告配信パイプライン**を構築' },
+      { ko: '톡포인트 지급·광고주 잔액 관리·정산 리포트 등 **핵심 비즈니스 API 및 최고관리자 어드민** 백엔드 개발',
+        en: 'Engineered core business APIs for point grants, advertiser balance, and **super-admin backend services**',
+        ja: 'ポイント付与・広告主残高管理・精算レポート等の**主要APIおよび最高管理者バックエンド**を開発' }
+    ],
+    stats: [
+      { v: { ko: '90만+', en: '900K+', ja: '90万+' }, k: { ko: '일 발송 건수', en: 'MESSAGES / DAY', ja: '1日配信件数' } },
+      { v: { ko: '30%', en: '30%', ja: '30%' },       k: { ko: '주요 조회 성능 개선', en: 'FASTER KEY QUERIES', ja: '主要照会性能改善' } }
+    ],
+    metrics: [
+      { ko: '**일 90만 건 이상** 규모의 대용량 마케팅 메시지 발송 트랜잭션 및 발송 데이터를 무장애로 안정적 처리',
+        en: 'Reliably processed high-throughput messaging transactions delivering **over 900K messages daily** with zero downtime',
+        ja: '**1日90万件以上**規模の大容量マーケティングメッセージ配信トランザクションおよびデータを無障害で安定処理' },
+      { ko: '대규모 통계 및 배치 쿼리 실행 계획 튜닝을 통해 **주요 조회 성능 30% 개선**',
         en: 'Tuned query execution plans for high-load batch and reporting jobs, **improving key query performance by 30%**',
-        ja: '大規模集計・バッチクエリの実行計画チューニングにより主要**照会性能を30%改善**' },
-      { ko: '톡포인트 지급·광고주 잔액 관리·정산 리포트 등 핵심 비즈니스 API 및 최고관리자 어드민 백엔드 개발',
-        en: 'Engineered core business APIs for point grants, advertiser balance control, and settlement reports along with super-admin backend services',
-        ja: 'ポイント付与・広告主残高管理・精算レポート等の主要APIおよび最高管理者向けバックエンドを開発' },
-      { ko: '수기 검증 및 반복적인 수작업 운영 프로세스를 자동화 시스템으로 전환하여 운영 리소스 절감',
-        en: 'Automated manual validation and repetitive operational workflows, substantially cutting operational overhead',
-        ja: '手動検証や反復的な運用作業を自動化システムへ転換し、運用工数を大幅に削減' }
-    ]
+        ja: '大規模集計・バッチクエリの実行計画チューニングにより**主要照会性能を30%改善**' }
+    ],
+    challenges: [
+      { ko: '수기 검증 및 반복적인 수작업 운영 프로세스를 **자동화 시스템으로 전환하여 운영 리소스 절감**',
+        en: 'Automated manual validation and repetitive workflows, **substantially reducing operational overhead**',
+        ja: '手動検証や反復的な運用作業を**自動化システムへ転換し、運用工数を大幅に削減**' }
+    ],
+    ai: []
   },
   {
     id: 'maketapp',
@@ -792,17 +848,34 @@ const PROJECTS = [
     },
     role: { ko: '데스크톱 솔루션 개발', en: 'Desktop Solution Dev', ja: 'デスクトップ開発' },
     stack: ['C#', 'WPF', 'MVVM', 'CefSharp'],
-    items: [
+    intro: {
+      ko: 'PC형 앱스토어 생태계 유통을 위해 웹 서비스를 독립된 데스크톱 앱으로 대량 패키징·빌드하는 자동화 솔루션 개발.',
+      en: 'Developed an automated desktop solution that mass-generates and packages web services into standalone desktop applications.',
+      ja: 'PC向けアプリストア流通のため、Webサービスを独立したデスクトップアプリとして一括生成する自動化ソリューションを開発。'
+    },
+    features: [
+      { ko: '쇼핑몰·뉴스·웹툰 등 카테고리별로 파편화되어 있던 솔루션을 **단일 통합 코어로 재구축**',
+        en: 'Consolidated category-fragmented apps into a **unified single-core desktop runtime**',
+        ja: 'カテゴリ別に分散していたソリューションを**単一の統合コアへ再構築**' },
+      { ko: 'CefSharp 브라우저 렌더링 및 캐싱 최적화로 **웹페이지 이동 시 체감 로딩 시간 75% 단축**',
+        en: 'Optimized CefSharp browser rendering and memory caching, **cutting perceived page load times by 75%**',
+        ja: 'CefSharpブラウザのレンダリングおよびキャッシュ最適化により**体感ロード時間を75%短縮**' }
+    ],
+    stats: [
+      { v: { ko: '800개', en: '~800', ja: '800本' },          k: { ko: '자동 빌드 앱', en: 'APPS AUTO-BUILT', ja: '自動ビルド' } },
+      { v: { ko: '1일→1시간', en: '1d → 1h', ja: '1日→1時間' }, k: { ko: '제작 소요 시간', en: 'BUILD TIME', ja: '制作時間' } }
+    ],
+    metrics: [
       { ko: '약 **800개 앱을 자동 빌드**하는 일괄 파이프라인을 구축해 1일 소요되던 제작 공수를 1시간으로 대폭 단축',
         en: 'Built a batch pipeline that **auto-builds ~800 apps**, dramatically reducing production time from 1 day to 1 hour',
-        ja: '約**800本のアプリを一括自動ビルド**するパイプラインを構築し、1日要していた制作工数を1時間に大幅短縮' },
-      { ko: '쇼핑몰·뉴스·웹툰 등 카테고리별로 파편화되어 있던 솔루션을 단일 통합 코어로 재구축',
-        en: 'Consolidated category-fragmented apps (commerce, news, webtoons) into a unified single-core desktop runtime',
-        ja: 'EC・ニュース・Webtoonなどカテゴリ別に分散していたソリューションを、単一の統合コアへ再構築' },
-      { ko: 'CefSharp 브라우저 렌더링 및 캐싱 최적화로 웹페이지 이동 시 **체감 로딩 시간 75% 단축**',
-        en: 'Optimized CefSharp browser rendering and memory caching, **cutting perceived page load times by 75%**',
-        ja: 'CefSharpブラウザのレンダリングおよびキャッシュ最適化により、ページ遷移時の**体感ロード時間を75%短縮**' }
-    ]
+        ja: '約**800本のアプリを一括自動ビルド**するパイプラインを構築し、1日要していた制作工数を1時間に大幅短縮' }
+    ],
+    challenges: [
+      { ko: '카테고리별 다양한 웹 기술 스펙 차이를 **단일 웹뷰 래퍼 환경에서 안정적으로 호환되도록 설계**',
+        en: 'Engineered webview wrapper ensuring robust compatibility across diverse third-party web technologies',
+        ja: 'カテゴリごとの多様なWeb技術仕様の差異を**単一WebView環境で安定して互換動作するよう設計**' }
+    ],
+    ai: []
   },
   {
     id: 'ezspool',
@@ -818,20 +891,37 @@ const PROJECTS = [
     },
     role: { ko: '도면 솔루션 개발', en: 'CAD Solution Dev', ja: '図面開発' },
     stack: ['C#', 'ASP.NET', 'VB.NET', 'MSSQL', 'EyeShot', 'LiteCad'],
-    items: [
+    intro: {
+      ko: '플랜트 시공 현장의 수작업 도면 작도 비효율을 개선하기 위한 Spool 제작 도면·BOM·용접 리포트 자동화 시스템 개발 및 운영.',
+      en: 'Engineered automated drafting and data extraction systems for plant piping fabrication drawings, BOMs, and welding reports.',
+      ja: 'プラント配管施工現場の作図非効率を改善するため、Spool製作図面・BOM・溶接レポートの自動算出システムを開発・運用。'
+    },
+    features: [
+      { ko: '플랜트 배관 시공에 필요한 **Spool 도면·BOM·용접 리포트 자동 산출 엔진** 개발 및 유지보수',
+        en: 'Engineered automated generation of plant piping **spool drawings, BOMs, and welding reports**',
+        ja: 'プラント配管施工向けの**Spool製作図面・BOM・溶接レポート自動生成エンジン**を開発' },
+      { ko: '사용자 정의 리포트 포맷 및 데이터 매핑 화면을 개발해 **고객사별 커스터마이징 대응 효율 극대화**',
+        en: 'Engineered custom report builders and data mapping UI, **maximizing client customization efficiency**',
+        ja: 'ユーザー定義レポート書式およびデータマッピング画面を開発し**個別カスタマイズ対応効率を最大化**' }
+    ],
+    stats: [
+      { v: { ko: '98%', en: '98%', ja: '98%' }, k: { ko: '도면 검색 속도 향상', en: 'FASTER SEARCH', ja: '図面検索速度向上' } },
+      { v: { ko: '70%', en: '70%', ja: '70%' }, k: { ko: '수작업 계산 공수 단축', en: 'LESS MANUAL CALC', ja: '手動計算工数削減' } }
+    ],
+    metrics: [
       { ko: '도면 인덱싱 및 공간 검색 알고리즘을 개선해 **도면 검색 속도 98% 향상**',
         en: 'Optimized drawing indexing and search algorithms, achieving a **98% faster drawing search speed**',
-        ja: '図面インデックスおよび検索アルゴリズムを改善し、**図面検索速度を98%向上**' },
+        ja: '図面インデックスおよび検索アルゴリズムを改善し**図面検索速度を98%向上**' },
       { ko: 'CAD 도면 형상 기반 심볼 좌표 추출 도구를 개발해 **수작업 계산 공수 70% 단축**',
         en: 'Developed CAD geometry symbol coordinate extraction, **reducing manual calculation effort by 70%**',
-        ja: 'CAD図面形状に基づくシンボル座標自動抽出ツールを開発し、**手動計算工数を70%削減**' },
-      { ko: '사용자 정의 리포트 포맷 및 데이터 매핑 화면을 개발해 고객사별 커스터마이징 대응 효율 극대화',
-        en: 'Engineered custom report builders and data mapping UI, maximizing client-specific customization efficiency',
-        ja: 'ユーザー定義レポート書式およびデータマッピング画面を開発し、顧客ごとの個別カスタマイズ対応効率を最大化' },
-      { ko: '현대엔지니어링 8개 현장 및 삼성물산 평택 현장의 기술 지원과 실시간 운영 이슈 전담 대응',
-        en: 'Handled dedicated technical support and real-time operational issue resolution for 8+ Hyundai E&C and Samsung C&T Pyeongtaek sites',
-        ja: '現代エンジニアリング8現場以上およびサムスン物産・平沢現場の技術支援と運用課題に専任対応' }
-    ]
+        ja: 'CAD図面形状に基づくシンボル座標自動抽出ツールを開発し**手動計算工数を70%削減**' }
+    ],
+    challenges: [
+      { ko: '현대엔지니어링 8개 현장 및 삼성물산 평택 현장의 **기술 지원과 실시간 운영 이슈 전담 대응**',
+        en: 'Handled technical support and real-time operations for **8+ Hyundai E&C and Samsung C&T sites**',
+        ja: '現代エンジニアリング8現場以上およびサムスン物産・平沢現場の**技術支援と運用課題に専任対応**' }
+    ],
+    ai: []
   },
   {
     id: 'pc3d',
@@ -847,14 +937,27 @@ const PROJECTS = [
     },
     role: { ko: '3D 플러그인 개발', en: '3D Plugin Dev', ja: '3D開発' },
     stack: ['C#', 'C++', 'Navisworks'],
-    items: [
-      { ko: '대용량 3D 모델 연산 시 발생하던 **메모리 누수 및 오류를 C++ Native 레이어에서 해결**하여 시스템 안정성 확보',
-        en: 'Resolved **memory leaks and faults in the C++ native layer** during high-load 3D model computations, ensuring rock-solid stability',
-        ja: '大容量3Dモデル演算時の**メモリリークおよびエラーをC++ Nativeレイヤーで解消**し、システムの高安定性を確保' },
-      { ko: '개념 검증(PoC) 수준의 코드를 지속 확장 및 유지보수 가능한 컴포넌트 아키텍처로 전면 리팩토링',
-        en: 'Refactored proof-of-concept codebase into an extensible, highly maintainable component-driven architecture',
-        ja: 'PoC(概念検証)段階のコードを、継続的な拡張と保守が可能なコンポーネント設計へと全面リファクタリング' }
-    ]
+    intro: {
+      ko: 'Autodesk Navisworks Add-in 환경에서 대용량 3D 플랜트 모델 위에 배관 시공 현황을 실시간 컬러링으로 시각화하는 시스템 개발.',
+      en: 'Developed a real-time 3D construction progress visualization Add-in within Autodesk Navisworks.',
+      ja: 'Autodesk Navisworksアドイン環境で大容量3Dプラントモデル上に配管施工工程をリアルタイム色分け表示する監視システムを開発。'
+    },
+    features: [
+      { ko: 'Autodesk Navisworks Add-in 기반으로 **3D 모델 위에 배관 시공 공정을 실시간 컬러링 모니터링**하는 시스템 구축',
+        en: 'Built an Autodesk Navisworks Add-in **monitoring plant piping status via real-time 3D color-coding**',
+        ja: 'Autodesk Navisworksアドインとして**3Dモデル上に配管施工工程をリアルタイム色分け監視**するシステムを開発' }
+    ],
+    metrics: [
+      { ko: '대용량 3D 모델 연산 시 발생하던 **메모리 누수를 C++ Native 레이어에서 완전 해결(Zero Leak)**하여 시스템 안정성 확보',
+        en: 'Completely resolved **memory leaks in the C++ native layer (Zero Leak)** during high-load 3D computations, ensuring rock-solid stability',
+        ja: '大容量3Dモデル演算時の**メモリリークをC++ Nativeレイヤーで完全解消(Zero Leak)**しシステムの高安定性を確保' }
+    ],
+    challenges: [
+      { ko: '개념 검증(PoC) 수준의 코드를 **지속 확장 및 유지보수 가능한 컴포넌트 아키텍처로 전면 리팩토링**',
+        en: 'Refactored proof-of-concept codebase into an **extensible, highly maintainable component architecture**',
+        ja: 'PoC段階のコードを**継続的な拡張と保守が可能なコンポーネント設計へと全面リファクタリング**' }
+    ],
+    ai: []
   },
   {
     id: 'mobile',
@@ -870,14 +973,27 @@ const PROJECTS = [
     },
     role: { ko: '모바일 단독 개발', en: 'Sole Mobile Dev', ja: 'モバイル単独開発' },
     stack: ['C#', 'Xamarin', 'MVVM', 'Firebase'],
-    items: [
-      { ko: 'Xamarin·MVVM·XAML 기반으로 iOS/Android 동시 지원 크로스플랫폼 앱을 **단독 설계 및 개발**',
-        en: 'Solely architected and developed a Xamarin/MVVM/XAML cross-platform app supporting both iOS and Android simultaneously',
-        ja: 'Xamarin・MVVM・XAMLを用いてiOS/Android両対応のクロスプラットフォームアプリを**単独で設計・開発**' },
-      { ko: 'Google Firebase Cloud Messaging(FCM) 기반 공지사항 및 긴급 불출 Push 알림 구현',
-        en: 'Implemented urgent notice and inventory dispatch push notifications via Google Firebase Cloud Messaging (FCM)',
-        ja: 'Google Firebase Cloud Messaging(FCM)を活用したお知らせおよび緊急出庫Push通知機能を実装' }
-    ]
+    intro: {
+      ko: '기존 윈도우 데스크톱 ERP의 핵심 자재 수불 및 현장 물류 관리 기능을 모바일 환경으로 단독 이식·구축.',
+      en: 'Solely developed and ported core materials inventory and on-site logistics features from desktop ERP to mobile.',
+      ja: '既存WindowsデスクトップERPの主要な資材受払・現場物流管理機能をモバイル環境へ単独で移植・構築。'
+    },
+    features: [
+      { ko: 'Xamarin·MVVM·XAML 기반으로 **iOS/Android 동시 지원 크로스플랫폼 앱을 단독 설계 및 개발(100%)**',
+        en: 'Solely architected and developed a **Xamarin/MVVM/XAML cross-platform app for iOS and Android (100%)**',
+        ja: 'Xamarin・MVVM・XAMLを用いて**iOS/Android両対応のクロスプラットフォームアプリを単独で設計・開発(100%)**' }
+    ],
+    metrics: [
+      { ko: 'Google Firebase Cloud Messaging(FCM) 기반 **공지사항 및 긴급 불출 Push 알림 구현**으로 현장 소통 신속화',
+        en: 'Implemented **Google Firebase Cloud Messaging (FCM) push notifications** for urgent notices and dispatch, accelerating on-site coordination',
+        ja: 'Google Firebase Cloud Messaging(FCM)を活用した**お知らせ・緊急出庫Push通知を実装**し現場の連携を迅速化' }
+    ],
+    challenges: [
+      { ko: '기존 Windows ERP의 핵심 자재 수불 및 현장 관리 기능을 **모바일 터치 환경에 최적화하여 안정적으로 이식**',
+        en: 'Ported core desktop ERP materials logistics into an **optimized mobile user experience**',
+        ja: '既存Windows ERPの主要な資材受払機能を**モバイル環境へ最適化し安定移植**' }
+    ],
+    ai: []
   }
 ];
 
@@ -891,7 +1007,11 @@ const NAV = [
 
 const T = {
   link: { ko: '공식 웹사이트', en: 'Official Website', ja: '公式サイト' },
-  contrib: { ko: '주요 성과 및 구현 내용', en: 'Key Engineering Highlights & Impact', ja: '主な成果・エンジニアリング実績' }
+  intro: { ko: '소개와 배경', en: 'Overview & Context', ja: '概要と背景' },
+  features: { ko: '핵심 기능 구현', en: 'Core Implementation', ja: '主要機能の実装' },
+  metrics: { ko: '수치로 보는 성과', en: 'Key Metrics & Impact', ja: '数値で見る成果' },
+  challenges: { ko: '기술적 도전과 해결', en: 'Technical Challenges', ja: '技術的課題と解決' },
+  ai: { ko: 'AI 협업 경험', en: 'AI-Assisted Workflow', ja: 'AI協業経験' }
 };
 
 const bold = (s) => s.indexOf('**') < 0 ? s : s.split('**').map((t, i) =>
@@ -1079,20 +1199,35 @@ class Component extends DCLogic {
     const on  = { bg: dark ? '#ececef' : '#151514', fg: dark ? '#0c0c0d' : '#fbfbf9', bc: dark ? '#ececef' : '#151514', inv: true };
     const off = { bg: 'transparent', fg: dark ? '#9a9aa2' : '#5e5e58', bc: dark ? '#2a2a30' : '#dedcd6', inv: null };
 
-    const view = (p) => ({
-      id: p.id,
-      co: t(p.co),
-      coFull: t(p.coFull),
-      date: p.date,
-      url: p.url,
-      title: t(p.title),
-      mtitle: t(p.mtitle),
-      blurb: t(p.blurb),
-      role: t(p.role),
-      stack: p.stack,
-      h3cls: p.feature ? 'card-title--feature' : '',
-      items: p.items.map((c, i) => ({ n: String(i + 1).padStart(2, '0'), text: bold(t(c)) }))
-    });
+    const view = (p) => {
+      // 5단계는 고정 번호(01~05)다. 내용이 없는 단계는 건너뛰되 번호는 당기지 않는다.
+      const T5 = [
+        ['intro', null],
+        ['features', p.features],
+        ['metrics', p.metrics],
+        ['challenges', p.challenges],
+        ['ai', p.ai]
+      ];
+      const flow = [];
+      T5.forEach(([key, list], i) => {
+        if (key !== 'intro' && !(list && list.length)) return;
+        const sec = { num: '0' + (i + 1), title: t(T[key]), cls: key === 'ai' ? 'm-flow-sec--ai' : '', last: null };
+        if (key === 'intro') { sec.isText = true; sec.text = t(p.intro || p.blurb); }
+        else { sec.isList = true; sec.items = list.map(c => ({ text: bold(t(c)) })); }
+        if (key === 'metrics') {
+          sec.hasStats = !!(p.stats && p.stats.length);
+          sec.stats = (p.stats || []).map(k => ({ v: t(k.v), k: t(k.k) }));
+        }
+        flow.push(sec);
+      });
+      flow[flow.length - 1].last = true;
+      return {
+        id: p.id, co: t(p.co), coFull: t(p.coFull), date: p.date, url: p.url,
+        title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb), role: t(p.role),
+        stack: p.stack, h3cls: p.feature ? 'card-title--feature' : '',
+        flow
+      };
+    };
 
     const shown = PROJECTS.filter(p => f === 'ALL' || p.tech.indexOf(f) !== -1);
     const opened = PROJECTS.find(p => p.id === this.state.openId);
@@ -1127,7 +1262,6 @@ class Component extends DCLogic {
       cards: shown.map(view),
       openCard: opened ? [view(opened)] : [],
       linkLabel: t(T.link),
-      contribHeading: t(T.contrib),
       setKo: () => this.setLang('ko'),
       setEn: () => this.setLang('en'),
       setJa: () => this.setLang('ja'),
