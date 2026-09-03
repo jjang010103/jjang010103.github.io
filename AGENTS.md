@@ -169,7 +169,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude/server.ps1
 ### 테마 (라이트/다크)
 CSS `light-dark()`와 `<html>`의 `colorScheme`으로만 처리한다. **한쪽 테마 전용 색을 하드코딩하지 않는다.** 토글은 View Transition 원형 확산(`data-vt`, `--vtx/--vty/--vtr`)으로 애니메이션한다. 테마·언어는 localStorage에 `mj-resume-theme` / `mj-resume-lang`으로 저장되고, 첫 페인트 전에 `<head>` 부트 스크립트가 복원한다.
 
-**예외 — 상단 바 크롬은 JS가 색을 만든다.** 내비 진행 게이지(`navState()`의 `active`/`idle`), 언어 세그먼트(`renderVals()`의 `on`/`off`), 로고 채움(`ink`/`rest`)은 인라인 스타일로 칠하므로 `light-dark()`를 쓸 수 없고 `dark ? '#…' : '#…'` 리터럴 쌍으로 되어 있다. **팔레트를 바꿀 때 시트만 고치면 상단 바만 옛 색으로 남는다.** 두 곳을 함께 본다.
+**예외 — 상단 바 크롬은 JS가 색을 만든다.** 내비 진행 게이지의 라벨(`navState()`의 `active`/`idle`), 언어 세그먼트(`renderVals()`의 `on`/`off`), 로고 채움(`ink`/`rest`)은 인라인 스타일로 칠하므로 `light-dark()`를 쓸 수 없고 `dark ? '#…' : '#…'` 리터럴 쌍으로 되어 있다. **팔레트를 바꿀 때 시트만 고치면 상단 바만 옛 색으로 남는다.** 두 곳을 함께 본다. 내비 **번호**는 2026-09-03에 이 예외에서 빠져 CSS 토큰(`--muted`)으로 옮겼다.
 
 ### 강조 표기
 `PROJECTS[].items` 문자열 안의 `**…**`는 `bold()`가 렌더 시 `<strong>`으로 바꾸고, CSS가 반전 하이라이트 칩으로 그린다. 눈에 걸려야 할 키워드/수치 하나에만 쓴다.
