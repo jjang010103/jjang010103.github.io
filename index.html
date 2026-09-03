@@ -53,18 +53,14 @@ document.documentElement.style.colorScheme=t;})()</script>
   --card-item:light-dark(#fbfbf9,#292930);  /* 카드 위의 한 단계 밝은 면 */
   --line:light-dark(#dcdbd5,#34343b);       /* 기본 헤어라인 */
   --line-soft:light-dark(#e3e2dc,#2c2c33);
-  --line-card:light-dark(#e3e2dc,#35353d);  /* 모달 내부 구분선 */
   --line-ui:light-dark(#cfcdc6,#4a4a54);    /* 버튼/세그먼트 테두리 */
   --muted:light-dark(#5f5f59,#98989d);
   --muted-2:light-dark(#8a8983,#7d7d82);
-  --chip-bg:light-dark(#f7f6f3,#24242a);    /* 이니셜 배지 */
-  --chip-bc:light-dark(#dcdbd5,#4a4a54);
   --chip-fg:light-dark(#3f3f3a,#bebec2);
   --body:light-dark(#2b2a27,#cbcbce);       /* 본문 */
   --sub:light-dark(#45453f,#adadb1);        /* 카드 요약·보조 본문 */
   --dot:light-dark(#6f6f68,#9a9aa3);        /* 불릿 점 */
   --stripe:light-dark(#d3d1ca,#3c3c44);     /* 타임라인 공백 스트라이프 */
-  --slot:light-dark(#e6e5df,#26262c);       /* 빈 슬롯 면 */
   --scrim:light-dark(rgba(20,20,19,.55),rgba(0,0,0,.7));  /* 모달 오버레이 */
   --tag-bg:var(--tag-bg);     /* 태그 칩 면 */
   --tag-bc:var(--tag-bc);
@@ -87,12 +83,10 @@ html[lang="ko"] [data-lb="ko"],html[lang="en"] [data-lb="en"],html[lang="ja"] [d
 /* shared atoms */
 .mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace}
 .sq{corner-shape:squircle}
-.nowrap{white-space:nowrap}
 .pill{font-size:13px;padding:5px 11px;border-radius:10px;white-space:nowrap}
 .pill-on{background:var(--ink);color:var(--ink-fg)}
 .pill-off{border:1px solid var(--line-ui)}
 .tag{font-size:12px;padding:3px 8px;border-radius:6px;background:var(--tag-bg);border:1px solid var(--tag-bc);color:var(--body)}
-.tag--card{background:var(--card-item)}
 .eyebrow{font-size:14px;letter-spacing:.1em;color:var(--muted)}
 
 html{scroll-behavior:smooth}
@@ -616,8 +610,6 @@ section[data-chapter]{padding:80px 0 0}
 </main>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
-// 필터 UI는 2026-09-03 리디자인에서 제거됐다. PROJECTS[].tech와 함께 데이터로만 남긴다(§8 검증 3번이 계속 이 짝을 확인한다).
-const FILTERS = ['ALL', 'C#/.NET', 'WPF·Avalonia', 'Java·Spring', 'C++·Native', 'DB·SQL', 'CAD·3D'];
 
 const STACK = [
   { label: { ko: '핵심 스택', en: 'CORE', ja: 'コア' }, core: true,
@@ -632,23 +624,23 @@ const STACK = [
 
 const EDU = [
   { label: { ko: '학력', en: 'EDUCATION', ja: '学歴' }, items: [
-    { badge: '배',
+    {
       name: { ko: '배화여자대학교 모바일소프트웨어과', en: "Baewha Women's University, Mobile Software", ja: '培花女子大学 モバイルソフトウェア学科' },
       meta: { ko: '2020.02 — 2022.02 · 편입 / 졸업', en: '2020.02 — 2022.02 · transferred / graduated', ja: '2020.02 — 2022.02 · 編入 / 卒業' } },
-    { badge: '세',
+    {
       name: { ko: '세명컴퓨터고등학교 스마트보안솔루션과', en: 'Semyung Computer High School, Smart Security Solutions', ja: '世明コンピュータ高等学校 スマートセキュリティ学科' },
       meta: { ko: '2016.01 — 2019.01 · 도제학교 / 졸업', en: '2016.01 — 2019.01 · apprenticeship track / graduated', ja: '2016.01 — 2019.01 · デュアル教育課程 / 卒業' } }
   ] },
   { label: { ko: '자격증', en: 'CERTIFICATIONS', ja: '資格' }, items: [
-    { badge: '산',
+    {
       name: { ko: '정보처리산업기사', en: 'Industrial Engineer Information Processing', ja: '情報処理産業技士' },
       meta: { ko: '2018.09 · 한국산업인력공단', en: '2018.09 · HRD Korea', ja: '2018.09 · 韓国産業人力公団' } },
-    { badge: '기',
+    {
       name: { ko: '정보기기운용기능사', en: 'Craftsman Information Equipment Operation', ja: '情報機器運用技能士' },
       meta: { ko: '2018.07 · 한국산업인력공단', en: '2018.07 · HRD Korea', ja: '2018.07 · 韓国産業人力公団' } }
   ] },
   { label: { ko: '병역', en: 'MILITARY SERVICE', ja: '兵役' }, items: [
-    { badge: '군',
+    {
       name: { ko: '산업기능요원 · 만기전역', en: 'Industrial Technical Personnel · completed', ja: '産業技能要員 · 満了' },
       meta: { ko: '2020.02 — 2022.12', en: '2020.02 — 2022.12', ja: '2020.02 — 2022.12' } }
   ] }
@@ -656,17 +648,14 @@ const EDU = [
 
 const CO = {
   enliple: { ko: '인라이플', en: 'ENLIPLE', ja: 'インライフル' },
-  enlipleFull: { ko: '㈜인라이플', en: 'ENLIPLE', ja: 'インライフル' },
   huen: { ko: '휴엔시스템', en: 'HUENSYSTEM', ja: 'ヒュエンシステム' },
-  huenFull: { ko: '㈜휴엔시스템', en: 'HUENSYSTEM', ja: 'ヒュエンシステム' }
 };
 
 // **…** marks the emphasised run; `bold()` turns it into <strong> at render time.
 const PROJECTS = [
   {
     id: 'ezzip', feature: true,
-    tech: ['C#/.NET', 'WPF·Avalonia', 'C++·Native'],
-    co: CO.enliple, coFull: CO.enlipleFull, date: '2025.02 — NOW',
+    co: CO.enliple, date: '2025.02 — NOW',
     url: 'https://ezlab.im/ko/tool/ezzip',
     title: { ko: '압축 프로그램 ezZip', en: 'ezZip & shared PC platform', ja: '圧縮ソフト ezZip · 共通プラットフォーム' },
     mtitle: { ko: '압축 프로그램 ezZip · 공통 플랫폼', en: 'ezZip — Compression Tool & Platform', ja: '圧縮ソフト ezZip・共通プラットフォーム' },
@@ -675,7 +664,6 @@ const PROJECTS = [
       en: 'Architected the shared desktop platform and engineered the high-performance C# engine for ezZip, scaling the flagship app to 60K DAU.',
       ja: '自社PC製品の共通基盤を設計し、第1弾製品ezZipの高性能C#エンジン開発と配信を統括してDAU 6万人を達成。'
     },
-    role: { ko: '설계 & 엔진 개발', en: 'Core Architecture & Engine Dev', ja: '設計・エンジン開発' },
     stack: ['C#', '.NET 8', 'WPF', 'Avalonia', 'VC++', 'Native AOT', 'WiX'],
     intro: {
       ko: '자사 PC 소프트웨어 전반의 중복 개발을 해소하기 위한 공통 플랫폼을 구축하고, 첫 상용 제품으로 압축 프로그램 ezZip의 기획부터 배포·운영을 총괄.',
@@ -719,8 +707,7 @@ const PROJECTS = [
   },
   {
     id: 'isend',
-    tech: ['Java·Spring', 'DB·SQL'],
-    co: CO.enliple, coFull: CO.enlipleFull, date: '2024.06 — 2025.02',
+    co: CO.enliple, date: '2024.06 — 2025.02',
     url: 'https://www.isend.co.kr/',
     title: { ko: '마케팅 메시지 발송 플랫폼 아이센드', en: 'iSend — marketing message platform', ja: 'マーケティング配信プラットフォーム iSend' },
     mtitle: { ko: '마케팅 메시지 발송 플랫폼 아이센드', en: 'iSend — Marketing Message Platform', ja: 'マーケティング配信プラットフォーム iSend' },
@@ -729,7 +716,6 @@ const PROJECTS = [
       en: 'High-throughput backend integrating multi-channel messaging with CRM ad targeting. Handled 900K+ daily transactions and improved queries by 30%.',
       ja: '多チャネル配信とCRM広告を連携する大容量バックエンド。日90万件超のトランザクションを無障害処理し、照会性能を30%改善。'
     },
-    role: { ko: '백엔드 개발', en: 'Backend Dev', ja: 'バックエンド開発' },
     stack: ['Java', 'Spring Boot', 'MariaDB', 'MyBatis', 'REST API'],
     intro: {
       ko: '카카오톡·문자·이메일 등 다채널 메시징을 통합 관리하고 자사 CRM 광고 타겟팅과 연계되는 대용량 백엔드 플랫폼 개발 및 운영.',
@@ -765,8 +751,7 @@ const PROJECTS = [
   },
   {
     id: 'maketapp',
-    tech: ['C#/.NET', 'WPF·Avalonia'],
-    co: CO.enliple, coFull: CO.enlipleFull, date: '2024.03 — 2024.06',
+    co: CO.enliple, date: '2024.03 — 2024.06',
     url: '',
     title: { ko: 'PC 앱 제작 서비스 MakeTApp', en: 'MakeTApp — PC app builder', ja: 'PCアプリ制作サービス MakeTApp' },
     mtitle: { ko: 'PC 앱 제작 서비스 MakeTApp', en: 'MakeTApp — PC App Builder', ja: 'PCアプリ制作サービス MakeTApp' },
@@ -775,7 +760,6 @@ const PROJECTS = [
       en: 'Automated hybrid desktop builder for app stores. Engineered a batch pipeline building ~800 apps and cut webview load times by 75%.',
       ja: 'WebサービスをPCアプリ化する自動生成ソリューション。約800本の自動ビルド環境を構築し、WebViewロード時間を75%短縮。'
     },
-    role: { ko: '데스크톱 솔루션 개발', en: 'Desktop Solution Dev', ja: 'デスクトップ開発' },
     stack: ['C#', 'WPF', 'MVVM', 'CefSharp'],
     intro: {
       ko: 'PC형 앱스토어 생태계 유통을 위해 웹 서비스를 독립된 데스크톱 앱으로 대량 패키징·빌드하는 자동화 솔루션 개발.',
@@ -812,8 +796,7 @@ const PROJECTS = [
   },
   {
     id: 'ezspool',
-    tech: ['C#/.NET', 'DB·SQL', 'CAD·3D'],
-    co: CO.huen, coFull: CO.huenFull, date: '2019.02 — 2023.10',
+    co: CO.huen, date: '2019.02 — 2023.10',
     url: 'https://www.huensystem.com/ez-solutions/solutions/ez-spool',
     title: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool / Ez-ISO — piping drawing automation', ja: '配管図面自動化 Ez-Spool / Ez-ISO' },
     mtitle: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool — Piping Drawing Automation', ja: '配管図面自動化 Ez-Spool' },
@@ -822,7 +805,6 @@ const PROJECTS = [
       en: 'Automated plant piping spool drawing and BOM engine. Accelerated drawing search by 98% and led on-site operations for Hyundai E&C and Samsung C&T.',
       ja: '配管Spool図面・BOM自動算出エンジン。検索処理を98%高速化し、現代エンジニアリングやサムスン物産の施工現場へ直接対応。'
     },
-    role: { ko: '도면 솔루션 개발', en: 'CAD Solution Dev', ja: '図面開発' },
     stack: ['C#', 'ASP.NET', 'VB.NET', 'MSSQL', 'EyeShot', 'LiteCad'],
     intro: {
       ko: '플랜트 시공 현장의 수작업 도면 작도 비효율을 개선하기 위한 Spool 제작 도면·BOM·용접 리포트 자동화 시스템 개발 및 운영.',
@@ -861,8 +843,7 @@ const PROJECTS = [
   },
   {
     id: 'pc3d',
-    tech: ['C#/.NET', 'C++·Native', 'CAD·3D'],
-    co: CO.huen, coFull: CO.huenFull, date: '2023.01 — 2023.05',
+    co: CO.huen, date: '2023.01 — 2023.05',
     url: 'https://www.huensystem.com/ez-solutions/solutions/ez-cc',
     title: { ko: '배관 시공 모니터링 PC3D', en: 'PC3D — piping construction monitoring', ja: '配管施工モニタリング PC3D' },
     mtitle: { ko: '배관 시공 모니터링 PC3D', en: 'PC3D — Piping Construction Monitoring', ja: '配管施工モニタリング PC3D' },
@@ -871,7 +852,6 @@ const PROJECTS = [
       en: 'Real-time 3D plant piping visualization Add-in for Navisworks. Resolved high-load memory leaks (Zero Leak) via C++ native optimization.',
       ja: '大容量3Dプラントモデル上に配管施工工程を可視化するNavisworksアドイン。C++最適化によりメモリリーク(Zero Leak)を完全解消。'
     },
-    role: { ko: '3D 플러그인 개발', en: '3D Plugin Dev', ja: '3D開発' },
     stack: ['C#', 'C++', 'Navisworks API'],
     intro: {
       ko: 'Autodesk Navisworks Add-in 환경에서 대용량 3D 플랜트 모델 위에 배관 시공 현황을 실시간 컬러링으로 시각화하는 시스템 개발.',
@@ -897,8 +877,7 @@ const PROJECTS = [
   },
   {
     id: 'mobile',
-    tech: ['C#/.NET'],
-    co: CO.huen, coFull: CO.huenFull, date: '2020.01 — 2020.06',
+    co: CO.huen, date: '2020.01 — 2020.06',
     url: '',
     title: { ko: '보운이피씨 자재관리 ERP 모바일 앱', en: 'Bowoon EPC — materials management app', ja: 'ボウンEPC 資材管理モバイルアプリ' },
     mtitle: { ko: '보운이피씨 자재관리 ERP 모바일 앱', en: 'Bowoon EPC — Materials Management ERP App', ja: 'ボウンEPC 資材管理ERPモバイルアプリ' },
@@ -907,7 +886,6 @@ const PROJECTS = [
       en: 'Cross-platform mobile app porting desktop ERP materials logistics. Solely engineered end-to-end (100%) from Xamarin/MVVM architecture to FCM push.',
       ja: 'Windows ERPの主要な資材管理機能を移植したモバイルアプリ。Xamarin/MVVM設計からFCM通知まで100%単独開発。'
     },
-    role: { ko: '모바일 단독 개발', en: 'Sole Mobile Dev', ja: 'モバイル単独開発' },
     stack: ['C#', 'Xamarin', 'MVVM', 'Firebase'],
     intro: {
       ko: '기존 윈도우 데스크톱 ERP의 핵심 자재 수불 및 현장 물류 관리 기능을 모바일 환경으로 단독 이식·구축.',
@@ -1204,8 +1182,8 @@ class Component extends DCLogic {
         flow.push(sec);
       });
       return {
-        id: p.id, co: t(p.co), coFull: t(p.coFull), date: p.date, url: p.url,
-        title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb), role: t(p.role),
+        id: p.id, co: t(p.co), date: p.date, url: p.url,
+        title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb),
         stack: p.stack, img: p.img || '',
         flow
       };
