@@ -56,7 +56,7 @@ document.documentElement.style.colorScheme=t;})()</script>
   --line-card:light-dark(#e3e2dc,#35353d);  /* 모달 내부 구분선 */
   --line-ui:light-dark(#cfcdc6,#4a4a54);    /* 버튼/세그먼트 테두리 */
   --muted:light-dark(#5f5f59,#98989d);
-  --muted-2:light-dark(#54544e,#a8a8ac);
+  --muted-2:light-dark(#8a8983,#7d7d82);
   --chip-bg:light-dark(#f7f6f3,#24242a);    /* 이니셜 배지 */
   --chip-bc:light-dark(#dcdbd5,#4a4a54);
   --chip-fg:light-dark(#3f3f3a,#bebec2);
@@ -64,6 +64,8 @@ document.documentElement.style.colorScheme=t;})()</script>
   --sub:light-dark(#45453f,#adadb1);        /* 카드 요약·보조 본문 */
   --dot:light-dark(#6f6f68,#9a9aa3);        /* 불릿 점 */
   --stripe:light-dark(#d3d1ca,#3c3c44);     /* 타임라인 공백 스트라이프 */
+  --slot:light-dark(#e6e5df,#26262c);       /* 빈 슬롯 면 */
+  --scrim:light-dark(rgba(20,20,19,.55),rgba(0,0,0,.7));  /* 모달 오버레이 */
   --tag-bg:var(--tag-bg);     /* 태그 칩 면 */
   --tag-bc:var(--tag-bc);
   --ai:light-dark(#4f46e5,#a5b4fc);         /* 모달 AI 섹션 강조 */
@@ -73,8 +75,8 @@ a{color:inherit;text-decoration:none}
 button{font-family:inherit;letter-spacing:inherit}
 a:hover{color:light-dark(#000,#fff);text-decoration:underline;text-underline-offset:3px}
 ::selection{background:light-dark(#151514,#f2f2f2);color:light-dark(#fff,#111)}
-.kw,[data-modalcard] li strong,.m-flow-item strong,.co-item strong{background:var(--ink);color:var(--ink-fg);padding:.08em .32em .12em;margin:0 .04em;border-radius:3px;font-weight:600;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.kw::selection,[data-modalcard] li strong::selection,.m-flow-item strong::selection,.co-item strong::selection{background:light-dark(#f2f2f2,#151514);color:light-dark(#111,#fff)}
+.kw,[data-modalcard] li strong,.m-item strong,.co-item strong{background:var(--ink);color:var(--ink-fg);padding:.08em .32em .12em;margin:0 .04em;border-radius:3px;font-weight:600;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.kw::selection,[data-modalcard] li strong::selection,.m-item strong::selection,.co-item strong::selection{background:light-dark(#f2f2f2,#151514);color:light-dark(#111,#fff)}
 [data-footer]::selection,[data-footer] ::selection,[data-tlbar]::selection,[data-tlbar] ::selection,[data-inverted]::selection,[data-inverted] ::selection{background:light-dark(#f2f2f2,#151514);color:light-dark(#111,#fff)}
 html[lang="ko"] body{word-break:keep-all;overflow-wrap:break-word}
 /* language visibility: static attrs, not 87 per-render display bindings */
@@ -92,7 +94,6 @@ html[lang="ko"] [data-lb="ko"],html[lang="en"] [data-lb="en"],html[lang="ja"] [d
 .tag{font-size:12px;padding:3px 8px;border-radius:6px;background:var(--tag-bg);border:1px solid var(--tag-bc);color:var(--body)}
 .tag--card{background:var(--card-item)}
 .eyebrow{font-size:14px;letter-spacing:.1em;color:var(--muted)}
-.speclabel{font-size:14px;letter-spacing:.1em;color:var(--muted);margin-bottom:4px}
 
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -142,24 +143,13 @@ section[id],header[id]{scroll-margin-top:76px}
 .icon-btn--close:hover{background:var(--ink);color:var(--ink-fg);border-color:transparent}
 .theme-ico{display:block;transition:transform .45s cubic-bezier(.65,0,.35,1)}
 
-/* ── intro ──────────────────────────────────────────────── */
-.intro{padding:66px 0 54px;border-bottom:1px solid var(--line)}
-.intro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:clamp(28px,4vw,48px);align-items:end}
-.intro-name{display:inline-block;max-width:100%;box-sizing:border-box;margin:0;padding:.1em .1em .13em;background:var(--ink);color:var(--ink-fg);border-radius:3px;font-size:clamp(38px,9vw,86px);line-height:.93;font-weight:600;letter-spacing:-.042em;overflow-wrap:break-word;word-break:keep-all}
-.intro-name [data-lb="ja"]{font-size:.8em;letter-spacing:-.03em}
-.intro-role{margin:20px 0 0;font-size:20px;font-weight:500;letter-spacing:-.01em}
-.intro-sub{margin:7px 0 0;font-size:13.5px;letter-spacing:.02em;color:var(--muted-2)}
-[data-contact]{display:flex;flex-direction:column;gap:9px;font-size:clamp(12px,2.6vw,13.5px);padding-bottom:6px}
-.contact-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;padding-bottom:10px;border-bottom:1px solid var(--line-soft);overflow-wrap:anywhere}
-.contact-row:last-child{padding-bottom:0;border-bottom:0}
-.contact-k{color:var(--muted)}
-
-/* ── about ──────────────────────────────────────────────── */
-.about{padding:38px 0 34px;border-bottom:1px solid var(--line)}
-.about-lead{margin:0 0 16px;font-size:22px;line-height:1.5;font-weight:500;letter-spacing:-.014em;color:var(--fg);word-break:keep-all}
-.about-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.about-item{position:relative;padding-left:16px;font-size:17px;line-height:1.7;color:var(--body);word-break:keep-all}
-.about-item::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%;background:var(--dot)}
+/* ── hero ───────────────────────────────────────────────── */
+.hero{padding:64px 0 56px;border-bottom:1px solid var(--line)}
+.hero-name{display:inline-block;max-width:100%;box-sizing:border-box;margin:0;padding:.1em .1em .13em;background:var(--ink);color:var(--ink-fg);border-radius:3px;font-size:clamp(38px,9vw,86px);line-height:.93;font-weight:600;letter-spacing:-.042em;overflow-wrap:break-word;word-break:keep-all}
+.hero-name [data-lb="ja"]{font-size:.8em;letter-spacing:-.03em}
+.hero-lead{margin:30px 0 0;font-size:24px;line-height:1.5;letter-spacing:-.018em;color:var(--fg);max-width:820px;text-wrap:pretty;word-break:keep-all}
+.hero-lead a{color:var(--fg);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;text-decoration-thickness:1px}
+.hero-sub{margin:16px 0 0;font-size:17px;line-height:1.7;color:var(--muted);max-width:720px;word-break:keep-all}
 
 
 /* ── chapters ───────────────────────────────────────────── */
@@ -169,7 +159,6 @@ section[data-chapter]{padding:80px 0 0}
 .chap-num{flex:none;font-size:14px;letter-spacing:.1em;color:var(--muted)}
 .chap-title{flex:none;margin:0;font-size:30px;font-weight:600;letter-spacing:-.032em;white-space:nowrap}
 [data-chaprule]{flex:1;height:1px;background:transparent}
-.chap-meta{font-size:12px;color:var(--muted)}
 
 /* ── career timeline ────────────────────────────────────── */
 [data-tlbar]{display:flex;gap:3px;height:58px;align-items:stretch}
@@ -189,8 +178,6 @@ section[data-chapter]{padding:80px 0 0}
 .co-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .co-item{position:relative;padding-left:16px;font-size:16px;line-height:1.7;color:var(--body);word-break:keep-all}
 .co-item::before{content:"";position:absolute;left:0;top:10px;width:5px;height:5px;border-radius:50%;background:var(--dot)}
-.badge{flex:none;display:flex;align-items:center;justify-content:center;corner-shape:squircle;border-radius:10px;border:1px solid var(--chip-bc);background:var(--chip-bg);font-weight:600;color:var(--chip-fg)}
-.badge--edu{width:30px;height:30px;font-size:13.5px}
 
 /* ── tech stack ─────────────────────────────────────────── */
 [data-stackgrid]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:26px 34px}
@@ -198,9 +185,7 @@ section[data-chapter]{padding:80px 0 0}
 [data-stackgroup]{display:flex;flex-wrap:wrap;gap:7px}
 
 /* ── projects ───────────────────────────────────────────── */
-[data-filters]{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px}
-.filter-btn{cursor:pointer;font-size:14px;letter-spacing:.02em;padding:6px 13px;border-radius:10px;white-space:nowrap;border-width:1px;border-style:solid}
-[data-projgrid]{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px}
+[data-projgrid]{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .proj-card{position:relative;aspect-ratio:3/4;corner-shape:squircle;border-radius:22px;overflow:hidden;background:var(--card);border:1px solid var(--line-soft);color:var(--fg);cursor:pointer;transition:background .15s}
 .proj-card:hover,.proj-card:focus-visible{background:var(--card-hover)}
 .pc-text{position:absolute;left:0;right:0;top:0;padding:24px 24px 0;display:flex;flex-direction:column;gap:12px;pointer-events:none}
@@ -209,7 +194,6 @@ section[data-chapter]{padding:80px 0 0}
 .pc-blurb{margin:0;font-size:16px;line-height:1.6;color:var(--sub);word-break:keep-all}
 .pc-img{position:absolute;right:-8%;bottom:-6%;width:70%;aspect-ratio:1/1;pointer-events:none}
 .pc-img img{width:100%;height:100%;object-fit:contain;object-position:right bottom;display:block}
-.proj-empty{margin:36px 0 0;text-align:center;font-size:14px;color:var(--muted)}
 
 /* ── education ──────────────────────────────────────────── */
 [data-edugrid]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:34px}
@@ -218,7 +202,7 @@ section[data-chapter]{padding:80px 0 0}
 .edu-item{display:flex;align-items:flex-start;gap:12px}
 .edu-body{min-width:0}
 .edu-name{font-size:15px;font-weight:500}
-.edu-meta{margin-top:3px;font-size:12.5px;color:var(--muted)}
+.edu-meta{margin-top:3px;font-size:14px;color:var(--muted)}
 
 /* ── footer ─────────────────────────────────────────────── */
 [data-footer]{margin-top:84px;background:var(--ink);color:var(--ink-fg);corner-shape:squircle;border-radius:20px;padding:48px 44px 26px}
@@ -228,58 +212,42 @@ section[data-chapter]{padding:80px 0 0}
 .foot-role{margin-top:8px;font-size:15px;opacity:.62}
 .foot-links{display:flex;gap:18px;margin-top:20px;font-size:14px}
 [data-footcontact]{justify-self:end;text-align:right}
-.foot-contact-label{font-size:12px;letter-spacing:.14em;opacity:.68;margin-bottom:14px}
+.foot-contact-label{font-size:14px;letter-spacing:.1em;opacity:.68;margin-bottom:14px}
 [data-footmail]{font-size:clamp(19px,2.4vw,27px);font-weight:500;letter-spacing:-.02em;line-height:1.2;word-break:break-all}
 .foot-tel{margin-top:9px;font-size:14px;opacity:.62}
 [data-footmeta]{margin-top:44px;padding-top:16px;border-top:1px solid currentColor;opacity:.7;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;font-size:12px}
 
 /* ── project modal ──────────────────────────────────────── */
-[data-modal]{position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:light-dark(rgba(20,20,18,.56),rgba(0,0,0,.7));backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);overflow:hidden}
-[data-modalcard]{position:relative;box-sizing:border-box;width:min(100%,1070px);height:min(90vh,1100px);max-height:min(92vh,1140px);display:flex;flex-direction:column;overflow:hidden;background:var(--card);border:1px solid var(--line-card);corner-shape:squircle;border-radius:24px;padding:clamp(28px,4.2vw,48px);box-shadow:0 30px 90px rgba(0,0,0,.45)}
+[data-modal]{position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:var(--scrim);backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);overflow:hidden}
+[data-modalcard]{position:relative;box-sizing:border-box;width:min(900px,calc(100vw - 32px));height:min(90vh,1100px);max-height:min(92vh,1140px);display:flex;flex-direction:column;overflow:hidden;background:var(--card);border:1px solid var(--line-soft);corner-shape:squircle;border-radius:24px;padding:22px 44px 40px;box-shadow:0 30px 90px rgba(0,0,0,.45)}
 [data-modalhead]{flex:none;display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px}
-[data-modalbody]{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:6px;margin-bottom:16px}
+[data-modalbody]{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:6px}
 .mbody-col{display:flex;flex-direction:column}
-.modal-title{margin:0 0 10px;font-size:28px;font-weight:600;line-height:1.24;letter-spacing:-.028em;color:var(--fg);word-break:keep-all;overflow-wrap:break-word}
-.modal-blurb{margin:0 0 20px;font-size:16px;font-weight:400;line-height:1.75;color:var(--sub);word-break:keep-all;overflow-wrap:break-word}
-.modal-spec{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px 20px;padding-top:18px;border-top:1px solid var(--line-card);margin-bottom:26px}
-.spec-co{font-size:14px;font-weight:600;color:var(--fg)}
-.spec-date{font-size:15px;color:var(--body)}
-.spec-role{font-size:16px;color:var(--body)}
-.spec-wide{grid-column:1/-1;padding-top:10px;border-top:1px solid var(--line-card)}
-.spec-stack .speclabel{margin-bottom:6px}
-.spec-tags{display:flex;flex-wrap:wrap;gap:5px}
-.spec-linkrow{display:flex;align-items:center;gap:10px}
-.spec-linkrow .speclabel{margin-bottom:0}
-.spec-linkrow a{font-size:13px;font-weight:500;color:var(--fg);display:inline-flex;align-items:center;gap:4px;text-decoration:none;transition:all .15s}
-.spec-linkrow a:hover{text-decoration:underline;text-underline-offset:3px;opacity:.75}
-.m-flow{display:flex;flex-direction:column}
-.m-flow-sec{display:grid;grid-template-columns:44px 1fr;gap:0 18px}
-.m-flow-rail{display:flex;flex-direction:column;align-items:center;gap:10px}
-.m-flow-num{font-size:14px;font-weight:500;letter-spacing:.08em;line-height:24px;color:var(--muted)}
-.m-flow-line{flex:1;width:1px;background:var(--line-ui)}
-[data-flowlast] .m-flow-line{display:none}
-.m-flow-body{display:flex;flex-direction:column;gap:12px;padding-bottom:30px}
-[data-flowlast] .m-flow-body{padding-bottom:0}
-.m-flow-title{font-size:18px;font-weight:600;letter-spacing:-.02em;line-height:24px;color:var(--fg)}
-.m-flow-text{margin:0;font-size:16px;line-height:1.75;font-weight:400;color:var(--body);word-break:keep-all}
-.m-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px;margin-bottom:2px}
-.m-stat{display:flex;flex-direction:column;gap:5px;padding:14px 16px 13px;background:var(--card-item);border:1px solid var(--line-card);corner-shape:squircle;border-radius:14px}
-.m-stat-v{font-size:28px;font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--fg)}
+.m-eyebrow{font-size:14px;letter-spacing:.1em;color:var(--muted)}
+.modal-title{margin:10px 0 0;font-size:34px;font-weight:600;line-height:1.2;letter-spacing:-.03em;color:var(--fg);word-break:keep-all;overflow-wrap:break-word}
+.modal-blurb{margin:14px 0 0;font-size:18px;line-height:1.6;color:var(--sub);max-width:720px;text-wrap:pretty;word-break:keep-all}
+.m-link{margin-top:18px;font-size:15px}
+.m-link a{color:var(--fg);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:5px;text-decoration-thickness:1px}
+.m-stack{display:flex;flex-wrap:wrap;gap:6px;margin:36px 0 56px}
+.m-stack .tag{font-size:14px;padding:5px 10px;border-radius:9px;border:1px solid var(--line-ui);background:transparent;color:var(--fg)}
+.m-sec{display:flex;flex-direction:column;gap:12px;padding-bottom:44px}
+.m-sec:last-child{padding-bottom:0}
+.m-sec-h{display:flex;align-items:baseline;gap:12px}
+.m-num{font-size:14px;letter-spacing:.1em;color:var(--muted-2)}
+.m-sec--ai .m-num{color:var(--ai)}
+.m-sec-t{font-size:20px;font-weight:600;letter-spacing:-.022em;color:var(--fg)}
+.m-text{margin:0;font-size:16px;line-height:1.75;color:var(--body);word-break:keep-all}
+.m-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.m-stat{background:var(--card-item);border:1px solid var(--line-soft);corner-shape:squircle;border-radius:14px;padding:18px 20px 16px;display:flex;flex-direction:column;gap:6px}
+.m-stat-v{font-size:30px;font-weight:600;letter-spacing:-.035em;line-height:1;color:var(--fg)}
 .m-stat-k{font-size:14px;letter-spacing:.08em;color:var(--muted)}
-.m-flow-list{display:flex;flex-direction:column;gap:8px;list-style:none;padding:0;margin:0}
-.m-flow-item{position:relative;padding-left:16px;font-size:16px;line-height:1.72;font-weight:400;color:var(--body);word-break:keep-all}
-.m-flow-item::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%;background:var(--dot)}
-.m-flow-sec--ai .m-flow-num{color:var(--ai)}
-.m-flow-sec--ai .m-flow-item::before{background:var(--ai)}
-[data-modalfoot]{flex:none;border-top:1px solid var(--line-card);padding-top:14px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px}
-.mfoot-id{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.mfoot-name{font-size:14.5px;font-weight:600;color:var(--fg);white-space:nowrap}
-.mfoot-role{font-size:12px;color:var(--muted);white-space:nowrap}
-.mfoot-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;font-size:12px}
-.mfoot-links a{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
-.mfoot-links a.tight{gap:2px}
-.mfoot-links a:hover{text-decoration:underline;text-underline-offset:3px}
-.mfoot-k{color:var(--muted)}
+.m-list{display:flex;flex-direction:column;gap:8px;list-style:none;padding:0;margin:0}
+.m-item{position:relative;padding-left:16px;font-size:16px;line-height:1.72;color:var(--body);word-break:keep-all}
+.m-item::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%;background:var(--dot)}
+.m-sec--ai .m-item::before{background:var(--ai)}
+.m-foot{display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;margin-top:72px;font-size:14px;color:var(--muted-2)}
+.m-foot a{color:var(--muted);text-decoration:none}
+.m-foot a:hover{text-decoration:underline;text-underline-offset:3px}
 
 /* ============================================================
    MOBILE (≤720px) — 모든 모바일 재정의는 이 블록 안에만 둔다.
@@ -296,8 +264,10 @@ section[data-chapter]{padding:80px 0 0}
   [data-bar] .seg-btn{min-width:34px;padding:0 9px;font-size:13.5px}
   .bar-pdf{display:none}
 
-  [data-contact]{gap:0}
-  .contact-row{min-height:46px;align-items:center;padding-bottom:0}
+  .hero{padding:40px 0}
+  .hero-name{font-size:52px}
+  .hero-lead{font-size:19px;margin-top:22px}
+  .hero-sub{font-size:15px;margin-top:14px}
 
   /* chapter rhythm: tighter blocks, clearer breaks */
   section[data-chapter]{padding-top:46px}
@@ -308,49 +278,57 @@ section[data-chapter]{padding:80px 0 0}
   [data-chaprule]{background:var(--line)}
 
   /* one continuous axis — same proportions as desktop, without labels */
-  [data-tlbar]{height:12px}
-  .tl-seg{padding:0}
-  .tl-co,.tl-date{display:none}
-  .co-grid{grid-template-columns:1fr;gap:28px}
-  [data-cardate]{display:block;margin-top:5px}
+  [data-tlbar]{height:44px}
+  .tl-seg{padding:8px 12px}
+  .tl-date{display:none}
+  .tl-co{font-size:13.5px}
+  .co-grid{grid-template-columns:1fr;gap:32px}
+  [data-cardate]{display:block;margin-top:5px;font-size:14px;color:var(--muted-2)}
 
   /* the stack becomes a spec table: label left, items flowing right */
   [data-stackgrid]{gap:0}
   .stack-cell{padding:14px 0 16px;border-top:1px solid var(--line)}
   .stack-cell:first-child{border-top:0;padding-top:0}
   [data-stackgroup]{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px;font-family:inherit}
-  [data-stackgroup] > span{display:block;padding:0;border:0;background:none;font-family:inherit;font-size:14px;font-weight:500;color:inherit;line-height:1.35;white-space:normal}
+  [data-stackgroup] > span{font-size:14px;display:block;padding:0;border:0;background:none;font-family:inherit;font-size:14px;font-weight:500;color:inherit;line-height:1.35;white-space:normal}
 
   /* project rows rebuilt: title-first, two-line blurb, press not lift */
-  [data-projgrid]{gap:12px}
-  .proj-card{aspect-ratio:auto;min-height:0}
-  .pc-text{position:static;padding:20px 20px 0}
-  .pc-img{position:static;width:60%;margin:16px 0 0 auto;aspect-ratio:1/1}
+  [data-projgrid]{gap:12px;grid-template-columns:1fr}
+  .proj-card{aspect-ratio:4/5}
+  .pc-text{padding:20px 20px 0;gap:10px}
+  .pc-title{font-size:21px}
+  .pc-blurb{font-size:15px}
+  .pc-img{width:62%}
   .proj-card:active{background:var(--card-hover);transform:scale(.986)}
   .proj-card:focus-visible{outline-offset:-2px}
 
-  [data-edugrid]{gap:24px 0}
+  [data-edugrid]{grid-template-columns:1fr;gap:24px 0}
 
   /* footer: one left-aligned column */
   [data-footer]{padding:34px 22px 20px}
   [data-footgrid]{gap:28px;align-items:start}
   [data-footcontact]{justify-self:start;text-align:left}
-  [data-footmail]{font-size:19px}
+  .foot-name{font-size:30px}
+  [data-footmail]{font-size:18px;word-break:break-all}
   [data-footmeta]{margin-top:30px}
 
-  /* modal becomes a full-height sheet */
-  [data-modal]{padding:0;align-items:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch}
-  [data-modalcard]{width:100%;max-width:100%;min-height:100dvh;height:auto;max-height:none;border-radius:0;border:0;box-shadow:none;padding:16px 14px 28px;overflow:visible}
-  [data-modalhead]{position:sticky;top:0;z-index:10;background:var(--card);padding-top:4px;padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--line-card)}
-  [data-modalbody]{flex:1 0 auto;overflow:visible;height:auto;min-height:auto;margin-bottom:0;padding-right:0}
-  [data-modalfoot]{margin-top:36px;padding-top:18px}
-  .m-flow-sec{grid-template-columns:28px 1fr;gap:0 12px}
-  .m-flow-body{padding-bottom:24px;gap:10px}
-  .m-flow-title{font-size:17px}
-  .m-flow-text{font-size:15px}
+  /* modal becomes a bottom sheet */
+  [data-modal]{padding:0;align-items:flex-end;overflow:hidden}
+  [data-modalcard]{width:100%;max-width:100%;height:92vh;max-height:92vh;min-height:0;border-radius:24px 24px 0 0;border-bottom:0;padding:14px 20px 40px;overflow:hidden}
+  [data-modalcard]::before{content:"";flex:none;width:36px;height:4px;border-radius:2px;background:var(--line-ui);margin:0 auto 8px}
+  [data-modalcard]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(to bottom,transparent,var(--card));pointer-events:none}
+  [data-modalhead]{position:sticky;top:0;z-index:10;background:var(--card);padding-bottom:8px;margin-bottom:10px}
+  [data-modalbody]{padding-right:2px}
+  .modal-title{font-size:27px}
+  .modal-blurb{font-size:16px}
+  .m-stack{margin:26px 0 38px}
+  .m-sec{padding-bottom:38px}
+  .m-sec-t{font-size:18px}
+  .m-text,.m-item{font-size:15px}
   .m-stats{grid-template-columns:1fr 1fr}
-  .m-stat{padding:12px 14px 11px}
-  .m-stat-v{font-size:24px}
+  .m-stat{padding:14px 16px 12px}
+  .m-stat-v{font-size:26px}
+  .m-foot{margin-top:48px}
 }
 @media print{
   :root{color-scheme:light only}
@@ -389,48 +367,27 @@ section[data-chapter]{padding:80px 0 0}
   <button onClick="{{ doPrint }}" aria-label="PDF" title="PDF" class="icon-btn bar-pdf"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8"></path><path d="M4.5 7L8 10.5 11.5 7"></path><path d="M2.5 13.5h11"></path></svg></button>
 </div>
 
-<header id="s-intro" class="intro">
-  <div class="intro-grid">
-    <div>
-      <h1 data-inverted class="intro-name">
-        <span data-lb="ko">장민규</span><span data-lb="en">Min&#8209;gyu Jang</span><span data-lb="ja">チャン・ミンギュ</span>
-      </h1>
-      <p class="intro-role">
-        <span data-l="ko">C#/.NET 개발자 · 8년차</span><span data-l="en">C#/.NET Developer · 8 years</span><span data-l="ja">C#/.NET エンジニア · 8年目</span>
-      </p>
-      <p class="mono intro-sub">
-        Windows Desktop &nbsp;/&nbsp; Cross&#8209;platform &nbsp;/&nbsp; Backend
-      </p>
-    </div>
-
-    <div data-contact class="mono">
-      <a href="mailto:a9090618693@gmail.com" class="contact-row"><span class="contact-k">EMAIL</span><span>a9090618693@gmail.com</span></a>
-      <a href="tel:+821090618693" class="contact-row"><span class="contact-k">PHONE</span><span>010-9061-8693</span></a>
-      <a href="https://github.com/jjang010103" target="_blank" rel="noopener" class="contact-row"><span class="contact-k">GITHUB</span><span class="nowrap">jjang010103 &#8599;</span></a>
-      <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" class="contact-row"><span class="contact-k">LINKEDIN</span><span class="nowrap">민규-장 &#8599;</span></a>
-    </div>
-  </div>
-</header>
-
-<section class="about">
-  <p class="about-lead">
-    <span data-lb="ko">고등학교 때 개발을 시작해 <strong class="kw">8년차</strong>가 된 C#/.NET 개발자입니다.</span>
-    <span data-lb="en">A C#/.NET developer <strong class="kw">8 years</strong> in — started writing software in high school.</span>
-    <span data-lb="ja">高校在学中に開発を始め、<strong class="kw">8年目</strong>を迎えたC#/.NETエンジニアです。</span>
+<header id="s-intro" class="hero">
+  <h1 data-inverted class="hero-name">
+    <span data-lb="ko">장민규</span><span data-lb="en">Min&#8209;gyu Jang</span><span data-lb="ja">チャン・ミンギュ</span>
+  </h1>
+  <p class="hero-lead">
+    <span data-lb="ko">고등학교 때 개발을 시작해 <strong class="kw">8년차</strong>가 된 C#/.NET 개발자. <a href="https://www.enliple.com" target="_blank" rel="noopener">인라이플</a>에서 압축 프로그램 <a href="https://ezlab.im/ko/tool/ezzip" target="_blank" rel="noopener">ezZip</a>과 자사 PC 제품군의 공통 플랫폼을 만들고 있습니다.</span>
+    <span data-lb="en">A C#/.NET developer <strong class="kw">8 years</strong> in, since high school. At <a href="https://www.enliple.com" target="_blank" rel="noopener">Enliple</a> I build <a href="https://ezlab.im/ko/tool/ezzip" target="_blank" rel="noopener">ezZip</a> and the shared platform behind our PC products.</span>
+    <span data-lb="ja">高校在学中に開発を始め、<strong class="kw">8年目</strong>のC#/.NETエンジニア。<a href="https://www.enliple.com" target="_blank" rel="noopener">インライフル</a>で圧縮ソフト<a href="https://ezlab.im/ko/tool/ezzip" target="_blank" rel="noopener">ezZip</a>と自社PC製品群の共通基盤を開発中。</span>
   </p>
-  <ul class="about-list">
-    <li class="about-item"><span data-lb="ko">Windows 데스크톱 · Avalonia 크로스플랫폼이 주력, C++ Native 연동까지 직접</span><span data-lb="en">Windows desktop and Avalonia cross-platform as the core, down to C++ native interop</span><span data-lb="ja">Windowsデスクトップ・Avaloniaクロスプラットフォームが主力、C++ Native連携まで担当</span></li>
-    <li class="about-item"><span data-lb="ko">Java / Spring Boot 대용량 분산 환경 백엔드 경험</span><span data-lb="en">Backend experience in high-volume Java / Spring Boot distributed systems</span><span data-lb="ja">Java / Spring Boot 大容量分散環境のバックエンド経験</span></li>
-    <li class="about-item"><span data-lb="ko">정량 목표를 먼저 정하고 수치로 결과를 증명하는 방식으로 일함</span><span data-lb="en">Sets a measurable target first, then proves the result with numbers</span><span data-lb="ja">定量目標を先に定め、数値で結果を証明する進め方</span></li>
-  </ul>
-</section>
+  <p class="hero-sub">
+    <span data-lb="ko">Windows 데스크톱 · Avalonia 크로스플랫폼이 주력, C++ Native 연동부터 Java / Spring Boot 대용량 백엔드까지 직접. 정량 목표를 먼저 정하고 수치로 결과를 증명합니다.</span>
+    <span data-lb="en">Windows desktop and Avalonia cross-platform first; hands-on from C++ native interop to high-volume Java / Spring Boot backends. Set a measurable target, prove it with numbers.</span>
+    <span data-lb="ja">Windowsデスクトップ・Avaloniaクロスプラットフォームが主力。C++ Native連携からJava / Spring Boot大容量バックエンドまで担当。定量目標を先に定め、数値で結果を証明。</span>
+  </p>
+</header>
 
 <section data-chapter id="s-career">
   <div class="chap-head">
     <span class="mono chap-num">01</span>
     <h2 class="chap-title"><span data-l="ko">경력 타임라인</span><span data-l="en">Career timeline</span><span data-l="ja">職務経歴タイムライン</span></h2>
     <span data-chaprule></span>
-    <span class="mono chap-meta">2018.09 → NOW</span>
   </div>
 
   <div data-tlbar>
@@ -501,14 +458,8 @@ section[data-chapter]{padding:80px 0 0}
     <span class="mono chap-num">03</span>
     <h2 class="chap-title"><span data-l="ko">프로젝트</span><span data-l="en">Projects</span><span data-l="ja">プロジェクト</span></h2>
     <span data-chaprule></span>
-    <span class="mono chap-meta">{{ shownCount }}/6</span>
   </div>
 
-  <div data-noprint data-filters>
-    <sc-for list="{{ filters }}" as="f" hint-placeholder-count="7">
-      <button onClick="{{ f.onClick }}" data-inverted="{{ f.inv }}" class="mono sq filter-btn" style="border-color:{{ f.bc }};background:{{ f.bg }};color:{{ f.fg }}">{{ f.label }}</button>
-    </sc-for>
-  </div>
 
   <div data-projgrid>
     <sc-for list="{{ cards }}" as="p" hint-placeholder-count="6">
@@ -525,7 +476,6 @@ section[data-chapter]{padding:80px 0 0}
     </sc-for>
   </div>
 
-  <p class="mono proj-empty" style="display:{{ emptyMsg }}">No projects match this filter.</p>
 </section>
 
 <section data-chapter id="s-education">
@@ -542,7 +492,6 @@ section[data-chapter]{padding:80px 0 0}
         <div class="edu-list">
           <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="2">
             <div class="edu-item">
-              <span class="badge badge--edu">{{ it.badge }}</span>
               <div class="edu-body">
                 <div class="edu-name">{{ it.name }}</div>
                 <div class="mono edu-meta">{{ it.meta }}</div>
@@ -596,99 +545,59 @@ section[data-chapter]{padding:80px 0 0}
 
     <div data-modalbody>
       <sc-for list="{{ openCard }}" as="p" hint-placeholder-count="1">
-                <div class="mbody-col">
+        <div class="mbody-col">
+          <div class="mono m-eyebrow">{{ p.co }} · {{ p.date }}</div>
           <h3 class="modal-title">{{ p.mtitle }}</h3>
           <p class="modal-blurb">{{ p.blurb }}</p>
 
-          <div class="modal-spec">
-            <div>
-              <div class="mono speclabel">COMPANY</div>
-              <div class="spec-co">{{ p.coFull }}</div>
-            </div>
-            <div>
-              <div class="mono speclabel">TIMELINE</div>
-              <div class="mono spec-date">{{ p.date }}</div>
-            </div>
-            <div>
-              <div class="mono speclabel">ROLE</div>
-              <div class="spec-role">{{ p.role }}</div>
-            </div>
+          <sc-if value="{{ p.url }}">
+            <div class="m-link"><a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener">{{ linkLabel }} <span>&#8599;</span></a></div>
+          </sc-if>
 
-            <div class="spec-wide spec-stack">
-              <div class="mono speclabel">TECH STACK</div>
-              <div class="spec-tags">
-                <sc-for list="{{ p.stack }}" as="t" hint-placeholder-count="5">
-                  <span class="mono sq tag tag--card">{{ t }}</span>
-                </sc-for>
-              </div>
-            </div>
-
-            <sc-if value="{{ p.url }}">
-              <div class="spec-wide spec-linkrow">
-                <span class="mono speclabel">LINK</span>
-                <a onClick="{{ stop }}" href="{{ p.url }}" target="_blank" rel="noopener" class="mono">{{ linkLabel }}<span>&#8599;</span></a>
-              </div>
-            </sc-if>
+          <div class="m-stack">
+            <sc-for list="{{ p.stack }}" as="t" hint-placeholder-count="5">
+              <span class="mono sq tag">{{ t }}</span>
+            </sc-for>
           </div>
 
-          <div class="m-flow">
-            <sc-for list="{{ p.flow }}" as="s" hint-placeholder-count="5">
-              <div class="m-flow-sec {{ s.cls }}" data-flowlast="{{ s.last }}">
-                <div class="m-flow-rail">
-                  <span class="mono m-flow-num">{{ s.num }}</span>
-                  <span class="m-flow-line"></span>
-                </div>
-                <div class="m-flow-body">
-                  <div class="m-flow-title">{{ s.title }}</div>
-                  <sc-if value="{{ s.isText }}">
-                    <p class="m-flow-text">{{ s.text }}</p>
-                  </sc-if>
-                  <sc-if value="{{ s.hasStats }}">
-                    <div class="m-stats">
-                      <sc-for list="{{ s.stats }}" as="k" hint-placeholder-count="3">
-                        <div class="m-stat"><span class="m-stat-v">{{ k.v }}</span><span class="mono m-stat-k">{{ k.k }}</span></div>
-                      </sc-for>
-                    </div>
-                  </sc-if>
-                  <sc-if value="{{ s.isList }}">
-                    <ul class="m-flow-list">
-                      <sc-for list="{{ s.items }}" as="c" hint-placeholder-count="2">
-                        <li class="m-flow-item">{{ c.text }}</li>
-                      </sc-for>
-                    </ul>
-                  </sc-if>
-                </div>
+          <sc-for list="{{ p.flow }}" as="s" hint-placeholder-count="5">
+            <div class="m-sec {{ s.cls }}">
+              <div class="m-sec-h">
+                <span class="mono m-num">{{ s.num }}</span>
+                <span class="m-sec-t">{{ s.title }}</span>
               </div>
-            </sc-for>
+              <sc-if value="{{ s.isText }}">
+                <p class="m-text">{{ s.text }}</p>
+              </sc-if>
+              <sc-if value="{{ s.hasStats }}">
+                <div class="m-stats">
+                  <sc-for list="{{ s.stats }}" as="k" hint-placeholder-count="3">
+                    <div class="m-stat"><span class="m-stat-v">{{ k.v }}</span><span class="mono m-stat-k">{{ k.k }}</span></div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ s.isList }}">
+                <ul class="m-list">
+                  <sc-for list="{{ s.items }}" as="c" hint-placeholder-count="2">
+                    <li class="m-item">{{ c.text }}</li>
+                  </sc-for>
+                </ul>
+              </sc-if>
+            </div>
+          </sc-for>
+
+          <div class="m-foot">
+            <span>
+              <span data-lb="ko">장민규 · C#/.NET 개발자 · 8년차</span><span data-lb="en">Min-gyu Jang · C#/.NET Developer · 8 years</span><span data-lb="ja">チャン・ミンギュ · C#/.NETエンジニア · 8年目</span>
+            </span>
+            <span class="mono">
+              <a href="mailto:a9090618693@gmail.com">a9090618693@gmail.com</a> ·
+              <a href="https://github.com/jjang010103" target="_blank" rel="noopener">GITHUB &#8599;</a> ·
+              <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener">LINKEDIN &#8599;</a>
+            </span>
           </div>
         </div>
       </sc-for>
-    </div>
-
-    <div data-modalfoot>
-      <div class="mfoot-id">
-        <span class="mfoot-name">
-          <span data-lb="ko">장민규</span><span data-lb="en">Min-gyu Jang</span><span data-lb="ja">チャン・ミンギュ</span>
-        </span>
-        <span class="mono mfoot-role">
-          <span data-lb="ko">· C#/.NET 개발자 (8년차)</span><span data-lb="en">· C#/.NET Dev (8y)</span><span data-lb="ja">· C#/.NET エンジニア (8年目)</span>
-        </span>
-      </div>
-
-      <div class="mono mfoot-links">
-        <a href="mailto:a9090618693@gmail.com">
-          <span class="mfoot-k">EMAIL</span> a9090618693@gmail.com
-        </a>
-        <a href="tel:+821090618693">
-          <span class="mfoot-k">TEL</span> 010-9061-8693
-        </a>
-        <a href="https://github.com/jjang010103" target="_blank" rel="noopener" class="tight">
-          GITHUB<span>&#8599;</span>
-        </a>
-        <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" class="tight">
-          LINKEDIN<span>&#8599;</span>
-        </a>
-      </div>
     </div>
   </div>
 </div>
@@ -696,6 +605,7 @@ section[data-chapter]{padding:80px 0 0}
 </main>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
+// 필터 UI는 2026-09-03 리디자인에서 제거됐다. PROJECTS[].tech와 함께 데이터로만 남긴다(§8 검증 3번이 계속 이 짝을 확인한다).
 const FILTERS = ['ALL', 'C#/.NET', 'WPF·Avalonia', 'Java·Spring', 'C++·Native', 'DB·SQL', 'CAD·3D'];
 
 const STACK = [
@@ -1033,7 +943,7 @@ const bold = (s) => s.indexOf('**') < 0 ? s : s.split('**').map((t, i) =>
   i & 1 ? React.createElement('strong', { key: i, style: { fontWeight: 600 } }, t) : t);
 
 class Component extends DCLogic {
-  state = { lang: 'ko', theme: 'light', filter: 'ALL', openId: null, scrollY: 0, vw: 0, geo: '' };
+  state = { lang: 'ko', theme: 'light', openId: null, scrollY: 0, vw: 0, geo: '' };
 
   componentDidMount() {
     let theme = null, lang = null;
@@ -1213,7 +1123,6 @@ class Component extends DCLogic {
   renderVals() {
     const lang = this.state.lang;
     const dark = this.state.theme === 'dark';
-    const f = this.state.filter;
     const t = (o) => o[lang];
 
     const on  = { bg: dark ? '#ececef' : '#151514', fg: dark ? '#101011' : '#fbfbf9', bc: dark ? '#ececef' : '#151514', inv: true };
@@ -1231,7 +1140,7 @@ class Component extends DCLogic {
       const flow = [];
       T5.forEach(([key, list], i) => {
         if (key !== 'intro' && !(list && list.length)) return;
-        const sec = { num: '0' + (i + 1), title: t(T[key]), cls: key === 'ai' ? 'm-flow-sec--ai' : '', last: null };
+        const sec = { num: '0' + (i + 1), title: t(T[key]), cls: key === 'ai' ? 'm-sec--ai' : '' };
         if (key === 'intro') { sec.isText = true; sec.text = t(p.intro || p.blurb); }
         else { sec.isList = true; sec.items = list.map(c => ({ text: bold(t(c)) })); }
         if (key === 'metrics') {
@@ -1240,7 +1149,6 @@ class Component extends DCLogic {
         }
         flow.push(sec);
       });
-      flow[flow.length - 1].last = true;
       return {
         id: p.id, co: t(p.co), coFull: t(p.coFull), date: p.date, url: p.url,
         title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb), role: t(p.role),
@@ -1249,7 +1157,7 @@ class Component extends DCLogic {
       };
     };
 
-    const shown = PROJECTS.filter(p => f === 'ALL' || p.tech.indexOf(f) !== -1);
+    const shown = PROJECTS;
     const opened = PROJECTS.find(p => p.id === this.state.openId);
     const nv = this.navState(dark);
 
@@ -1277,7 +1185,7 @@ class Component extends DCLogic {
       })),
       edu: EDU.map(g => ({
         label: t(g.label),
-        items: g.items.map(it => ({ badge: it.badge, name: t(it.name), meta: t(it.meta) }))
+        items: g.items.map(it => ({ name: t(it.name), meta: t(it.meta) }))
       })),
       cards: shown.map(view),
       openCard: opened ? [view(opened)] : [],
@@ -1292,12 +1200,6 @@ class Component extends DCLogic {
       closeModal: this.closeModal,
       toTop: () => this.goTo('s-intro'),
       stop: (e) => e.stopPropagation(),
-      shownCount: String(shown.length),
-      emptyMsg: shown.length === 0 ? 'block' : 'none',
-      filters: FILTERS.map(label => {
-        const s = label === f ? on : off;
-        return { label, bg: s.bg, fg: s.fg, bc: s.bc, inv: s.inv, onClick: () => this.setState({ filter: label }) };
-      })
     };
   }
 }
