@@ -126,7 +126,7 @@ section[id],header[id]{scroll-margin-top:76px}
 .bar-nav{display:flex;align-items:flex-end;gap:clamp(8px,1.2vw,14px);flex:8 1 380px;max-width:640px;min-width:0;overflow-x:auto;scrollbar-width:none;padding-bottom:1px}
 .nav-btn{min-width:max-content;display:flex;flex-direction:column;gap:7px;padding:0 4px 0 0;border:0;background:transparent;cursor:pointer;white-space:nowrap;transition:color .2s ease}
 .nav-top{display:flex;align-items:baseline;gap:6px}
-.nav-num{font-size:11.5px;letter-spacing:.08em;transition:color .2s ease}
+.nav-num{font-size:11.5px;letter-spacing:.08em;color:var(--muted)}
 .nav-label{font-size:13.5px;letter-spacing:-.01em}
 .nav-rail{display:block;height:2px;background:var(--line)}
 .nav-fill{display:block;height:2px;background:currentColor;transition:width .12s linear}
@@ -354,7 +354,7 @@ section[data-chapter]{padding:80px 0 0}
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
       <button onClick="{{ n.go }}" class="nav-btn" style="flex:{{ n.grow }} 1 0;color:{{ n.fg }}">
         <span class="nav-top">
-          <span class="mono nav-num" style="color:{{ n.nfg }}">{{ n.num }}</span>
+          <span class="mono nav-num">{{ n.num }}</span>
           <span class="nav-label" style="font-weight:{{ n.w }}">{{ n.label }}</span>
         </span>
         <span class="nav-rail"><span class="nav-fill" style="width:{{ n.fill }}"></span></span>
@@ -1016,8 +1016,8 @@ class Component extends DCLogic {
     const barH = bar ? bar.getBoundingClientRect().height : 60;
     const top = (window.scrollY || 0) + barH + 24;
     const settled = (document.documentElement.scrollHeight || 0) > window.innerHeight + 1;
-    const active = { fg: dark ? '#ececed' : '#151514', nfg: dark ? '#ececed' : '#151514', w: '600' };
-    const idle = { fg: dark ? '#8e8e98' : '#6f6f68', nfg: dark ? '#5f5f68' : '#a9a89f', w: '400' };
+    const active = { fg: dark ? '#ececed' : '#151514', w: '600' };
+    const idle = { fg: dark ? '#8e8e98' : '#6f6f68', w: '400' };
     if (!settled) {
       const flat = {};
       keys.forEach((k, i) => { flat[k] = { ...(i === 0 ? active : idle), fill: i === 0 ? '100%' : '0%', grow: 1 }; });
