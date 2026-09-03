@@ -384,7 +384,7 @@ section[data-chapter]{padding:96px 0 0}
     <button onClick="{{ setEn }}" class="seg-btn" style="background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
     <button onClick="{{ setJa }}" class="seg-btn" style="background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
   </div>
-  <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" class="icon-btn"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" class="theme-ico" style="transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg></button>
+  <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" data-themebtn class="icon-btn"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" class="theme-ico" style="transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg></button>
   <button onClick="{{ doPrint }}" aria-label="PDF" title="PDF" class="icon-btn bar-pdf"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8"></path><path d="M4.5 7L8 10.5 11.5 7"></path><path d="M2.5 13.5h11"></path></svg></button>
 </div>
 
@@ -579,7 +579,7 @@ section[data-chapter]{padding:96px 0 0}
         <button onClick="{{ setEn }}" class="seg-btn" style="background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
         <button onClick="{{ setJa }}" class="seg-btn" style="background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
       </div>
-      <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" class="icon-btn icon-btn--card">
+      <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" data-themebtn class="icon-btn icon-btn--card">
         <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true" class="theme-ico" style="transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg>
       </button>
       <button data-sheetclose onClick="{{ closeModal }}" aria-label="닫기" title="닫기" class="icon-btn icon-btn--card icon-btn--close">
@@ -1177,12 +1177,17 @@ class Component extends DCLogic {
 
     if (!document.startViewTransition || reduced) { this.applyTheme(theme); return; }
 
-    let x = e && e.clientX, y = e && e.clientY;
-    if (!x && !y && e && e.currentTarget && e.currentTarget.getBoundingClientRect) {
-      const r = e.currentTarget.getBoundingClientRect();
-      x = r.left + r.width / 2;
-      y = r.top + r.height / 2;
+    // 원형 확산은 항상 눌린 테마 버튼 정중앙에서 시작한다.
+    // 커서 좌표(clientX/Y)를 쓰면 키보드·터치에서 0이나 엉뚱한 지점이 잡힌다.
+    let btn = e && (e.currentTarget || (e.target && e.target.closest && e.target.closest('[data-themebtn]')));
+    if (!btn || !btn.getBoundingClientRect) {
+      // 모달이 열려 있으면 모달 쪽 버튼이 화면에 있는 버튼이다
+      btn = [].slice.call(document.querySelectorAll('[data-themebtn]'))
+        .filter(b => b.getBoundingClientRect().width > 0).pop();
     }
+    const br = btn && btn.getBoundingClientRect();
+    const x = br ? br.left + br.width / 2 : window.innerWidth / 2;
+    const y = br ? br.top + br.height / 2 : window.innerHeight / 2;
     const w = window.innerWidth, h = window.innerHeight;
     const radius = Math.hypot(Math.max(x, w - x), Math.max(y, h - y));
 
