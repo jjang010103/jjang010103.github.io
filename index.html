@@ -61,7 +61,6 @@ document.documentElement.style.colorScheme=t;})()</script>
   --sub:light-dark(#45453f,#adadb1);        /* 카드 요약·보조 본문 */
   --dot:light-dark(#6f6f68,#9a9aa3);        /* 불릿 점 */
   --stripe:light-dark(#d3d1ca,#3c3c44);     /* 타임라인 공백 스트라이프 */
-  --scrim:light-dark(rgba(20,20,19,.55),rgba(0,0,0,.7));  /* 모달 오버레이 */
   --tag-bg:var(--tag-bg);     /* 태그 칩 면 */
   --tag-bc:var(--tag-bc);
   --ai:light-dark(#4f46e5,#a5b4fc);         /* 모달 AI 섹션 강조 */
@@ -216,8 +215,8 @@ section[data-chapter]{padding:80px 0 0}
 [data-footmeta]{margin-top:44px;padding-top:16px;border-top:1px solid currentColor;opacity:.7;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;font-size:12px}
 
 /* ── project modal ──────────────────────────────────────── */
-[data-modal]{position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:var(--scrim);backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);overflow:hidden}
-[data-modalcard]{position:relative;box-sizing:border-box;width:min(900px,calc(100vw - 32px));height:min(90vh,1100px);max-height:min(92vh,1140px);display:flex;flex-direction:column;overflow:hidden;background:var(--card);border:1px solid var(--line-soft);corner-shape:squircle;border-radius:24px;padding:22px 44px 40px;box-shadow:0 30px 90px rgba(0,0,0,.45)}
+[data-modal]{position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:var(--bg);overflow:hidden}
+[data-modalcard]{position:relative;box-sizing:border-box;width:min(720px,calc(100vw - 32px));height:min(90vh,1100px);max-height:min(92vh,1140px);display:flex;flex-direction:column;overflow:hidden;background:var(--card);border:1px solid var(--line-soft);corner-shape:squircle;border-radius:24px;padding:22px 44px 40px;box-shadow:0 30px 90px rgba(0,0,0,.45)}
 [data-modalhead]{flex:none;display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px}
 [data-modalbody]{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:6px}
 .mbody-col{display:flex;flex-direction:column}
