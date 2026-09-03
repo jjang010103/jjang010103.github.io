@@ -123,14 +123,13 @@
 `PROJECTS`에 항목을 넣거나 고칠 때 순서대로 확인한다.
 
 1. `id`가 고유한가. (모달 상태 `openId`가 이 값을 쓴다)
-2. `tech` 배열의 값이 `FILTERS` 상수에 **존재하는 문자열과 정확히 일치**하는가. 필터 UI는 제거됐지만 데이터 짝은 §8 검증 3번이 계속 확인한다.
-3. `title` / `mtitle` / `blurb` / `intro` / `role` / 각 섹션 항목 / `stats`의 `v`·`k` 전부 **ko·en·ja 3개**가 있는가.
-4. 내용이 `features`(02) → `metrics`(03) → `challenges`(04) → `ai`(05) 중 **맞는 필드**에 들어갔는가. 없는 단계는 배열을 비워 둔다(§2).
-5. 섹션당 1~2개, 한 항목 한 문장(90자 이내), 볼드 최대 1개 — §1-④ 분량 상한을 지켰는가.
-6. 수치가 전부 사용자 제공값인가. `stats`의 값이 `metrics` 문장에 실제로 있는가. 3개 국어의 숫자가 같은가.
-7. `date` 표기가 기존과 같은 형식(`2025.02 — NOW`)인가.
-8. `url`이 없으면 빈 문자열 `''`. (`sc-if`가 링크 줄을 숨긴다)
-9. 브라우저에서 카드 → 모달 → 3개 언어 → 라이트/다크 → 720px → **인쇄 미리보기**까지 확인했는가.
+2. `title` / `mtitle` / `blurb` / `intro` / 각 섹션 항목 / `stats`의 `v`·`k` 전부 **ko·en·ja 3개**가 있는가.
+3. 내용이 `features`(02) → `metrics`(03) → `challenges`(04) → `ai`(05) 중 **맞는 필드**에 들어갔는가. 없는 단계는 배열을 비워 둔다(§2).
+4. 섹션당 1~2개, 한 항목 한 문장(90자 이내), 볼드 최대 1개 — §1-④ 분량 상한을 지켰는가.
+5. 수치가 전부 사용자 제공값인가. `stats`의 값이 `metrics` 문장에 실제로 있는가. 3개 국어의 숫자가 같은가.
+6. `date` 표기가 기존과 같은 형식(`2025.02 — NOW`)인가.
+7. `url`이 없으면 빈 문자열 `''`. (`sc-if`가 링크 줄을 숨긴다)
+8. 브라우저에서 카드 → 모달 → 3개 언어 → 라이트/다크 → 720px → **인쇄 미리보기**까지 확인했는가.
 
 ---
 
@@ -149,11 +148,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude/server.ps1
 
 인쇄/PDF 출력은 **부가 기능이 아니라 1급 기능**이다(`@media print` 블록 + PDF 버튼). 레이아웃을 건드리면 반드시 인쇄 미리보기까지 확인한다(`Ctrl+P`).
 
-### index.html 구조 (약 1210줄, 4개 구역)
+### index.html 구조 (약 1240줄, 4개 구역)
 1. **실제 `<head>`** — 첫 페인트 전에 저장된 테마/언어와 현지화된 `<title>`을 적용하는 인라인 부트 스크립트. `<helmet>`이 아니라 `<head>`에 있어야 한다(런타임이 helmet을 관리 대상으로 삼아 매 렌더마다 `<title>`을 되돌린다). 옮기기 전에 그 자리의 주석을 읽는다.
 2. **`<helmet data-dc-atomics>`** — meta·폰트 링크, 그리고 **유일한 전역 `<style>` 블록**.
 3. **템플릿** (`</x-dc>`까지) — `{{ binding }}` 보간과 `<sc-for list="{{ … }}" as="x">` 루프. 레이아웃 훅은 `data-*` 속성(`data-bar`, `data-projgrid`, `data-modalcard`, `data-noprint` …)이고 스타일시트는 이것을 타깃한다.
-4. **`<script type="text/x-dc" data-dc-script>`** — 데이터 상수(`FILTERS`, `STACK`, `EDU`, `CO`, `PROJECTS`, `NAV`, `T`), `bold()` 헬퍼, `class Component extends DCLogic`.
+4. **`<script type="text/x-dc" data-dc-script>`** — 데이터 상수(`STACK`, `EDU`, `CO`, `PROJECTS`, `NAV`, `T`), `bold()` 헬퍼, `class Component extends DCLogic`.
 
 `renderVals()`가 반환하는 객체의 키가 템플릿의 `{{ 바인딩 }}`이다. 상태는 `lang`, `theme`, `openId`, 그리고 `navState()`에 들어가는 `scrollY`/`vw`/`geo`다. `navState()`는 실제 요소 지오메트리에서 내비 진행 게이지를 계산하며, `<html>`에 건 `ResizeObserver`가 폰트 로드·리플로 후 다시 측정한다.
 
@@ -193,25 +192,22 @@ awk '/<\/style>/,/<\/x-dc>/' index.html | grep -o 'data-lb\?="[a-z][a-z]"' | sor
 # 2. 3개 국어 짝이 맞는가 (스크립트) — 세 숫자가 같아야 한다
 awk '/data-dc-script/,0' index.html | grep -oE "(ko|en|ja): ['\"]" | sed 's/:.*//' | sort | uniq -c
 
-# 3. tech 값이 FILTERS에 실제로 있는가 — 출력이 없어야 한다
-awk -F\' '/^const FILTERS/{for(i=2;i<=NF;i+=2)f[$i]=1;next} /tech: \[/{for(i=2;i<=NF;i+=2) if($i!="" && !($i in f)) print "UNKNOWN:",$i}' index.html
-
-# 4. !important 0, 모바일 미디어 블록 1, 취약 셀렉터 0
+# 3. !important 0, 모바일 미디어 블록 1, 취약 셀렉터 0
 grep -c '!important[;}]' index.html
 grep -c '@media (max-width:720px){' index.html
 grep -cE ':first-of-type|:last-of-type|> *div:first-child|style\*=' index.html
 ```
 
-**2026-09-03 기준 통과값:** 1 → `data-l` 19/19/19 · `data-lb` 13/13/13 | 2 → 111/111/111 | 3 → 출력 없음 | 4 → `0`, `1`, `0`.
+**2026-09-03 기준 통과값:** 1 → `data-l` 19/19/19 · `data-lb` 13/13/13 | 2 → 103/103/103 | 3 → `0`, `1`, `0`.
 
-5번째 검증 — **시트에 다크 리터럴이 남지 않았는가.** 색은 토큰에서만 온다(§7). `::selection`과 `a:hover`의 흑백 쌍만 예외다.
+4번째 검증 — **시트에 다크 리터럴이 남지 않았는가.** 색은 토큰에서만 온다(§7). `::selection`과 `a:hover`의 흑백 쌍만 예외다.
 
 ```bash
 awk '/<style>/,/<\/style>/' index.html | grep -oE 'light-dark\(#[0-9a-f]{3,6},#[0-9a-f]{3,6}\)' | sort | uniq -c
 ```
 → `light-dark(#000,#fff)` 1 · `light-dark(#111,#fff)` 2 · `light-dark(#151514,#f2f2f2)` 1 · `light-dark(#f2f2f2,#151514)` 2 만 남아야 한다.
 
-숫자가 어긋나면 **거기서 멈춘다.** 3번은 필터에서 프로젝트가 조용히 사라지는 버그를, 1·2번은 한 언어만 고치고 커밋하는 사고를 잡는다.
+숫자가 어긋나면 **거기서 멈춘다.** 1·2번은 한 언어만 고치고 커밋하는 사고를, 3·4번은 걷어낸 구조(인라인 스타일·하드코딩 색)가 되살아나는 것을 잡는다.
 
 ### ② 사람이 확인하는 것 — 자동화할 수 없다
 
