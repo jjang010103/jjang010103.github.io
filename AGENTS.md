@@ -92,7 +92,7 @@
 - **간결하고 담백한 연결**: 히어로(이름 + 문장 2개)에서 경력 타임라인으로 매끄럽게 이어지도록 구성한다. 별도 About 섹션은 2026-09-03 리디자인에서 히어로에 흡수됐다.
 - **연락처는 값을 보이고 연다.** 히어로의 이메일·전화는 그대로 노출하고 `mailto:` / `tel:` 링크다. 복사는 옆의 보조 아이콘 버튼(`.copy-btn`)이고 결과는 `aria-live`로 알린다. 라벨만 보이고 값을 숨기는 복사 버튼으로 되돌리지 않는다(2026-09-05 critique: 유일한 전환 행동이 가장 불투명했다).
 - **프로젝트 카드의 빈 아랫면은 이미지 자리다.** `PROJECTS[].img`를 채우면 `.pc-img`가 켜진다. 텍스트로 메우지 않는다(사용자 결정, 2026-09-05).
-- 섹션 순서는 `NAV` 상수가 정의한다: 프로필 → 경력 → 스택 → 프로젝트 → 학력. 순서를 바꾸면 상단 내비게이션 게이지도 함께 검증한다.
+- 섹션 순서는 `NAV` 상수가 정의한다: 프로필 → 경력 → 스택 → 프로젝트 → 학력. 순서를 바꾸면 상단 pill 내비의 활성 챕터 표시도 함께 검증한다.
 
 ---
 
@@ -162,7 +162,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude/server.ps1
 3. **템플릿** (`</x-dc>`까지) — `{{ binding }}` 보간과 `<sc-for list="{{ … }}" as="x">` 루프. 레이아웃 훅은 `data-*` 속성(`data-bar`, `data-projgrid`, `data-modalcard`, `data-noprint` …)이고 스타일시트는 이것을 타깃한다.
 4. **`<script type="text/x-dc" data-dc-script>`** — 데이터 상수(`STACK`, `EDU`, `CO`, `PROJECTS`, `NAV`, `T`), `bold()` 헬퍼, `class Component extends DCLogic`.
 
-`renderVals()`가 반환하는 객체의 키가 템플릿의 `{{ 바인딩 }}`이다. 상태는 `lang`, `theme`, `openId`, `copied`, 그리고 `navState()`에 들어가는 `scrollY`/`vw`/`geo`다. `navState()`는 실제 요소 지오메트리에서 내비 진행 게이지를 계산하며, `<html>`에 건 `ResizeObserver`가 폰트 로드·리플로 후 다시 측정한다. 스크롤·리사이즈·옵저버는 전부 `onScroll`로 들어와 `requestAnimationFrame` 한 번으로 합쳐진 뒤 `measure()`가 setState한다 — 프레임당 렌더 한 번.
+`renderVals()`가 반환하는 객체의 키가 템플릿의 `{{ 바인딩 }}`이다. 상태는 `lang`, `theme`, `openId`, `copied`, 그리고 `measure()`가 넣는 `scrollY`/`vw`/`geo`/`navIdx`/`ink`다. `activeChapter()`가 실제 요소 지오메트리에서 활성 챕터 하나를 고르고, 인덱스가 바뀐 프레임에만 `switchChapter()`가 잉크를 두 칸의 합집합으로 늘렸다가 200ms 뒤 수축시킨다(`navLayout()`이 칸 좌표를 계산, 2026-09-05 pill 내비), `<html>`에 건 `ResizeObserver`가 폰트 로드·리플로 후 다시 측정한다. 스크롤·리사이즈·옵저버는 전부 `onScroll`로 들어와 `requestAnimationFrame` 한 번으로 합쳐진 뒤 `measure()`가 setState한다 — 프레임당 렌더 한 번.
 
 **모달은 dialog다.** `[data-modalcard]`가 `role="dialog" aria-modal="true" aria-labelledby="modal-title"`이고, `open()`이 닫기 버튼으로 포커스를 옮기며 형제 섹션에 `inert`를 건다(`setBackdropInert`). `closeModal()`은 `inert`를 풀고 카드 제목 버튼(`.pc-btn`)으로 포커스를 돌려보낸다. 헤더의 `.m-pager`(이전 · `n / 6` · 다음)와 좌우 화살표 키가 `step(±1)`로 프로젝트를 넘기고, 모바일에서는 시트 상단 72px 또는 본문 맨 위에서 아래로 90px 스와이프하면 닫힌다(`sheetStart/sheetEnd`). 카드는 `<article>`이 클릭 면이고 접근성 컨트롤은 `h3 > button.pc-btn` 하나다 — article에 `role=button`을 주면 h3가 버튼 이름에 묻혀 헤딩 탐색에서 사라진다.
 
@@ -178,13 +178,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude/server.ps1
 - 손가락 타깃: 모바일 블록에서 히어로 연락처·푸터 링크는 **44px** 높이. 상단 바·시트 헤더 컨트롤은 **36px**다 — 44px로 키웠더니 바가 너무 무거워져 사용자가 되돌렸다(2026-09-05). 문장 속 인라인 링크는 예외.
 - 복사 버튼(`.copy-btn`)과 모달 페이저(`.m-pager .icon-btn`)는 **테두리 없는 글리프**다. 아이콘 버튼의 기본 테두리를 물려받지 않는다.
 - 반전 블록 안의 보조 글자는 `opacity`가 아니라 `--ink-fg-2` 토큰이다. 불투명도는 호버 페이드(`.logo-btn:hover`)에만 쓴다.
-- 모바일에서 내비는 사라지지 않고 상단 바 **둘째 줄 스트립**(`.bar-nav{order:9}`)이 된다. 바가 약 100px이므로 `scroll-margin-top`도 모바일 블록에서 함께 올린다.
+- 상단 바는 이름 + **플로팅 pill 하나**(`.ctl`: 챕터 5개 · 언어 3개 · 테마 · PDF)다. 데스크톱은 `[data-bar]`가 sticky, 모바일은 챕터 내비를 **없애고**(스크롤로만 읽는다) 컨트롤 pill만 우하단 `position:fixed`로 남긴다 — 탭 타깃 44px. 프로젝트 벤토의 열 수·높이·이미지 폭은 `PROJECTS[].span/minH/imgW/featured`가 `--span/--minh/--imgw` 커스텀 속성으로 넘기고, 모바일·인쇄 블록은 그 소비처를 1열로 덮어쓴다(인라인 값을 이기려고 `!important`를 쓰지 않는다).
 - 구조 의존 셀렉터(`:first-of-type`, `> div:first-child`, 속성 부분일치)를 쓰지 않는다. 전부 취약해서 제거했다 — 명시적인 `data-*` 훅을 잡는다.
 
 ### 테마 (라이트/다크)
 CSS `light-dark()`와 `<html>`의 `colorScheme`으로만 처리한다. **한쪽 테마 전용 색을 하드코딩하지 않는다.** 토글은 View Transition 원형 확산(`data-vt`, `--vtx/--vty/--vtr`)으로 애니메이션한다. 테마·언어는 localStorage에 `mj-resume-theme` / `mj-resume-lang`으로 저장되고, 첫 페인트 전에 `<head>` 부트 스크립트가 복원한다.
 
-**예외 — 상단 바 크롬은 JS가 색을 만든다.** 내비 진행 게이지의 라벨(`navState()`의 `active`/`idle`), 언어 세그먼트(`renderVals()`의 `on`/`off`), 로고 채움(`ink`/`rest`)은 인라인 스타일로 칠하므로 `light-dark()`를 쓸 수 없고 `dark ? '#…' : '#…'` 리터럴 쌍으로 되어 있다. **팔레트를 바꿀 때 시트만 고치면 상단 바만 옛 색으로 남는다.** 두 곳을 함께 본다. 내비 **번호**는 2026-09-03에 이 예외에서 빠져 CSS 토큰(`--muted`)으로 옮겼다.
+JS가 색을 만드는 곳은 이제 없다. 언어 버튼은 상단 pill(`.lang-btn.is-on`)과 모달 시트(`.seg-btn.is-on`) 모두 `renderVals()`의 `cls`가 주는 `is-on` 클래스로 CSS가 칠한다(2026-09-05 critique 수정). `dark ? '#…' : '#…'` 리터럴 쌍을 다시 만들지 않는다.
 
 ### 강조 표기
 `PROJECTS[].items` 문자열 안의 `**…**`는 `bold()`가 렌더 시 `<strong>`으로 바꾸고, CSS가 반전 하이라이트 칩으로 그린다. 눈에 걸려야 할 키워드/수치 하나에만 쓴다.
@@ -213,7 +213,7 @@ grep -c '@media (max-width:720px){' index.html
 grep -cE ':first-of-type|:last-of-type|> *div:first-child|style\*=' index.html
 ```
 
-**2026-09-05 기준 통과값:** 1 → `data-l` 21/21/21 · `data-lb` 13/13/13 | 2 → 116/116/116 | 3 → `0`, `1`, `0`.
+**2026-09-05 기준 통과값:** 1 → `data-l` 21/21/21 · `data-lb` 13/13/13 | 2 → 118/118/118 | 3 → `0`, `1`, `0`.
 
 4번째 검증 — **시트에 다크 리터럴이 남지 않았는가.** 색은 토큰에서만 온다(§7). `::selection`과 `a:hover`의 흑백 쌍만 예외다.
 
