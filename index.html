@@ -48,14 +48,15 @@ document.documentElement.style.colorScheme=t;})()</script>
   --fg:light-dark(#1c1b19,#d9d9db);
   --ink:light-dark(#151514,#d9d9db);        /* 반전 블록 배경 */
   --ink-fg:light-dark(#fbfbf9,#101011);     /* 반전 블록 글자 */
+  --ink-fg-2:light-dark(#adadab,#545456);   /* 반전 블록 보조 글자 — 불투명도 대신 색 한 단계 */
   --card:light-dark(#f1f1f0,#1c1c20);       /* 카드 면 */
   --card-hover:light-dark(#eaeae9,#222227);
   --card-item:light-dark(#fbfbf9,#292930);  /* 카드 위의 한 단계 밝은 면 */
   --line:light-dark(#dcdbd5,#34343b);       /* 기본 헤어라인 */
   --line-soft:light-dark(#e3e2dc,#2c2c33);
-  --line-ui:light-dark(#cfcdc6,#4a4a54);    /* 버튼/세그먼트 테두리 */
+  --line-ui:light-dark(#8d8b84,#72727c);    /* 버튼/세그먼트 테두리 — 배경·카드 위 3:1 이상 */
   --muted:light-dark(#5f5f59,#98989d);
-  --muted-2:light-dark(#8a8983,#7d7d82);
+  --muted-2:light-dark(#6f6e68,#838388);    /* 연락처 행·모달 번호·서명 줄 — 카드 위에서도 4.5:1 */
   --chip-fg:light-dark(#3f3f3a,#bebec2);
   --body:light-dark(#2b2a27,#cbcbce);       /* 본문 */
   --sub:light-dark(#45453f,#adadb1);        /* 카드 요약·보조 본문 */
@@ -67,15 +68,25 @@ document.documentElement.style.colorScheme=t;})()</script>
   --shadow-1:light-dark(rgba(0,0,0,.10),rgba(0,0,0,.62));
   --shadow-2:light-dark(rgba(0,0,0,.35),rgba(0,0,0,.44));
 }
-body{margin:0;background:var(--bg);color:var(--fg);font-family:'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+/* light-dark()를 모르는 구형 브라우저(2024년 이전)는 라이트 팔레트로 떨어진다. 값은 위 토큰의 라이트 쪽과 같다. */
+@supports not (color:light-dark(red,blue)){
+  :root{--bg:#fbfbf9;--fg:#1c1b19;--ink:#151514;--ink-fg:#fbfbf9;--ink-fg-2:#adadab;--card:#f1f1f0;--card-hover:#eaeae9;--card-item:#fbfbf9;--line:#dcdbd5;--line-soft:#e3e2dc;--line-ui:#8d8b84;--muted:#5f5f59;--muted-2:#6f6e68;--chip-fg:#3f3f3a;--body:#2b2a27;--sub:#45453f;--dot:#6f6f68;--stripe:#d3d1ca;--ai:#4f46e5;--shadow-1:rgba(0,0,0,.10);--shadow-2:rgba(0,0,0,.35)}
+}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty;overflow-wrap:break-word}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;letter-spacing:inherit}
 a:hover{color:light-dark(#000,#fff);text-decoration:underline;text-underline-offset:3px}
 ::selection{background:light-dark(#151514,#f2f2f2);color:light-dark(#fff,#111)}
-.kw,[data-modalcard] li strong,.m-item strong,.co-item strong{background:var(--ink);color:var(--ink-fg);padding:.08em .32em .12em;margin:0 .04em;border-radius:3px;font-weight:600;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.kw,[data-modalcard] li strong,.m-item strong,.co-item strong{background:var(--ink);color:var(--ink-fg);padding:.08em .28em .12em;margin:0;border-radius:3px;font-weight:600;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .kw::selection,[data-modalcard] li strong::selection,.m-item strong::selection,.co-item strong::selection{background:light-dark(#f2f2f2,#151514);color:light-dark(#111,#fff)}
 [data-footer]::selection,[data-footer] ::selection,[data-tlbar]::selection,[data-tlbar] ::selection,[data-inverted]::selection,[data-inverted] ::selection{background:light-dark(#f2f2f2,#151514);color:light-dark(#111,#fff)}
-html[lang="ko"] body{word-break:keep-all;overflow-wrap:break-word}
+/* 줄바꿈 규칙은 언어에만 건다. keep-all을 컴포넌트에 직접 쓰면 일본어에서 어절 경계가 없어
+   문장이 통째로 넘친다(2026-09-05 감사: 모바일 가로 오버플로 294px, 바텀시트가 화면 밖으로). */
+html[lang="ko"] body{word-break:keep-all}
+html[lang="ja"] body{line-break:strict}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:-999px;top:10px;z-index:30;padding:8px 12px;background:var(--ink);color:var(--ink-fg);border-radius:8px;font-size:14px}
+.skip:focus{left:10px}
 /* language visibility: static attrs, not 87 per-render display bindings */
 [data-l],[data-lb]{display:none}
 html[lang="ko"] [data-l="ko"],html[lang="en"] [data-l="en"],html[lang="ja"] [data-l="ja"]{display:inline}
@@ -117,7 +128,7 @@ section[id],header[id]{scroll-margin-top:76px}
 .logo-btn [data-l="ko"]{font-size:22.5px;letter-spacing:-.055em}
 .logo-btn [data-l="en"]{font-size:18px;letter-spacing:-.045em}
 .logo-btn [data-l="ja"]{font-size:17px;letter-spacing:-.05em}
-.bar-nav{display:flex;align-items:flex-end;gap:clamp(8px,1.2vw,14px);flex:8 1 380px;max-width:640px;min-width:0;overflow-x:auto;scrollbar-width:none;padding-bottom:1px}
+.bar-nav{display:flex;align-items:flex-end;gap:clamp(8px,1.2vw,14px);flex:8 1 300px;max-width:640px;min-width:0;overflow-x:auto;scrollbar-width:none;padding-bottom:1px}
 .nav-btn{min-width:max-content;display:flex;flex-direction:column;gap:7px;padding:0 4px 0 0;border:0;background:transparent;cursor:pointer;white-space:nowrap;transition:color .2s ease}
 .nav-top{display:flex;align-items:baseline;gap:6px}
 .nav-num{font-size:11.5px;letter-spacing:.08em;color:var(--muted)}
@@ -139,15 +150,22 @@ section[id],header[id]{scroll-margin-top:76px}
 
 /* ── hero ───────────────────────────────────────────────── */
 .hero{padding:64px 0 56px;border-bottom:1px solid var(--line)}
-.hero-name{display:inline-block;max-width:100%;box-sizing:border-box;margin:0;padding:.1em .1em .13em;background:var(--ink);color:var(--ink-fg);border-radius:3px;font-size:clamp(38px,9vw,86px);line-height:.93;font-weight:600;letter-spacing:-.042em;overflow-wrap:break-word;word-break:keep-all}
+.hero-name{display:inline-block;max-width:100%;box-sizing:border-box;margin:0;padding:.1em .1em .13em;background:var(--ink);color:var(--ink-fg);border-radius:3px;font-size:clamp(38px,9vw,86px);line-height:.93;font-weight:600;letter-spacing:-.042em}
 .hero-name [data-lb="ja"]{font-size:.8em;letter-spacing:-.03em}
-.hero-lead{margin:30px 0 0;font-size:24px;line-height:1.5;letter-spacing:-.018em;color:var(--fg);max-width:820px;text-wrap:pretty;word-break:keep-all}
+.hero-lead{margin:30px 0 0;font-size:24px;line-height:1.5;letter-spacing:-.018em;color:var(--fg);max-width:820px;text-wrap:pretty}
 .hero-lead a{color:var(--fg);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;text-decoration-thickness:1px}
-.hero-sub{margin:16px 0 0;font-size:17px;line-height:1.7;color:var(--fg);max-width:720px;word-break:keep-all}
-.hero-contact{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 20px;margin:26px 0 0;font-size:15px;color:var(--muted-2)}
-.hero-contact a,.hero-contact button{padding:0;border:0;background:none;font:inherit;letter-spacing:inherit;color:var(--muted-2);text-decoration:none;white-space:nowrap;cursor:pointer}
-.hero-contact a:hover,.hero-contact button:hover{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
-.hero-contact button:focus-visible{outline:1px solid var(--line-ui);outline-offset:3px}
+.hero-sub{margin:16px 0 0;font-size:17px;line-height:1.7;color:var(--fg);max-width:720px}
+/* 연락처는 값을 그대로 보이고 mailto:/tel:로 연다. 복사는 옆의 보조 버튼이다.
+   값을 숨기고 복사만 두면 이 페이지의 유일한 전환 행동이 가장 불투명해진다. */
+.hero-contact{display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;margin:26px 0 0;font-size:15px;color:var(--muted-2)}
+.hero-contact a{padding:0;color:var(--muted-2);text-decoration:none;white-space:nowrap}
+.hero-contact a:hover{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
+.contact-item{display:inline-flex;align-items:center;gap:7px}
+.contact-links{display:inline-flex;align-items:center;gap:22px}
+/* 복사 버튼은 테두리 없는 글리프다. 링크 끝의 ↗ 화살표와 같은 크기·같은 색으로 앉힌다. */
+.hero-contact .copy-btn{width:22px;height:22px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;background:transparent;color:var(--muted-2);cursor:pointer;border-radius:6px;transition:color .15s}
+.hero-contact .copy-btn:hover{color:var(--fg)}
+.hero-contact .copy-btn svg{display:block;width:14px;height:14px}
 
 
 /* ── chapters ───────────────────────────────────────────── */
@@ -163,7 +181,7 @@ section[data-chapter]{padding:80px 0 0}
 .tl-seg{box-sizing:border-box;background:var(--ink);color:var(--ink-fg);corner-shape:squircle;border-radius:10px;padding:9px 14px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
 .tl-gap{background:repeating-linear-gradient(135deg,var(--stripe) 0 3px,transparent 3px 6px);corner-shape:squircle;border-radius:10px}
 .tl-co{font-size:15px;font-weight:500;white-space:nowrap}
-.tl-date{font-size:12.5px;opacity:.68}
+.tl-date{font-size:12.5px;color:var(--ink-fg-2)}
 
 /* ── career: flat company columns ───────────────────────── */
 .co-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;margin-top:28px}
@@ -174,7 +192,7 @@ section[data-chapter]{padding:80px 0 0}
 .co-about{font-size:15px;color:var(--muted);margin-bottom:14px}
 [data-cardate]{display:none;margin-top:6px;font-size:14px;color:var(--muted)}
 .co-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.co-item{position:relative;padding-left:16px;font-size:16px;line-height:1.7;color:var(--body);word-break:keep-all}
+.co-item{position:relative;padding-left:16px;font-size:16px;line-height:1.7;color:var(--body)}
 .co-item::before{content:"";position:absolute;left:0;top:10px;width:5px;height:5px;border-radius:50%;background:var(--dot)}
 
 /* ── tech stack ─────────────────────────────────────────── */
@@ -185,11 +203,16 @@ section[data-chapter]{padding:80px 0 0}
 /* ── projects ───────────────────────────────────────────── */
 [data-projgrid]{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .proj-card{position:relative;aspect-ratio:3/4;corner-shape:squircle;border-radius:22px;overflow:hidden;background:var(--card);border:1px solid var(--line-soft);color:var(--fg);cursor:pointer;transition:background .15s}
-.proj-card:hover,.proj-card:focus-visible{background:var(--card-hover)}
+.proj-card:hover,.proj-card:focus-within{background:var(--card-hover)}
+/* 카드 전체가 클릭 면이지만 접근성 트리에서는 제목 안의 버튼 하나만 컨트롤이다.
+   article 자체에 role=button을 주면 h3가 버튼 이름 속으로 사라져 헤딩 탐색에서 빠진다. */
+.proj-card:has(.pc-btn:focus-visible){outline:2px solid var(--ink);outline-offset:3px}
+.pc-btn{all:unset;display:inline;cursor:pointer;color:inherit;font:inherit;letter-spacing:inherit}
+.pc-btn:focus-visible{outline:none}
 .pc-text{position:absolute;left:0;right:0;top:0;padding:24px 24px 0;display:flex;flex-direction:column;gap:12px;pointer-events:none}
 .pc-eyebrow{font-size:14px;letter-spacing:.1em;color:var(--muted)}
-.pc-title{margin:0;font-size:22px;line-height:1.25;letter-spacing:-.028em;font-weight:600;color:var(--fg);word-break:keep-all}
-.pc-blurb{margin:0;font-size:16px;line-height:1.6;color:var(--sub);word-break:keep-all}
+.pc-title{margin:0;font-size:22px;line-height:1.25;letter-spacing:-.028em;font-weight:600;color:var(--fg)}
+.pc-blurb{margin:0;font-size:16px;line-height:1.6;color:var(--sub)}
 .pc-img{position:absolute;right:-8%;bottom:-6%;width:70%;aspect-ratio:1/1;pointer-events:none}
 .pc-img img{width:100%;height:100%;object-fit:contain;object-position:right bottom;display:block}
 
@@ -207,23 +230,31 @@ section[data-chapter]{padding:80px 0 0}
 [data-footer] a{color:var(--ink-fg)}
 [data-footgrid]{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;align-items:end}
 .foot-name{font-size:clamp(30px,4vw,42px);font-weight:600;letter-spacing:-.03em;line-height:1.05}
-.foot-role{margin-top:8px;font-size:15px;opacity:.62}
+.foot-role{margin-top:8px;font-size:15px;color:var(--ink-fg-2)}
 .foot-links{display:flex;gap:18px;margin-top:20px;font-size:14px}
 [data-footcontact]{justify-self:end;text-align:right}
-.foot-contact-label{font-size:14px;letter-spacing:.1em;opacity:.68;margin-bottom:14px}
+.foot-contact-label{font-size:14px;letter-spacing:.1em;color:var(--ink-fg-2);margin-bottom:14px}
 [data-footmail]{font-size:clamp(19px,2.4vw,27px);font-weight:500;letter-spacing:-.02em;line-height:1.2;word-break:break-all}
-.foot-tel{margin-top:9px;font-size:14px;opacity:.62}
-[data-footmeta]{margin-top:44px;padding-top:16px;border-top:1px solid currentColor;opacity:.7;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;font-size:12px}
+.foot-tel{margin-top:9px;font-size:14px}
+.foot-tel a{color:var(--ink-fg-2)}
+[data-footmeta]{margin-top:44px;padding-top:16px;border-top:1px solid var(--ink-fg-2);color:var(--ink-fg-2);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;font-size:12px}
 
 /* ── project modal ──────────────────────────────────────── */
 [data-modal]{position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;padding:2.5vh clamp(10px,2.5vw,20px);background:var(--bg);overflow:hidden}
 [data-modalcard]{position:relative;box-sizing:border-box;width:min(720px,calc(100vw - 32px));height:min(90vh,1100px);max-height:min(92vh,1140px);display:flex;flex-direction:column;overflow:hidden;background:var(--card);border:1px solid var(--line-soft);corner-shape:squircle;border-radius:24px;padding:22px 44px 40px;box-shadow:0 4px 10px var(--shadow-1),0 24px 60px var(--shadow-2)}
 [data-modalhead]{flex:none;display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-bottom:12px}
+/* 프로젝트 사이 이동: 면접관은 2~3개를 연달아 본다. 닫고 스크롤해서 다시 여는 대신 여기서 넘긴다. */
+.m-pager{display:flex;align-items:center;gap:2px;margin-right:auto}
+.m-pager .icon-btn{border-color:transparent;background:transparent;color:var(--muted)}
+.m-pager .icon-btn:not(:disabled):hover{background:var(--card-item);color:var(--fg)}
+.m-count{font-size:13px;letter-spacing:.06em;color:var(--muted);min-width:44px;text-align:center}
+.icon-btn:disabled{color:var(--line-ui);cursor:default}
+.icon-btn:disabled:hover{background:transparent;color:var(--line-ui)}
 [data-modalbody]{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:6px}
 .mbody-col{display:flex;flex-direction:column}
 .m-eyebrow{font-size:14px;letter-spacing:.1em;color:var(--muted)}
-.modal-title{margin:10px 0 0;font-size:34px;font-weight:600;line-height:1.2;letter-spacing:-.03em;color:var(--fg);word-break:keep-all;overflow-wrap:break-word}
-.modal-blurb{margin:14px 0 0;font-size:18px;line-height:1.6;color:var(--sub);max-width:720px;text-wrap:pretty;word-break:keep-all}
+.modal-title{margin:10px 0 0;font-size:34px;font-weight:600;line-height:1.2;letter-spacing:-.03em;color:var(--fg)}
+.modal-blurb{margin:14px 0 0;font-size:18px;line-height:1.6;color:var(--sub);max-width:720px;text-wrap:pretty}
 .m-link{margin-top:18px;font-size:15px}
 .m-link a{color:var(--fg);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:5px;text-decoration-thickness:1px}
 .m-stack{display:flex;flex-wrap:wrap;gap:6px;margin:36px 0 56px}
@@ -234,13 +265,14 @@ section[data-chapter]{padding:80px 0 0}
 .m-num{font-size:14px;letter-spacing:.1em;color:var(--muted-2)}
 .m-sec--ai .m-num{color:var(--ai)}
 .m-sec-t{font-size:20px;font-weight:600;letter-spacing:-.022em;color:var(--fg)}
-.m-text{margin:0;font-size:16px;line-height:1.75;color:var(--body);word-break:keep-all}
-.m-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.m-text{margin:0;font-size:16px;line-height:1.75;color:var(--body)}
+.m-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
 .m-stat{background:var(--card-item);border:1px solid var(--line-soft);corner-shape:squircle;border-radius:14px;padding:18px 20px 16px;display:flex;flex-direction:column;gap:6px}
 .m-stat-v{font-size:30px;font-weight:600;letter-spacing:-.035em;line-height:1;color:var(--fg)}
-.m-stat-k{font-size:14px;letter-spacing:.08em;color:var(--muted)}
+.m-stat-k{font-size:14px;letter-spacing:.02em;color:var(--muted)}
+html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;letter-spacing:.08em}
 .m-list{display:flex;flex-direction:column;gap:8px;list-style:none;padding:0;margin:0}
-.m-item{position:relative;padding-left:16px;font-size:16px;line-height:1.72;color:var(--body);word-break:keep-all}
+.m-item{position:relative;padding-left:16px;font-size:16px;line-height:1.72;color:var(--body)}
 .m-item::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%;background:var(--dot)}
 .m-sec--ai .m-item::before{background:var(--ai)}
 .m-foot{display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;margin-top:72px;font-size:14px;color:var(--muted-2)}
@@ -256,19 +288,33 @@ section[data-chapter]{padding:80px 0 0}
   html{scrollbar-width:none}
   html::-webkit-scrollbar{width:0;height:0;display:none}
 
-  [data-bar]{padding:11px 0 13px;gap:8px}
-  .bar-nav,[data-barspacer]{display:none}
-  .logo-btn{margin-right:auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  [data-bar] .seg-btn{min-width:34px;padding:0 9px;font-size:13.5px}
+  [data-bar]{padding:11px 0 10px;gap:8px}
+  [data-barspacer]{display:none}
+  /* 내비는 둘째 줄 스트립으로 남긴다. 5600px 페이지에 점프 수단이 없으면 한 손 사용자는 스크롤로만 치른다 */
+  .bar-nav{order:9;flex:1 1 100%;max-width:none;gap:16px;padding-top:0}
+  .nav-btn{gap:5px;min-height:36px;justify-content:flex-end}
+  .nav-label{font-size:13px}
+  section[id],header[id]{scroll-margin-top:108px}
+  .logo-btn{height:36px;margin-right:auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  /* 상단 바·시트 헤더 컨트롤은 36px. 44px는 바를 너무 무겁게 만들었다(사용자 결정, 2026-09-05). */
+  .seg{height:36px}
+  .seg-btn,.seg--card .seg-btn{min-width:36px;padding:0 9px}
+  [data-bar] .seg-btn{font-size:13px}
+  .icon-btn{height:36px;width:36px}
   .bar-pdf{display:none}
 
   .hero{padding:40px 0}
   .hero-name{font-size:52px}
   .hero-lead{font-size:19px;margin-top:22px}
   .hero-sub{font-size:15px;margin-top:14px}
-  .hero-contact{font-size:14px;gap:4px 14px;margin-top:20px}
+  /* 한 줄에 안 들어가는 여섯 항목을 억지로 접지 않는다: 이메일 / 전화 / 링크 두 개, 세 줄 */
+  .hero-contact{flex-direction:column;align-items:flex-start;font-size:14px;gap:0;margin-top:12px}
+  .hero-contact a{display:inline-flex;align-items:center;min-height:44px}
+  .hero-contact .copy-btn{width:36px;height:36px}
+  .contact-links{gap:18px}
 
-  /* chapter rhythm: tighter blocks, clearer breaks */
+  /* chapter rhythm: tighter blocks, clearer breaks.
+     제목 옆 구분선은 모바일에만 있다 — 데스크톱과 맞추려고 뺐다가 되돌렸다(사용자 결정, 2026-09-05) */
   section[data-chapter]{padding-top:46px}
   .chap-head{margin-bottom:24px}
   #s-career .chap-head{margin-bottom:30px}
@@ -290,6 +336,8 @@ section[data-chapter]{padding:80px 0 0}
   .stack-cell:first-child{border-top:0;padding-top:0}
   [data-stackgroup]{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px;font-family:inherit}
   [data-stackgroup] > span{font-size:14px;display:block;padding:0;border:0;background:none;font-family:inherit;font-size:14px;font-weight:500;color:inherit;line-height:1.35;white-space:normal}
+  /* 핵심 스택의 반전은 모바일에서도 남긴다. 지우면 4군이 동급으로 보여 "주력"이 사라진다 */
+  [data-stackgroup] > .pill-on{display:inline-block;justify-self:start;background:var(--ink);color:var(--ink-fg);padding:2px 9px 3px;border-radius:8px;font-weight:600}
 
   /* project rows rebuilt: title-first, two-line blurb, press not lift */
   [data-projgrid]{gap:12px;grid-template-columns:1fr}
@@ -299,7 +347,7 @@ section[data-chapter]{padding:80px 0 0}
   .pc-blurb{font-size:15px}
   .pc-img{width:62%}
   .proj-card:active{background:var(--card-hover);transform:scale(.986)}
-  .proj-card:focus-visible{outline-offset:-2px}
+  .proj-card:has(.pc-btn:focus-visible){outline-offset:-2px}
 
   [data-edugrid]{grid-template-columns:1fr;gap:24px 0}
 
@@ -308,12 +356,15 @@ section[data-chapter]{padding:80px 0 0}
   [data-footgrid]{gap:28px;align-items:start}
   [data-footcontact]{justify-self:start;text-align:left}
   .foot-name{font-size:30px}
-  [data-footmail]{font-size:18px;word-break:break-all}
+  .foot-links{gap:0 18px;margin-top:10px}
+  .foot-links a,.foot-tel a{display:inline-flex;align-items:center;min-height:44px}
+  [data-footmail]{display:inline-block;padding:11px 0;font-size:18px;word-break:break-all}
+  .foot-tel{margin-top:0}
   [data-footmeta]{margin-top:30px}
 
-  /* modal becomes a bottom sheet */
+  /* modal becomes a bottom sheet. dvh: 주소창이 접히고 펴져도 시트 바닥이 툴바 밑으로 안 들어간다 */
   [data-modal]{padding:0;align-items:flex-end;overflow:hidden}
-  [data-modalcard]{width:100%;max-width:100%;height:92vh;max-height:92vh;min-height:0;border-radius:24px 24px 0 0;border-bottom:0;padding:14px 20px 40px;overflow:hidden}
+  [data-modalcard]{width:100%;max-width:100%;height:92vh;height:92dvh;max-height:92vh;max-height:92dvh;min-height:0;border-radius:24px 24px 0 0;border-bottom:0;padding:14px 20px 40px;overflow:hidden}
   [data-modalcard]::before{content:"";flex:none;width:36px;height:4px;border-radius:2px;background:var(--line-ui);margin:0 auto 8px}
   [data-modalcard]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(to bottom,transparent,var(--card));pointer-events:none}
   [data-modalhead]{position:sticky;top:0;z-index:10;background:var(--card);padding-bottom:8px;margin-bottom:10px}
@@ -324,7 +375,8 @@ section[data-chapter]{padding:80px 0 0}
   .m-sec{padding-bottom:38px}
   .m-sec-t{font-size:18px}
   .m-text,.m-item{font-size:15px}
-  .m-stats{grid-template-columns:1fr 1fr}
+  .m-stats{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+  .m-count{min-width:36px;font-size:12px}
   .m-stat{padding:14px 16px 12px}
   .m-stat-v{font-size:26px}
   .m-foot{margin-top:48px}
@@ -334,7 +386,9 @@ section[data-chapter]{padding:80px 0 0}
   [data-noprint],.pc-img{display:none}
   .proj-card{aspect-ratio:auto;break-inside:avoid}
   .pc-text{position:static;padding:20px 20px 18px}
-  body{background:#fff}
+  /* 반전 블록(이름·강조 칩·타임라인·푸터)은 배경색 위의 밝은 글자다.
+     브라우저 기본값 "배경 그래픽 끔"이 배경만 버리면 글자가 종이색이 되어 사라진다. */
+  body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#151514"/><text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#fbfbf9" letter-spacing="-1">장민규</text></svg></template>
@@ -342,8 +396,9 @@ section[data-chapter]{padding:80px 0 0}
 
 <main class="page">
 
+<a class="skip" href="#s-career" data-noprint><span data-l="ko">본문으로 건너뛰기</span><span data-l="en">Skip to content</span><span data-l="ja">本文へスキップ</span></a>
 <div data-noprint data-bar>
-  <button onClick="{{ toTop }}" class="logo-btn" style="background-image:{{ logoBg }}"><span data-l="ko">장민규</span><span data-l="en">Min&#8209;gyu Jang</span><span data-l="ja">チャン・ミンギュ</span></button>
+  <button onClick="{{ toTop }}" aria-label="{{ homeLabel }}" title="{{ homeLabel }}" class="logo-btn" style="background-image:{{ logoBg }}"><span data-l="ko">장민규</span><span data-l="en">Min&#8209;gyu Jang</span><span data-l="ja">チャン・ミンギュ</span></button>
   <nav class="bar-nav">
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
       <button onClick="{{ n.go }}" class="nav-btn" style="flex:{{ n.grow }} 1 0;color:{{ n.fg }}">
@@ -357,13 +412,13 @@ section[data-chapter]{padding:80px 0 0}
   </nav>
   <span data-barspacer></span>
 
-  <div class="seg">
-    <button onClick="{{ setKo }}" class="seg-btn seg-btn--ko" style="background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
-    <button onClick="{{ setEn }}" class="seg-btn" style="background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
-    <button onClick="{{ setJa }}" class="seg-btn" style="background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
+  <div class="seg" role="group" aria-label="{{ langLabel }}">
+    <button onClick="{{ setKo }}" aria-label="한국어" title="한국어" aria-pressed="{{ lk.pressed }}" class="seg-btn seg-btn--ko" style="background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
+    <button onClick="{{ setEn }}" aria-label="English" title="English" aria-pressed="{{ le.pressed }}" class="seg-btn" style="background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
+    <button onClick="{{ setJa }}" aria-label="日本語" title="日本語" aria-pressed="{{ lj.pressed }}" class="seg-btn" style="background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
   </div>
   <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" data-themebtn class="icon-btn"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" class="theme-ico" style="transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg></button>
-  <button onClick="{{ doPrint }}" aria-label="PDF" title="PDF" class="icon-btn bar-pdf"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8"></path><path d="M4.5 7L8 10.5 11.5 7"></path><path d="M2.5 13.5h11"></path></svg></button>
+  <button onClick="{{ doPrint }}" aria-label="{{ pdfLabel }}" title="{{ pdfLabel }}" class="icon-btn bar-pdf"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 6V2.5h7V6"></path><path d="M4.5 11.5H3a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1h-1.5"></path><path d="M4.5 9.5h7v4h-7z"></path></svg></button>
 </div>
 
 <header id="s-intro" class="hero">
@@ -381,10 +436,25 @@ section[data-chapter]{padding:80px 0 0}
     <span data-lb="ja">Windowsデスクトップ・Avaloniaクロスプラットフォームが主力。C++ Native連携からJava / Spring Boot大容量バックエンドまで担当。定量目標を先に定め、数値で結果を証明。</span>
   </p>
   <p class="mono hero-contact">
-    <button type="button" onClick="{{ copyEmail }}" aria-label="Copy email address">{{ emailLabel }}</button>
-    <button type="button" onClick="{{ copyPhone }}" aria-label="Copy phone number">{{ phoneLabel }}</button>
-    <a href="https://github.com/jjang010103" target="_blank" rel="noopener">GITHUB &#8599;</a>
-    <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener">LINKEDIN &#8599;</a>
+    <span class="contact-item">
+      <a href="mailto:a9090618693@gmail.com">a9090618693@gmail.com</a>
+      <button type="button" onClick="{{ copyEmail }}" aria-label="{{ copyEmailLabel }}" title="{{ copyEmailLabel }}" class="copy-btn">
+        <sc-if value="{{ emailCopied }}"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-6"></path></svg></sc-if>
+        <sc-if value="{{ emailIdle }}"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="7.5" height="7.5" rx="1.5"></rect><path d="M9.5 4.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.5"></path></svg></sc-if>
+      </button>
+    </span>
+    <span class="contact-item">
+      <a href="tel:+821090618693">010-9061-8693</a>
+      <button type="button" onClick="{{ copyPhone }}" aria-label="{{ copyPhoneLabel }}" title="{{ copyPhoneLabel }}" class="copy-btn">
+        <sc-if value="{{ phoneCopied }}"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-6"></path></svg></sc-if>
+        <sc-if value="{{ phoneIdle }}"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="7.5" height="7.5" rx="1.5"></rect><path d="M9.5 4.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.5"></path></svg></sc-if>
+      </button>
+    </span>
+    <span class="vh" aria-live="polite">{{ liveMsg }}</span>
+    <span class="contact-links">
+      <a href="https://github.com/jjang010103" target="_blank" rel="noopener">GITHUB &#8599;</a>
+      <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener">LINKEDIN &#8599;</a>
+    </span>
   </p>
 </header>
 
@@ -400,7 +470,7 @@ section[data-chapter]{padding:80px 0 0}
       <span class="tl-co"><span data-l="ko">㈜휴엔시스템</span><span data-l="en">Huensystem</span><span data-l="ja">ヒュエンシステム</span></span>
       <span class="mono tl-date">2018.09 — 2023.11 · 5y 3m</span>
     </div>
-    <div class="tl-gap" style="flex:0 0 3.1%" title="2023.12 — 2024.02"></div>
+    <div class="tl-gap" style="flex:0 0 3.1%" title="2023.12 — 2024.02"><span class="vh"><span data-l="ko">공백 2023.12 — 2024.02</span><span data-l="en">Gap 2023.12 — 2024.02</span><span data-l="ja">空白 2023.12 — 2024.02</span></span></div>
     <div class="tl-seg" style="flex:0 0 calc(31.3% - 2px)">
       <span class="tl-co"><span data-l="ko">㈜인라이플</span><span data-l="en">Enliple</span><span data-l="ja">インライフル</span></span>
       <span class="mono tl-date">2024.03 — <span data-l="ko">재직중</span><span data-l="en">present</span><span data-l="ja">在職中</span></span>
@@ -468,10 +538,10 @@ section[data-chapter]{padding:80px 0 0}
 
   <div data-projgrid>
     <sc-for list="{{ cards }}" as="p" hint-placeholder-count="6">
-      <article onClick="{{ open }}" onKeyDown="{{ open }}" data-pid="{{ p.id }}" role="button" tabIndex="0" aria-haspopup="dialog" class="proj-card">
+      <article onClick="{{ open }}" data-pid="{{ p.id }}" class="proj-card">
         <div class="pc-text">
           <div class="mono pc-eyebrow">{{ p.co }} · {{ p.date }}</div>
-          <h3 class="pc-title">{{ p.title }}</h3>
+          <h3 class="pc-title"><button type="button" class="pc-btn" aria-haspopup="dialog">{{ p.title }}</button></h3>
           <p class="pc-blurb">{{ p.blurb }}</p>
         </div>
         <sc-if value="{{ p.img }}">
@@ -532,18 +602,23 @@ section[data-chapter]{padding:80px 0 0}
 </footer>
 
 <div data-modal onClick="{{ closeModal }}" style="display:{{ modal }}">
-  <div data-modalcard onClick="{{ stop }}">
+  <div data-modalcard onClick="{{ stop }}" onTouchStart="{{ sheetStart }}" onTouchEnd="{{ sheetEnd }}" role="dialog" aria-modal="true" aria-labelledby="modal-title">
 
     <div data-modalhead>
-      <div class="seg seg--card">
-        <button onClick="{{ setKo }}" class="seg-btn seg-btn--ko" style="background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
-        <button onClick="{{ setEn }}" class="seg-btn" style="background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
-        <button onClick="{{ setJa }}" class="seg-btn" style="background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
+      <div class="m-pager">
+        <button onClick="{{ goPrev }}" disabled="{{ noPrev }}" aria-label="{{ prevLabel }}" title="{{ prevLabel }}" class="icon-btn icon-btn--card"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 2.5L4 7l4.5 4.5"></path></svg></button>
+        <span class="mono m-count" aria-live="polite">{{ pagePos }}</span>
+        <button onClick="{{ goNext }}" disabled="{{ noNext }}" aria-label="{{ nextLabel }}" title="{{ nextLabel }}" class="icon-btn icon-btn--card"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 2.5L10 7l-4.5 4.5"></path></svg></button>
+      </div>
+      <div class="seg seg--card" role="group" aria-label="{{ langLabel }}">
+        <button onClick="{{ setKo }}" aria-label="한국어" title="한국어" aria-pressed="{{ lk.pressed }}" class="seg-btn seg-btn--ko" style="background:{{ lk.bg }};color:{{ lk.fg }}" data-inverted="{{ lk.inv }}">ㅎ</button>
+        <button onClick="{{ setEn }}" aria-label="English" title="English" aria-pressed="{{ le.pressed }}" class="seg-btn" style="background:{{ le.bg }};color:{{ le.fg }}" data-inverted="{{ le.inv }}">A</button>
+        <button onClick="{{ setJa }}" aria-label="日本語" title="日本語" aria-pressed="{{ lj.pressed }}" class="seg-btn" style="background:{{ lj.bg }};color:{{ lj.fg }}" data-inverted="{{ lj.inv }}">あ</button>
       </div>
       <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" data-themebtn class="icon-btn icon-btn--card">
         <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true" class="theme-ico" style="transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg>
       </button>
-      <button data-sheetclose onClick="{{ closeModal }}" aria-label="닫기" title="닫기" class="icon-btn icon-btn--card icon-btn--close">
+      <button data-sheetclose onClick="{{ closeModal }}" aria-label="{{ closeLabel }}" title="{{ closeLabel }}" class="icon-btn icon-btn--card icon-btn--close">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 2L12 12M12 2L2 12"></path></svg>
       </button>
     </div>
@@ -552,7 +627,7 @@ section[data-chapter]{padding:80px 0 0}
       <sc-for list="{{ openCard }}" as="p" hint-placeholder-count="1">
         <div class="mbody-col">
           <div class="mono m-eyebrow">{{ p.co }} · {{ p.date }}</div>
-          <h3 class="modal-title">{{ p.mtitle }}</h3>
+          <h3 class="modal-title" id="modal-title">{{ p.mtitle }}</h3>
           <p class="modal-blurb">{{ p.blurb }}</p>
 
           <sc-if value="{{ p.url }}">
@@ -577,7 +652,7 @@ section[data-chapter]{padding:80px 0 0}
               <sc-if value="{{ s.hasStats }}">
                 <div class="m-stats">
                   <sc-for list="{{ s.stats }}" as="k" hint-placeholder-count="3">
-                    <div class="m-stat"><span class="m-stat-v">{{ k.v }}</span><span class="mono m-stat-k">{{ k.k }}</span></div>
+                    <div class="m-stat"><span class="m-stat-v">{{ k.v }}</span><span class="m-stat-k">{{ k.k }}</span></div>
                   </sc-for>
                 </div>
               </sc-if>
@@ -654,7 +729,7 @@ const CO = {
 // **…** marks the emphasised run; `bold()` turns it into <strong> at render time.
 const PROJECTS = [
   {
-    id: 'ezzip', feature: true,
+    id: 'ezzip',
     co: CO.enliple, date: '2025.02 — NOW',
     url: 'https://ezlab.im/ko/tool/ezzip',
     title: { ko: '압축 프로그램 ezZip', en: 'ezZip & shared PC platform', ja: '圧縮ソフト ezZip · 共通プラットフォーム' },
@@ -776,16 +851,17 @@ const PROJECTS = [
     ],
     stats: [
       { v: { ko: '800개', en: '~800', ja: '800本' },          k: { ko: '자동 빌드 앱', en: 'APPS AUTO-BUILT', ja: '自動ビルド' } },
-      { v: { ko: '75%', en: '75%', ja: '75%' }, k: { ko: '웹뷰 로딩 단축', en: 'FASTER WEBVIEW LOAD', ja: 'WebView読込短縮' } },
-      { v: { ko: '75%', en: '75%', ja: '75%' },               k: { ko: '페이지 로딩 단축', en: 'FASTER PAGE LOAD', ja: 'ページロード短縮' } }
+      // 75%가 두 장인 건 중복이 아니다. 첫 실행 로딩과 페이지 이동 로딩을 각각 75% 줄였다(2026-09-05 사용자 확인).
+      { v: { ko: '75%', en: '75%', ja: '75%' }, k: { ko: '첫 실행 로딩 단축', en: 'FASTER FIRST-RUN LOAD', ja: '初回起動ロード短縮' } },
+      { v: { ko: '75%', en: '75%', ja: '75%' }, k: { ko: '페이지 이동 로딩 단축', en: 'FASTER PAGE TRANSITIONS', ja: 'ページ遷移ロード短縮' } }
     ],
     metrics: [
       { ko: '약 **800개 앱 자동 빌드 시스템**을 구축하여 하루 소요되던 제작 작업을 1시간으로 대폭 단축',
         en: 'Engineered an automated batch pipeline for **~800 apps, slashing production time from 1 day to 1 hour**',
         ja: '約**800本のアプリを一括自動ビルド**する環境を構築し、1日要していた制作作業を1時間に大幅短縮' },
-      { ko: 'CefSharp 브라우저 렌더링 및 캐시 최적화로 **웹페이지 이동 로딩 시간을 75% 단축**',
-        en: 'Optimized CefSharp rendering and caching, **cutting web page transition loading times by 75%**',
-        ja: 'CefSharpの描画およびキャッシュ最適化により**Webページ遷移時のロード時間を75%短縮**' }
+      { ko: 'CefSharp 렌더링·캐시 최적화로 **웹뷰 첫 실행 로딩과 페이지 이동 로딩을 각각 75% 단축**',
+        en: 'Optimized CefSharp rendering and caching, **cutting first-run webview load and page-transition load times by 75% each**',
+        ja: 'CefSharpの描画・キャッシュ最適化により**WebView初回起動とページ遷移のロード時間をそれぞれ75%短縮**' }
     ],
     challenges: [
       { ko: '카테고리별 다양한 웹 기술 스펙 차이를 **단일 웹뷰 래퍼 환경에서 안정적으로 호환되도록 설계**',
@@ -925,7 +1001,21 @@ const T = {
   features: { ko: '핵심 기능 구현', en: 'Core Implementation', ja: '主要機能の実装' },
   metrics: { ko: '수치로 보는 성과', en: 'Key Metrics & Impact', ja: '数値で見る成果' },
   challenges: { ko: '기술적 도전과 해결', en: 'Technical Challenges', ja: '技術的課題と解決' },
-  ai: { ko: 'AI 협업 경험', en: 'AI-Assisted Workflow', ja: 'AI協業経験' }
+  ai: { ko: 'AI 협업 경험', en: 'AI-Assisted Workflow', ja: 'AI協業経験' },
+  // 보이지 않는 라벨(aria-label·라이브 리전)도 보이는 글과 같은 3개 국어 규칙을 따른다.
+  lang: { ko: '언어', en: 'Language', ja: '言語' },
+  toDark: { ko: '다크 모드로 전환', en: 'Switch to dark mode', ja: 'ダークモードに切替' },
+  toLight: { ko: '라이트 모드로 전환', en: 'Switch to light mode', ja: 'ライトモードに切替' },
+  pdf: { ko: 'PDF로 저장', en: 'Save as PDF', ja: 'PDFで保存' },
+  close: { ko: '닫기', en: 'Close', ja: '閉じる' },
+  copyEmail: { ko: '이메일 주소 복사', en: 'Copy email address', ja: 'メールアドレスをコピー' },
+  copyPhone: { ko: '전화번호 복사', en: 'Copy phone number', ja: '電話番号をコピー' },
+  copiedEmail: { ko: '이메일 주소를 복사했습니다', en: 'Email address copied', ja: 'メールアドレスをコピーしました' },
+  copiedPhone: { ko: '전화번호를 복사했습니다', en: 'Phone number copied', ja: '電話番号をコピーしました' },
+  now: { ko: '현재', en: 'NOW', ja: '現在' },
+  home: { ko: '맨 위로', en: 'Back to top', ja: 'ページ先頭へ' },
+  prev: { ko: '이전 프로젝트', en: 'Previous project', ja: '前のプロジェクト' },
+  next: { ko: '다음 프로젝트', en: 'Next project', ja: '次のプロジェクト' }
 };
 
 const bold = (s) => s.indexOf('**') < 0 ? s : s.split('**').map((t, i) =>
@@ -981,6 +1071,7 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     if (this._ro) this._ro.disconnect();
+    cancelAnimationFrame(this._raf);
     clearTimeout(this._copyTimer);
     window.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('scroll', this.onScroll);
@@ -1051,7 +1142,13 @@ class Component extends DCLogic {
     return out;
   }
 
+  // 스크롤·리사이즈·ResizeObserver가 한 프레임에 여러 번 와도 측정과 렌더는 프레임당 한 번이다.
   onScroll = () => {
+    if (this._raf) return;
+    this._raf = requestAnimationFrame(() => { this._raf = 0; this.measure(); });
+  };
+
+  measure() {
     // 테마 전환 중에는 재측정하지 않는다. View Transition이 만드는 스냅샷 때문에
     // scrollHeight가 잠깐 달라지고, 그 렌더에서 navState가 '아직 안 앉음' 경로로 빠져
     // 내비 번호(00)가 한 번 깜빡인다.
@@ -1071,20 +1168,73 @@ class Component extends DCLogic {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  onKeyDown = (e) => { if (e.key === 'Escape' && this.state.openId) this.closeModal(); };
+  onKeyDown = (e) => {
+    if (!this.state.openId) return;
+    if (e.key === 'Escape') this.closeModal();
+    else if (e.key === 'ArrowLeft') this.step(-1);
+    else if (e.key === 'ArrowRight') this.step(1);
+  };
+
+  // 모달 안에서 프로젝트를 넘긴다. 끝에서 멈추고(순환 없음), 넘긴 뒤엔 본문을 맨 위로 되돌린다.
+  step(d) {
+    const i = PROJECTS.findIndex(p => p.id === this.state.openId);
+    const next = PROJECTS[i + d];
+    if (i < 0 || !next) return;
+    this.setState({ openId: next.id }, () => {
+      const body = document.querySelector('[data-modalbody]');
+      if (body) body.scrollTop = 0;
+      // 방금 누른 화살표가 끝에 닿아 disabled가 되면 포커스가 body로 떨어진다. 닫기 버튼으로 옮긴다.
+      const a = document.activeElement;
+      if (!a || a === document.body || a.disabled) {
+        const close = document.querySelector('[data-sheetclose]');
+        if (close) close.focus();
+      }
+    });
+  }
+
+  // 바텀시트 스와이프 닫기. 핸들 영역(카드 상단 72px)에서 시작했거나 본문이 맨 위일 때만 아래로 90px 이상 끌면 닫는다.
+  sheetStart = (e) => {
+    const t = e.touches && e.touches[0];
+    if (!t || window.innerWidth > 720) { this._sheetY = null; return; }
+    const r = e.currentTarget.getBoundingClientRect();
+    const body = e.currentTarget.querySelector('[data-modalbody]');
+    const atTop = !body || body.scrollTop <= 0;
+    this._sheetY = (t.clientY - r.top < 72 || atTop) ? t.clientY : null;
+  };
+  sheetEnd = (e) => {
+    if (this._sheetY == null) return;
+    const t = e.changedTouches && e.changedTouches[0];
+    const dy = t ? t.clientY - this._sheetY : 0;
+    this._sheetY = null;
+    if (dy > 90) this.closeModal();
+  };
+
+  // 모달은 main 안에 있어서 main 전체를 inert로 막을 수 없다. 형제 섹션만 잠근다.
+  // inert는 React가 관리하는 속성이 아니므로 리렌더가 되돌리지 않는다.
+  setBackdropInert(on) {
+    const modal = document.querySelector('[data-modal]');
+    const page = modal && modal.parentElement;
+    if (!page) return;
+    [].forEach.call(page.children, c => { if (c !== modal) c.inert = on; });
+  }
 
   open = (e) => {
-    if (e.type === 'keydown') {
-      if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
-      e.preventDefault();
-    }
+    const card = e.currentTarget;
+    this._opener = card.querySelector('.pc-btn') || card;
     document.body.style.overflow = 'hidden';
-    this.setState({ openId: e.currentTarget.dataset.pid });
+    this.setState({ openId: card.dataset.pid }, () => {
+      this.setBackdropInert(true);
+      const close = document.querySelector('[data-sheetclose]');
+      if (close) close.focus();
+    });
   };
 
   closeModal = () => {
     document.body.style.overflow = '';
-    this.setState({ openId: null });
+    this.setBackdropInert(false);
+    const opener = this._opener;
+    this._opener = null;
+    this.setState({ openId: null }, () => { if (opener && opener.isConnected) opener.focus(); });
   };
 
   setLang = (lang) => {
@@ -1107,6 +1257,8 @@ class Component extends DCLogic {
   }
 
   toggleTheme = (e) => {
+    // 340ms 확산이 끝나기 전의 재클릭은 버린다. 겹치면 앞 전환의 콜백이 늦게 착지해 상태가 뒤집힌다.
+    if (this._vtBusy) return;
     const theme = this.state.theme === 'dark' ? 'light' : 'dark';
     const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1149,7 +1301,11 @@ class Component extends DCLogic {
       this._vtBusy = false;
       this.onScroll();
     };
-    document.startViewTransition(() => this.applyTheme(theme)).finished.then(clear, clear);
+    const vt = document.startViewTransition(() => this.applyTheme(theme));
+    // 탭이 백그라운드로 가면 DOM 갱신 콜백이 타임아웃으로 거부된다. 테마는 이미 적용됐으니 삼킨다.
+    vt.updateCallbackDone.catch(() => {});
+    vt.ready.catch(() => {});
+    vt.finished.then(clear, clear);
   };
 
   renderVals() {
@@ -1157,8 +1313,8 @@ class Component extends DCLogic {
     const dark = this.state.theme === 'dark';
     const t = (o) => o[lang];
 
-    const on  = { bg: dark ? '#ececef' : '#151514', fg: dark ? '#101011' : '#fbfbf9', bc: dark ? '#ececef' : '#151514', inv: true };
-    const off = { bg: 'transparent', fg: dark ? '#9a9aa2' : '#5e5e58', bc: dark ? '#2a2a30' : '#dedcd6', inv: null };
+    const on  = { bg: dark ? '#ececef' : '#151514', fg: dark ? '#101011' : '#fbfbf9', inv: true, pressed: 'true' };
+    const off = { bg: 'transparent', fg: dark ? '#9a9aa2' : '#5e5e58', inv: null, pressed: 'false' };
 
     const view = (p) => {
       // 5단계는 고정 번호(01~05)다. 내용이 없는 단계는 건너뛰되 번호는 당기지 않는다.
@@ -1182,7 +1338,8 @@ class Component extends DCLogic {
         flow.push(sec);
       });
       return {
-        id: p.id, co: t(p.co), date: p.date, url: p.url,
+        // date는 '2025.02 — NOW' 한 형식으로 저장하고, NOW만 언어에 맞춰 바꿔 그린다
+        id: p.id, co: t(p.co), date: p.date.replace('NOW', t(T.now)), url: p.url,
         title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb),
         stack: p.stack, img: p.img || '',
         flow
@@ -1190,14 +1347,31 @@ class Component extends DCLogic {
     };
 
     const shown = PROJECTS;
-    const opened = PROJECTS.find(p => p.id === this.state.openId);
+    const openIdx = PROJECTS.findIndex(p => p.id === this.state.openId);
+    const opened = openIdx >= 0 ? PROJECTS[openIdx] : null;
     const nv = this.navState(dark);
 
     return {
       lk: lang === 'ko' ? on : off,
       le: lang === 'en' ? on : off,
       lj: lang === 'ja' ? on : off,
-      themeLabel: dark ? 'Light mode' : 'Dark mode',
+      themeLabel: t(dark ? T.toLight : T.toDark),
+      langLabel: t(T.lang),
+      pdfLabel: t(T.pdf),
+      closeLabel: t(T.close),
+      copyEmailLabel: t(T.copyEmail),
+      copyPhoneLabel: t(T.copyPhone),
+      liveMsg: this.state.copied === 'email' ? t(T.copiedEmail) : this.state.copied === 'phone' ? t(T.copiedPhone) : '',
+      homeLabel: t(T.home),
+      prevLabel: t(T.prev),
+      nextLabel: t(T.next),
+      pagePos: openIdx >= 0 ? (openIdx + 1) + ' / ' + PROJECTS.length : '',
+      noPrev: openIdx <= 0,
+      noNext: openIdx < 0 || openIdx >= PROJECTS.length - 1,
+      goPrev: () => this.step(-1),
+      goNext: () => this.step(1),
+      sheetStart: this.sheetStart,
+      sheetEnd: this.sheetEnd,
       themeIcon: dark ? 'rotate(180deg)' : 'rotate(0deg)',
       navItems: NAV.map(n => ({ num: n.num, label: t(n.label), go: () => this.goTo('s-' + n.id), ...nv[n.id] })),
       logoBg: (() => {
@@ -1205,8 +1379,9 @@ class Component extends DCLogic {
         if ((document.documentElement.scrollHeight || 0) <= window.innerHeight + 1) return 'none';
         const max = Math.max(1, (document.documentElement.scrollHeight || 0) - window.innerHeight);
         const p = (Math.min(1, Math.max(0, (window.scrollY || 0) / max)) * 100).toFixed(1) + '%';
+        // rest는 아직 안 읽은 구간이지만 로드 직후엔 이름 전체가 이 색이다. 배경 위 3:1은 지킨다.
         const ink = dark ? '#a5a5ad' : '#4a4a45';
-        const rest = dark ? '#4a4a53' : '#d3d2cc';
+        const rest = dark ? '#5f5f68' : '#93928c';
         return 'linear-gradient(90deg, ' + ink + ' 0 ' + p + ', ' + rest + ' ' + p + ' 100%)';
       })(),
       stack: STACK.map(g => ({
@@ -1234,8 +1409,10 @@ class Component extends DCLogic {
       stop: (e) => e.stopPropagation(),
       copyEmail: () => this.copyText('a9090618693@gmail.com', 'email'),
       copyPhone: () => this.copyText('010-9061-8693', 'phone'),
-      emailLabel: this.state.copied === 'email' ? 'COPIED' : 'EMAIL',
-      phoneLabel: this.state.copied === 'phone' ? 'COPIED' : 'PHONE',
+      emailCopied: this.state.copied === 'email',
+      emailIdle: this.state.copied !== 'email',
+      phoneCopied: this.state.copied === 'phone',
+      phoneIdle: this.state.copied !== 'phone',
     };
   }
 }

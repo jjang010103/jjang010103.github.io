@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-05T12:32:26+09:00",
+  "title": "Design System: 장민규 이력서",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "primary", "displayName": "잉크 (Ink)", "canonical": "light-dark(#151514,#d9d9db)", "tonalRamp": ["#101011", "#151514", "#2b2a27", "#45453f", "#6f6f68", "#98989d", "#cbcbce", "#d9d9db"] },
+      "ink-text": { "role": "primary", "displayName": "잉크 글자 (Ink Text)", "canonical": "light-dark(#fbfbf9,#101011)", "tonalRamp": ["#101011", "#1c1c20", "#292930", "#4a4a54", "#98989d", "#dcdbd5", "#f1f1f0", "#fbfbf9"] },
+      "ink-text-soft": { "role": "primary", "displayName": "잉크 보조 글자 (Ink Text Soft)", "canonical": "light-dark(#adadab,#545456)", "tonalRamp": ["#1a1a1b", "#2f2f30", "#545456", "#6e6e70", "#8a8a8b", "#adadab", "#c9c9c7", "#e6e6e4"] },
+      "ai-blue": { "role": "secondary", "displayName": "AI 블루 (AI Blue)", "canonical": "light-dark(#4f46e5,#a5b4fc)", "tonalRamp": ["#1e1b4b", "#312e81", "#3730a3", "#4338ca", "#4f46e5", "#818cf8", "#a5b4fc", "#e0e7ff"] },
+      "paper": { "role": "neutral", "displayName": "종이 (Paper)", "canonical": "light-dark(#fbfbf9,#101011)", "tonalRamp": ["#101011", "#1c1c20", "#292930", "#4a4a54", "#98989d", "#dcdbd5", "#f1f1f0", "#fbfbf9"] },
+      "text": { "role": "neutral", "displayName": "글자 (Text)", "canonical": "light-dark(#1c1b19,#d9d9db)", "tonalRamp": ["#1c1b19", "#2b2a27", "#45453f", "#5f5f59", "#8a8983", "#adadb1", "#cbcbce", "#d9d9db"] },
+      "card": { "role": "neutral", "displayName": "카드 (Card)", "canonical": "light-dark(#f1f1f0,#1c1c20)", "tonalRamp": ["#1c1c20", "#222227", "#292930", "#34343b", "#4a4a54", "#dcdbd5", "#eaeae9", "#f1f1f0"] },
+      "card-hover": { "role": "neutral", "displayName": "카드 호버 (Card Hover)", "canonical": "light-dark(#eaeae9,#222227)", "tonalRamp": ["#1c1c20", "#222227", "#292930", "#34343b", "#4a4a54", "#dcdbd5", "#eaeae9", "#f1f1f0"] },
+      "card-item": { "role": "neutral", "displayName": "카드 위 면 (Card Item)", "canonical": "light-dark(#fbfbf9,#292930)", "tonalRamp": ["#1c1c20", "#222227", "#292930", "#34343b", "#4a4a54", "#dcdbd5", "#f1f1f0", "#fbfbf9"] },
+      "hairline": { "role": "neutral", "displayName": "헤어라인 (Hairline)", "canonical": "light-dark(#dcdbd5,#34343b)", "tonalRamp": ["#2c2c33", "#34343b", "#4a4a54", "#72727c", "#8d8b84", "#cfcdc6", "#dcdbd5", "#e3e2dc"] },
+      "hairline-soft": { "role": "neutral", "displayName": "부드러운 헤어라인 (Hairline Soft)", "canonical": "light-dark(#e3e2dc,#2c2c33)", "tonalRamp": ["#2c2c33", "#34343b", "#4a4a54", "#72727c", "#8d8b84", "#cfcdc6", "#dcdbd5", "#e3e2dc"] },
+      "control-border": { "role": "neutral", "displayName": "컨트롤 테두리 (Control Border)", "canonical": "light-dark(#8d8b84,#72727c)", "tonalRamp": ["#2c2c33", "#34343b", "#4a4a54", "#72727c", "#8d8b84", "#cfcdc6", "#dcdbd5", "#e3e2dc"] },
+      "muted": { "role": "neutral", "displayName": "뮤트 (Muted)", "canonical": "light-dark(#5f5f59,#98989d)", "tonalRamp": ["#2b2a27", "#45453f", "#5f5f59", "#6f6e68", "#838388", "#98989d", "#adadb1", "#cbcbce"] },
+      "muted-2": { "role": "neutral", "displayName": "뮤트 2 (Muted 2)", "canonical": "light-dark(#6f6e68,#838388)", "tonalRamp": ["#2b2a27", "#45453f", "#5f5f59", "#6f6e68", "#838388", "#98989d", "#adadb1", "#cbcbce"] },
+      "chip-text": { "role": "neutral", "displayName": "칩 글자 (Chip Text)", "canonical": "light-dark(#3f3f3a,#bebec2)", "tonalRamp": ["#1c1b19", "#2b2a27", "#3f3f3a", "#5f5f59", "#8a8983", "#adadb1", "#bebec2", "#d9d9db"] },
+      "body": { "role": "neutral", "displayName": "본문 (Body)", "canonical": "light-dark(#2b2a27,#cbcbce)", "tonalRamp": ["#1c1b19", "#2b2a27", "#45453f", "#5f5f59", "#8a8983", "#adadb1", "#cbcbce", "#d9d9db"] },
+      "sub": { "role": "neutral", "displayName": "보조 본문 (Sub)", "canonical": "light-dark(#45453f,#adadb1)", "tonalRamp": ["#1c1b19", "#2b2a27", "#45453f", "#5f5f59", "#8a8983", "#adadb1", "#cbcbce", "#d9d9db"] },
+      "dot": { "role": "neutral", "displayName": "점 (Dot)", "canonical": "light-dark(#6f6f68,#9a9aa3)", "tonalRamp": ["#2b2a27", "#45453f", "#5f5f59", "#6f6f68", "#8a8983", "#9a9aa3", "#adadb1", "#cbcbce"] },
+      "stripe": { "role": "neutral", "displayName": "줄무늬 (Stripe)", "canonical": "light-dark(#d3d1ca,#3c3c44)", "tonalRamp": ["#2c2c33", "#3c3c44", "#4a4a54", "#72727c", "#8d8b84", "#cfcdc6", "#d3d1ca", "#e3e2dc"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "히어로 이름 한 곳. 잉크 블록 안에 인라인으로 앉는다. 일본어는 0.8em." },
+      "headline": { "displayName": "Headline", "purpose": "챕터 제목 30px, 모달 제목 34px." },
+      "title": { "displayName": "Title", "purpose": "프로젝트 카드 제목. 모달 섹션 소제목은 20px." },
+      "lead": { "displayName": "Lead", "purpose": "히어로 첫 문장. text-wrap: pretty." },
+      "body": { "displayName": "Body", "purpose": "경력 불릿·모달 본문. 항목 한 문장, 90자 이내." },
+      "stat": { "displayName": "Stat", "purpose": "수치 카드 값." },
+      "label": { "displayName": "Label", "purpose": "아이브로우·챕터 번호·스택 라벨·카드 상단 회사 · 기간. 계측값에만 모노." }
+    },
+    "shadows": [
+      { "name": "shadow-ground", "value": "0 4px 10px light-dark(rgba(0,0,0,.10), rgba(0,0,0,.62))", "purpose": "모달 카드의 모서리를 만드는 좁고 진한 접지 층. 항상 환경 그림자와 함께." },
+      { "name": "shadow-ambient", "value": "0 24px 60px light-dark(rgba(0,0,0,.35), rgba(0,0,0,.44))", "purpose": "같은 모달의 넓고 옅은 환경 층. 카드·버튼·칩에는 쓰지 않는다." }
+    ],
+    "motion": [
+      { "name": "color-state", "value": "150ms ease", "purpose": "버튼·칩의 색·배경 상태 전환." },
+      { "name": "nav-fill", "value": "width 120ms linear", "purpose": "내비 게이지 채움. 스크롤에 붙어 움직인다." },
+      { "name": "theme-icon", "value": "transform 450ms cubic-bezier(.65, 0, .35, 1)", "purpose": "테마 아이콘 180° 회전." },
+      { "name": "theme-reveal", "value": "clip-path circle() 340ms linear (View Transition)", "purpose": "누른 버튼 중심에서 퍼지는 테마 전환. reduced-motion이면 즉시." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "720px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Keyword Chip",
+      "kind": "chip",
+      "refersTo": "keyword-chip",
+      "description": "문장 속 강조 키워드·수치 하나를 잉크로 반전한다. 항목당 하나.",
+      "html": "<p class=\"ds-line\">최초 기획부터 운영을 주도하여 <strong class=\"ds-kw\">DAU 6만 명 달성</strong></p>",
+      "css": ".ds-line { font-family: 'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,sans-serif; font-size: 16px; line-height: 1.72; color: var(--body, #2b2a27); margin: 0; } .ds-kw { background: var(--ink, #151514); color: var(--ink-fg, #fbfbf9); padding: .08em .28em .12em; margin: 0; border-radius: 3px; font-weight: 600; box-decoration-break: clone; -webkit-box-decoration-break: clone; }"
+    },
+    {
+      "name": "Icon Button",
+      "kind": "button",
+      "refersTo": "icon-button",
+      "description": "테마·PDF·닫기. 헤어라인 테두리, 호버 시 잉크 반전.",
+      "html": "<button class=\"ds-icon-btn\" aria-label=\"다크 모드로 전환\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"6.25\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"></circle><path d=\"M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z\" fill=\"currentColor\"></path></svg></button>",
+      "css": ".ds-icon-btn { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--line-ui, #8d8b84); background: transparent; color: var(--fg, #1c1b19); cursor: pointer; corner-shape: squircle; border-radius: 10px; transition: background .18s ease, color .18s ease, border-color .18s ease; } .ds-icon-btn:hover { background: var(--ink, #151514); color: var(--ink-fg, #fbfbf9); border-color: transparent; } .ds-icon-btn:focus-visible { outline: 2px solid var(--ink, #151514); outline-offset: 3px; }"
+    },
+    {
+      "name": "Language Segment",
+      "kind": "nav",
+      "refersTo": "segment-on",
+      "description": "ㅎ / A / あ. 켜진 버튼은 잉크 반전, 꺼진 버튼은 투명.",
+      "html": "<div class=\"ds-seg\" role=\"group\" aria-label=\"언어\"><button class=\"ds-seg-btn ds-seg-btn--ko ds-on\" aria-label=\"한국어\" aria-pressed=\"true\">ㅎ</button><button class=\"ds-seg-btn\" aria-label=\"English\" aria-pressed=\"false\">A</button><button class=\"ds-seg-btn\" aria-label=\"日本語\" aria-pressed=\"false\">あ</button></div>",
+      "css": ".ds-seg { display: inline-flex; height: 32px; border: 1px solid var(--line-ui, #8d8b84); corner-shape: squircle; border-radius: 10px; overflow: hidden; } .ds-seg-btn { min-width: 38px; padding: 0 10px; border: 0; background: transparent; color: var(--muted, #5f5f59); font: 500 13px/1.25 'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,sans-serif; cursor: pointer; } .ds-seg-btn--ko { font-size: 15px; } .ds-seg-btn.ds-on { background: var(--ink, #151514); color: var(--ink-fg, #fbfbf9); } .ds-seg-btn:hover:not(.ds-on) { color: var(--fg, #1c1b19); } .ds-seg-btn:focus-visible { outline: 2px solid var(--ink, #151514); outline-offset: -3px; }"
+    },
+    {
+      "name": "Stack Pill",
+      "kind": "chip",
+      "refersTo": "pill",
+      "description": "기술 스택 태그. 핵심 군은 잉크 반전, 나머지는 테두리만.",
+      "html": "<div class=\"ds-pills\"><span class=\"ds-pill ds-pill--core\">C#</span><span class=\"ds-pill ds-pill--core\">.NET 8</span><span class=\"ds-pill\">Native AOT</span><span class=\"ds-pill\">WiX Toolset</span></div>",
+      "css": ".ds-pills { display: flex; flex-wrap: wrap; gap: 7px; } .ds-pill { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace; font-size: 13px; padding: 5px 11px; corner-shape: squircle; border-radius: 10px; white-space: nowrap; border: 1px solid var(--line-ui, #8d8b84); color: var(--fg, #1c1b19); } .ds-pill--core { background: var(--ink, #151514); color: var(--ink-fg, #fbfbf9); border-color: transparent; }"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "project-card",
+      "description": "3:4 단색 카드. 위에 아이브로우·제목·요약, 아랫면은 이미지 자리. 호버는 면 색 한 단계.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-text\"><div class=\"ds-eyebrow\">인라이플 · 2025.02 — 현재</div><h3 class=\"ds-card-title\"><button class=\"ds-card-btn\" type=\"button\">압축 프로그램 ezZip</button></h3><p class=\"ds-card-blurb\">자사 PC 제품군 공통 모듈·인스톨러 플랫폼을 설계하고, 첫 상용 제품인 ezZip의 C# 엔진 개발을 총괄.</p></div></article>",
+      "css": ".ds-card { position: relative; width: 300px; aspect-ratio: 3/4; corner-shape: squircle; border-radius: 22px; overflow: hidden; background: var(--card, #f1f1f0); border: 1px solid var(--line-soft, #e3e2dc); color: var(--fg, #1c1b19); cursor: pointer; transition: background .15s; font-family: 'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,sans-serif; } .ds-card:hover, .ds-card:focus-within { background: var(--card-hover, #eaeae9); } .ds-card:has(.ds-card-btn:focus-visible) { outline: 2px solid var(--ink, #151514); outline-offset: 3px; } .ds-card-text { position: absolute; inset: 0 0 auto 0; padding: 24px 24px 0; display: flex; flex-direction: column; gap: 12px; pointer-events: none; } .ds-eyebrow { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; letter-spacing: .1em; color: var(--muted, #5f5f59); } .ds-card-title { margin: 0; font-size: 22px; line-height: 1.25; letter-spacing: -.028em; font-weight: 600; } .ds-card-btn { all: unset; display: inline; color: inherit; font: inherit; cursor: pointer; } .ds-card-blurb { margin: 0; font-size: 16px; line-height: 1.6; color: var(--sub, #45453f); }"
+    },
+    {
+      "name": "Stat Card",
+      "kind": "card",
+      "refersTo": "stat-card",
+      "description": "metrics 문장에 있는 수치만 카드로. 카드 위 면 색, 14px 스쿼클.",
+      "html": "<div class=\"ds-stats\"><div class=\"ds-stat\"><span class=\"ds-stat-v\">6만 명</span><span class=\"ds-stat-k\">DAU</span></div><div class=\"ds-stat\"><span class=\"ds-stat-v\">1,800건</span><span class=\"ds-stat-k\">일 평균 설치</span></div><div class=\"ds-stat\"><span class=\"ds-stat-v\">50%+</span><span class=\"ds-stat-k\">실행 파일 크기 감축</span></div></div>",
+      "css": ".ds-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; font-family: 'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,sans-serif; } .ds-stat { background: var(--card-item, #fbfbf9); border: 1px solid var(--line-soft, #e3e2dc); corner-shape: squircle; border-radius: 14px; padding: 18px 20px 16px; display: flex; flex-direction: column; gap: 6px; } .ds-stat-v { font-size: 30px; font-weight: 600; letter-spacing: -.035em; line-height: 1; color: var(--fg, #1c1b19); font-variant-numeric: tabular-nums; } .ds-stat-k { font-size: 14px; letter-spacing: .02em; color: var(--muted, #5f5f59); }"
+    },
+    {
+      "name": "Timeline Bar",
+      "kind": "custom",
+      "refersTo": "keyword-chip",
+      "description": "근무 기간 비율의 잉크 세그먼트와 빗금 공백. 이 페이지만의 시그니처.",
+      "html": "<div class=\"ds-tl\"><div class=\"ds-tl-seg\" style=\"flex:0 0 calc(65.6% - 4px)\"><span class=\"ds-tl-co\">㈜휴엔시스템</span><span class=\"ds-tl-date\">2018.09 — 2023.11 · 5y 3m</span></div><div class=\"ds-tl-gap\" style=\"flex:0 0 3.1%\"></div><div class=\"ds-tl-seg\" style=\"flex:0 0 calc(31.3% - 2px)\"><span class=\"ds-tl-co\">㈜인라이플</span><span class=\"ds-tl-date\">2024.03 — 재직중</span></div></div>",
+      "css": ".ds-tl { display: flex; gap: 3px; height: 58px; width: 100%; font-family: 'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,sans-serif; } .ds-tl-seg { box-sizing: border-box; background: var(--ink, #151514); color: var(--ink-fg, #fbfbf9); corner-shape: squircle; border-radius: 10px; padding: 9px 14px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; } .ds-tl-gap { background: repeating-linear-gradient(135deg, var(--stripe, #d3d1ca) 0 3px, transparent 3px 6px); corner-shape: squircle; border-radius: 10px; } .ds-tl-co { font-size: 15px; font-weight: 500; white-space: nowrap; } .ds-tl-date { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12.5px; color: var(--ink-fg-2, #adadab); }"
+    },
+    {
+      "name": "Nav Gauge",
+      "kind": "nav",
+      "refersTo": "segment-off",
+      "description": "번호 + 라벨 위 2px 레일. 채움이 현재 챕터의 읽기 진행률, 폭은 챕터 높이 비례.",
+      "html": "<nav class=\"ds-nav\"><button class=\"ds-nav-btn ds-active\" style=\"flex:1.1 1 0\"><span class=\"ds-nav-top\"><span class=\"ds-nav-num\">01</span><span class=\"ds-nav-label\">경력</span></span><span class=\"ds-nav-rail\"><span class=\"ds-nav-fill\" style=\"width:62%\"></span></span></button><button class=\"ds-nav-btn\" style=\"flex:0.8 1 0\"><span class=\"ds-nav-top\"><span class=\"ds-nav-num\">02</span><span class=\"ds-nav-label\">스택</span></span><span class=\"ds-nav-rail\"><span class=\"ds-nav-fill\" style=\"width:0%\"></span></span></button><button class=\"ds-nav-btn\" style=\"flex:1.4 1 0\"><span class=\"ds-nav-top\"><span class=\"ds-nav-num\">03</span><span class=\"ds-nav-label\">프로젝트</span></span><span class=\"ds-nav-rail\"><span class=\"ds-nav-fill\" style=\"width:0%\"></span></span></button></nav>",
+      "css": ".ds-nav { display: flex; align-items: flex-end; gap: 12px; width: 360px; font-family: 'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,sans-serif; } .ds-nav-btn { display: flex; flex-direction: column; gap: 7px; padding: 0 4px 0 0; border: 0; background: transparent; cursor: pointer; white-space: nowrap; color: var(--muted-2, #6f6e68); transition: color .2s ease; } .ds-nav-btn.ds-active { color: var(--fg, #1c1b19); } .ds-nav-btn:hover { color: var(--fg, #1c1b19); } .ds-nav-top { display: flex; align-items: baseline; gap: 6px; } .ds-nav-num { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11.5px; letter-spacing: .08em; color: var(--muted, #5f5f59); } .ds-nav-label { font-size: 13.5px; letter-spacing: -.01em; } .ds-active .ds-nav-label { font-weight: 600; } .ds-nav-rail { display: block; height: 2px; background: var(--line, #dcdbd5); } .ds-nav-fill { display: block; height: 2px; background: currentColor; transition: width .12s linear; } .ds-nav-btn:focus-visible { outline: 2px solid var(--ink, #151514); outline-offset: 3px; border-radius: 4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "한 가지 잉크 (One Ink)",
+    "overview": "이 페이지에는 액센트 색이 없다. 이름, 강조 키워드, 경력 타임라인, 푸터, 켜진 세그먼트가 전부 같은 잉크의 반전 블록이다. 잉크 하나가 \"무엇이 중요한가\"를 찍고, 나머지는 종이색 위의 회색 단계로 물러난다. 라이트와 다크는 이 잉크의 방향만 뒤집은 것이라 두 테마가 한 벌의 토큰(light-dark())으로 성립한다.\n\n어조는 에디토리얼하고 자신감 있고 조용하다. 86px 이름 블록과 넓은 여백이 잡지 편집 같은 첫인상을 만들지만, 그 아래는 근무 기간 비율로 그려진 타임라인 바, 챕터 높이로 폭을 나누는 내비 게이지, metrics 문장에서만 뽑은 수치 카드처럼 장식이 아니라 계측이 형태를 정한다. 1차 독자는 비개발자 인사담당자이고 2차 독자는 기술 면접관이라, 표면은 쉽고 세부는 정확해야 한다.\n\n거부한 것: 그라디언트와 네온 액센트, 아이콘·사진이 가득한 카드 그리드, 이모지와 장식 아이콘. 아이콘은 1.4~1.8px 스트로크의 선 아이콘 몇 개(테마·프린터·닫기·복사·화살표)뿐이고, 외부 링크 표시 ↗는 글리프로 쓴다.",
+    "keyCharacteristics": [
+      "잉크 반전 하나가 강조·서명·현재 상태를 모두 맡는다. 유채색은 ai-blue 한 곳(모달 05 AI 섹션 번호와 불릿)뿐이다.",
+      "종이색 → 카드 → 카드 위 면의 세 단 톤 레이어링. 그림자는 열린 모달에만 있다.",
+      "본문은 Pretendard, 계측값(날짜·번호·라벨·스택 태그)은 JetBrains Mono. 모노스페이스는 데이터에만 쓴다.",
+      "모서리는 corner-shape: squircle을 지원하는 브라우저에서 스쿼클로 부드러워진다.",
+      "3개 국어가 같은 DOM에 살고 html[lang]으로만 보인다. 줄바꿈 규칙(keep-all)은 한국어에만 건다."
+    ],
+    "rules": [
+      { "name": "The One Ink Rule", "body": "강조하고 싶으면 잉크로 반전한다. 새 액센트 색을 만들지 않는다. ai-blue는 예외가 아니라 \"AI 섹션\"이라는 한 자리의 이름표다.", "section": "colors" },
+      { "name": "The Surface Contrast Rule", "body": "글자 토큰은 놓이는 면(종이가 아니라 카드·카드 위 면) 기준으로 4.5:1, 테두리·로고 잉크는 3:1을 지킨다. 토큰 값을 바꾸면 카드 위에서 다시 잰다.", "section": "colors" },
+      { "name": "The Chrome Exception", "body": "상단 바 크롬(내비 라벨 색, 언어 세그먼트, 모바일 로고 채움)은 JS가 인라인으로 칠하므로 light-dark()를 못 쓰고 dark ? '#…' : '#…' 쌍으로 있다. 팔레트를 바꾸면 시트와 그 쌍을 함께 고친다.", "section": "colors" },
+      { "name": "The Mono Means Data Rule", "body": "JetBrains Mono는 날짜, 번호, 라벨, 스택 태그, 연락처 값에만 쓴다. 문장에는 쓰지 않는다. 수치 카드 라벨은 영어일 때만 모노고 한글·일본어는 본문 서체다.", "section": "typography" },
+      { "name": "The Language Owns Line Breaks Rule", "body": "word-break: keep-all은 html[lang=\"ko\"] body 한 곳에만 있다. 컴포넌트에 직접 쓰면 일본어 문장이 한 덩어리가 되어 넘친다. 안전망은 body { overflow-wrap: break-word }.", "section": "typography" },
+      { "name": "The One Bold Rule", "body": "항목 하나에 잉크 칩(**…**)은 최대 하나. 전부 칠하면 강조가 사라진다.", "section": "typography" },
+      { "name": "The Modal-Only Shadow Rule", "body": "그림자는 페이지 위로 뜨는 모달 하나에만 있다. 카드·버튼·칩은 호버에도 그림자를 얻지 않는다. 한 겹짜리 넓은 블러는 다크에서 얼룩으로 보이므로 쓰지 않는다.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do 강조가 필요하면 잉크로 반전한다. 항목당 칩 하나.",
+      "Do 새 색은 :root 토큰으로 먼저 만들고 light-dark() 한 줄에 두 테마를 담는다. @supports not 폴백 블록의 라이트 값도 같이 맞춘다.",
+      "Do 글자 대비는 카드 위에서 4.5:1, 테두리는 3:1로 잰다.",
+      "Do 정적 스타일은 시트에, 모바일 재정의는 하단 @media (max-width: 720px) 블록 하나에.",
+      "Do 계측값(날짜·번호·태그·연락처)만 모노스페이스로.",
+      "Do 보이지 않는 라벨(aria-label, 라이브 리전)도 T 상수로 3개 국어.",
+      "Do 레이아웃을 건드렸으면 3개 언어 × 모바일 × 인쇄 미리보기까지 본다."
+    ],
+    "donts": [
+      "Don't 그라디언트·네온·두 번째 액센트 색을 넣지 않는다. ai-blue는 AI 섹션 이름표일 뿐이다.",
+      "Don't 카드·버튼·칩에 그림자를 주지 않는다. 그림자는 모달 두 겹뿐이다.",
+      "Don't 이모지나 장식 아이콘, 아이콘+제목+설명 카드 그리드를 만들지 않는다.",
+      "Don't !important, 인라인 정적 style=, :first-of-type 같은 구조 의존 셀렉터를 쓰지 않는다.",
+      "Don't word-break: keep-all을 컴포넌트에 직접 쓰지 않는다. 언어 셀렉터에만.",
+      "Don't 반전 블록 안 보조 글자를 opacity로 만들지 않는다. ink-text-soft를 쓴다.",
+      "Don't 프로젝트 카드 아랫면을 텍스트로 메우지 않는다. 이미지 자리다."
+    ]
+  }
+}
