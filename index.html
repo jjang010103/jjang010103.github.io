@@ -95,9 +95,6 @@ html[lang="ko"] [data-lb="ko"],html[lang="en"] [data-lb="en"],html[lang="ja"] [d
 /* shared atoms */
 .mono{font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace}
 .sq{corner-shape:squircle}
-.pill{font-size:13px;padding:5px 11px;border-radius:10px;white-space:nowrap}
-.pill-on{background:var(--ink);color:var(--ink-fg)}
-.pill-off{border:1px solid var(--line-ui)}
 .eyebrow{font-size:14px;letter-spacing:.1em;color:var(--muted)}
 
 html{scroll-behavior:smooth}
@@ -152,7 +149,7 @@ section[id],header[id]{scroll-margin-top:76px}
 .lang-btn.is-on{color:var(--ink)}
 .lang-btn.is-on .lang-in{background:var(--card);font-weight:600}
 .ctl-ico{width:28px;height:28px;padding:0;color:var(--fg)}
-.ctl-pdf{height:28px;padding:0 10px;font-size:12px;letter-spacing:.08em;color:var(--fg);border-radius:999px}
+.ctl-pdf{border-radius:999px}
 .ctl-pdf:hover{background:var(--card)}
 .seg{height:32px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid var(--line-ui);corner-shape:squircle;border-radius:10px;overflow:hidden}
 .seg--card{background:var(--card-item)}
@@ -174,8 +171,7 @@ section[id],header[id]{scroll-margin-top:76px}
 .hero-lead{margin:30px 0 0;font-size:24px;line-height:1.5;letter-spacing:-.018em;color:var(--fg);max-width:820px;text-wrap:pretty}
 .hero-lead a{color:var(--fg);text-decoration:underline;text-decoration-color:var(--muted-2);text-underline-offset:4px;text-decoration-thickness:1px}
 .hero-sub{margin:16px 0 0;font-size:17px;line-height:1.7;color:var(--fg);max-width:720px}
-/* 연락처는 값을 그대로 보이고 mailto:/tel:로 연다. 복사는 옆의 보조 버튼이다.
-   값을 숨기고 복사만 두면 이 페이지의 유일한 전환 행동이 가장 불투명해진다. */
+/* 연락처 값은 텍스트로 남기고 복사 버튼만 동작한다. */
 .hero-contact{display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;margin:26px 0 0;font-size:15px;color:var(--muted-2)}
 .hero-contact a{padding:0;color:var(--muted-2);text-decoration:none;white-space:nowrap}
 .hero-contact a:hover{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
@@ -203,27 +199,33 @@ section[data-chapter]{padding:80px 0 0}
 .tl-date{font-size:12.5px;color:var(--ink-fg-2)}
 
 /* ── career: flat company columns ───────────────────────── */
-.co-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;margin-top:28px}
-.co-col{display:flex;flex-direction:column}
-.co-head{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+.co-grid{display:grid;gap:28px;margin-top:32px}
+.co-col{display:grid;grid-template-columns:minmax(180px,1fr) minmax(0,2fr);gap:32px}
+.co-col + .co-col{padding-top:28px;border-top:1px solid var(--line)}
+.co-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-bottom:4px}
 .co-name{font-size:18px;font-weight:600;letter-spacing:-.02em;color:var(--fg)}
 .co-dept{font-size:14px;color:var(--muted)}
-.co-about{font-size:15px;color:var(--muted);margin-bottom:14px}
-[data-cardate]{display:none;margin-top:6px;font-size:14px;color:var(--muted)}
+.co-about{font-size:15px;line-height:1.6;color:var(--muted);margin-top:12px}
+[data-cardate]{margin-top:6px;font-size:14px;color:var(--muted)}
 .co-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .co-item{position:relative;padding-left:16px;font-size:16px;line-height:1.7;color:var(--body)}
 .co-item::before{content:"";position:absolute;left:0;top:10px;width:5px;height:5px;border-radius:50%;background:var(--dot)}
 
 /* ── tech stack ─────────────────────────────────────────── */
-[data-stackgrid]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:26px 34px}
-.stack-label{margin-bottom:11px}
-[data-stackgroup]{display:flex;flex-wrap:wrap;gap:7px}
+[data-stackgrid]{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 40px}
+.stack-cell{min-width:0}
+.stack-cell:has(.stack-core){grid-column:1 / -1;padding-bottom:8px}
+.stack-label{margin-bottom:12px;font-size:15px;font-weight:600;color:var(--fg)}
+[data-stackgroup]{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline}
+.stack-item{font-size:15px;line-height:1.7;color:var(--muted)}
+.stack-core{font-size:24px;font-weight:500;letter-spacing:-.025em;color:var(--fg)}
+[data-stackgroup]:has(.stack-core){gap:8px 24px}
 
 /* ── projects ───────────────────────────────────────────── */
 /* 벤토: 한 그리드 안에서 크기로 중요도를 말한다. 열 수·높이·이미지 폭은 PROJECTS[]가
    --span/--minh/--imgw 커스텀 속성으로 넘기고, 모바일 블록은 그 소비처만 덮어쓴다. */
 [data-projgrid]{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.proj-card{grid-column:span var(--span,2);min-height:var(--minh,200px);display:grid;grid-template-columns:minmax(0,1fr) var(--imgw,190px);border-radius:14px;overflow:hidden;background:var(--bg);border:1px solid var(--line);color:var(--fg);cursor:pointer;transition:background .15s}
+.proj-card{grid-column:span var(--span,2);min-height:var(--minh,200px);display:grid;grid-template-columns:minmax(0,1fr) min(30%,var(--imgw,190px));border-radius:14px;overflow:hidden;background:var(--bg);border:1px solid var(--line);color:var(--fg);cursor:pointer;transition:background .15s}
 .proj-card:hover,.proj-card:focus-within{background:var(--card)}
 /* 카드 전체가 클릭 면이지만 접근성 트리에서는 제목 안의 버튼 하나만 컨트롤이다.
    article 자체에 role=button을 주면 h3가 버튼 이름 속으로 사라져 헤딩 탐색에서 빠진다. */
@@ -235,23 +237,10 @@ section[data-chapter]{padding:80px 0 0}
 .pc-eyebrow{font-size:14px;letter-spacing:.1em;color:var(--muted)}
 .pc-title{margin:0;font-size:22px;line-height:1.25;letter-spacing:-.028em;font-weight:600;color:var(--fg)}
 .pc-blurb{margin:0;font-size:16px;line-height:1.6;color:var(--sub)}
-/* 수치는 설명 바로 아래 붙는다(flex:1 스페이서로 바닥에 밀지 않는다). 폭 4칸의 일반 카드는 설명과 한 줄. */
-.pc-body{display:flex;flex-direction:column}
-.proj-card[data-span="4"]:not([data-featured]) .pc-body{flex-direction:row;align-items:flex-end;gap:28px}
-.proj-card[data-span="4"]:not([data-featured]) .pc-body .pc-stats{margin-top:0;flex:none}
-.pc-stats{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px}
-.pc-stat{display:flex;flex-direction:column;gap:2px}
-.pc-stat-v{font-size:21px;font-weight:600;letter-spacing:-.03em;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--fg)}
-.pc-stat-k{font-size:13.5px;color:var(--muted)}
-[data-featured] .pc-stats{gap:12px}
-[data-featured] .pc-stat{flex:1;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px 12px}
-[data-featured] .pc-stat-v{font-size:26px}
-[data-featured] .pc-stat-k{font-size:14px}
-/* 이미지 칸: PROJECTS[].img 자리. 비어 있으면 빗금 플레이스홀더 + 캡션 */
-.pc-img{display:flex;align-items:center;justify-content:center;background:var(--card) repeating-linear-gradient(135deg,var(--stripe) 0 3px,transparent 3px 8px);border-left:1px solid var(--line-soft)}
-.pc-img:has(img){background:var(--card)}
+/* 이미지가 없어도 자리는 유지하되 본문보다 시선을 끌지 않는다. */
+.pc-img{min-width:0;display:flex;align-items:center;justify-content:center;background:var(--card);border-left:1px solid var(--line-soft)}
 .pc-img img{width:100%;height:100%;object-fit:cover;display:block}
-.pc-cap{font-size:11px;letter-spacing:.1em;color:var(--muted);background:var(--bg);padding:4px 8px;border-radius:999px}
+.pc-cap{font-size:11px;letter-spacing:.04em;color:var(--muted);padding:8px;text-align:center}
 
 /* ── education ──────────────────────────────────────────── */
 [data-edugrid]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:34px}
@@ -265,15 +254,14 @@ section[data-chapter]{padding:80px 0 0}
 /* ── footer ─────────────────────────────────────────────── */
 [data-footer]{margin-top:84px;background:var(--ink);color:var(--ink-fg);corner-shape:squircle;border-radius:20px;padding:48px 44px 26px}
 [data-footer] a{color:var(--ink-fg)}
-[data-footgrid]{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;align-items:end}
+[data-footgrid]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:40px;align-items:end}
 .foot-name{font-size:clamp(30px,4vw,42px);font-weight:600;letter-spacing:-.03em;line-height:1.05}
 .foot-role{margin-top:8px;font-size:15px;color:var(--ink-fg-2)}
 .foot-links{display:flex;gap:18px;margin-top:20px;font-size:14px}
 [data-footcontact]{justify-self:end;text-align:right}
 .foot-contact-label{font-size:14px;letter-spacing:.1em;color:var(--ink-fg-2);margin-bottom:14px}
 [data-footmail]{font-size:clamp(19px,2.4vw,27px);font-weight:500;letter-spacing:-.02em;line-height:1.2;word-break:break-all}
-.foot-tel{margin-top:9px;font-size:14px}
-.foot-tel a{color:var(--ink-fg-2)}
+.foot-tel{margin-top:9px;font-size:14px;color:var(--ink-fg-2)}
 [data-footmeta]{margin-top:44px;padding-top:16px;border-top:1px solid var(--ink-fg-2);color:var(--ink-fg-2);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 32px;font-size:12px}
 
 /* ── project modal ──────────────────────────────────────── */
@@ -316,6 +304,12 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
 .m-foot a{color:var(--muted);text-decoration:none}
 .m-foot a:hover{text-decoration:underline;text-underline-offset:3px}
 
+/* 반폭 카드의 본문이 좁아지기 전에 한 행으로 펼친다. */
+@media (min-width:721px) and (max-width:1000px){
+  [data-projgrid]{grid-template-columns:1fr}
+  .proj-card{grid-column:auto}
+}
+
 /* ============================================================
    MOBILE (≤720px) — 모든 모바일 재정의는 이 블록 안에만 둔다.
    base 규칙과 같은 선택자를 쓰면 뒤에 오는 이 블록이 이긴다.
@@ -323,29 +317,27 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
 @media (max-width:720px){
   /* 챕터 내비가 없는 모바일에서 스크롤바는 유일한 위치 표시다. 숨기지 않는다(2026-09-05 critique). */
 
-  /* 챕터 내비는 없다(스크롤로만 읽는다). 이름도 히어로가 대신한다.
-     컨트롤 pill만 우하단 고정 — 탭 타깃은 전부 44px 이상. */
-  [data-bar]{position:static;display:block;padding:0}
+  /* 도구막대는 문서 흐름에 자리를 확보해 카드 위에 떠다니지 않는다. */
+  [data-bar]{top:0;justify-content:flex-end;padding:10px 0}
   .logo-btn,.ctl-nav,.ctl-nav + .ctl-sep{display:none}
-  .ctl{position:fixed;right:14px;bottom:14px;z-index:20;padding:0 5px;gap:0;background:var(--bg);box-shadow:0 1px 3px var(--shadow-1),0 10px 26px var(--shadow-1)}
-  .lang-btn{width:40px;height:44px}
+  .ctl{padding:0 5px;gap:0}
+  .lang-btn{width:44px;height:44px}
   .lang-in{width:30px;height:30px}
   .ctl-sep{margin:0 2px}
   .ctl-ico{width:44px;height:44px}
-  .ctl-pdf{height:44px;padding:0 12px}
-  section[id],header[id]{scroll-margin-top:20px}
+  section[id],header[id]{scroll-margin-top:80px}
   /* 시트 헤더 컨트롤은 36px. 44px는 바를 너무 무겁게 만들었다(사용자 결정, 2026-09-05). */
   .seg{height:36px}
   .seg-btn,.seg--card .seg-btn{min-width:36px;padding:0 9px}
   .icon-btn{height:36px;width:36px}
 
-  .hero{padding:40px 0 0}
+  .hero{padding:28px 0 0}
   .hero-name{font-size:52px}
   .hero-lead{font-size:19px;margin-top:22px}
   .hero-sub{font-size:15px;margin-top:14px}
   /* 한 줄에 안 들어가는 여섯 항목을 억지로 접지 않는다: 이메일 / 전화 / 링크 두 개, 세 줄 */
   .hero-contact{flex-direction:column;align-items:flex-start;font-size:14px;gap:0;margin-top:12px}
-  .hero-contact a{display:inline-flex;align-items:center;min-height:44px}
+  .hero-contact a,.contact-item{display:inline-flex;align-items:center;min-height:44px}
   .hero-contact .copy-btn{width:36px;height:36px}
   .contact-links{gap:18px}
 
@@ -356,7 +348,7 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
   .chap-head{margin-bottom:24px}
   #s-career .chap-head{margin-bottom:30px}
   #s-projects .chap-head{margin-bottom:22px}
-  .chap-title{font-size:17px;letter-spacing:-.018em}
+  .chap-title{flex:0 1 auto;min-width:0;font-size:22px;letter-spacing:-.018em;white-space:normal}
   [data-chaprule]{background:var(--line)}
 
   /* one continuous axis — same proportions as desktop, without labels */
@@ -364,29 +356,24 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
   .tl-seg{padding:8px 12px}
   .tl-date{display:none}
   .tl-co{font-size:13.5px}
-  .co-grid{grid-template-columns:1fr;gap:32px}
-  [data-cardate]{display:block;margin-top:5px;font-size:14px;color:var(--muted-2)}
+  .co-grid{gap:24px}
+  .co-col{grid-template-columns:1fr;gap:16px}
+  .co-col + .co-col{padding-top:24px}
+  [data-cardate]{color:var(--muted-2)}
 
-  /* the stack becomes a spec table: label left, items flowing right */
-  [data-stackgrid]{gap:0}
-  .stack-cell{padding:14px 0 16px;border-top:1px solid var(--line)}
-  .stack-cell:first-child{border-top:0;padding-top:0}
-  [data-stackgroup]{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px;font-family:inherit}
-  [data-stackgroup] > span{font-size:14px;display:block;padding:0;border:0;background:none;font-family:inherit;font-size:14px;font-weight:500;color:inherit;line-height:1.35;white-space:normal}
-  /* 핵심 스택의 반전은 모바일에서도 남긴다. 지우면 4군이 동급으로 보여 "주력"이 사라진다 */
-  [data-stackgroup] > .pill-on{display:inline-block;justify-self:start;background:var(--ink);color:var(--ink-fg);padding:2px 9px 3px;border-radius:8px;font-weight:600}
+  [data-stackgrid]{grid-template-columns:1fr;gap:24px}
+  .stack-cell:has(.stack-core){padding-bottom:0}
+  .stack-label{margin-bottom:8px}
+  .stack-core{font-size:21px}
+  [data-stackgroup]:has(.stack-core){gap:4px 18px}
 
   /* project rows rebuilt: title-first, two-line blurb, press not lift */
   /* 1열. 모든 카드가 텍스트 → 하단 전폭 이미지 스트립. 좌우 분할은 390px에서 제목이 3줄로 접혀 버렸다 */
   [data-projgrid]{gap:12px;grid-template-columns:1fr}
   .proj-card{grid-column:auto;min-height:0;grid-template-columns:1fr}
   .pc-text,.proj-card[data-span="4"] .pc-text{padding:20px 20px 18px;gap:10px}
-  .proj-card[data-span="4"]:not([data-featured]) .pc-body{flex-direction:column}
-  .proj-card[data-span="4"]:not([data-featured]) .pc-body .pc-stats{margin-top:14px}
   .pc-title{font-size:21px}
   .pc-blurb{font-size:15px}
-  .pc-stat-v,[data-featured] .pc-stat-v{font-size:19px}
-  [data-featured] .pc-stat{padding:12px 12px 10px}
   .pc-img{height:88px;border-left:0;border-top:1px solid var(--line-soft)}
   [data-featured] .pc-img{height:112px}
   .proj-card:active{background:var(--card);transform:scale(.986)}
@@ -400,7 +387,7 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
   [data-footcontact]{justify-self:start;text-align:left}
   .foot-name{font-size:30px}
   .foot-links{gap:0 18px;margin-top:10px}
-  .foot-links a,.foot-tel a{display:inline-flex;align-items:center;min-height:44px}
+  .foot-links a{display:inline-flex;align-items:center;min-height:44px}
   [data-footmail]{display:inline-block;padding:11px 0;font-size:18px;word-break:break-all}
   .foot-tel{margin-top:0}
   [data-footmeta]{margin-top:30px}
@@ -409,7 +396,6 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
   [data-modal]{padding:0;align-items:flex-end;overflow:hidden}
   [data-modalcard]{width:100%;max-width:100%;height:92vh;height:92dvh;max-height:92vh;max-height:92dvh;min-height:0;border-radius:24px 24px 0 0;border-bottom:0;padding:14px 20px 40px;overflow:hidden}
   [data-modalcard]::before{content:"";flex:none;width:36px;height:4px;border-radius:2px;background:var(--line-ui);margin:0 auto 8px}
-  [data-modalcard]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(to bottom,transparent,var(--card));pointer-events:none}
   [data-modalhead]{position:sticky;top:0;z-index:10;background:var(--card);padding-bottom:8px;margin-bottom:10px}
   [data-modalbody]{padding-right:2px}
   .modal-title{font-size:27px}
@@ -419,7 +405,7 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
   .m-sec-t{font-size:18px}
   .m-text,.m-item{font-size:15px}
   .m-stats{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
-  .m-count{min-width:36px;font-size:12px}
+  .m-count{min-width:36px;font-size:12px;white-space:nowrap}
   .m-stat{padding:14px 16px 12px}
   .m-stat-v{font-size:26px}
   .m-foot{margin-top:48px}
@@ -432,7 +418,7 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
   .proj-card{grid-column:auto;min-height:0;grid-template-columns:1fr;break-inside:avoid}
   /* 반전 블록(이름·강조 칩·타임라인·푸터)은 배경색 위의 밝은 글자다.
      브라우저 기본값 "배경 그래픽 끔"이 배경만 버리면 글자가 종이색이 되어 사라진다. */
-  body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{color-scheme:light;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#151514"/><text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#fbfbf9" letter-spacing="-1">장민규</text></svg></template>
@@ -460,7 +446,7 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
     </div>
     <span class="ctl-sep"></span>
     <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" data-themebtn class="ctl-ico"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" class="theme-ico" style="transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.4"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg></button>
-    <button onClick="{{ doPrint }}" aria-label="{{ pdfLabel }}" title="{{ pdfLabel }}" class="mono ctl-pdf">PDF</button>
+    <button onClick="{{ doPrint }}" aria-label="{{ pdfLabel }}" title="{{ pdfLabel }}" class="ctl-ico ctl-pdf"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8m-3-3 3 3 3-3M2.5 10.5v3h11v-3"></path></svg></button>
   </div>
 </div>
 
@@ -480,14 +466,14 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
   </p>
   <p class="mono hero-contact">
     <span class="contact-item">
-      <a href="mailto:a9090618693@gmail.com">a9090618693@gmail.com</a>
+      <span>a9090618693@gmail.com</span>
       <button type="button" onClick="{{ copyEmail }}" aria-label="{{ copyEmailLabel }}" title="{{ copyEmailLabel }}" class="copy-btn">
         <sc-if value="{{ emailCopied }}"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-6"></path></svg></sc-if>
         <sc-if value="{{ emailIdle }}"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="7.5" height="7.5" rx="1.5"></rect><path d="M9.5 4.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.5"></path></svg></sc-if>
       </button>
     </span>
     <span class="contact-item">
-      <a href="tel:+821090618693">010-9061-8693</a>
+      <span>010-9061-8693</span>
       <button type="button" onClick="{{ copyPhone }}" aria-label="{{ copyPhoneLabel }}" title="{{ copyPhoneLabel }}" class="copy-btn">
         <sc-if value="{{ phoneCopied }}"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-6"></path></svg></sc-if>
         <sc-if value="{{ phoneIdle }}"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="7.5" height="7.5" rx="1.5"></rect><path d="M9.5 4.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.5"></path></svg></sc-if>
@@ -522,12 +508,14 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
 
   <div class="co-grid">
     <div class="co-col">
+      <div class="co-meta">
       <div class="co-head">
         <span class="co-name"><span data-l="ko">㈜휴엔시스템</span><span data-l="en">Huensystem</span><span data-l="ja">ヒュエンシステム</span></span>
         <span class="mono co-dept"><span data-l="ko">EIS · 주임</span><span data-l="en">EIS · Associate</span><span data-l="ja">EIS · 主任</span></span>
       </div>
       <div data-cardate class="mono">2018.09 — 2023.11 &nbsp;·&nbsp; 5<span data-l="ko">년</span><span data-l="en">y</span><span data-l="ja">年</span> 3<span data-l="ko">개월</span><span data-l="en">m</span><span data-l="ja">ヶ月</span></div>
       <div class="co-about"><span data-lb="ko">플랜트 건설·엔지니어링 특화 솔루션 기업</span><span data-lb="en">Solutions vendor for plant construction &amp; engineering</span><span data-lb="ja">プラント建設・エンジニアリング特化のソリューション企業</span></div>
+      </div>
       <ul class="co-list">
         <li class="co-item"><span data-lb="ko">플랜트 배관 도면 자동화 제품군 <strong class="kw">Windows 클라이언트 전담</strong></span><span data-lb="en">Led <strong class="kw">Windows client development</strong> for the piping drawing automation suite</span><span data-lb="ja">配管図面自動化製品群の<strong class="kw">Windowsクライアント開発を担当</strong></span></li>
         <li class="co-item"><span data-lb="ko">도면 검색 속도 98% 개선, 심볼 좌표 자동 추출로 수작업 계산 70% 절감</span><span data-lb="en">Improved drawing search speed by 98% and cut manual calculations by 70% via automated symbol extraction</span><span data-lb="ja">図面検索速度を98%改善し、シンボル座標抽出の自動化で手作業の計算工数を70%削減</span></li>
@@ -535,12 +523,14 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
       </ul>
     </div>
     <div class="co-col">
+      <div class="co-meta">
       <div class="co-head">
         <span class="co-name"><span data-l="ko">㈜인라이플</span><span data-l="en">Enliple</span><span data-l="ja">インライフル</span></span>
         <span class="mono co-dept"><span data-l="ko">이지랩사업부 · 주임</span><span data-l="en">ezLab Division · Associate</span><span data-l="ja">ezLab事業部 · 主任</span></span>
       </div>
       <div data-cardate class="mono">2024.03 — <span data-l="ko">재직중</span><span data-l="en">present</span><span data-l="ja">在職中</span></div>
       <div class="co-about"><span data-lb="ko">국내 1위 리타겟팅 광고 플랫폼과 국내 최초 PC형 앱스토어를 운영하는 데이터 테크 기업</span><span data-lb="en">Data-tech company behind Korea's top retargeting ad platform and first PC app store</span><span data-lb="ja">韓国最大のリターゲティング広告プラットフォームと韓国初のPC向けアプリストアを運営するデータテック企業</span></div>
+      </div>
       <ul class="co-list">
         <li class="co-item"><span data-lb="ko">자사 PC 제품군 <strong class="kw">공통 모듈 · 통합 인스톨러 플랫폼</strong> 설계·구축</span><span data-lb="en">Designed and built the <strong class="kw">shared module and installer platform</strong> for all company PC products</span><span data-lb="ja">自社PC製品群の<strong class="kw">共通モジュール・インストーラー基盤</strong>を設計・構築</span></li>
         <li class="co-item"><span data-lb="ko">첫 제품 ezZip 기획부터 엔진 개발·운영 주도 → DAU 6만 명</span><span data-lb="en">Led ezZip from concept to engine development and operations, reaching 60K DAU</span><span data-lb="ja">第1弾製品ezZipの企画からエンジン開発・運用まで主導しDAU6万人を達成</span></li>
@@ -560,10 +550,10 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
   <div data-stackgrid>
     <sc-for list="{{ stack }}" as="g" hint-placeholder-count="4">
       <div class="stack-cell">
-        <div class="mono eyebrow stack-label">{{ g.label }}</div>
+        <div class="stack-label">{{ g.label }}</div>
         <div data-stackgroup>
           <sc-for list="{{ g.items }}" as="t" hint-placeholder-count="6">
-            <span class="mono sq pill {{ g.cls }}" data-inverted="{{ g.inv }}">{{ t }}</span>
+            <span class="stack-item {{ g.cls }}">{{ t }}</span>
           </sc-for>
         </div>
       </div>
@@ -585,16 +575,7 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
         <div class="pc-text">
           <div class="mono pc-eyebrow">{{ p.co }} · {{ p.date }}</div>
           <h3 class="pc-title"><button type="button" class="pc-btn" aria-haspopup="dialog" aria-describedby="pc-blurb-{{ p.id }}">{{ p.title }}</button></h3>
-          <div class="pc-body">
-            <p class="pc-blurb" id="pc-blurb-{{ p.id }}">{{ p.blurb }}</p>
-            <sc-if value="{{ p.hasStats }}">
-              <div class="pc-stats">
-                <sc-for list="{{ p.stats }}" as="k" hint-placeholder-count="3">
-                  <span class="pc-stat"><span class="pc-stat-v">{{ k.v }}</span><span class="pc-stat-k">{{ k.k }}</span></span>
-                </sc-for>
-              </div>
-            </sc-if>
-          </div>
+          <p class="pc-blurb" id="pc-blurb-{{ p.id }}">{{ p.intro }}</p>
         </div>
         <div class="pc-img">
           <sc-if value="{{ p.img }}"><img src="{{ p.img }}" alt="" loading="lazy"></sc-if>
@@ -644,8 +625,8 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
     </div>
     <div data-footcontact>
       <div class="mono foot-contact-label"><span data-l="ko">연락처</span><span data-l="en">CONTACT</span><span data-l="ja">連絡先</span></div>
-      <a data-footmail href="mailto:a9090618693@gmail.com">a9090618693@gmail.com</a>
-      <div class="mono foot-tel"><a href="tel:+821090618693">010-9061-8693</a></div>
+      <span data-footmail>a9090618693@gmail.com</span>
+      <div class="mono foot-tel">010-9061-8693</div>
     </div>
   </div>
   <div data-footmeta class="mono">
@@ -724,7 +705,7 @@ html[lang="en"] .m-stat-k{font-family:'JetBrains Mono',ui-monospace,SFMono-Regul
               <span data-lb="ko">장민규 · C#/.NET 개발자 · 8년차</span><span data-lb="en">Min-gyu Jang · C#/.NET Developer · 8 years</span><span data-lb="ja">チャン・ミンギュ · C#/.NETエンジニア · 8年目</span>
             </span>
             <span class="mono">
-              <a href="mailto:a9090618693@gmail.com">a9090618693@gmail.com</a> ·
+              <span>a9090618693@gmail.com</span> ·
               <a href="https://github.com/jjang010103" target="_blank" rel="noopener">GITHUB &#8599;</a> ·
               <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener">LINKEDIN &#8599;</a>
             </span>
@@ -782,7 +763,7 @@ const CO = {
 // **…** marks the emphasised run; `bold()` turns it into <strong> at render time.
 const PROJECTS = [
   {
-    id: 'ezzip', span: 4, minH: 250, imgW: 400, featured: true,
+    id: 'ezzip', span: 4, minH: 200, imgW: 400, featured: true,
     co: CO.enliple, date: '2025.02 — NOW',
     url: 'https://ezlab.im/ko/tool/ezzip',
     title: { ko: '압축 프로그램 ezZip', en: 'ezZip & shared PC platform', ja: '圧縮ソフト ezZip · 共通プラットフォーム' },
@@ -1102,7 +1083,6 @@ class Component extends DCLogic {
   }
 
 
-  // 히어로 연락처: 값 대신 라벨을 보여주고 누르면 클립보드에 넣는다.
   // file://이나 http에서는 navigator.clipboard가 없으므로 execCommand로 떨어진다.
   copyText(text, key) {
     const done = () => {
@@ -1213,6 +1193,14 @@ class Component extends DCLogic {
     if (e.key === 'Escape') this.closeModal();
     else if (e.key === 'ArrowLeft') this.step(-1);
     else if (e.key === 'ArrowRight') this.step(1);
+    else if (e.key === 'Tab') {
+      const controls = document.querySelectorAll('[data-modalcard] button:not(:disabled), [data-modalcard] a[href]');
+      const first = controls[0], last = controls[controls.length - 1];
+      if (first && document.activeElement === (e.shiftKey ? first : last)) {
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+      }
+    }
   };
 
   // 모달 안에서 프로젝트를 넘긴다. 끝에서 멈추고(순환 없음), 넘긴 뒤엔 본문을 맨 위로 되돌린다.
@@ -1386,12 +1374,10 @@ class Component extends DCLogic {
       return {
         // date는 '2025.02 — NOW' 한 형식으로 저장하고, NOW만 언어에 맞춰 바꿔 그린다
         id: p.id, co: t(p.co), date: p.date.replace('NOW', t(T.now)), url: p.url,
-        title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb),
+        title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb), intro: t(p.intro),
         stack: p.stack, img: p.img || '', noImg: !p.img,
         // 벤토 배치는 데이터가 정한다. 기본은 2칸·200px·이미지 190px.
         span: p.span || 2, minH: p.minH || 200, imgW: p.imgW || 190, featured: p.featured ? 'true' : null,
-        hasStats: !!(p.stats && p.stats.length),
-        stats: (p.stats || []).map(k => ({ v: t(k.v), k: t(k.k) })),
         flow
       };
     };
@@ -1433,8 +1419,7 @@ class Component extends DCLogic {
       stack: STACK.map(g => ({
         label: t(g.label),
         items: g.items,
-        cls: g.core ? 'pill-on' : 'pill-off',
-        inv: g.core ? true : null
+        cls: g.core ? 'stack-core' : ''
       })),
       edu: EDU.map(g => ({
         label: t(g.label),

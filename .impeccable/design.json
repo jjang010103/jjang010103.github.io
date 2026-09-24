@@ -1,50 +1,368 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-05T16:31:08+09:00",
+  "generatedAt": "2026-09-24T13:46:27.5214075+09:00",
   "title": "Design System: 장민규 이력서",
   "extensions": {
     "colorMeta": {
-      "ink": { "role": "primary", "displayName": "잉크 (Ink)", "canonical": "light-dark(#151514,#d9d9db)", "tonalRamp": ["#101011", "#151514", "#2b2a27", "#45453f", "#6f6f68", "#98989d", "#cbcbce", "#d9d9db"] },
-      "ink-text": { "role": "primary", "displayName": "잉크 글자 (Ink Text)", "canonical": "light-dark(#fbfbf9,#101011)", "tonalRamp": ["#101011", "#1c1c20", "#292930", "#4a4a54", "#98989d", "#dcdbd5", "#f1f1f0", "#fbfbf9"] },
-      "ink-text-soft": { "role": "primary", "displayName": "잉크 보조 글자 (Ink Text Soft)", "canonical": "light-dark(#adadab,#545456)", "tonalRamp": ["#1a1a1b", "#2f2f30", "#545456", "#6e6e70", "#8a8a8b", "#adadab", "#c9c9c7", "#e6e6e4"] },
-      "ai-blue": { "role": "secondary", "displayName": "AI 블루 (AI Blue)", "canonical": "light-dark(#4f46e5,#a5b4fc)", "tonalRamp": ["#1e1b4b", "#312e81", "#3730a3", "#4338ca", "#4f46e5", "#818cf8", "#a5b4fc", "#e0e7ff"] },
-      "paper": { "role": "neutral", "displayName": "종이 (Paper)", "canonical": "light-dark(#fbfbf9,#101011)", "tonalRamp": ["#101011", "#1c1c20", "#292930", "#4a4a54", "#98989d", "#dcdbd5", "#f1f1f0", "#fbfbf9"] },
-      "text": { "role": "neutral", "displayName": "글자 (Text)", "canonical": "light-dark(#1c1b19,#d9d9db)", "tonalRamp": ["#1c1b19", "#2b2a27", "#45453f", "#5f5f59", "#8a8983", "#adadb1", "#cbcbce", "#d9d9db"] },
-      "card": { "role": "neutral", "displayName": "카드 (Card)", "canonical": "light-dark(#f1f1f0,#1c1c20)", "tonalRamp": ["#1c1c20", "#222227", "#292930", "#34343b", "#4a4a54", "#dcdbd5", "#eaeae9", "#f1f1f0"] },
-      "card-hover": { "role": "neutral", "displayName": "카드 호버 (Card Hover)", "canonical": "light-dark(#eaeae9,#222227)", "tonalRamp": ["#1c1c20", "#222227", "#292930", "#34343b", "#4a4a54", "#dcdbd5", "#eaeae9", "#f1f1f0"] },
-      "card-item": { "role": "neutral", "displayName": "카드 위 면 (Card Item)", "canonical": "light-dark(#fbfbf9,#292930)", "tonalRamp": ["#1c1c20", "#222227", "#292930", "#34343b", "#4a4a54", "#dcdbd5", "#f1f1f0", "#fbfbf9"] },
-      "hairline": { "role": "neutral", "displayName": "헤어라인 (Hairline)", "canonical": "light-dark(#dcdbd5,#34343b)", "tonalRamp": ["#2c2c33", "#34343b", "#4a4a54", "#72727c", "#8d8b84", "#cfcdc6", "#dcdbd5", "#e3e2dc"] },
-      "hairline-soft": { "role": "neutral", "displayName": "부드러운 헤어라인 (Hairline Soft)", "canonical": "light-dark(#e3e2dc,#2c2c33)", "tonalRamp": ["#2c2c33", "#34343b", "#4a4a54", "#72727c", "#8d8b84", "#cfcdc6", "#dcdbd5", "#e3e2dc"] },
-      "control-border": { "role": "neutral", "displayName": "컨트롤 테두리 (Control Border)", "canonical": "light-dark(#8d8b84,#72727c)", "tonalRamp": ["#2c2c33", "#34343b", "#4a4a54", "#72727c", "#8d8b84", "#cfcdc6", "#dcdbd5", "#e3e2dc"] },
-      "muted": { "role": "neutral", "displayName": "뮤트 (Muted)", "canonical": "light-dark(#5f5f59,#98989d)", "tonalRamp": ["#2b2a27", "#45453f", "#5f5f59", "#6f6e68", "#838388", "#98989d", "#adadb1", "#cbcbce"] },
-      "muted-2": { "role": "neutral", "displayName": "뮤트 2 (Muted 2)", "canonical": "light-dark(#6f6e68,#838388)", "tonalRamp": ["#2b2a27", "#45453f", "#5f5f59", "#6f6e68", "#838388", "#98989d", "#adadb1", "#cbcbce"] },
-      "chip-text": { "role": "neutral", "displayName": "칩 글자 (Chip Text)", "canonical": "light-dark(#3f3f3a,#bebec2)", "tonalRamp": ["#1c1b19", "#2b2a27", "#3f3f3a", "#5f5f59", "#8a8983", "#adadb1", "#bebec2", "#d9d9db"] },
-      "body": { "role": "neutral", "displayName": "본문 (Body)", "canonical": "light-dark(#2b2a27,#cbcbce)", "tonalRamp": ["#1c1b19", "#2b2a27", "#45453f", "#5f5f59", "#8a8983", "#adadb1", "#cbcbce", "#d9d9db"] },
-      "sub": { "role": "neutral", "displayName": "보조 본문 (Sub)", "canonical": "light-dark(#45453f,#adadb1)", "tonalRamp": ["#1c1b19", "#2b2a27", "#45453f", "#5f5f59", "#8a8983", "#adadb1", "#cbcbce", "#d9d9db"] },
-      "dot": { "role": "neutral", "displayName": "점 (Dot)", "canonical": "light-dark(#6f6f68,#9a9aa3)", "tonalRamp": ["#2b2a27", "#45453f", "#5f5f59", "#6f6f68", "#8a8983", "#9a9aa3", "#adadb1", "#cbcbce"] },
-      "stripe": { "role": "neutral", "displayName": "줄무늬 (Stripe)", "canonical": "light-dark(#d3d1ca,#3c3c44)", "tonalRamp": ["#2c2c33", "#3c3c44", "#4a4a54", "#72727c", "#8d8b84", "#cfcdc6", "#d3d1ca", "#e3e2dc"] }
+      "ink": {
+        "role": "primary",
+        "displayName": "잉크 (Ink)",
+        "canonical": "light-dark(#151514,#d9d9db)",
+        "tonalRamp": [
+          "#101011",
+          "#151514",
+          "#2b2a27",
+          "#45453f",
+          "#6f6f68",
+          "#98989d",
+          "#cbcbce",
+          "#d9d9db"
+        ]
+      },
+      "ink-text": {
+        "role": "primary",
+        "displayName": "잉크 글자 (Ink Text)",
+        "canonical": "light-dark(#fbfbf9,#101011)",
+        "tonalRamp": [
+          "#101011",
+          "#1c1c20",
+          "#292930",
+          "#4a4a54",
+          "#98989d",
+          "#dcdbd5",
+          "#f1f1f0",
+          "#fbfbf9"
+        ]
+      },
+      "ink-text-soft": {
+        "role": "primary",
+        "displayName": "잉크 보조 글자 (Ink Text Soft)",
+        "canonical": "light-dark(#adadab,#545456)",
+        "tonalRamp": [
+          "#1a1a1b",
+          "#2f2f30",
+          "#545456",
+          "#6e6e70",
+          "#8a8a8b",
+          "#adadab",
+          "#c9c9c7",
+          "#e6e6e4"
+        ]
+      },
+      "ai-blue": {
+        "role": "secondary",
+        "displayName": "AI 블루 (AI Blue)",
+        "canonical": "light-dark(#4f46e5,#a5b4fc)",
+        "tonalRamp": [
+          "#1e1b4b",
+          "#312e81",
+          "#3730a3",
+          "#4338ca",
+          "#4f46e5",
+          "#818cf8",
+          "#a5b4fc",
+          "#e0e7ff"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "종이 (Paper)",
+        "canonical": "light-dark(#fbfbf9,#101011)",
+        "tonalRamp": [
+          "#101011",
+          "#1c1c20",
+          "#292930",
+          "#4a4a54",
+          "#98989d",
+          "#dcdbd5",
+          "#f1f1f0",
+          "#fbfbf9"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "글자 (Text)",
+        "canonical": "light-dark(#1c1b19,#d9d9db)",
+        "tonalRamp": [
+          "#1c1b19",
+          "#2b2a27",
+          "#45453f",
+          "#5f5f59",
+          "#8a8983",
+          "#adadb1",
+          "#cbcbce",
+          "#d9d9db"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "카드 (Card)",
+        "canonical": "light-dark(#f1f1f0,#1c1c20)",
+        "tonalRamp": [
+          "#1c1c20",
+          "#222227",
+          "#292930",
+          "#34343b",
+          "#4a4a54",
+          "#dcdbd5",
+          "#eaeae9",
+          "#f1f1f0"
+        ]
+      },
+      "card-hover": {
+        "role": "neutral",
+        "displayName": "카드 호버 (Card Hover)",
+        "canonical": "light-dark(#eaeae9,#222227)",
+        "tonalRamp": [
+          "#1c1c20",
+          "#222227",
+          "#292930",
+          "#34343b",
+          "#4a4a54",
+          "#dcdbd5",
+          "#eaeae9",
+          "#f1f1f0"
+        ]
+      },
+      "card-item": {
+        "role": "neutral",
+        "displayName": "카드 위 면 (Card Item)",
+        "canonical": "light-dark(#fbfbf9,#292930)",
+        "tonalRamp": [
+          "#1c1c20",
+          "#222227",
+          "#292930",
+          "#34343b",
+          "#4a4a54",
+          "#dcdbd5",
+          "#f1f1f0",
+          "#fbfbf9"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "헤어라인 (Hairline)",
+        "canonical": "light-dark(#dcdbd5,#34343b)",
+        "tonalRamp": [
+          "#2c2c33",
+          "#34343b",
+          "#4a4a54",
+          "#72727c",
+          "#8d8b84",
+          "#cfcdc6",
+          "#dcdbd5",
+          "#e3e2dc"
+        ]
+      },
+      "hairline-soft": {
+        "role": "neutral",
+        "displayName": "부드러운 헤어라인 (Hairline Soft)",
+        "canonical": "light-dark(#e3e2dc,#2c2c33)",
+        "tonalRamp": [
+          "#2c2c33",
+          "#34343b",
+          "#4a4a54",
+          "#72727c",
+          "#8d8b84",
+          "#cfcdc6",
+          "#dcdbd5",
+          "#e3e2dc"
+        ]
+      },
+      "control-border": {
+        "role": "neutral",
+        "displayName": "컨트롤 테두리 (Control Border)",
+        "canonical": "light-dark(#8d8b84,#72727c)",
+        "tonalRamp": [
+          "#2c2c33",
+          "#34343b",
+          "#4a4a54",
+          "#72727c",
+          "#8d8b84",
+          "#cfcdc6",
+          "#dcdbd5",
+          "#e3e2dc"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "뮤트 (Muted)",
+        "canonical": "light-dark(#5f5f59,#98989d)",
+        "tonalRamp": [
+          "#2b2a27",
+          "#45453f",
+          "#5f5f59",
+          "#6f6e68",
+          "#838388",
+          "#98989d",
+          "#adadb1",
+          "#cbcbce"
+        ]
+      },
+      "muted-2": {
+        "role": "neutral",
+        "displayName": "뮤트 2 (Muted 2)",
+        "canonical": "light-dark(#6f6e68,#838388)",
+        "tonalRamp": [
+          "#2b2a27",
+          "#45453f",
+          "#5f5f59",
+          "#6f6e68",
+          "#838388",
+          "#98989d",
+          "#adadb1",
+          "#cbcbce"
+        ]
+      },
+      "chip-text": {
+        "role": "neutral",
+        "displayName": "칩 글자 (Chip Text)",
+        "canonical": "light-dark(#3f3f3a,#bebec2)",
+        "tonalRamp": [
+          "#1c1b19",
+          "#2b2a27",
+          "#3f3f3a",
+          "#5f5f59",
+          "#8a8983",
+          "#adadb1",
+          "#bebec2",
+          "#d9d9db"
+        ]
+      },
+      "body": {
+        "role": "neutral",
+        "displayName": "본문 (Body)",
+        "canonical": "light-dark(#2b2a27,#cbcbce)",
+        "tonalRamp": [
+          "#1c1b19",
+          "#2b2a27",
+          "#45453f",
+          "#5f5f59",
+          "#8a8983",
+          "#adadb1",
+          "#cbcbce",
+          "#d9d9db"
+        ]
+      },
+      "sub": {
+        "role": "neutral",
+        "displayName": "보조 본문 (Sub)",
+        "canonical": "light-dark(#45453f,#adadb1)",
+        "tonalRamp": [
+          "#1c1b19",
+          "#2b2a27",
+          "#45453f",
+          "#5f5f59",
+          "#8a8983",
+          "#adadb1",
+          "#cbcbce",
+          "#d9d9db"
+        ]
+      },
+      "dot": {
+        "role": "neutral",
+        "displayName": "점 (Dot)",
+        "canonical": "light-dark(#6f6f68,#9a9aa3)",
+        "tonalRamp": [
+          "#2b2a27",
+          "#45453f",
+          "#5f5f59",
+          "#6f6f68",
+          "#8a8983",
+          "#9a9aa3",
+          "#adadb1",
+          "#cbcbce"
+        ]
+      },
+      "stripe": {
+        "role": "neutral",
+        "displayName": "줄무늬 (Stripe)",
+        "canonical": "light-dark(#d3d1ca,#3c3c44)",
+        "tonalRamp": [
+          "#2c2c33",
+          "#3c3c44",
+          "#4a4a54",
+          "#72727c",
+          "#8d8b84",
+          "#cfcdc6",
+          "#d3d1ca",
+          "#e3e2dc"
+        ]
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "히어로 이름 한 곳. 잉크 블록 안에 인라인으로 앉는다. 일본어는 0.8em." },
-      "headline": { "displayName": "Headline", "purpose": "챕터 제목 30px, 모달 제목 34px." },
-      "title": { "displayName": "Title", "purpose": "프로젝트 카드 제목. 모달 섹션 소제목은 20px." },
-      "lead": { "displayName": "Lead", "purpose": "히어로 첫 문장. text-wrap: pretty." },
-      "body": { "displayName": "Body", "purpose": "경력 불릿·모달 본문. 항목 한 문장, 90자 이내." },
-      "stat": { "displayName": "Stat", "purpose": "수치 카드 값." },
-      "label": { "displayName": "Label", "purpose": "아이브로우·챕터 번호·스택 라벨·카드 상단 회사 · 기간. 계측값에만 모노." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "히어로 이름 한 곳. 잉크 블록 안에 인라인으로 앉는다. 일본어는 0.8em."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "챕터 제목 30px, 모달 제목 34px."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "프로젝트 카드 제목. 모달 섹션 소제목은 20px."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "히어로 첫 문장. text-wrap: pretty."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "경력 불릿·모달 본문. 항목 한 문장, 90자 이내."
+      },
+      "stat": {
+        "displayName": "Stat",
+        "purpose": "수치 카드 값."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "아이브로우·챕터 번호·스택 라벨·카드 상단 회사 · 기간. 계측값에만 모노."
+      }
     },
     "shadows": [
-      { "name": "shadow-ground", "value": "0 4px 10px light-dark(rgba(0,0,0,.10), rgba(0,0,0,.62))", "purpose": "모달 카드의 모서리를 만드는 좁고 진한 접지 층. 항상 환경 그림자와 함께." },
-      { "name": "shadow-ambient", "value": "0 24px 60px light-dark(rgba(0,0,0,.35), rgba(0,0,0,.44))", "purpose": "같은 모달의 넓고 옅은 환경 층. 카드·버튼·칩에는 쓰지 않는다." }
+      {
+        "name": "shadow-ground",
+        "value": "0 4px 10px light-dark(rgba(0,0,0,.10), rgba(0,0,0,.62))",
+        "purpose": "모달 카드의 모서리를 만드는 좁고 진한 접지 층. 항상 환경 그림자와 함께."
+      },
+      {
+        "name": "shadow-ambient",
+        "value": "0 24px 60px light-dark(rgba(0,0,0,.35), rgba(0,0,0,.44))",
+        "purpose": "같은 모달의 넓고 옅은 환경 층. 카드·버튼·칩에는 쓰지 않는다."
+      }
     ],
     "motion": [
-      { "name": "color-state", "value": "150ms ease", "purpose": "버튼·칩의 색·배경 상태 전환." },
-      { "name": "nav-fill", "value": "width 120ms linear", "purpose": "내비 게이지 채움. 스크롤에 붙어 움직인다." },
-      { "name": "theme-icon", "value": "transform 450ms cubic-bezier(.65, 0, .35, 1)", "purpose": "테마 아이콘 180° 회전." },
-      { "name": "theme-reveal", "value": "clip-path circle() 340ms linear (View Transition)", "purpose": "누른 버튼 중심에서 퍼지는 테마 전환. reduced-motion이면 즉시." }
+      {
+        "name": "color-state",
+        "value": "150ms ease",
+        "purpose": "버튼·칩의 색·배경 상태 전환."
+      },
+      {
+        "name": "nav-fill",
+        "value": "width 120ms linear",
+        "purpose": "내비 게이지 채움. 스크롤에 붙어 움직인다."
+      },
+      {
+        "name": "theme-icon",
+        "value": "transform 450ms cubic-bezier(.65, 0, .35, 1)",
+        "purpose": "테마 아이콘 180° 회전."
+      },
+      {
+        "name": "theme-reveal",
+        "value": "clip-path circle() 340ms linear (View Transition)",
+        "purpose": "누른 버튼 중심에서 퍼지는 테마 전환. reduced-motion이면 즉시."
+      }
     ],
     "breakpoints": [
-      { "name": "mobile", "value": "720px" }
+      {
+        "name": "mobile",
+        "value": "720px"
+      },
+      {
+        "name": "single-project-row",
+        "value": "1000px"
+      }
     ]
   },
   "components": [
@@ -73,20 +391,19 @@
       "css": ".ds-seg { display: inline-flex; height: 32px; border: 1px solid var(--line-ui, #8d8b84); corner-shape: squircle; border-radius: 10px; overflow: hidden; } .ds-seg-btn { min-width: 38px; padding: 0 10px; border: 0; background: transparent; color: var(--muted, #5f5f59); font: 500 13px/1.25 'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,sans-serif; cursor: pointer; } .ds-seg-btn--ko { font-size: 15px; } .ds-seg-btn.ds-on { background: var(--ink, #151514); color: var(--ink-fg, #fbfbf9); } .ds-seg-btn:hover:not(.ds-on) { color: var(--fg, #1c1b19); } .ds-seg-btn:focus-visible { outline: 2px solid var(--ink, #151514); outline-offset: -3px; }"
     },
     {
-      "name": "Stack Pill",
-      "kind": "chip",
-      "refersTo": "pill",
-      "description": "기술 스택 태그. 핵심 군은 잉크 반전, 나머지는 테두리만.",
-      "html": "<div class=\"ds-pills\"><span class=\"ds-pill ds-pill--core\">C#</span><span class=\"ds-pill ds-pill--core\">.NET 8</span><span class=\"ds-pill\">Native AOT</span><span class=\"ds-pill\">WiX Toolset</span></div>",
-      "css": ".ds-pills { display: flex; flex-wrap: wrap; gap: 7px; } .ds-pill { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace; font-size: 13px; padding: 5px 11px; corner-shape: squircle; border-radius: 10px; white-space: nowrap; border: 1px solid var(--line-ui, #8d8b84); color: var(--fg, #1c1b19); } .ds-pill--core { background: var(--ink, #151514); color: var(--ink-fg, #fbfbf9); border-color: transparent; }"
+      "name": "Technical Stack",
+      "kind": "custom",
+      "description": "주력 기술 한 줄과 보조 기술 세 묶음. 표·구분선·칩 없이 본문 서체로 표시한다.",
+      "html": "<div class=\"ds-stackgrid\"><div class=\"ds-stack-cell\"><div class=\"ds-stack-label\">핵심 스택</div><div class=\"ds-stackgroup\"><span class=\"ds-stack-item ds-stack-core\">C#</span><span class=\"ds-stack-item ds-stack-core\">.NET 8</span><span class=\"ds-stack-item ds-stack-core\">WPF</span><span class=\"ds-stack-item ds-stack-core\">Avalonia UI</span><span class=\"ds-stack-item ds-stack-core\">MVVM</span></div></div><div class=\"ds-stack-cell\"><div class=\"ds-stack-label\">플랫폼 · 네이티브</div><div class=\"ds-stackgroup\"><span class=\"ds-stack-item\">Native AOT</span><span class=\"ds-stack-item\">COM Interop</span><span class=\"ds-stack-item\">C++ / VC++</span></div></div><div class=\"ds-stack-cell\"><div class=\"ds-stack-label\">백엔드 · 데이터</div><div class=\"ds-stackgroup\"><span class=\"ds-stack-item\">Java</span><span class=\"ds-stack-item\">Spring Boot</span><span class=\"ds-stack-item\">MyBatis</span></div></div><div class=\"ds-stack-cell\"><div class=\"ds-stack-label\">도메인 · 툴</div><div class=\"ds-stackgroup\"><span class=\"ds-stack-item\">Navisworks API</span><span class=\"ds-stack-item\">Revit Add-in</span></div></div></div>",
+      "css": "/* ── tech stack ─────────────────────────────────────────── */\n.ds-stackgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 40px}\n.ds-stack-cell{min-width:0}\n.ds-stack-cell:has(.ds-stack-core){grid-column:1 / -1;padding-bottom:8px}\n.ds-stack-label{margin-bottom:12px;font-size:15px;font-weight:600;color:var(--fg)}\n.ds-stackgroup{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline}\n.ds-stack-item{font-size:15px;line-height:1.7;color:var(--muted)}\n.ds-stack-core{font-size:24px;font-weight:500;letter-spacing:-.025em;color:var(--fg)}\n.ds-stackgroup:has(.ds-stack-core){gap:8px 24px}\n\n"
     },
     {
       "name": "Project Card (Bento)",
       "kind": "card",
       "refersTo": "project-card",
-      "description": "종이색 + 헤어라인 벤토 카드. 텍스트(아이브로우·제목·요약·수치) | 이미지 칸(빗금 플레이스홀더). 호버는 card로 한 단계.",
-      "html": "<article class=\"ds-card\"><div class=\"ds-card-text\"><div class=\"ds-eyebrow\">인라이플 · 2025.02 — 현재</div><h3 class=\"ds-card-title\"><button class=\"ds-card-btn\" type=\"button\">압축 프로그램 ezZip</button></h3><p class=\"ds-card-blurb\">자사 PC 제품군 공통 모듈·인스톨러 플랫폼을 설계하고, 첫 상용 제품인 ezZip의 C# 엔진 개발을 총괄.</p><div class=\"ds-card-stats\"><span class=\"ds-card-stat\"><span class=\"ds-card-stat-v\">6만 명</span><span class=\"ds-card-stat-k\">DAU</span></span><span class=\"ds-card-stat\"><span class=\"ds-card-stat-v\">1,800건</span><span class=\"ds-card-stat-k\">일 평균 설치</span></span></div></div><div class=\"ds-card-img\"><span class=\"ds-card-cap\">이미지 준비 중</span></div></article>",
-      "css": ".ds-card { width: 560px; min-height: 200px; display: grid; grid-template-columns: minmax(0,1fr) 190px; border-radius: 14px; overflow: hidden; background: var(--bg, #fbfbf9); border: 1px solid var(--line, #dcdbd5); color: var(--fg, #1c1b19); cursor: pointer; transition: background .15s; font-family: 'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,sans-serif; } .ds-card:hover, .ds-card:focus-within { background: var(--card, #f1f1f0); } .ds-card:has(.ds-card-btn:focus-visible) { outline: 2px solid var(--ink, #151514); outline-offset: 3px; } .ds-card-text { min-width: 0; padding: 24px 24px 22px; display: flex; flex-direction: column; gap: 12px; } .ds-eyebrow { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; letter-spacing: .1em; color: var(--muted, #5f5f59); } .ds-card-title { margin: 0; font-size: 22px; line-height: 1.25; letter-spacing: -.028em; font-weight: 600; } .ds-card-btn { all: unset; display: inline; color: inherit; font: inherit; cursor: pointer; } .ds-card-blurb { margin: 0; font-size: 16px; line-height: 1.6; color: var(--sub, #45453f); } .ds-card-stats { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 2px; } .ds-card-stat { display: flex; flex-direction: column; gap: 2px; } .ds-card-stat-v { font-size: 21px; font-weight: 600; letter-spacing: -.03em; line-height: 1.1; font-variant-numeric: tabular-nums; } .ds-card-stat-k { font-size: 13.5px; color: var(--muted, #5f5f59); } .ds-card-img { display: flex; align-items: center; justify-content: center; background: var(--card, #f1f1f0) repeating-linear-gradient(135deg, var(--stripe, #d3d1ca) 0 3px, transparent 3px 8px); border-left: 1px solid var(--line-soft, #e3e2dc); } .ds-card-cap { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .1em; color: var(--muted, #5f5f59); background: var(--bg, #fbfbf9); padding: 4px 8px; border-radius: 999px; }"
+      "description": "회사·기간·제목·개요만 표시하는 카드. 성과는 상세 모달에만 남긴다. 이미지 폭은 최대 30%.",
+      "html": "<article class=\"ds-proj-card\" data-span=\"4\"><div class=\"ds-pc-text\"><div class=\"ds-pc-eyebrow\">인라이플 · 2025.02 — 현재</div><h3 class=\"ds-pc-title\"><button class=\"ds-pc-btn\" type=\"button\">압축 프로그램 ezZip</button></h3><p class=\"ds-pc-blurb\">자사 PC 소프트웨어의 공통 플랫폼과 압축 프로그램 ezZip.</p></div><div class=\"ds-pc-img\"><span class=\"ds-pc-cap\">이미지 준비 중</span></div></article>",
+      "css": "/* ── projects ───────────────────────────────────────────── */\n/* 벤토: 한 그리드 안에서 크기로 중요도를 말한다. 열 수·높이·이미지 폭은 PROJECTS[]가\n   --span/--minh/--imgw 커스텀 속성으로 넘기고, 모바일 블록은 그 소비처만 덮어쓴다. */\n[data-projgrid]{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}\n.ds-proj-card{grid-column:span var(--span,2);min-height:var(--minh,200px);display:grid;grid-template-columns:minmax(0,1fr) min(30%,var(--imgw,190px));border-radius:14px;overflow:hidden;background:var(--bg);border:1px solid var(--line);color:var(--fg);cursor:pointer;transition:background .15s}\n.ds-proj-card:hover,.ds-proj-card:focus-within{background:var(--card)}\n/* 카드 전체가 클릭 면이지만 접근성 트리에서는 제목 안의 버튼 하나만 컨트롤이다.\n   article 자체에 role=button을 주면 h3가 버튼 이름 속으로 사라져 헤딩 탐색에서 빠진다. */\n.ds-proj-card:has(.ds-pc-btn:focus-visible){outline:2px solid var(--ink);outline-offset:3px}\n.ds-pc-btn{all:unset;display:inline;cursor:pointer;color:inherit;font:inherit;letter-spacing:inherit}\n.ds-pc-btn:focus-visible{outline:none}\n.ds-pc-text{min-width:0;padding:24px 24px 22px;display:flex;flex-direction:column;gap:12px}\n.ds-proj-card[data-span=\"4\"] .ds-pc-text{padding:24px 26px}\n.ds-pc-eyebrow{font-size:14px;letter-spacing:.1em;color:var(--muted)}\n.ds-pc-title{margin:0;font-size:22px;line-height:1.25;letter-spacing:-.028em;font-weight:600;color:var(--fg)}\n.ds-pc-blurb{margin:0;font-size:16px;line-height:1.6;color:var(--sub)}\n/* 이미지가 없어도 자리는 유지하되 본문보다 시선을 끌지 않는다. */\n.ds-pc-img{min-width:0;display:flex;align-items:center;justify-content:center;background:var(--card);border-left:1px solid var(--line-soft)}\n.ds-pc-img img{width:100%;height:100%;object-fit:cover;display:block}\n.ds-pc-cap{font-size:11px;letter-spacing:.04em;color:var(--muted);padding:8px;text-align:center}\n\n"
     },
     {
       "name": "Stat Card",
@@ -108,9 +425,9 @@
       "name": "Control Pill",
       "kind": "nav",
       "refersTo": "nav-pill",
-      "description": "상단 바의 플로팅 알약: 챕터 5(활성 칸만 이름으로 늘어나 잉크가 채움) · 언어 3 · 테마 · PDF. 모바일에선 챕터를 빼고 우하단에 고정.",
-      "html": "<div class=\"ds-ctl\"><nav class=\"ds-ctl-nav\" aria-label=\"챕터\"><a class=\"ds-nav-ch\" href=\"#\"><span class=\"ds-nav-n\">00</span></a><a class=\"ds-nav-ch ds-on\" href=\"#\" aria-current=\"true\"><span class=\"ds-nav-n\">01</span><span class=\"ds-nav-l\">경력</span></a><a class=\"ds-nav-ch\" href=\"#\"><span class=\"ds-nav-n\">02</span></a><a class=\"ds-nav-ch\" href=\"#\"><span class=\"ds-nav-n\">03</span></a><a class=\"ds-nav-ch\" href=\"#\"><span class=\"ds-nav-n\">04</span></a></nav><span class=\"ds-ctl-sep\"></span><div class=\"ds-ctl-lang\" role=\"group\" aria-label=\"언어\"><button class=\"ds-lang-btn ds-on\" aria-label=\"한국어\" aria-pressed=\"true\"><span class=\"ds-lang-in ds-lang-in--ko\">ㅎ</span></button><button class=\"ds-lang-btn\" aria-label=\"English\" aria-pressed=\"false\"><span class=\"ds-lang-in\">A</span></button><button class=\"ds-lang-btn\" aria-label=\"日本語\" aria-pressed=\"false\"><span class=\"ds-lang-in\">あ</span></button></div><span class=\"ds-ctl-sep\"></span><button class=\"ds-ctl-ico\" aria-label=\"다크 모드로 전환\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"6.25\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"></circle><path d=\"M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z\" fill=\"currentColor\"></path></svg></button><button class=\"ds-ctl-pdf\">PDF</button></div>",
-      "css": ".ds-ctl { display: inline-flex; align-items: center; gap: 4px; padding: 6px 8px; background: var(--bg, #fbfbf9); border: 1px solid var(--line, #dcdbd5); border-radius: 999px; font-family: 'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,sans-serif; } .ds-ctl button, .ds-ctl a { border: 0; background: transparent; color: var(--muted, #5f5f59); cursor: pointer; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; } .ds-ctl-nav { display: flex; gap: 4px; } .ds-nav-ch { height: 30px; min-width: 40px; padding: 0 12px; gap: 0; border-radius: 999px; transition: color .2s cubic-bezier(.4,0,.2,1), gap .2s cubic-bezier(.4,0,.2,1); } .ds-nav-ch:hover { color: var(--fg, #1c1b19); } .ds-nav-ch.ds-on, .ds-nav-ch.ds-on:hover { gap: 8px; background: var(--ink, #151514); color: var(--ink-fg, #fbfbf9); } .ds-nav-n { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11.5px; letter-spacing: .06em; } .ds-nav-l { font-size: 13px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; } .ds-ctl-sep { width: 1px; height: 17px; margin: 0 4px; background: var(--line-soft, #e3e2dc); } .ds-ctl-lang { display: flex; gap: 4px; } .ds-lang-btn { width: 28px; height: 28px; padding: 0; } .ds-lang-in { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; } .ds-lang-in--ko { font-size: 15px; } .ds-lang-btn.ds-on { color: var(--ink, #151514); } .ds-lang-btn.ds-on .ds-lang-in { background: var(--card, #f1f1f0); font-weight: 600; } .ds-ctl-ico { width: 28px; height: 28px; padding: 0; color: var(--fg, #1c1b19); } .ds-ctl-pdf { height: 28px; padding: 0 10px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: .08em; color: var(--fg, #1c1b19); border-radius: 999px; } .ds-ctl-pdf:hover { background: var(--card, #f1f1f0); } .ds-ctl button:focus-visible, .ds-ctl a:focus-visible { outline: 2px solid var(--ink, #151514); outline-offset: 2px; border-radius: 999px; }"
+      "description": "챕터·언어·테마·PDF 다운로드 아이콘. 모바일은 챕터 없이 상단 sticky 바에서 사용한다.",
+      "html": "<div class=\"ds-ctl\"><nav class=\"ds-ctl-nav\" aria-label=\"챕터\"><a class=\"ds-nav-ch\" href=\"#\"><span class=\"ds-nav-n\">00</span></a><a class=\"ds-nav-ch ds-on\" href=\"#\" aria-current=\"true\"><span class=\"ds-nav-n\">01</span><span class=\"ds-nav-l\">경력</span></a><a class=\"ds-nav-ch\" href=\"#\"><span class=\"ds-nav-n\">02</span></a><a class=\"ds-nav-ch\" href=\"#\"><span class=\"ds-nav-n\">03</span></a><a class=\"ds-nav-ch\" href=\"#\"><span class=\"ds-nav-n\">04</span></a></nav><span class=\"ds-ctl-sep\"></span><div class=\"ds-ctl-lang\" role=\"group\" aria-label=\"언어\"><button class=\"ds-lang-btn ds-on\" aria-label=\"한국어\" aria-pressed=\"true\"><span class=\"ds-lang-in ds-lang-in--ko\">ㅎ</span></button><button class=\"ds-lang-btn\" aria-label=\"English\" aria-pressed=\"false\"><span class=\"ds-lang-in\">A</span></button><button class=\"ds-lang-btn\" aria-label=\"日本語\" aria-pressed=\"false\"><span class=\"ds-lang-in\">あ</span></button></div><span class=\"ds-ctl-sep\"></span><button class=\"ds-ctl-ico\" aria-label=\"다크 모드로 전환\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"6.25\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"></circle><path d=\"M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z\" fill=\"currentColor\"></path></svg></button><button class=\"ds-ctl-pdf\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 2v8m-3-3 3 3 3-3M2.5 10.5v3h11v-3\"></path></svg></button></div>",
+      "css": ".ds-ctl { display: inline-flex; align-items: center; gap: 4px; padding: 6px 8px; background: var(--bg, #fbfbf9); border: 1px solid var(--line, #dcdbd5); border-radius: 999px; font-family: 'Pretendard JP Variable','Pretendard Variable',Pretendard,system-ui,sans-serif; } .ds-ctl button, .ds-ctl a { border: 0; background: transparent; color: var(--muted, #5f5f59); cursor: pointer; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; } .ds-ctl-nav { display: flex; gap: 4px; } .ds-nav-ch { height: 30px; min-width: 40px; padding: 0 12px; gap: 0; border-radius: 999px; transition: color .2s cubic-bezier(.4,0,.2,1), gap .2s cubic-bezier(.4,0,.2,1); } .ds-nav-ch:hover { color: var(--fg, #1c1b19); } .ds-nav-ch.ds-on, .ds-nav-ch.ds-on:hover { gap: 8px; background: var(--ink, #151514); color: var(--ink-fg, #fbfbf9); } .ds-nav-n { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11.5px; letter-spacing: .06em; } .ds-nav-l { font-size: 13px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; } .ds-ctl-sep { width: 1px; height: 17px; margin: 0 4px; background: var(--line-soft, #e3e2dc); } .ds-ctl-lang { display: flex; gap: 4px; } .ds-lang-btn { width: 28px; height: 28px; padding: 0; } .ds-lang-in { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; } .ds-lang-in--ko { font-size: 15px; } .ds-lang-btn.ds-on { color: var(--ink, #151514); } .ds-lang-btn.ds-on .ds-lang-in { background: var(--card, #f1f1f0); font-weight: 600; } .ds-ctl-ico { width: 28px; height: 28px; padding: 0; color: var(--fg, #1c1b19); } .ds-ctl-pdf { height: 28px; padding: 0 10px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: .08em; color: var(--fg, #1c1b19); border-radius: 999px; } .ds-ctl-pdf:hover { background: var(--card, #f1f1f0); } .ds-ctl button:focus-visible, .ds-ctl a:focus-visible { outline: 2px solid var(--ink, #151514); outline-offset: 2px; border-radius: 999px; } .ds-ctl-pdf { width:28px; height:28px; padding:0; }"
     }
   ],
   "narrative": {
@@ -124,13 +441,41 @@
       "3개 국어가 같은 DOM에 살고 html[lang]으로만 보인다. 줄바꿈 규칙(keep-all)은 한국어에만 건다."
     ],
     "rules": [
-      { "name": "The One Ink Rule", "body": "강조하고 싶으면 잉크로 반전한다. 새 액센트 색을 만들지 않는다. ai-blue는 예외가 아니라 \"AI 섹션\"이라는 한 자리의 이름표다.", "section": "colors" },
-      { "name": "The Surface Contrast Rule", "body": "글자 토큰은 놓이는 면(종이가 아니라 카드·카드 위 면) 기준으로 4.5:1, 테두리·로고 잉크는 3:1을 지킨다. 토큰 값을 바꾸면 카드 위에서 다시 잰다.", "section": "colors" },
-      { "name": "The No-JS-Color Rule", "body": "색은 시트에서만 온다. 활성 챕터·활성 언어는 is-on 클래스로 CSS가 칠하고, JS는 클래스 이름만 넘긴다. dark ? '#…' : '#…' 리터럴 쌍을 다시 만들지 않는다(2026-09-05에 전부 제거).", "section": "colors" },
-      { "name": "The Mono Means Data Rule", "body": "JetBrains Mono는 날짜, 번호, 라벨, 스택 태그, 연락처 값에만 쓴다. 문장에는 쓰지 않는다. 수치 카드 라벨은 영어일 때만 모노고 한글·일본어는 본문 서체다.", "section": "typography" },
-      { "name": "The Language Owns Line Breaks Rule", "body": "word-break: keep-all은 html[lang=\"ko\"] body 한 곳에만 있다. 컴포넌트에 직접 쓰면 일본어 문장이 한 덩어리가 되어 넘친다. 안전망은 body { overflow-wrap: break-word }.", "section": "typography" },
-      { "name": "The One Bold Rule", "body": "항목 하나에 잉크 칩(**…**)은 최대 하나. 전부 칠하면 강조가 사라진다.", "section": "typography" },
-      { "name": "The Floating-Only Shadow Rule", "body": "그림자는 페이지 위로 뜨는 것에만 있다: 열린 모달, 그리고 모바일에서 본문 위를 떠다니는 우하단 컨트롤 pill. 둘 다 접지 + 환경 두 겹이다. 카드·버튼·칩은 호버에도 그림자를 얻지 않는다. 한 겹짜리 넓은 블러는 다크에서 얼룩으로 보이므로 쓰지 않는다.", "section": "elevation" }
+      {
+        "name": "The One Ink Rule",
+        "body": "강조하고 싶으면 잉크로 반전한다. 새 액센트 색을 만들지 않는다. ai-blue는 예외가 아니라 \"AI 섹션\"이라는 한 자리의 이름표다.",
+        "section": "colors"
+      },
+      {
+        "name": "The Surface Contrast Rule",
+        "body": "글자 토큰은 놓이는 면(종이가 아니라 카드·카드 위 면) 기준으로 4.5:1, 테두리·로고 잉크는 3:1을 지킨다. 토큰 값을 바꾸면 카드 위에서 다시 잰다.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-JS-Color Rule",
+        "body": "색은 시트에서만 온다. 활성 챕터·활성 언어는 is-on 클래스로 CSS가 칠하고, JS는 클래스 이름만 넘긴다. dark ? '#…' : '#…' 리터럴 쌍을 다시 만들지 않는다(2026-09-05에 전부 제거).",
+        "section": "colors"
+      },
+      {
+        "name": "The Mono Means Data Rule",
+        "body": "JetBrains Mono는 날짜, 번호, 라벨, 연락처 값에만 쓴다. 기술 스택과 문장에는 본문 서체를 쓴다.",
+        "section": "typography"
+      },
+      {
+        "name": "The Language Owns Line Breaks Rule",
+        "body": "word-break: keep-all은 html[lang=\"ko\"] body 한 곳에만 있다. 컴포넌트에 직접 쓰면 일본어 문장이 한 덩어리가 되어 넘친다. 안전망은 body { overflow-wrap: break-word }.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Bold Rule",
+        "body": "항목 하나에 잉크 칩(**…**)은 최대 하나. 전부 칠하면 강조가 사라진다.",
+        "section": "typography"
+      },
+      {
+        "name": "The Floating-Only Shadow Rule",
+        "body": "그림자는 열린 모달에만 접지와 환경 두 겹으로 둔다. 상단 바·카드·버튼·칩에는 그림자를 쓰지 않는다.",
+        "section": "elevation"
+      }
     ],
     "dos": [
       "Do 강조가 필요하면 잉크로 반전한다. 항목당 칩 하나.",
@@ -138,7 +483,7 @@
       "Do 글자 대비는 카드 위에서 4.5:1, 테두리는 3:1로 잰다.",
       "Do 정적 스타일은 시트에, 모바일 재정의는 하단 @media (max-width: 720px) 블록 하나에.",
       "Do 계측값(날짜·번호·태그·연락처)만 모노스페이스로.",
-      "Do 뜨는 것(모달, 모바일 pill)에만 그림자를, 그것도 접지 + 환경 두 겹으로.",
+      "Do 모달에만 접지 + 환경 그림자 두 겹을 쓴다.",
       "Do 보이지 않는 라벨(aria-label, 라이브 리전)도 T 상수로 3개 국어.",
       "Do 레이아웃을 건드렸으면 3개 언어 × 모바일 × 인쇄 미리보기까지 본다."
     ],
@@ -149,7 +494,7 @@
       "Don't !important, 인라인 정적 style=, :first-of-type 같은 구조 의존 셀렉터를 쓰지 않는다.",
       "Don't word-break: keep-all을 컴포넌트에 직접 쓰지 않는다. 언어 셀렉터에만.",
       "Don't 반전 블록 안 보조 글자를 opacity로 만들지 않는다. ink-text-soft를 쓴다.",
-      "Don't 카드의 이미지 칸을 텍스트로 메우지 않는다. img가 올 때까지 빗금 + 캡션이다.",
+      "Don't 카드의 이미지 칸을 텍스트로 메우지 않는다. img가 올 때까지 단색 면과 캡션이다.",
       "Don't 벤토의 칸 수·높이를 CSS에 박지 않는다. PROJECTS[].span / minH / imgW가 정하고 시트는 --span / --minh / --imgw를 소비만 한다."
     ]
   }
