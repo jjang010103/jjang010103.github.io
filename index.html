@@ -205,8 +205,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 /* 칸 수는 PROJECTS[].span / rows가 정하고 시트는 --span / --rows만 읽는다.
    모양은 거기서 나온다: 2×2 대표(위 이미지) · 1칸 보조(이미지 없음) · 2칸 가로형(왼쪽 이미지). */
 [data-projgrid]{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-/* 대표(2×2) 옆 두 번째 줄(PC3D)은 내용 높이만큼만 쓰고, 대표가 더 필요한 높이는 첫 줄이 받는다 */
-[data-projgrid]{grid-template-rows:1fr auto}
+/* 대표(2×2) 옆 두 줄(아이센드·PC3D)은 높이를 반씩 나눈다. 한쪽 내용이 더 길면 그 줄만 늘어난다 */
+[data-projgrid]{grid-template-rows:1fr 1fr}
 .proj-card{grid-column:span var(--span,1);grid-row:span var(--rows,1);cursor:pointer}
 /* 카드 전체가 클릭 면이지만 접근성 트리에서는 제목 안의 버튼 하나만 컨트롤이다.
    article 자체에 role=button을 주면 h3가 버튼 이름 속으로 사라져 헤딩 탐색에서 빠진다. */
@@ -894,7 +894,7 @@ const PROJECTS = [
     id: 'ezspool', span: 2, ink: true,
     co: CO.huen, date: '2019.02 — 2023.10',
     url: 'https://www.huensystem.com/ez-solutions/solutions/ez-spool',
-    title: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool / Ez-ISO — piping drawing automation', ja: '配管図面自動化 Ez-Spool / Ez-ISO' },
+    title: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool — piping drawing automation', ja: '配管図面自動化 Ez-Spool' },
     mtitle: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool — Piping Drawing Automation', ja: '配管図面自動化 Ez-Spool' },
     blurb: {
       ko: '플랜트 배관 Spool 도면·BOM 자동 산출 및 도면 추출 엔진. 검색 알고리즘 개선으로 도면 조회를 98% 단축하고 현대엔지니어링·삼성물산 현장을 지원.',
