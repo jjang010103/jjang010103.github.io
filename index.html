@@ -58,6 +58,9 @@ document.documentElement.style.colorScheme=t;})()</script>
   --accent-text:#ffffff;
   /* 글자·선 전용 액센트(상세 05 AI 제목·포커스 링). 다크의 옻칠 빨강은 어두운 바탕 위에서 2.6:1이라 같은 계열을 밝혀 쓴다(5.1:1). */
   --accent-line:light-dark(#2a45c7,#f05a5f);
+  /* 바 뒤 흐림 덮개. 라이트는 회색 쟁반이 흰 카드 위에서 띠처럼 도드라져 옅게(25%·12%), 다크는 60%·35% 그대로. */
+  --blur-tint-1:light-dark(color-mix(in srgb,var(--canvas) 25%,transparent),color-mix(in srgb,var(--canvas) 60%,transparent));
+  --blur-tint-2:light-dark(color-mix(in srgb,var(--canvas) 12%,transparent),color-mix(in srgb,var(--canvas) 35%,transparent));
   --sans:'Noto Sans KR','Noto Sans JP',system-ui,-apple-system,sans-serif;
   --data:'Space Grotesk','Noto Sans KR','Noto Sans JP',system-ui,sans-serif;
 }
@@ -136,9 +139,16 @@ section[id],header[id]{scroll-margin-top:96px}
 
 /* ── top bar ────────────────────────────────────────────── */
 /* 흰 알약 하나: 이름 · 챕터 4 · 언어 3 · 테마 · PDF. 켜진 챕터·언어만 잉크다. */
-[data-bar]{position:sticky;top:16px;z-index:20;display:flex;align-items:center;gap:8px;padding:12px 12px 12px 28px;background:var(--surface);border-radius:999px;transition:box-shadow .2s}
-/* 맨 위에서는 쟁반 위라 테두리가 필요 없다. 스크롤해서 카드와 겹칠 때만 헤어라인 한 줄로 바의 가장자리를 긋는다(사용자 결정, 2026-09-25). */
-[data-bar].is-scrolled{box-shadow:inset 0 0 0 1px var(--hairline)}
+[data-bar]{position:sticky;top:16px;z-index:20;display:flex;align-items:center;gap:8px;padding:12px 12px 12px 28px;background:var(--surface);border-radius:999px}
+/* 바 뒤 점진 흐림: 스크롤하면 화면 위쪽이 아래로 갈수록 풀리는 세 겹 흐림(1·3·6px)과 쟁반색 덮개로 덮인다.
+   흰 바는 불투명한 채 그 위에 떠서, 흰·검정 카드 어느 위에서도 가장자리가 흐린 배경과 구분된다(사용자 결정, 2026-09-25).
+   맨 위에서는 꺼져 있다. 경계가 칼로 자른 듯 보이지 않게 각 겹을 마스크로 서서히 지운다. */
+.bar-blur,.bar-blur::before,.bar-blur::after{position:fixed;left:0;right:0;top:0;height:180px;pointer-events:none}
+.bar-blur{z-index:19;opacity:0;transition:opacity .2s;background:linear-gradient(to bottom,var(--blur-tint-1),var(--blur-tint-2) 45%,transparent);-webkit-backdrop-filter:blur(1px);backdrop-filter:blur(1px);-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 100%);mask-image:linear-gradient(to bottom,#000 60%,transparent 100%)}
+.bar-blur::before,.bar-blur::after{content:""}
+.bar-blur::before{-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);-webkit-mask-image:linear-gradient(to bottom,#000 45%,transparent 85%);mask-image:linear-gradient(to bottom,#000 45%,transparent 85%)}
+.bar-blur::after{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);-webkit-mask-image:linear-gradient(to bottom,#000 25%,transparent 65%);mask-image:linear-gradient(to bottom,#000 25%,transparent 65%)}
+.bar-blur.is-on{opacity:1}
 .logo-btn{margin-right:auto;padding:0;border:0;background:transparent;cursor:pointer;color:var(--text);font-size:20px;font-weight:900;letter-spacing:-.02em;line-height:1.2;white-space:nowrap}
 .nav{display:flex;align-items:center;gap:4px}
 .nav-ch{flex:none;box-sizing:border-box;display:inline-flex;align-items:center;height:44px;padding:0 20px;border-radius:999px;font-size:15px;font-weight:500;color:var(--text);white-space:nowrap;transition:background .2s,color .2s}
@@ -152,7 +162,7 @@ section[id],header[id]{scroll-margin-top:96px}
 .icon-btn--ko{font-size:16px}
 .icon-btn:disabled,.icon-btn:disabled:hover{color:var(--hairline);cursor:default}
 .theme-ico{display:block;transition:transform .45s cubic-bezier(.65,0,.35,1)}
-@media (prefers-reduced-motion:reduce){.nav-ch,.icon-btn,.theme-ico,[data-bar]{transition:none}}
+@media (prefers-reduced-motion:reduce){.nav-ch,.icon-btn,.theme-ico,.bar-blur{transition:none}}
 
 /* ── section heads ──────────────────────────────────────── */
 /* 카드 밖, 쟁반 위에 둔다 */
@@ -327,6 +337,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   [data-main],[data-detail]{gap:12px}
   section[id],header[id]{scroll-margin-top:124px}
   /* 이름을 숨기고 두 줄: 위는 언어·테마·PDF, 아래는 가로로 스크롤되는 챕터 알약. 타깃 44px */
+  .bar-blur,.bar-blur::before,.bar-blur::after{height:200px}
   [data-bar]{top:8px;flex-wrap:wrap;gap:0;padding:4px;border-radius:26px}
   .logo-btn{display:none}
   .tools{order:-1;width:100%;justify-content:flex-end;margin:0}
@@ -411,7 +422,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 <main class="page">
 
 <a class="skip" href="#s-career" onClick="{{ skip }}" data-noprint><span data-l="ko">본문으로 건너뛰기</span><span data-l="en">Skip to content</span><span data-l="ja">本文へスキップ</span></a>
-<div data-noprint data-bar class="{{ barCls }}">
+<div class="bar-blur {{ blurCls }}" aria-hidden="true" data-noprint></div>
+<div data-noprint data-bar>
   <button onClick="{{ toTop }}" aria-label="{{ homeLabel }}" title="{{ homeLabel }}" class="logo-btn"><span data-l="ko">장민규</span><span data-l="en">Min&#8209;gyu Jang</span><span data-l="ja">チャン・ミンギュ</span></button>
   <nav class="nav">
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
@@ -1389,7 +1401,7 @@ class Component extends DCLogic {
       stackLabel: t(T.stack),
       resultLabel: t(T.result),
       themeIcon: dark ? 'rotate(180deg)' : 'rotate(0deg)',
-      barCls: this.state.scrolled ? 'is-scrolled' : '',
+      blurCls: this.state.scrolled ? 'is-on' : '',
       navItems: NAV.map((n, i) => ({ label: t(n.label), href: '#s-' + n.id,
         go: (e) => { e.preventDefault(); if (this.state.openId) this.closeDetail('s-' + n.id); else this.goTo('s-' + n.id); },
         cls: i === this.state.navIdx ? 'is-on' : '', cur: i === this.state.navIdx ? 'true' : null })),
