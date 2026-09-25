@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-25T10:13:23+00:00",
+  "generatedAt": "2026-09-25T10:55:23+00:00",
   "title": "Design System: 장민규 이력서",
   "extensions": {
     "colorMeta": {
@@ -459,7 +459,7 @@
       },
       {
         "name": "The Flat Tray Rule",
-        "body": "카드·내비·버튼·칩은 호버해도 그림자를 얻지 않는다. 프로젝트 카드의 호버는 제목 밑줄이다(카드를 `surface-inset`으로 가라앉히면 같은 색의 태그가 사라진다). 내비 항목·아이콘 버튼·\"메인으로\"·페이저는 `surface-inset` 바탕으로 호버한다.",
+        "body": "카드·내비·버튼·칩은 호버해도 그림자를 얻지 않는다. 스크롤 중의 상단 바도 그림자 대신 헤어라인 한 줄이다. 프로젝트 카드의 호버는 제목 밑줄이다(카드를 `surface-inset`으로 가라앉히면 같은 색의 태그가 사라진다). 내비 항목·아이콘 버튼·\"메인으로\"·페이저는 `surface-inset` 바탕으로 호버한다.",
         "section": "elevation"
       }
     ],
