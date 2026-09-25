@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-25T09:59:17+00:00",
+  "generatedAt": "2026-09-25T10:13:23+00:00",
   "title": "Design System: 장민규 이력서",
   "extensions": {
     "colorMeta": {
@@ -445,6 +445,11 @@
       {
         "name": "The One Bold Rule",
         "body": "문장 안 강조(`**…**` → `<strong>`)는 항목 하나에 최대 하나, 배경 없는 600 웨이트다. 액센트 면 위에서는 둘레 굵기를 따라간다.",
+        "section": "typography"
+      },
+      {
+        "name": "The Balanced Heading Rule",
+        "body": "여러 줄로 접히는 제목(이름·섹션·회사·프로젝트·학교·자격증·상세 제목)은 `text-wrap: balance`로 줄 길이를 고르게 한다. 본문은 `text-wrap: pretty`. 큰 한글 제목은 받침이 닿지 않도록 행간 1.2 이상.",
         "section": "typography"
       },
       {

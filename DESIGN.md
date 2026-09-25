@@ -28,7 +28,7 @@ typography:
     fontFamily: "'Noto Sans KR', 'Noto Sans JP', system-ui, sans-serif"
     fontSize: "60px"
     fontWeight: 900
-    lineHeight: 1.12
+    lineHeight: 1.2
     letterSpacing: "-0.03em"
   headline:
     fontFamily: "'Noto Sans KR', 'Noto Sans JP', system-ui, sans-serif"
@@ -40,7 +40,7 @@ typography:
     fontFamily: "'Noto Sans KR', 'Noto Sans JP', system-ui, sans-serif"
     fontSize: "26px"
     fontWeight: 700
-    lineHeight: 1.4
+    lineHeight: 1.45
     letterSpacing: "-0.01em"
   title-lg:
     fontFamily: "'Noto Sans KR', 'Noto Sans JP', system-ui, sans-serif"
@@ -279,9 +279,9 @@ components:
 
 ### Hierarchy
 - **Display** (900, 68px, 1.1, -0.03em): 메인 히어로 카드의 이름. 모바일 44px.
-- **Display Detail** (900, 60px, 1.12): 상세 히어로의 프로젝트 제목(`mtitle`). 중간 폭 48px, 모바일 36px.
+- **Display Detail** (900, 60px, 1.2): 상세 히어로의 프로젝트 제목(`mtitle`). 중간 폭 48px, 모바일 36px.
 - **Headline** (900, 48px, 1.2, -0.02em): 섹션 제목(경력·프로젝트·학력). 모바일 32px.
-- **Lead** (700, 26px, 1.4): 히어로 카드의 한 줄 소개. `text-wrap: pretty`.
+- **Lead** (700, 26px, 1.45): 히어로 카드의 한 줄 소개. `text-wrap: pretty`.
 - **Title L** (900, 32px): 대표 프로젝트 제목.
 - **Title** (700, 28px): 경력 카드의 회사명, 학력의 학교명, 상세의 "결과물 보기".
 - **Title S** (700, 24px): 일반 프로젝트 제목. 자격증·병역 이름은 22px, 상세 본문 카드 제목도 22px.
@@ -298,6 +298,8 @@ components:
 **The 900 Is Rare Rule.** 900 웨이트는 이름(히어로·내비·푸터), 섹션 제목, 대표 프로젝트 제목, 상세 히어로 제목에만 쓴다. 카드 제목까지 900이 되면 위계가 무너진다.
 
 **The One Bold Rule.** 문장 안 강조(`**…**` → `<strong>`)는 항목 하나에 최대 하나, 배경 없는 600 웨이트다. 액센트 면 위에서는 둘레 굵기를 따라간다.
+
+**The Balanced Heading Rule.** 여러 줄로 접히는 제목(이름·섹션·회사·프로젝트·학교·자격증·상세 제목)은 `text-wrap: balance`로 줄 길이를 고르게 한다. 본문은 `text-wrap: pretty`. 큰 한글 제목은 받침이 닿지 않도록 행간 1.2 이상.
 
 **The Language Owns Line Breaks Rule.** `word-break: keep-all`은 `html[lang="ko"] body` 한 곳에만 둔다. 안전망으로 `body { overflow-wrap: break-word }`를 건다.
 
@@ -323,7 +325,7 @@ components:
   - 카드 순서는 `CARD_ORDER`가 정한다(ezZip · 아이센드 · MakeTApp · PC3D / Ez-Spool · 보운 ERP). 왼쪽 두 칸 열에 ezZip(2×2)과 Ez-Spool이 위아래로 놓인다. 상세 페이지의 번호와 이전·다음은 `PROJECTS` 순서를 따른다.
   - 가로형(`span: 2`): 2열 미디어 카드, 왼쪽에 220px 이미지.
   - 칸 수는 `PROJECTS[].span / rows`가 정하고 CSS는 `--span / --rows`만 읽는다.
-  - 카드는 기간 → 제목 ↗ → 개요(`intro`) → 태그. 성과는 노출하지 않는다. 누르면 상세 페이지가 열린다.
+  - 카드는 기간 → 제목 ↗ → 한 줄 요약(`summary`, 30~40자) → 태그. 긴 개요(`intro`)는 상세 01에만 둔다. 성과는 노출하지 않는다. 누르면 상세 페이지가 열린다.
 - **04 학력 · 자격 · 병역**: 4열. 학교마다 2열 카드("학력" 라벨 → 학교명 → 전공·학위 → 기간), 자격증은 1열씩("자격증" 라벨 → 이름 → 발급기관·취득일), 병역은 2열(같은 형식). 아이콘 타일은 쓰지 않는다.
 - **푸터**: 전체 폭 잉크 카드 하나, 섹션과 64px, 패딩 48px. 왼쪽에 이름(900, 40px) / "C# / .NET 개발자 · N년차"(`ink-text-soft`, N은 총 경력에서 계산) / GitHub ↗ · LinkedIn ↗ 잉크 알약. 오른쪽(오른쪽 정렬)에 "연락처" 라벨 / 이메일(Mail) + 복사 버튼 / 전화번호(18px, `ink-text-soft`) + 복사 버튼. 카드 아래 쟁반 위 오른쪽에 Space Grotesk 13px `muted`로 "최종 수정 YYYY.MM"만 둔다. 저작권 표기(© 연도 이름)는 뺐다(사용자 결정, 2026-09-25). 행동 유도(CTA) 문구는 쓰지 않는다.
 
