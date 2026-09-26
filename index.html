@@ -59,6 +59,7 @@ document.documentElement.style.colorScheme=t;})()</script>
   /* 글자·선 전용 액센트(상세 05 AI 제목·포커스 링). 다크의 옻칠 빨강은 어두운 바탕 위에서 2.6:1이라 같은 계열을 밝혀 쓴다(5.1:1). */
   --accent-line:light-dark(#2a45c7,#f05a5f);
   /* 바 뒤 흐림 덮개. 라이트는 회색 쟁반이 흰 카드 위에서 띠처럼 도드라져 옅게(25%·12%), 다크는 60%·35% 그대로. */
+  --glass:color-mix(in srgb,var(--surface) 72%,transparent);   /* 모바일 위 알약: 반투명 + 뒤 흐림 */
   --blur-tint-1:light-dark(color-mix(in srgb,var(--canvas) 25%,transparent),color-mix(in srgb,var(--canvas) 60%,transparent));
   --blur-tint-2:light-dark(color-mix(in srgb,var(--canvas) 12%,transparent),color-mix(in srgb,var(--canvas) 35%,transparent));
   --sans:'Noto Sans KR','Noto Sans JP',system-ui,-apple-system,sans-serif;
@@ -110,7 +111,8 @@ section[id],header[id]{scroll-margin-top:96px}
 
 /* ── page frame ─────────────────────────────────────────── */
 /* 1440 뷰포트에서 좌우 48px, 내용 폭 1344px */
-.page{max-width:1344px;margin:0 auto;padding:32px 48px 32px;display:flex;flex-direction:column;gap:16px}
+/* 아래 여백 26px: 푸터 아래(최종 수정 줄 간격 16 + 줄 높이 약 22 + 26)가 푸터 위(여백 48 + gap 16 = 64)와 같아지게(2026-09-26) */
+.page{max-width:1344px;margin:0 auto;padding:32px 48px 26px;display:flex;flex-direction:column;gap:16px}
 [data-main],[data-detail]{flex-direction:column;gap:16px}
 [data-detail]{display:flex}
 
@@ -193,10 +195,12 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 .contact-row{display:flex;align-items:center;justify-content:space-between;gap:4px;min-width:0;font-size:15px}
 .contact-row .copy-btn{margin-right:-10px}
 .contact-links{display:flex;gap:16px;margin-top:4px;font-size:15px;font-weight:500}
+.link-ico{display:none}
 .stack-card{grid-column:span 4}
 /* 핵심 스택만 알약으로 강조하고 나머지는 글자로 둔다. 전부 알약이면 카드가 쓸데없이 높아진다. */
 .stack-groups{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px 24px}
-.stack-g-label{margin-bottom:10px;font-size:14px;font-weight:500;color:var(--muted)}
+/* 묶음 제목은 카드 라벨(.label, 총 경력 등)과 같은 크기 — 카드 제목을 뺀 뒤 이것이 라벨 역할을 한다(2026-09-26) */
+.stack-g-label{margin-bottom:10px;font-size:15px;font-weight:500;line-height:1.4;color:var(--muted)}
 .stack-items{display:flex;flex-wrap:wrap;gap:4px 14px}
 .stack-items--core{gap:6px}
 .stack-item{font-size:15px;font-weight:500;line-height:1.6;color:var(--body)}
@@ -290,6 +294,16 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 .dt-pager .icon-btn:not(:disabled):hover{background:var(--surface-inset)}
 .dt-pager .icon-btn:disabled,.dt-pager .icon-btn:disabled:hover{background:var(--surface)}
 .dt-count{min-width:64px;text-align:center;font-size:15px;font-weight:500;color:var(--muted)}
+/* 데스크톱 상세: 켜진 "프로젝트" 잉크 칩이 오른쪽으로 늘어나 번호와 이전·다음을 품는다(시안 v3 B, 사용자 결정 2026-09-26).
+   칩(a)과 페이저(div)는 형제다 — 링크 안에 버튼을 넣을 수 없어서 두 조각을 이어 붙여 한 알약으로 보이게 한다.
+   화살표는 모바일 알약의 메뉴 버튼과 같은 옅은 동그라미. "← 메인으로" 줄은 없다 — 이름을 누르면 보던 카드로 돌아간다.
+   중간 폭·모바일은 이름이 안 보여서 본문 위 줄(.dt-bar)을 그대로 쓴다 */
+.nav-pager{display:none;align-items:center;gap:4px;height:44px;box-sizing:border-box;margin-left:-4px;padding:0 6px 0 0;border-radius:0 999px 999px 0;background:var(--ink);color:var(--ink-text)}
+.nav-pager .icon-btn{width:32px;height:32px;background:var(--surface-inset);color:var(--text)}
+.nav-pager .icon-btn:not(:disabled):hover{background:var(--hairline)}
+.nav-pager .icon-btn:disabled,.nav-pager .icon-btn:disabled:hover{background:var(--surface-inset);color:var(--text);opacity:.35}
+.bar-back{display:none}
+.nav-count{padding:0 8px 0 2px;font-size:13px;font-weight:500;color:var(--ink-text-soft);font-variant-numeric:tabular-nums}
 /* 결과물 보기 줄은 내용만큼 낮게(160px, 원래 199px의 4/5), 남는 높이는 정보·스택 줄이 받는다 */
 .dt-hero{grid-template-rows:1fr 160px}
 .dt-hero-card{grid-column:span 2;grid-row:span 2;min-height:460px;padding:48px;justify-content:space-between}
@@ -316,13 +330,18 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 
 /* 데스크톱은 명세의 px 값을 0.9배로 그린다. 브라우저 90% 배율이 적정 밀도였다(사용자 결정, 2026-09-25).
    토큰·명세는 100% 기준 그대로 두고 여기 한 곳에서만 줄인다. 모바일·중간 폭·인쇄는 원래 크기다. */
-@media screen and (min-width:1001px){.page{zoom:.9}}
+@media screen and (min-width:1001px){
+  .page{zoom:.9}
+  .dt-bar{display:none}
+  .nav-pager{display:flex}
+  .nav-ch.has-pager{border-radius:999px 0 0 999px;padding-right:12px}
+}
 
 /* ============================================================
    MID (721~1000px) — 2열. 히어로는 2열 × 1행.
    ============================================================ */
 @media (min-width:721px) and (max-width:1000px){
-  .page{padding:24px 24px 32px}
+  .page{padding:24px 24px 26px}
   .logo-btn{display:none}
   .nav{margin-right:auto}
   .bento,[data-projgrid],[data-edugrid]{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -332,6 +351,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .stack-card{grid-column:span 2}
   .stack-groups{grid-template-columns:repeat(2,minmax(0,1fr))}
   .dt-hero{grid-template-rows:none}
+  /* 결과물 칸은 링크가 없어도 있을 때와 같은 높이(사용자 지적, 2026-09-26) */
+  .dt-link{min-height:108px}
   .dt-title{font-size:48px}
 }
 
@@ -340,50 +361,56 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
    base 규칙과 같은 선택자를 쓰면 뒤에 오는 이 블록이 이긴다.
    ============================================================ */
 @media (max-width:720px){
-  /* 아래 여백은 알약(52px)+띄움(24px)+숨 쉴 틈 자리를 비워, 맨 끝까지 내리면 알약 뒤에 아무것도 없게 한다 */
-  .page{padding:12px 16px 104px;gap:12px}
+  /* 위 바(사용자 결정 2026-09-26 — 하단 알약 대체): 언어 3 · 테마 · 메뉴를 가운데 정렬로 둔다(알약과 같은 순서, 사용자 결정 2026-09-26).
+     이름은 없다 — 히어로가 보여 준다. 맨 위에서는 쟁반색 전체 폭 바(알약 바탕 없음), 스크롤하면 가운데 위 흰 알약이 된다.
+     iOS Safari 주소창이 아래에 있으므로 우리 바는 위로 올려 겹쳐 쌓이지 않게 한다. 위 여백은 바 높이(56px)만큼 비운다 */
+  /* 아래 26px: 푸터 아래(12 + 최종 수정 22 + 26)가 푸터 위(48 + 12 = 60)와 같아지게 */
+  .page{padding:71px 16px 26px;gap:12px}
   [data-main],[data-detail]{gap:12px}
-  section[id],header[id]{scroll-margin-top:16px}
-  /* 하단 떠 있는 알약: 오른쪽 아래에 내용 폭만큼(언어 3 · 테마 · 메뉴, 2026-09-26, 상단 바 대체). 이름은 히어로가 보여 준다.
-     transform을 쓰지 않는다 — 걸리면 안쪽 fixed 시트가 알약 기준으로 붙는다. */
-  /* zoom .9: 알약 전체를 10% 작게(사용자 결정, 2026-09-26). 버튼 타깃은 약 36px(40 × .9)이 된다. zoom이 위치값도 줄이므로 나눠서 실제 16·30px을 맞춘다 */
-  /* 닫힘·열림이 같은 틀을 쓴다: wrap·모서리 26(= 닫힌 높이 52의 절반이라 알약과 같은 모양)·gap 0을 항상 유지해,
-     열 때 폭이 gap만큼 늘거나 모서리가 바뀌며 움찔하지 않게 한다 */
-  [data-bar]{position:fixed;top:auto;bottom:calc(30px / .9);left:auto;right:calc(16px / .9);flex-wrap:wrap;gap:0;padding:6px;background:var(--surface);border-radius:26px;zoom:.9}
+  section[id],header[id]{scroll-margin-top:72px}
+  /* zoom .9: 하단 알약 시절과 같은 크기(버튼 약 36px, 사용자 결정 2026-09-26). zoom이 여백·위치도 줄이므로 나눠서 실제 px을 맞춘다 */
+  [data-bar]{position:fixed;top:0;left:0;right:0;z-index:20;flex-wrap:wrap;justify-content:center;gap:0;padding:calc(20px / .9) 0 0;background:var(--canvas);zoom:.9}
+  /* 바탕색 전환 애니메이션은 두지 않는다. 맨 위에서 메뉴를 열면 쟁반색 전체 폭 바가 반투명 알약으로 바뀌는데,
+     바탕이 서서히 바뀌는 동안 뒤가 비쳤다 가려졌다 하며 번쩍였다(사용자 지적, 2026-09-26) */
   .logo-btn,.nav,[data-bar] .tools-pdf{display:none}
   .tools{order:1;margin:0}
-  .icon-btn.menu-btn{display:inline-flex;order:2;margin-left:4px;background:var(--surface-inset)}
-  .menu-btn[aria-expanded="true"],.menu-btn[aria-expanded="true"]:hover{background:var(--ink);color:var(--ink-text)}
-  /* 여백 6 + 버튼 40 = 높이 52 그대로. 끝 버튼과 알약 테두리 사이 링이 가운데와 같은 두께로 고르게 보인다(2026-09-26) */
-  [data-bar] .icon-btn{width:40px;height:40px}
-  /* 내리는 동안은 알약을 화면 아래로 빼고(흐림도 함께 꺼짐), 올리면 돌려놓는다(사용자 결정, 2026-09-26). 키보드 포커스가 안에 있으면 숨기지 않는다 */
-  [data-bar]{transition:transform .28s cubic-bezier(.2,.8,.2,1)}
-  [data-bar].is-hidden{transform:translateY(calc(100% + 60px))}
-  /* 키보드 포커스만 붙잡는다. :focus-within이면 탭한 버튼에 남은 포커스 때문에 알약이 안 숨는다 */
-  [data-bar].is-hidden:has(:focus-visible){transform:none}
-  @media (prefers-reduced-motion:reduce){[data-bar]{transition:none}}
-  /* 메뉴: 알약 자체가 위로 늘어나 카드가 된다. 같은 챕터 마크업이 버튼 줄 위에 펼쳐진다.
-     열면 딤 대신 바 뒤 점진 흐림이 메뉴 카드 위까지 늘어난다(사용자 결정, 2026-09-26). */
-  /* 바깥을 누르면 닫히도록 화면 전체를 받는 투명 층. 어둡게 하지 않는다 — 대신 아래 흐림이 메뉴 위까지 넓어진다 */
+  /* 메뉴 버튼 바탕(surface-inset)은 흰 알약일 때만 둔다. 맨 위 쟁반색 바에서는 라이트에서 바탕과 같은 색이라 안 보이고
+     다크에서만 도드라져, 두 테마가 달라 보였다(사용자 지적, 2026-09-26) */
+  .icon-btn.menu-btn{display:inline-flex;order:2;margin-left:4px}
+  [data-bar].is-pill .icon-btn.menu-btn{background:var(--surface-inset)}
+  /* 열린 메뉴의 × 버튼은 닫힌 메뉴 버튼과 같은 옅은 바탕을 쓴다. 잉크로 칠하면 켜진 언어 버튼과 같은 모양이 되고,
+     다크에서는 밝은 동그라미로 뒤집혀 보였다(사용자 지적, 2026-09-26) */
+  /* 버튼 34px(× .9 ≈ 31px)·글리프 14px, 알약 안쪽 여백 10px — 알약 안을 더 여유 있게(사용자 결정, 2026-09-26) */
+  [data-bar] .icon-btn{width:34px;height:34px;font-size:13px}
+  [data-bar] .icon-btn--ko{font-size:15px}
+  [data-bar] .icon-btn svg{width:14px;height:14px}
+  /* 버튼 줄은 화면 위·히어로에서 20px(사용자 지적, 2026-09-26). 스크롤하거나 메뉴를 열면 흰 알약: 위 11px(= 20 − 안쪽 여백 10 × .9),
+     가로는 margin:auto로 가운데에 둬(transform 없이),
+     바 ↔ 알약이 바뀔 때 버튼이 위아래·옆 어느 쪽으로도 움직이지 않게 한다(바탕만 바뀐다).
+     모서리 27 = 닫힌 높이 54의 절반. 메뉴는 맨 위에서도 항상 알약이 늘어난 카드로 연다(전체 폭 판은 쓰지 않는다, 사용자 결정 2026-09-26) */
+  /* 알약은 반투명 유리: 뒤 내용을 흐리게 비추고, 헤어라인 한 줄로 가장자리를 긋는다(사용자 결정, 2026-09-26).
+     테두리는 크기가 변하지 않게 안쪽 box-shadow로 긋는다 — border면 버튼이 1px 밀린다.
+     폭이 화면의 80%보다 좁고 위에서 떨어져 있어 iOS Safari 26의 툴바 칠하기 대상이 아니다 */
+  [data-bar].is-pill{top:calc(11px / .9);width:max-content;margin:0 auto;padding:10px;background:var(--glass);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);box-shadow:inset 0 0 0 1px var(--hairline);border-radius:27px}
+  /* 메뉴: 같은 챕터 마크업이 알약 버튼 줄 아래로 펼쳐진다. 바깥(투명 층)을 누르면 닫힌다 */
   .menu-scrim{display:block;position:fixed;inset:0;z-index:19}
-  /* width:0 + min-width:100%: 목록이 알약 폭을 넓히지 않고 버튼 줄 폭을 그대로 따른다 */
-  [data-bar].is-open .nav{display:flex;order:0;width:0;min-width:100%;flex-direction:column;align-items:stretch;gap:2px;padding:4px 0 8px}
-  /* 카드 모서리 26 − 안쪽 여백 6 = 20: 켜진 챕터 모서리가 카드 모서리와 같은 곡선을 그린다 */
-  .nav-ch{height:48px;padding:0 16px;border-radius:20px;font-size:18px;font-weight:500}
-  /* PDF 저장은 알약이 아니라 메뉴 안 마지막 줄(사용자 결정, 2026-09-26) */
-  .menu-pdf{display:flex;align-items:center;gap:10px;height:48px;padding:0 16px;border:0;border-radius:20px;background:transparent;color:var(--text);font-size:16px;font-weight:500;cursor:pointer}
-  /* 바 뒤 흐림도 아래로: 알약 뒤에 겹치는 내용이 있을 때 아래에서 위로 풀리는 세 겹 흐림 */
-  .bar-blur{top:auto;bottom:0;height:190px;transition:opacity .2s,height .25s cubic-bezier(.2,.8,.2,1)}
-  .bar-blur.is-open{opacity:1;height:520px}
-  @media (prefers-reduced-motion:reduce){.bar-blur{transition:none}}
-  .blur-tint{background:linear-gradient(to top,var(--blur-tint-1),var(--blur-tint-2) 45%,transparent);-webkit-mask-image:linear-gradient(to top,#000 60%,transparent 100%);mask-image:linear-gradient(to top,#000 60%,transparent 100%)}
-  .bar-blur::before{-webkit-mask-image:linear-gradient(to top,#000 45%,transparent 85%);mask-image:linear-gradient(to top,#000 45%,transparent 85%)}
-  .bar-blur::after{-webkit-mask-image:linear-gradient(to top,#000 25%,transparent 65%);mask-image:linear-gradient(to top,#000 25%,transparent 65%)}
+  /* width:0 + min-width:100%: 알약일 때 목록이 알약 폭을 넓히지 않고 버튼 줄 폭을 따른다 */
+  [data-bar].is-open .nav{display:flex;order:3;width:0;min-width:100%;flex-direction:column;align-items:stretch;gap:2px;padding:8px 0 0}
+  /* 알약 모서리 27 − 안쪽 여백 10 = 17: 켜진 챕터 모서리가 알약 모서리와 같은 곡선 */
+  .nav-ch{height:44px;padding:0 14px;border-radius:17px;font-size:16px;font-weight:500}
+  /* PDF 저장은 바가 아니라 메뉴 안 마지막 줄(사용자 결정, 2026-09-26) */
+  .menu-pdf{display:flex;align-items:center;gap:10px;height:44px;padding:0 14px;border:0;border-radius:17px;background:transparent;color:var(--text);font-size:15px;font-weight:500;cursor:pointer}
+  /* 바 뒤 흐림은 모바일에서 뺀다. iOS Safari 26은 화면 끝에 붙은 전체 폭 fixed 층을 보고 주소창 자리를 단색 띠로 칠한다(2026-09-26) */
+  .bar-blur{display:none}
 
   /* 반반 섞기(M1, 2026-09-26): 벤토는 2열. 글이 긴 카드(히어로·스택·2칸 프로젝트·학교·병역·상세 히어로·결과물)는 전체 폭,
      짧은 카드(총 경력·연락처·1칸 프로젝트·자격증·기간·기술 스택)만 반씩 나란히. 경력·수치 카드는 1열. 글자 크기는 줄이지 않는다 */
   .bento,[data-projgrid],[data-edugrid]{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .career-grid,.dt-stats{grid-template-columns:minmax(0,1fr);gap:12px}
+  .career-grid{grid-template-columns:minmax(0,1fr);gap:12px}
+  /* 상세 성과 수치: 총 경력 카드처럼 반 칸씩 2열, 숫자 32px. 홀수면 마지막만 전체 폭(사용자 결정, 2026-09-26) */
+  .dt-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .dt-stat.is-wide{grid-column:span 2}
+  .dt-stat-v{font-size:32px}
   [data-projgrid]{grid-template-rows:none}
   .hero-card,.stack-card,.dt-hero-card,.dt-link{grid-column:span 2;grid-row:auto}
   .proj-card,.edu-card,.svc-card,.dt-side{grid-row:auto}
@@ -394,60 +421,78 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   /* 한 줄 소개의 두 번째 문장(인라이플·ezZip)은 빼고, 그 자리를 이름 아래 간격으로 돌려
      카드 크기는 그대로 둔 채 글을 아래로 내린다. 빠진 줄 수는 390px 기준 한·영 3줄, 일 2줄(사용자 결정, 2026-09-26) */
   .hero-card{min-height:0;padding:40px 32px;gap:40px}
-  .hero-name{font-size:44px}
-  .hero-lead{font-size:20px;margin-top:calc(20px + 3lh)}
+  .hero-name{font-size:36px}
+  .hero-lead{font-size:18px;margin-top:calc(20px + 3lh)}
   html[lang="ja"] .hero-lead{margin-top:calc(20px + 2lh)}
-  .hero-sub{font-size:15px;margin-top:18px}
+  .hero-sub{font-size:14px;margin-top:16px}
   .lead-more{display:none}
-  .stat-v{font-size:64px}
-  /* 반 칸 연락처: 값 대신 메일·전화 아이콘 버튼(누르면 복사), 링크는 두 줄 */
+  .stat-v{font-size:48px}
+  .stat-u{font-size:20px}
+  /* 반 칸 연락처: 값 대신 동그라미 아이콘 — 메일·전화는 누르면 복사, GitHub·LinkedIn은 링크(2026-09-26) */
   .contact-list{flex-direction:row;flex-wrap:wrap;gap:8px}
   .contact-row .dat{display:none}
   .contact-card .contact-row .copy-btn{width:44px;height:44px;margin:0;background:var(--ink-inset);color:var(--ink-text)}
   .contact-card .copy-ico{display:none}
   .contact-card .type-ico{display:block;width:18px;height:18px}
-  .contact-links{width:100%;flex-direction:column;gap:0;margin-top:4px}
-  .contact-links a{display:inline-flex;align-items:center;min-height:40px}
+  .contact-links{gap:8px;margin:0}
+  .contact-links a{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--ink-inset);color:var(--ink-text)}
+  .link-txt{display:none}
+  .link-ico{display:block;width:18px;height:18px}
   .stack-groups{grid-template-columns:minmax(0,1fr)}
 
   .sec-head{padding:40px 8px 4px}
-  .sec-title{font-size:32px}
+  .sec-title{font-size:26px}
   .career-card{min-height:0;padding:24px}
-  .co-name{font-size:24px}
-  .co-item,.dt-item{font-size:15px}
+  .co-name{font-size:20px}
+  .co-item,.dt-item{font-size:14px}
 
   .proj-card[data-kind="tall"]{min-height:0}
-  .proj-card[data-kind="feature"],.proj-card[data-kind="wide"]{display:flex;padding:12px}
+  .proj-card[data-kind="feature"]{display:flex;padding:12px}
   .proj-card[data-kind="feature"] .pc-img{height:220px}
-  /* 가로형 이미지는 설명 아래로 내린다 */
-  .proj-card[data-kind="wide"] .pc-img{order:2;height:180px}
-  .proj-card[data-kind="feature"] .pc-text,.proj-card[data-kind="wide"] .pc-text{padding:12px}
-  .proj-card[data-kind="feature"] .pc-title{font-size:26px}
-  .pc-title{font-size:21px}
-  .pc-blurb{font-size:15px}
+  .proj-card[data-kind="feature"] .pc-text{padding:12px}
+  /* 가로형은 제목 왼쪽 썸네일(사용자 결정 2026-09-26). 대표만 위에 큰 이미지를 둔다.
+     썸네일(폭 120px)은 날짜~설명 높이만큼 늘리고, 기술 태그 줄은 그 아래 카드 전체 폭으로 내린다.
+     .pc-text를 display:contents로 풀어 안쪽 요소를 카드 격자에 직접 놓는다. 썸네일에는 "이미지 준비 중" 글자를 넣지 않는다 */
+  .proj-card[data-kind="wide"]{grid-template-columns:120px minmax(0,1fr);column-gap:14px;row-gap:10px;align-items:start;padding:20px 18px}
+  .proj-card[data-kind="wide"] .pc-text{display:contents}
+  .proj-card[data-kind="wide"] .pc-img{grid-column:1;grid-row:1 / 4;align-self:stretch;height:auto;border-radius:14px}
+  .proj-card[data-kind="wide"] .pc-date,.proj-card[data-kind="wide"] .pc-title,.proj-card[data-kind="wide"] .pc-blurb{grid-column:2}
+  .proj-card[data-kind="wide"] .pc-tags{grid-column:1 / -1;margin:0;padding-top:6px}
+  .proj-card[data-kind="wide"] .cap{display:none}
+  /* 모바일 카드 제목 끝의 ↗는 뺀다 — 카드 전체가 눌리는 면이라 없어도 된다(사용자 결정, 2026-09-26) */
+  .pc-arrow{display:none}
+  .proj-card[data-kind="feature"] .pc-title{font-size:22px}
+  .pc-title{font-size:18px}
+  .pc-blurb{font-size:14px}
   .proj-card:has(.pc-btn:focus-visible){outline-offset:-2px}
-  .school-name{font-size:22px}
-  .cert-name{font-size:20px}
+  .school-name{font-size:18px}
+  .cert-name{font-size:17px}
 
-  [data-footer]{margin-top:24px;flex-direction:column;align-items:stretch;padding:28px 24px;gap:28px}
-  .foot-name{font-size:32px}
+  /* 푸터는 데스크톱처럼 위 콘텐츠에서 띄운다(margin 48 + page gap 12 = 60px, 사용자 결정 2026-09-26) */
+  [data-footer]{margin-top:48px;flex-direction:column;align-items:stretch;padding:28px 24px;gap:28px}
+  .foot-name{font-size:28px}
   .foot-right{align-items:flex-start;text-align:left}
   .foot-row{justify-content:space-between;width:100%}
-  .foot-mail{font-size:20px}
-  .foot-note{justify-content:flex-start;padding:0 8px}
+  .foot-mail{font-size:17px}
+  .foot-note{padding:0 8px}
 
-  .dt-bar{gap:8px}
+  /* 상세(사용자 결정 2026-09-26): 본문 위 "메인으로"·페이저 줄 대신 위 바 맨 앞에 ←(바탕 없음).
+     모바일에서는 이전·다음 넘기기를 두지 않는다 — 메인으로 돌아가 다른 카드를 고른다 */
+  .dt-bar{display:none}
+  [data-bar] .bar-back{display:inline-flex;margin-right:6px}
   .dt-back{padding:0 16px 0 12px}
   .dt-count{min-width:48px}
   .dt-hero{grid-template-rows:none}
   .dt-hero-card{min-height:0;padding:28px 24px;gap:32px}
-  .dt-title{font-size:36px}
-  .dt-blurb{font-size:16px}
-  .dt-link-t{font-size:22px}
+  .dt-title{font-size:30px}
+  .dt-blurb{font-size:15px}
+  .dt-link-t{font-size:19px}
+  /* 결과물 칸은 링크가 없어도 있을 때와 같은 높이(사용자 지적, 2026-09-26) */
+  .dt-link{min-height:92px}
   .dt-media{padding:12px}
   .dt-media .pc-img{height:220px}
-  .dt-sec-h{font-size:19px}
-  .dt-text{font-size:15px}
+  .dt-sec-h{font-size:17px}
+  .dt-text{font-size:14px}
 }
 @media print{
   :root{color-scheme:light only}
@@ -486,9 +531,17 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   <nav class="nav" id="bar-nav">
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
       <a href="{{ n.href }}" onClick="{{ n.go }}" class="nav-ch {{ n.cls }}" aria-current="{{ n.cur }}">{{ n.label }}</a>
+      <sc-if value="{{ n.pager }}">
+        <div class="nav-pager">
+          <span class="dat nav-count" aria-live="polite">{{ n.pagePos }}</span>
+          <button onClick="{{ n.goPrev }}" disabled="{{ n.noPrev }}" aria-label="{{ n.prevLabel }}" title="{{ n.prevLabel }}" class="icon-btn"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 2.5L4 7l4.5 4.5"></path></svg></button>
+          <button onClick="{{ n.goNext }}" disabled="{{ n.noNext }}" aria-label="{{ n.nextLabel }}" title="{{ n.nextLabel }}" class="icon-btn"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 2.5L10 7l-4.5 4.5"></path></svg></button>
+        </div>
+      </sc-if>
     </sc-for>
     <button type="button" onClick="{{ doPrint }}" class="menu-pdf"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8m-3-3 3 3 3-3M2.5 10.5v3h11v-3"></path></svg>{{ pdfLabel }}</button>
   </nav>
+  <sc-if value="{{ inDetail }}"><button type="button" onClick="{{ backToMain }}" aria-label="{{ backLabel }}" title="{{ backLabel }}" class="icon-btn bar-back"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8H3m4-4.5L2.5 8 7 12.5"></path></svg></button></sc-if>
   <div class="tools" id="bar-tools">
     <div class="tools-lang" role="group" aria-label="{{ langLabel }}">
       <button onClick="{{ setKo }}" aria-label="한국어" title="한국어" aria-pressed="{{ lk.pressed }}" class="icon-btn icon-btn--ko {{ lk.cls }}">ㅎ</button>
@@ -534,19 +587,20 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
             <sc-if value="{{ c.copied }}"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-6"></path></svg></sc-if>
             <sc-if value="{{ c.idle }}"><svg class="copy-ico" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="7.5" height="7.5" rx="1.5"></rect><path d="M9.5 4.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.5"></path></svg></sc-if>
             <sc-if value="{{ c.idleMail }}"><svg class="type-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3.5" width="12" height="9" rx="1.5"></rect><path d="M2.5 4.5 8 9l5.5-4.5"></path></svg></sc-if>
-            <sc-if value="{{ c.idlePhone }}"><svg class="type-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 2.5h-2a1 1 0 0 0-1 1C2.5 9 7 13.5 12.5 13.5a1 1 0 0 0 1-1v-2l-3-1-1.5 1.5a8 8 0 0 1-3.5-3.5L7 6.5l-1-3Z"></path></svg></sc-if>
+            <sc-if value="{{ c.idlePhone }}"><svg class="type-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg></sc-if>
           </button>
         </div>
       </sc-for>
       <div class="dat contact-links">
-        <a href="https://github.com/jjang010103" target="_blank" rel="noopener">GitHub &#8599;</a>
-        <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener">LinkedIn &#8599;</a>
+        <a href="https://github.com/jjang010103" target="_blank" rel="noopener" aria-label="GitHub"><svg class="link-ico" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg><span class="link-txt">GitHub &#8599;</span></a>
+        <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="link-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"></path></svg><span class="link-txt">LinkedIn &#8599;</span></a>
       </div>
     </div>
   </div>
 
   <div class="card stack-card">
-    <div class="label"><span data-l="ko">기술 스택</span><span data-l="en">Tech stack</span><span data-l="ja">技術スタック</span></div>
+    <!-- 카드 라벨은 화면에서 뺐다 — 첫 묶음 "핵심 스택"이 라벨 역할을 한다. 스크린리더에는 남긴다(사용자 결정, 2026-09-26) -->
+    <div class="vh"><span data-l="ko">기술 스택</span><span data-l="en">Tech stack</span><span data-l="ja">技術スタック</span></div>
     <div class="stack-groups">
       <sc-for list="{{ stackGroups }}" as="g" hint-placeholder-count="4">
         <div>
@@ -674,7 +728,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 
     <div class="bento dt-hero">
       <div class="card card--accent dt-hero-card" data-accent data-inverted>
-        <div class="dat label">PROJECT {{ p.num }} · {{ p.co }}</div>
+        <div class="dat label">{{ projectWord }} {{ p.num }} · {{ p.co }}</div>
         <div>
           <h1 class="dt-title" id="dt-title" tabindex="-1">{{ p.mtitle }}</h1>
           <p class="dt-blurb">{{ p.blurb }}</p>
@@ -707,7 +761,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
     <sc-if value="{{ p.hasStats }}">
       <div class="dt-stats">
         <sc-for list="{{ p.stats }}" as="k" hint-placeholder-count="3">
-          <div class="card dt-stat"><span class="dat dt-stat-v">{{ k.v }}</span><span class="label">{{ k.k }}</span></div>
+          <div class="card dt-stat {{ k.cls }}"><span class="dat dt-stat-v">{{ k.v }}</span><span class="label">{{ k.k }}</span></div>
         </sc-for>
       </div>
     </sc-if>
@@ -725,6 +779,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
         </section>
       </sc-for>
     </div>
+
 
   </article>
 </sc-for>
@@ -763,9 +818,9 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 
 const STACK = [
   { label: { ko: '핵심 스택', en: 'Core', ja: 'コア' },
-    items: ['C#', '.NET 8', 'WPF', 'Avalonia UI', 'MVVM'] },
+    items: ['C#', '.NET 8+', 'WPF', 'Avalonia UI', 'MVVM', 'Native AOT'] },
   { label: { ko: '플랫폼 · 네이티브', en: 'Platform & native', ja: 'プラットフォーム・ネイティブ' },
-    items: ['Native AOT', 'COM Interop', 'C++ / VC++', 'Win32 API', 'WiX Toolset', 'MSIX', 'WinForm', 'Xamarin'] },
+    items: ['COM Interop', 'C++ / VC++', 'Win32 API', 'WiX Toolset', 'MSIX', 'WinForm', 'Xamarin'] },
   { label: { ko: '백엔드 · 데이터', en: 'Backend & data', ja: 'バックエンド・データ' },
     items: ['Java', 'Spring Boot', 'MyBatis', 'REST API', 'MSSQL', 'MariaDB', 'ASP.NET', 'WCF'] },
   { label: { ko: '도메인 · 툴', en: 'Domain & tools', ja: 'ドメイン・ツール' },
@@ -1058,8 +1113,8 @@ const PROJECTS = [
     id: 'mobile', span: 1,
     co: CO.huen, date: '2020.01 — 2020.06',
     url: '',
-    title: { ko: '보운이피씨 자재관리 ERP 모바일 앱', en: 'Bowoon EPC — materials management app', ja: 'ボウンEPC 資材管理モバイルアプリ' },
-    mtitle: { ko: '보운이피씨 자재관리 ERP 모바일 앱', en: 'Bowoon EPC — Materials Management ERP App', ja: 'ボウンEPC 資材管理ERPモバイルアプリ' },
+    title: { ko: '자재관리 ERP 모바일 앱', en: 'Materials management app', ja: '資材管理モバイルアプリ' },
+    mtitle: { ko: '자재관리 ERP 모바일 앱', en: 'Materials Management ERP App', ja: '資材管理ERPモバイルアプリ' },
     blurb: {
       ko: '윈도우 ERP의 핵심 자재 수불 및 물류 관리 기능을 모바일로 이식한 크로스플랫폼 솔루션. Xamarin·MVVM 아키텍처부터 FCM 푸시까지 100% 단독 개발.',
       en: 'Cross-platform mobile app porting desktop ERP materials logistics. Solely engineered end-to-end (100%) from Xamarin/MVVM architecture to FCM push.',
@@ -1133,6 +1188,7 @@ const T = {
   home: { ko: '맨 위로', en: 'Back to top', ja: 'ページ先頭へ' },
   menuOpen: { ko: '메뉴 열기', en: 'Open menu', ja: 'メニューを開く' },
   menuClose: { ko: '메뉴 닫기', en: 'Close menu', ja: 'メニューを閉じる' },
+  project: { ko: '프로젝트', en: 'PROJECT', ja: 'プロジェクト' },
   prev: { ko: '이전 프로젝트', en: 'Previous project', ja: '前のプロジェクト' },
   next: { ko: '다음 프로젝트', en: 'Next project', ja: '次のプロジェクト' },
   back: { ko: '메인으로', en: 'Back to main', ja: 'メインへ' },
@@ -1160,7 +1216,7 @@ const routeId = () => {
 };
 
 class Component extends DCLogic {
-  state = { lang: 'ko', theme: 'light', openId: null, copied: '', navIdx: 0, scrolled: false, menuOpen: false, pillHidden: false };
+  state = { lang: 'ko', theme: 'light', openId: null, copied: '', navIdx: 0, scrolled: false, menuOpen: false };
 
   componentDidMount() {
     let theme = null, lang = null;
@@ -1223,9 +1279,9 @@ class Component extends DCLogic {
     const keys = NAV.map(n => n.id);
     const bar = document.querySelector('[data-bar]');
     // sticky 바는 top 여백만큼 내려와 있다. 높이가 아니라 아랫변을 기준으로 잡아야 scroll-margin과 맞는다.
-    // 모바일은 바가 화면 아래에 떠 있으므로 위쪽 가림이 없다.
+    // 모바일 위 바가 숨으면 아랫변이 화면 위로 나가 가림이 없다.
     const r = bar && bar.getBoundingClientRect();
-    const barB = !r ? 84 : r.top > window.innerHeight / 2 ? 0 : r.bottom;
+    const barB = r ? Math.max(0, r.bottom) : 84;
     const sy = window.scrollY || 0;
     const top = sy + barB + 24;
     if ((document.documentElement.scrollHeight || 0) <= window.innerHeight + 1) return 0;
@@ -1250,21 +1306,9 @@ class Component extends DCLogic {
     if (this._vtBusy) return;
     const next = this.activeChapter();
     if (next !== this.state.navIdx) this.setState({ navIdx: next });
-    // 흐림: 데스크톱은 스크롤하면(위 바 뒤), 모바일은 맨 끝이 아니면(아래 알약 뒤에 내용이 겹칠 때) 켠다.
-    const sy = window.scrollY || 0;
-    const maxY = Math.max(0, (document.documentElement.scrollHeight || 0) - window.innerHeight);
-    const mobile = window.matchMedia && window.matchMedia('(max-width:720px)').matches;
-    const scrolled = mobile ? maxY - sy > 2 : sy > 4;
+    // 스크롤하면 데스크톱은 위 바 뒤 흐림을 켜고, 모바일은 위 바가 알약이 된다(모바일은 CSS가 흐림 층을 뺀다).
+    const scrolled = (window.scrollY || 0) > 4;
     if (scrolled !== this.state.scrolled) this.setState({ scrolled });
-    // 모바일 알약: 내리면 숨고 올리면 나온다. 방향이 8px 넘게 바뀔 때만 뒤집는다.
-    // 맨 위·맨 끝·메뉴가 열려 있을 때는 항상 보인다.
-    const last = this._lastY == null ? sy : this._lastY;
-    let hide = this.state.pillHidden;
-    if (!mobile || this.state.menuOpen || sy < 40 || maxY - sy <= 2) hide = false;
-    else if (sy > last + 8) hide = true;
-    else if (sy < last - 8) hide = false;
-    if (this._lastY == null || Math.abs(sy - last) > 8 || !mobile) this._lastY = sy;
-    if (hide !== this.state.pillHidden) this.setState({ pillHidden: hide });
   }
 
   goTo = (id) => {
@@ -1456,13 +1500,19 @@ class Component extends DCLogic {
         kind: (p.rows || 1) > 1 ? 'feature' : (p.span || 1) > 1 ? 'wide' : 'tall',
         cls: p.ink ? 'card--ink' : '', inverted: p.ink ? '' : null,
         hasStats: !!(p.stats && p.stats.length),
-        stats: (p.stats || []).map(k => ({ v: t(k.v), k: t(k.k) })),
+        // 모바일 반 칸 2열에서 수가 홀수면 마지막 카드만 전체 폭(is-wide)
+        stats: (p.stats || []).map((k, i, a) => ({ v: t(k.v), k: t(k.k), cls: a.length % 2 && i === a.length - 1 ? 'is-wide' : '' })),
         flow
       };
     };
 
     const openIdx = PROJECTS.findIndex(p => p.id === this.state.openId);
     const months = careerMonths();
+    const pager = openIdx >= 0;
+    const contacts = CONTACTS.map(c => ({ value: c.value, footCls: c.footCls, label: t(c.label),
+      copy: () => this.copyText(c.value, c.key),
+      copied: this.state.copied === c.key, idle: this.state.copied !== c.key,
+      idleMail: this.state.copied !== c.key && c.key === 'email', idlePhone: this.state.copied !== c.key && c.key === 'phone' }));
 
     return {
       lk: lang === 'ko' ? on : off,
@@ -1472,7 +1522,8 @@ class Component extends DCLogic {
       langLabel: t(T.lang),
       pdfLabel: t(T.pdf),
       liveMsg: this.state.copied ? t(CONTACTS.find(c => c.key === this.state.copied).done) : '',
-      homeLabel: t(T.home),
+      // 상세에서 이름은 "메인으로"와 같다 — 보던 카드 자리로 돌아가 그 카드에 포커스(사용자 결정, 2026-09-26)
+      homeLabel: t(this.state.openId ? T.back : T.home),
       // 연차는 채운 햇수의 다음 해다(공백 제외): 7년 10개월 → 8년차
       careerYears: Math.floor(months / 12) + 1,
       roleLine: t(T.role).replace('{n}', Math.floor(months / 12) + 1),
@@ -1484,14 +1535,16 @@ class Component extends DCLogic {
       noNext: openIdx < 0 || openIdx >= total - 1,
       goPrev: () => this.step(-1),
       goNext: () => this.step(1),
+      inDetail: !!this.state.openId,
+      projectWord: t(T.project),
       backToMain: () => this.closeDetail(),
       backLabel: t(T.back),
       periodLabel: t(T.period),
       stackLabel: t(T.stack),
       resultLabel: t(T.result),
       themeIcon: dark ? 'rotate(180deg)' : 'rotate(0deg)',
-      blurCls: (this.state.scrolled && !this.state.pillHidden ? 'is-on' : '') + (this.state.menuOpen ? ' is-open' : ''),
-      barCls: this.state.menuOpen ? 'is-open' : this.state.pillHidden ? 'is-hidden' : '',
+      blurCls: (this.state.scrolled ? 'is-on' : '') + (this.state.menuOpen ? ' is-open' : ''),
+      barCls: (this.state.scrolled || this.state.menuOpen ? 'is-pill' : '') + (this.state.menuOpen ? ' is-open' : ''),
       toggleMenu: this.toggleMenu,
       closeMenuClick: () => this.closeMenu(),
       menuOpen: this.state.menuOpen, menuClosed: !this.state.menuOpen,
@@ -1499,7 +1552,14 @@ class Component extends DCLogic {
       menuLabel: t(this.state.menuOpen ? T.menuClose : T.menuOpen),
       navItems: NAV.map((n, i) => ({ label: t(n.label), href: '#s-' + n.id,
         go: (e) => { e.preventDefault(); this.closeMenu(); if (this.state.openId) this.closeDetail('s-' + n.id); else this.goTo('s-' + n.id); },
-        cls: i === this.state.navIdx ? 'is-on' : '', cur: i === this.state.navIdx ? 'true' : null })),
+        cls: (i === this.state.navIdx ? 'is-on' : '') + (pager && i === PROJ_NAV ? ' has-pager' : ''), cur: i === this.state.navIdx ? 'true' : null,
+        // 상세에서는 켜진 "프로젝트" 칩 옆에 페이저가 붙는다(데스크톱만 CSS로 보인다)
+        pager: pager && i === PROJ_NAV,
+        pagePos: pager ? pad(openIdx + 1) + ' / ' + pad(total) : '',
+        noPrev: openIdx <= 0, noNext: openIdx < 0 || openIdx >= total - 1,
+        prevLabel: openIdx > 0 ? t(T.prev) + ': ' + t(PROJECTS[openIdx - 1].title) : t(T.prev),
+        nextLabel: openIdx >= 0 && openIdx < total - 1 ? t(T.next) + ': ' + t(PROJECTS[openIdx + 1].title) : t(T.next),
+        goPrev: () => this.step(-1), goNext: () => this.step(1) })),
       stackGroups: STACK.map((g, i) => ({ label: t(g.label), items: g.items, cls: i === 0 ? 'stack-items--core' : '' })),
       schoolLabel: t(EDU.school.label),
       schools: EDU.school.items.map(it => ({ school: t(it.school), major: t(it.major), period: it.period })),
@@ -1518,7 +1578,7 @@ class Component extends DCLogic {
       toggleTheme: this.toggleTheme,
       doPrint: () => { this.closeMenu(); window.print(); },
       open: this.open,
-      toTop: () => { this.closeMenu(); if (this.state.openId) this.closeDetail('s-intro'); else this.goTo('s-intro'); },
+      toTop: () => { this.closeMenu(); if (this.state.openId) this.closeDetail(); else this.goTo('s-intro'); },
       // 건너뛰기 링크의 #s-career가 해시 라우팅을 건드리지 않도록 직접 포커스를 옮긴다
       skip: (e) => {
         e.preventDefault();
@@ -1528,10 +1588,7 @@ class Component extends DCLogic {
         el.focus();
       },
       // 연락처는 프로필 잉크 카드와 푸터 두 곳에서 같은 목록을 돈다. 값은 링크 없이 텍스트 + 복사 버튼.
-      contacts: CONTACTS.map(c => ({ value: c.value, footCls: c.footCls, label: t(c.label),
-        copy: () => this.copyText(c.value, c.key),
-        copied: this.state.copied === c.key, idle: this.state.copied !== c.key,
-        idleMail: this.state.copied !== c.key && c.key === 'email', idlePhone: this.state.copied !== c.key && c.key === 'phone' })),
+      contacts,
     };
   }
 }
