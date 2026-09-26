@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>장민규</title>
+<!-- 파비콘: 오른쪽 위로 비킨 강조색 원 + 아래 수평선(라이트 파랑·다크 빨강). 사이트 테마 버튼을 따라 라이트/다크 파일을 바꿔 끼운다(부트 스크립트·applyTheme) -->
+<link rel="icon" type="image/svg+xml" href="./favicon-light.svg" id="favicon">
 <!-- 부트스트랩(테마/언어/제목)은 반드시 실제 <head>에 둔다.
      helmet 안에 두면 프레임워크가 <title>을 관리 대상으로 삼아
      매 렌더마다 정적 제목으로 되돌리고, 테마 적용도 첫 페인트보다 늦어진다. -->
@@ -12,7 +14,8 @@ window.NAMES={ko:'장민규',en:'Min-gyu Jang',ja:'チャン・ミンギュ'};
 document.documentElement.lang=l||'ko';
 document.title=window.NAMES[document.documentElement.lang];
 if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
-document.documentElement.style.colorScheme=t;})()</script>
+document.documentElement.style.colorScheme=t;
+var f=document.getElementById('favicon');if(f)f.href='./favicon-'+t+'.svg';})()</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -487,8 +490,16 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .dt-title{font-size:30px}
   .dt-blurb{font-size:15px}
   .dt-link-t{font-size:19px}
-  /* 결과물 칸은 링크가 없어도 있을 때와 같은 높이(사용자 지적, 2026-09-26) */
-  .dt-link{min-height:92px}
+  /* 상세 히어로 아래: 기간 · 결과물 보기를 반 칸씩 한 줄, 기술 스택은 그 아래 전체 폭 한 줄(사용자 결정, 2026-09-26).
+     결과물 칸은 링크가 없어도 있을 때와 같은 높이 — 옆 기간 카드와 한 줄이라 줄 높이를 함께 쓴다 */
+  .dt-hero .dt-link{grid-column:span 1;flex-direction:column;align-items:flex-start;justify-content:space-between}
+  /* 반 칸(안쪽 137px)에서 "공식 웹사이트 ↗"가 두 줄로 꺾이지 않게 알약을 한 단계 작게 */
+  .dt-hero .card.dt-link{padding:20px 18px}
+  .dt-hero .dt-link .ink-pill{padding:0 14px;font-size:14px;white-space:nowrap}
+  html[lang="en"] .dt-hero .dt-link .ink-pill{padding:0 10px;font-size:13px}
+  .dt-hero .dt-side--stack{grid-column:span 2;order:1}
+  /* 기간·결과물 보기는 정사각형 반 칸(사용자 결정, 2026-09-26) */
+  .dt-hero .dt-side:not(.dt-side--stack),.dt-hero .dt-link{aspect-ratio:1}
   .dt-media{padding:12px}
   .dt-media .pc-img{height:220px}
   .dt-sec-h{font-size:17px}
@@ -738,7 +749,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
         <div class="label">{{ periodLabel }}</div>
         <div class="dat dt-period">{{ p.date }}</div>
       </div>
-      <div class="card dt-side">
+      <div class="card dt-side dt-side--stack">
         <div class="label">{{ stackLabel }}</div>
         <div class="dt-stack"><sc-for list="{{ p.stack }}" as="t" hint-placeholder-count="5"><span class="dat dt-stack-item">{{ t }}</span></sc-for></div>
       </div>
@@ -1406,6 +1417,8 @@ class Component extends DCLogic {
         document.documentElement.style.colorScheme = theme;
         const tc = document.querySelector('meta[name="theme-color"]');
         if (tc) tc.setAttribute('content', theme === 'dark' ? '#121214' : '#ecebe6');
+        const fav = document.getElementById('favicon');
+        if (fav) fav.href = './favicon-' + theme + '.svg';
         try { localStorage.setItem('mj-resume-theme', theme); } catch (e) {}
         resolve();
       });

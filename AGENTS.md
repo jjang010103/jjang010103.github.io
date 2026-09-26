@@ -8,6 +8,7 @@
 | 파일 | 성격 |
 | --- | --- |
 | `index.html` | 사이트 전부(템플릿·스타일·데이터·로직). 거의 모든 수정은 여기서 한다. |
+| `favicon-light.svg` / `favicon-dark.svg` | 파비콘. 오른쪽 위로 비킨 강조색 원 + 아래 수평선(라이트 화지색 바탕·파란 원, 다크 쟁반 바탕·옻칠 빨간 원). 원 색은 `:root`의 `accent` 값을 옮겨 적은 것이라 토큰을 바꾸면 함께 고친다(DESIGN.md Favicon). 테마 버튼에 따라 부트 스크립트와 `applyTheme()`이 파일을 바꿔 끼운다. |
 | `support.js` | **생성 파일, 수정 금지.** dc-runtime 번들. React를 CDN에서 UMD로 받아 문서를 렌더한다. |
 | `AGENTS.md` | 이 문서. |
 | `CLAUDE.md` | 이 문서를 가리키는 포인터. |
