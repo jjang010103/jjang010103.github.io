@@ -135,6 +135,7 @@ section[id],header[id]{scroll-margin-top:96px}
 .copy-btn{flex:none;width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:50%;background:transparent;color:var(--ink-text-soft);cursor:pointer;transition:color .15s}
 .copy-btn:hover{color:var(--ink-text)}
 .copy-btn svg{display:block;width:16px;height:16px}
+.copy-btn .type-ico{display:none}
 .foot-row .copy-btn svg{width:18px;height:18px}
 
 /* ── top bar ────────────────────────────────────────────── */
@@ -355,7 +356,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   /* 내리는 동안은 알약을 화면 아래로 빼고(흐림도 함께 꺼짐), 올리면 돌려놓는다(사용자 결정, 2026-09-26). 키보드 포커스가 안에 있으면 숨기지 않는다 */
   [data-bar]{transition:transform .28s cubic-bezier(.2,.8,.2,1)}
   [data-bar].is-hidden{transform:translateY(calc(100% + 60px))}
-  [data-bar].is-hidden:focus-within{transform:none}
+  /* 키보드 포커스만 붙잡는다. :focus-within이면 탭한 버튼에 남은 포커스 때문에 알약이 안 숨는다 */
+  [data-bar].is-hidden:has(:focus-visible){transform:none}
   @media (prefers-reduced-motion:reduce){[data-bar]{transition:none}}
   /* 메뉴: 알약 자체가 위로 늘어나 카드가 된다. 같은 챕터 마크업이 버튼 줄 위에 펼쳐진다.
      열면 딤 대신 바 뒤 점진 흐림이 메뉴 카드 위까지 늘어난다(사용자 결정, 2026-09-26). */
@@ -376,16 +378,34 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .bar-blur::before{-webkit-mask-image:linear-gradient(to top,#000 45%,transparent 85%);mask-image:linear-gradient(to top,#000 45%,transparent 85%)}
   .bar-blur::after{-webkit-mask-image:linear-gradient(to top,#000 25%,transparent 65%);mask-image:linear-gradient(to top,#000 25%,transparent 65%)}
 
-  .bento,[data-projgrid],[data-edugrid],.career-grid,.dt-stats{grid-template-columns:minmax(0,1fr);gap:12px}
+  /* 반반 섞기(M1, 2026-09-26): 벤토는 2열. 글이 긴 카드(히어로·스택·2칸 프로젝트·학교·병역·상세 히어로·결과물)는 전체 폭,
+     짧은 카드(총 경력·연락처·1칸 프로젝트·자격증·기간·기술 스택)만 반씩 나란히. 경력·수치 카드는 1열. 글자 크기는 줄이지 않는다 */
+  .bento,[data-projgrid],[data-edugrid]{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .career-grid,.dt-stats{grid-template-columns:minmax(0,1fr);gap:12px}
   [data-projgrid]{grid-template-rows:none}
-  .hero-card,.stack-card,.proj-card,.edu-card,.svc-card,.dt-hero-card,.dt-side,.dt-link{grid-column:auto;grid-row:auto}
+  .hero-card,.stack-card,.dt-hero-card,.dt-link{grid-column:span 2;grid-row:auto}
+  .proj-card,.edu-card,.svc-card,.dt-side{grid-row:auto}
+  /* 강조(잉크) 카드 ezZip·Ez-Spool을 맨 위로 모은다 — 데스크톱에서 왼쪽 열에 모은 것처럼(사용자 결정, 2026-09-26) */
+  .proj-card.card--ink{order:-1}
+  .stat-card,.contact-card,.cert-card,.dt-side,.proj-card[data-kind="tall"]{padding:20px 18px}
   .card{border-radius:22px;padding:24px}
-  .hero-card{min-height:0;padding:28px 24px;gap:40px}
+  /* 한 줄 소개의 두 번째 문장(인라이플·ezZip)은 빼고, 그 자리를 이름 아래 간격으로 돌려
+     카드 크기는 그대로 둔 채 글을 아래로 내린다. 빠진 줄 수는 390px 기준 한·영 3줄, 일 2줄(사용자 결정, 2026-09-26) */
+  .hero-card{min-height:0;padding:40px 32px;gap:40px}
   .hero-name{font-size:44px}
-  .hero-lead{font-size:21px;margin-top:18px}
-  .hero-sub{font-size:16px}
+  .hero-lead{font-size:20px;margin-top:calc(20px + 3lh)}
+  html[lang="ja"] .hero-lead{margin-top:calc(20px + 2lh)}
+  .hero-sub{font-size:15px;margin-top:18px}
+  .lead-more{display:none}
   .stat-v{font-size:64px}
-  .contact-links a{display:inline-flex;align-items:center;min-height:44px}
+  /* 반 칸 연락처: 값 대신 메일·전화 아이콘 버튼(누르면 복사), 링크는 두 줄 */
+  .contact-list{flex-direction:row;flex-wrap:wrap;gap:8px}
+  .contact-row .dat{display:none}
+  .contact-card .contact-row .copy-btn{width:44px;height:44px;margin:0;background:var(--ink-inset);color:var(--ink-text)}
+  .contact-card .copy-ico{display:none}
+  .contact-card .type-ico{display:block;width:18px;height:18px}
+  .contact-links{width:100%;flex-direction:column;gap:0;margin-top:4px}
+  .contact-links a{display:inline-flex;align-items:center;min-height:40px}
   .stack-groups{grid-template-columns:minmax(0,1fr)}
 
   .sec-head{padding:40px 8px 4px}
@@ -485,9 +505,9 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
     <div>
       <h1 class="hero-name"><span data-lb="ko">장민규</span><span data-lb="en">Min&#8209;gyu Jang</span><span data-lb="ja">チャン・ミンギュ</span></h1>
       <p class="hero-lead">
-        <span data-lb="ko">고등학교 때 개발을 시작해 <strong>8년차</strong>가 된 C#/.NET 개발자. <a href="https://www.enliple.com" target="_blank" rel="noopener">인라이플</a>에서 압축 프로그램 <a href="https://ezlab.im/ko/tool/ezzip" target="_blank" rel="noopener">ezZip</a>과 자사 PC 제품군의 공통 플랫폼을 만들고 있습니다.</span>
-        <span data-lb="en">A C#/.NET developer <strong>8 years</strong> in, since high school. At <a href="https://www.enliple.com" target="_blank" rel="noopener">Enliple</a> I build <a href="https://ezlab.im/ko/tool/ezzip" target="_blank" rel="noopener">ezZip</a> and the shared platform behind our PC products.</span>
-        <span data-lb="ja">高校在学中に開発を始め、<strong>8年目</strong>のC#/.NETエンジニア。<a href="https://www.enliple.com" target="_blank" rel="noopener">インライフル</a>で圧縮ソフト<a href="https://ezlab.im/ko/tool/ezzip" target="_blank" rel="noopener">ezZip</a>と自社PC製品群の共通基盤を開発中。</span>
+        <span data-lb="ko">고등학교 때 개발을 시작해 <strong>8년차</strong>가 된 C#/.NET 개발자. <span class="lead-more"><a href="https://www.enliple.com" target="_blank" rel="noopener">인라이플</a>에서 압축 프로그램 <a href="https://ezlab.im/ko/tool/ezzip" target="_blank" rel="noopener">ezZip</a>과 자사 PC 제품군의 공통 플랫폼을 만들고 있습니다.</span></span>
+        <span data-lb="en">A C#/.NET developer <strong>8 years</strong> in, since high school. <span class="lead-more">At <a href="https://www.enliple.com" target="_blank" rel="noopener">Enliple</a> I build <a href="https://ezlab.im/ko/tool/ezzip" target="_blank" rel="noopener">ezZip</a> and the shared platform behind our PC products.</span></span>
+        <span data-lb="ja">高校在学中に開発を始め、<strong>8年目</strong>のC#/.NETエンジニア。<span class="lead-more"><a href="https://www.enliple.com" target="_blank" rel="noopener">インライフル</a>で圧縮ソフト<a href="https://ezlab.im/ko/tool/ezzip" target="_blank" rel="noopener">ezZip</a>と自社PC製品群の共通基盤を開発中。</span></span>
       </p>
       <p class="hero-sub">
         <span data-lb="ko">Windows 데스크톱 · Avalonia 크로스플랫폼이 주력, C++ Native 연동부터 Java / Spring Boot 대용량 백엔드까지 직접. 정량 목표를 먼저 정하고 수치로 결과를 증명합니다.</span>
@@ -510,7 +530,9 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
           <span class="dat">{{ c.value }}</span>
           <button type="button" onClick="{{ c.copy }}" aria-label="{{ c.label }}" title="{{ c.label }}" class="copy-btn">
             <sc-if value="{{ c.copied }}"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-6"></path></svg></sc-if>
-            <sc-if value="{{ c.idle }}"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="7.5" height="7.5" rx="1.5"></rect><path d="M9.5 4.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.5"></path></svg></sc-if>
+            <sc-if value="{{ c.idle }}"><svg class="copy-ico" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="7.5" height="7.5" rx="1.5"></rect><path d="M9.5 4.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.5"></path></svg></sc-if>
+            <sc-if value="{{ c.idleMail }}"><svg class="type-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3.5" width="12" height="9" rx="1.5"></rect><path d="M2.5 4.5 8 9l5.5-4.5"></path></svg></sc-if>
+            <sc-if value="{{ c.idlePhone }}"><svg class="type-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 2.5h-2a1 1 0 0 0-1 1C2.5 9 7 13.5 12.5 13.5a1 1 0 0 0 1-1v-2l-3-1-1.5 1.5a8 8 0 0 1-3.5-3.5L7 6.5l-1-3Z"></path></svg></sc-if>
           </button>
         </div>
       </sc-for>
@@ -1506,7 +1528,8 @@ class Component extends DCLogic {
       // 연락처는 프로필 잉크 카드와 푸터 두 곳에서 같은 목록을 돈다. 값은 링크 없이 텍스트 + 복사 버튼.
       contacts: CONTACTS.map(c => ({ value: c.value, footCls: c.footCls, label: t(c.label),
         copy: () => this.copyText(c.value, c.key),
-        copied: this.state.copied === c.key, idle: this.state.copied !== c.key })),
+        copied: this.state.copied === c.key, idle: this.state.copied !== c.key,
+        idleMail: this.state.copied !== c.key && c.key === 'email', idlePhone: this.state.copied !== c.key && c.key === 'phone' })),
     };
   }
 }
