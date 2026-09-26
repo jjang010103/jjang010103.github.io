@@ -146,8 +146,11 @@ section[id],header[id]{scroll-margin-top:96px}
 /* 바 뒤 점진 흐림: 스크롤하면 화면 위쪽이 아래로 갈수록 풀리는 세 겹 흐림(1·3·6px)과 쟁반색 덮개로 덮인다.
    흰 바는 불투명한 채 그 위에 떠서, 흰·검정 카드 어느 위에서도 가장자리가 흐린 배경과 구분된다(사용자 결정, 2026-09-25).
    맨 위에서는 꺼져 있다. 경계가 칼로 자른 듯 보이지 않게 각 겹을 마스크로 서서히 지운다. */
-.bar-blur,.bar-blur::before,.bar-blur::after{position:fixed;left:0;right:0;top:0;height:180px;pointer-events:none}
-.bar-blur{z-index:19;opacity:0;transition:opacity .2s;background:linear-gradient(to bottom,var(--blur-tint-1),var(--blur-tint-2) 45%,transparent);-webkit-backdrop-filter:blur(1px);backdrop-filter:blur(1px);-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 100%);mask-image:linear-gradient(to bottom,#000 60%,transparent 100%)}
+/* iOS Safari 26은 화면 가장자리에 붙은 fixed 요소의 배경·backdrop-filter를 읽어 툴바 자리를 단색으로 칠한다.
+   그래서 fixed 틀에는 칠을 두지 않고, 흐림 세 겹은 안쪽 absolute 층(.blur-tint·::before·::after)에 둔다(2026-09-26) */
+.bar-blur{position:fixed;left:0;right:0;top:0;height:180px;pointer-events:none;z-index:19;opacity:0;transition:opacity .2s}
+.blur-tint,.bar-blur::before,.bar-blur::after{position:absolute;inset:0}
+.blur-tint{background:linear-gradient(to bottom,var(--blur-tint-1),var(--blur-tint-2) 45%,transparent);-webkit-backdrop-filter:blur(1px);backdrop-filter:blur(1px);-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 100%);mask-image:linear-gradient(to bottom,#000 60%,transparent 100%)}
 .bar-blur::before,.bar-blur::after{content:""}
 .bar-blur::before{-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);-webkit-mask-image:linear-gradient(to bottom,#000 45%,transparent 85%);mask-image:linear-gradient(to bottom,#000 45%,transparent 85%)}
 .bar-blur::after{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);-webkit-mask-image:linear-gradient(to bottom,#000 25%,transparent 65%);mask-image:linear-gradient(to bottom,#000 25%,transparent 65%)}
@@ -370,11 +373,10 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   /* PDF 저장은 알약이 아니라 메뉴 안 마지막 줄(사용자 결정, 2026-09-26) */
   .menu-pdf{display:flex;align-items:center;gap:10px;height:48px;padding:0 16px;border:0;border-radius:20px;background:transparent;color:var(--text);font-size:16px;font-weight:500;cursor:pointer}
   /* 바 뒤 흐림도 아래로: 알약 뒤에 겹치는 내용이 있을 때 아래에서 위로 풀리는 세 겹 흐림 */
-  .bar-blur,.bar-blur::before,.bar-blur::after{top:auto;bottom:0;height:190px;transition:height .25s cubic-bezier(.2,.8,.2,1)}
-  .bar-blur.is-open{opacity:1}
-  .bar-blur.is-open,.bar-blur.is-open::before,.bar-blur.is-open::after{height:520px}
-  @media (prefers-reduced-motion:reduce){.bar-blur,.bar-blur::before,.bar-blur::after{transition:none}}
-  .bar-blur{background:linear-gradient(to top,var(--blur-tint-1),var(--blur-tint-2) 45%,transparent);-webkit-mask-image:linear-gradient(to top,#000 60%,transparent 100%);mask-image:linear-gradient(to top,#000 60%,transparent 100%)}
+  .bar-blur{top:auto;bottom:0;height:190px;transition:opacity .2s,height .25s cubic-bezier(.2,.8,.2,1)}
+  .bar-blur.is-open{opacity:1;height:520px}
+  @media (prefers-reduced-motion:reduce){.bar-blur{transition:none}}
+  .blur-tint{background:linear-gradient(to top,var(--blur-tint-1),var(--blur-tint-2) 45%,transparent);-webkit-mask-image:linear-gradient(to top,#000 60%,transparent 100%);mask-image:linear-gradient(to top,#000 60%,transparent 100%)}
   .bar-blur::before{-webkit-mask-image:linear-gradient(to top,#000 45%,transparent 85%);mask-image:linear-gradient(to top,#000 45%,transparent 85%)}
   .bar-blur::after{-webkit-mask-image:linear-gradient(to top,#000 25%,transparent 65%);mask-image:linear-gradient(to top,#000 25%,transparent 65%)}
 
@@ -473,7 +475,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 <main class="page">
 
 <a class="skip" href="#s-career" onClick="{{ skip }}" data-noprint><span data-l="ko">본문으로 건너뛰기</span><span data-l="en">Skip to content</span><span data-l="ja">本文へスキップ</span></a>
-<div class="bar-blur {{ blurCls }}" aria-hidden="true" data-noprint></div>
+<div class="bar-blur {{ blurCls }}" aria-hidden="true" data-noprint><div class="blur-tint"></div></div>
 <sc-if value="{{ menuOpen }}"><div class="menu-scrim" onClick="{{ closeMenuClick }}" aria-hidden="true" data-noprint></div></sc-if>
 <div data-noprint data-bar class="{{ barCls }}">
   <button onClick="{{ toTop }}" aria-label="{{ homeLabel }}" title="{{ homeLabel }}" class="logo-btn"><span data-l="ko">장민규</span><span data-l="en">Min&#8209;gyu Jang</span><span data-l="ja">チャン・ミンギュ</span></button>
