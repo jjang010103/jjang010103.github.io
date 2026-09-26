@@ -155,6 +155,7 @@ section[id],header[id]{scroll-margin-top:96px}
 .nav-ch:hover{background:var(--surface-inset);text-decoration:none}
 .nav-ch.is-on,.nav-ch.is-on:hover{background:var(--ink);color:var(--ink-text)}
 .tools{display:flex;align-items:center;gap:2px;margin-left:8px}
+.icon-btn.menu-btn,.menu-scrim,.menu-pdf{display:none}
 .tools-lang{display:flex;align-items:center;gap:2px}
 .icon-btn{flex:none;box-sizing:border-box;width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:50%;background:transparent;color:var(--text);cursor:pointer;font-size:14px;font-weight:500;transition:background .15s}
 .icon-btn:hover{background:var(--surface-inset)}
@@ -333,17 +334,45 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
    base 규칙과 같은 선택자를 쓰면 뒤에 오는 이 블록이 이긴다.
    ============================================================ */
 @media (max-width:720px){
-  .page{padding:12px 16px 24px;gap:12px}
+  /* 아래 여백은 알약(52px)+띄움(24px)+숨 쉴 틈 자리를 비워, 맨 끝까지 내리면 알약 뒤에 아무것도 없게 한다 */
+  .page{padding:12px 16px 104px;gap:12px}
   [data-main],[data-detail]{gap:12px}
-  section[id],header[id]{scroll-margin-top:124px}
-  /* 이름을 숨기고 두 줄: 위는 언어·테마·PDF, 아래는 가로로 스크롤되는 챕터 알약. 타깃 44px */
-  .bar-blur,.bar-blur::before,.bar-blur::after{height:200px}
-  [data-bar]{top:8px;flex-wrap:wrap;gap:0;padding:4px;border-radius:26px}
-  .logo-btn{display:none}
-  .tools{order:-1;width:100%;justify-content:flex-end;margin:0}
-  .nav{width:100%;overflow-x:auto}
-  .icon-btn{width:44px;height:44px}
-  .nav-ch{padding:0 18px}
+  section[id],header[id]{scroll-margin-top:16px}
+  /* 하단 떠 있는 알약: 오른쪽 아래에 내용 폭만큼(언어 3 · 테마 · 메뉴, 2026-09-26, 상단 바 대체). 이름은 히어로가 보여 준다.
+     transform을 쓰지 않는다 — 걸리면 안쪽 fixed 시트가 알약 기준으로 붙는다. */
+  /* zoom .9: 알약 전체를 10% 작게(사용자 결정, 2026-09-26). 버튼 타깃은 약 36px(40 × .9)이 된다. zoom이 위치값도 줄이므로 나눠서 실제 16·30px을 맞춘다 */
+  /* 닫힘·열림이 같은 틀을 쓴다: wrap·모서리 26(= 닫힌 높이 52의 절반이라 알약과 같은 모양)·gap 0을 항상 유지해,
+     열 때 폭이 gap만큼 늘거나 모서리가 바뀌며 움찔하지 않게 한다 */
+  [data-bar]{position:fixed;top:auto;bottom:calc(30px / .9);left:auto;right:calc(16px / .9);flex-wrap:wrap;gap:0;padding:6px;border-radius:26px;zoom:.9}
+  .logo-btn,.nav,[data-bar] .tools-pdf{display:none}
+  .tools{order:1;margin:0}
+  .icon-btn.menu-btn{display:inline-flex;order:2;margin-left:4px;background:var(--surface-inset)}
+  .menu-btn[aria-expanded="true"],.menu-btn[aria-expanded="true"]:hover{background:var(--ink);color:var(--ink-text)}
+  /* 여백 6 + 버튼 40 = 높이 52 그대로. 끝 버튼과 알약 테두리 사이 링이 가운데와 같은 두께로 고르게 보인다(2026-09-26) */
+  [data-bar] .icon-btn{width:40px;height:40px}
+  /* 내리는 동안은 알약을 화면 아래로 빼고(흐림도 함께 꺼짐), 올리면 돌려놓는다(사용자 결정, 2026-09-26). 키보드 포커스가 안에 있으면 숨기지 않는다 */
+  [data-bar]{transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+  [data-bar].is-hidden{transform:translateY(calc(100% + 60px))}
+  [data-bar].is-hidden:focus-within{transform:none}
+  @media (prefers-reduced-motion:reduce){[data-bar]{transition:none}}
+  /* 메뉴: 알약 자체가 위로 늘어나 카드가 된다. 같은 챕터 마크업이 버튼 줄 위에 펼쳐진다.
+     열면 딤 대신 바 뒤 점진 흐림이 메뉴 카드 위까지 늘어난다(사용자 결정, 2026-09-26). */
+  /* 바깥을 누르면 닫히도록 화면 전체를 받는 투명 층. 어둡게 하지 않는다 — 대신 아래 흐림이 메뉴 위까지 넓어진다 */
+  .menu-scrim{display:block;position:fixed;inset:0;z-index:19}
+  /* width:0 + min-width:100%: 목록이 알약 폭을 넓히지 않고 버튼 줄 폭을 그대로 따른다 */
+  [data-bar].is-open .nav{display:flex;order:0;width:0;min-width:100%;flex-direction:column;align-items:stretch;gap:2px;padding:4px 0 8px}
+  /* 카드 모서리 26 − 안쪽 여백 6 = 20: 켜진 챕터 모서리가 카드 모서리와 같은 곡선을 그린다 */
+  .nav-ch{height:48px;padding:0 16px;border-radius:20px;font-size:18px;font-weight:500}
+  /* PDF 저장은 알약이 아니라 메뉴 안 마지막 줄(사용자 결정, 2026-09-26) */
+  .menu-pdf{display:flex;align-items:center;gap:10px;height:48px;padding:0 16px;border:0;border-radius:20px;background:transparent;color:var(--text);font-size:16px;font-weight:500;cursor:pointer}
+  /* 바 뒤 흐림도 아래로: 알약 뒤에 겹치는 내용이 있을 때 아래에서 위로 풀리는 세 겹 흐림 */
+  .bar-blur,.bar-blur::before,.bar-blur::after{top:auto;bottom:0;height:190px;transition:height .25s cubic-bezier(.2,.8,.2,1)}
+  .bar-blur.is-open{opacity:1}
+  .bar-blur.is-open,.bar-blur.is-open::before,.bar-blur.is-open::after{height:520px}
+  @media (prefers-reduced-motion:reduce){.bar-blur,.bar-blur::before,.bar-blur::after{transition:none}}
+  .bar-blur{background:linear-gradient(to top,var(--blur-tint-1),var(--blur-tint-2) 45%,transparent);-webkit-mask-image:linear-gradient(to top,#000 60%,transparent 100%);mask-image:linear-gradient(to top,#000 60%,transparent 100%)}
+  .bar-blur::before{-webkit-mask-image:linear-gradient(to top,#000 45%,transparent 85%);mask-image:linear-gradient(to top,#000 45%,transparent 85%)}
+  .bar-blur::after{-webkit-mask-image:linear-gradient(to top,#000 25%,transparent 65%);mask-image:linear-gradient(to top,#000 25%,transparent 65%)}
 
   .bento,[data-projgrid],[data-edugrid],.career-grid,.dt-stats{grid-template-columns:minmax(0,1fr);gap:12px}
   [data-projgrid]{grid-template-rows:none}
@@ -423,21 +452,27 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 
 <a class="skip" href="#s-career" onClick="{{ skip }}" data-noprint><span data-l="ko">본문으로 건너뛰기</span><span data-l="en">Skip to content</span><span data-l="ja">本文へスキップ</span></a>
 <div class="bar-blur {{ blurCls }}" aria-hidden="true" data-noprint></div>
-<div data-noprint data-bar>
+<sc-if value="{{ menuOpen }}"><div class="menu-scrim" onClick="{{ closeMenuClick }}" aria-hidden="true" data-noprint></div></sc-if>
+<div data-noprint data-bar class="{{ barCls }}">
   <button onClick="{{ toTop }}" aria-label="{{ homeLabel }}" title="{{ homeLabel }}" class="logo-btn"><span data-l="ko">장민규</span><span data-l="en">Min&#8209;gyu Jang</span><span data-l="ja">チャン・ミンギュ</span></button>
-  <nav class="nav">
+  <button type="button" onClick="{{ toggleMenu }}" aria-expanded="{{ menuExpanded }}" aria-controls="bar-nav bar-tools" aria-label="{{ menuLabel }}" title="{{ menuLabel }}" class="icon-btn menu-btn">
+    <sc-if value="{{ menuClosed }}"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M2.5 5.5h11M2.5 10.5h11"></path></svg></sc-if>
+    <sc-if value="{{ menuOpen }}"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"></path></svg></sc-if>
+  </button>
+  <nav class="nav" id="bar-nav">
     <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
       <a href="{{ n.href }}" onClick="{{ n.go }}" class="nav-ch {{ n.cls }}" aria-current="{{ n.cur }}">{{ n.label }}</a>
     </sc-for>
+    <button type="button" onClick="{{ doPrint }}" class="menu-pdf"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8m-3-3 3 3 3-3M2.5 10.5v3h11v-3"></path></svg>{{ pdfLabel }}</button>
   </nav>
-  <div class="tools">
+  <div class="tools" id="bar-tools">
     <div class="tools-lang" role="group" aria-label="{{ langLabel }}">
       <button onClick="{{ setKo }}" aria-label="한국어" title="한국어" aria-pressed="{{ lk.pressed }}" class="icon-btn icon-btn--ko {{ lk.cls }}">ㅎ</button>
       <button onClick="{{ setEn }}" aria-label="English" title="English" aria-pressed="{{ le.pressed }}" class="icon-btn {{ le.cls }}">A</button>
       <button onClick="{{ setJa }}" aria-label="日本語" title="日本語" aria-pressed="{{ lj.pressed }}" class="icon-btn {{ lj.cls }}">あ</button>
     </div>
     <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" data-themebtn class="icon-btn"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" class="theme-ico" style="transform:{{ themeIcon }}"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.6"></circle><path d="M8 1.75 A6.25 6.25 0 0 1 8 14.25 Z" fill="currentColor"></path></svg></button>
-    <button onClick="{{ doPrint }}" aria-label="{{ pdfLabel }}" title="{{ pdfLabel }}" class="icon-btn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8m-3-3 3 3 3-3M2.5 10.5v3h11v-3"></path></svg></button>
+    <button onClick="{{ doPrint }}" aria-label="{{ pdfLabel }}" title="{{ pdfLabel }}" class="icon-btn tools-pdf"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8m-3-3 3 3 3-3M2.5 10.5v3h11v-3"></path></svg></button>
   </div>
 </div>
 
@@ -1070,6 +1105,8 @@ const T = {
   now: { ko: '현재', en: 'NOW', ja: '現在' },
   imgSoon: { ko: '이미지 준비 중', en: 'Image coming soon', ja: '画像準備中' },
   home: { ko: '맨 위로', en: 'Back to top', ja: 'ページ先頭へ' },
+  menuOpen: { ko: '메뉴 열기', en: 'Open menu', ja: 'メニューを開く' },
+  menuClose: { ko: '메뉴 닫기', en: 'Close menu', ja: 'メニューを閉じる' },
   prev: { ko: '이전 프로젝트', en: 'Previous project', ja: '前のプロジェクト' },
   next: { ko: '다음 프로젝트', en: 'Next project', ja: '次のプロジェクト' },
   back: { ko: '메인으로', en: 'Back to main', ja: 'メインへ' },
@@ -1097,7 +1134,7 @@ const routeId = () => {
 };
 
 class Component extends DCLogic {
-  state = { lang: 'ko', theme: 'light', openId: null, copied: '', navIdx: 0, scrolled: false };
+  state = { lang: 'ko', theme: 'light', openId: null, copied: '', navIdx: 0, scrolled: false, menuOpen: false, pillHidden: false };
 
   componentDidMount() {
     let theme = null, lang = null;
@@ -1160,7 +1197,9 @@ class Component extends DCLogic {
     const keys = NAV.map(n => n.id);
     const bar = document.querySelector('[data-bar]');
     // sticky 바는 top 여백만큼 내려와 있다. 높이가 아니라 아랫변을 기준으로 잡아야 scroll-margin과 맞는다.
-    const barB = bar ? bar.getBoundingClientRect().bottom : 84;
+    // 모바일은 바가 화면 아래에 떠 있으므로 위쪽 가림이 없다.
+    const r = bar && bar.getBoundingClientRect();
+    const barB = !r ? 84 : r.top > window.innerHeight / 2 ? 0 : r.bottom;
     const sy = window.scrollY || 0;
     const top = sy + barB + 24;
     if ((document.documentElement.scrollHeight || 0) <= window.innerHeight + 1) return 0;
@@ -1185,8 +1224,21 @@ class Component extends DCLogic {
     if (this._vtBusy) return;
     const next = this.activeChapter();
     if (next !== this.state.navIdx) this.setState({ navIdx: next });
-    const scrolled = (window.scrollY || 0) > 4;
+    // 흐림: 데스크톱은 스크롤하면(위 바 뒤), 모바일은 맨 끝이 아니면(아래 알약 뒤에 내용이 겹칠 때) 켠다.
+    const sy = window.scrollY || 0;
+    const maxY = Math.max(0, (document.documentElement.scrollHeight || 0) - window.innerHeight);
+    const mobile = window.matchMedia && window.matchMedia('(max-width:720px)').matches;
+    const scrolled = mobile ? maxY - sy > 2 : sy > 4;
     if (scrolled !== this.state.scrolled) this.setState({ scrolled });
+    // 모바일 알약: 내리면 숨고 올리면 나온다. 방향이 8px 넘게 바뀔 때만 뒤집는다.
+    // 맨 위·맨 끝·메뉴가 열려 있을 때는 항상 보인다.
+    const last = this._lastY == null ? sy : this._lastY;
+    let hide = this.state.pillHidden;
+    if (!mobile || this.state.menuOpen || sy < 40 || maxY - sy <= 2) hide = false;
+    else if (sy > last + 8) hide = true;
+    else if (sy < last - 8) hide = false;
+    if (this._lastY == null || Math.abs(sy - last) > 8 || !mobile) this._lastY = sy;
+    if (hide !== this.state.pillHidden) this.setState({ pillHidden: hide });
   }
 
   goTo = (id) => {
@@ -1244,6 +1296,16 @@ class Component extends DCLogic {
     }
   };
 
+  // 모바일 메뉴. 챕터를 고르거나 Esc를 누르면 닫는다. Esc로 닫으면 포커스를 메뉴 버튼으로 돌려보낸다.
+  toggleMenu = () => this.setState({ menuOpen: !this.state.menuOpen });
+  closeMenu(refocus) {
+    if (!this.state.menuOpen) return;
+    this.setState({ menuOpen: false }, () => {
+      const b = refocus && document.querySelector('.menu-btn');
+      if (b) b.focus();
+    });
+  }
+
   // 상세 안에서 프로젝트를 넘긴다. 기록을 쌓지 않아서 뒤로가기 한 번이면 메인이다. 끝에서 멈춘다.
   step(d) {
     const i = PROJECTS.findIndex(p => p.id === this.state.openId);
@@ -1254,6 +1316,7 @@ class Component extends DCLogic {
   }
 
   onKeyDown = (e) => {
+    if (e.key === 'Escape' && this.state.menuOpen) { this.closeMenu(true); return; }
     if (!this.state.openId || e.altKey || e.ctrlKey || e.metaKey) return;
     if (e.key === 'Escape') this.closeDetail();
     else if (e.key === 'ArrowLeft') this.step(-1);
@@ -1401,9 +1464,15 @@ class Component extends DCLogic {
       stackLabel: t(T.stack),
       resultLabel: t(T.result),
       themeIcon: dark ? 'rotate(180deg)' : 'rotate(0deg)',
-      blurCls: this.state.scrolled ? 'is-on' : '',
+      blurCls: (this.state.scrolled && !this.state.pillHidden ? 'is-on' : '') + (this.state.menuOpen ? ' is-open' : ''),
+      barCls: this.state.menuOpen ? 'is-open' : this.state.pillHidden ? 'is-hidden' : '',
+      toggleMenu: this.toggleMenu,
+      closeMenuClick: () => this.closeMenu(),
+      menuOpen: this.state.menuOpen, menuClosed: !this.state.menuOpen,
+      menuExpanded: this.state.menuOpen ? 'true' : 'false',
+      menuLabel: t(this.state.menuOpen ? T.menuClose : T.menuOpen),
       navItems: NAV.map((n, i) => ({ label: t(n.label), href: '#s-' + n.id,
-        go: (e) => { e.preventDefault(); if (this.state.openId) this.closeDetail('s-' + n.id); else this.goTo('s-' + n.id); },
+        go: (e) => { e.preventDefault(); this.closeMenu(); if (this.state.openId) this.closeDetail('s-' + n.id); else this.goTo('s-' + n.id); },
         cls: i === this.state.navIdx ? 'is-on' : '', cur: i === this.state.navIdx ? 'true' : null })),
       stackGroups: STACK.map((g, i) => ({ label: t(g.label), items: g.items, cls: i === 0 ? 'stack-items--core' : '' })),
       schoolLabel: t(EDU.school.label),
@@ -1421,9 +1490,9 @@ class Component extends DCLogic {
       setEn: () => this.setLang('en'),
       setJa: () => this.setLang('ja'),
       toggleTheme: this.toggleTheme,
-      doPrint: () => window.print(),
+      doPrint: () => { this.closeMenu(); window.print(); },
       open: this.open,
-      toTop: () => { if (this.state.openId) this.closeDetail('s-intro'); else this.goTo('s-intro'); },
+      toTop: () => { this.closeMenu(); if (this.state.openId) this.closeDetail('s-intro'); else this.goTo('s-intro'); },
       // 건너뛰기 링크의 #s-career가 해시 라우팅을 건드리지 않도록 직접 포커스를 옮긴다
       skip: (e) => {
         e.preventDefault();

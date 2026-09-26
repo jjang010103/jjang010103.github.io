@@ -167,7 +167,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude/server.ps1
 3. **템플릿** (`</x-dc>`까지) — `{{ binding }}` 보간과 `<sc-for list="{{ … }}" as="x">` 루프. 레이아웃 훅은 `data-*` 속성(`data-bar`, `data-main`, `data-detail`, `data-projgrid`, `data-noprint` …)이고 스타일시트는 이것을 타깃한다.
 4. **`<script type="text/x-dc" data-dc-script>`** — 데이터 상수(`STACK`, `EDU`, `CO`, `PROJECTS`, `NAV`, `T`), `bold()` 헬퍼, `class Component extends DCLogic`.
 
-`renderVals()`가 반환하는 객체의 키가 템플릿의 `{{ 바인딩 }}`이다. 상태는 `lang`, `theme`, `openId`, `copied`, `navIdx`다. 메인(`[data-main]`)과 상세(`[data-detail]`)는 같은 문서의 두 뷰이고 `openId`가 어느 쪽을 보일지 정한다. `activeChapter()`가 sticky 바의 아랫변 기준으로 활성 챕터 하나를 고르고, 인덱스가 바뀐 프레임에만 `switchChapter()`가 setState한다. 켜진 챕터는 `is-on` 클래스의 잉크 알약이다(2026-09-25에 늘어나는 잉크·`navLayout()` 제거). `<html>`에 건 `ResizeObserver`가 폰트 로드·리플로 후 다시 측정한다. 스크롤·리사이즈·옵저버는 전부 `onScroll`로 들어와 `requestAnimationFrame` 한 번으로 합쳐진 뒤 `measure()`가 setState한다 — 프레임당 렌더 한 번.
+`renderVals()`가 반환하는 객체의 키가 템플릿의 `{{ 바인딩 }}`이다. 상태는 `lang`, `theme`, `openId`, `copied`, `navIdx`, `scrolled`(바 뒤 흐림), `menuOpen`(모바일 메뉴)이다. 메인(`[data-main]`)과 상세(`[data-detail]`)는 같은 문서의 두 뷰이고 `openId`가 어느 쪽을 보일지 정한다. `activeChapter()`가 sticky 바의 아랫변 기준으로 활성 챕터 하나를 고르고, 인덱스가 바뀐 프레임에만 `switchChapter()`가 setState한다. 켜진 챕터는 `is-on` 클래스의 잉크 알약이다(2026-09-25에 늘어나는 잉크·`navLayout()` 제거). `<html>`에 건 `ResizeObserver`가 폰트 로드·리플로 후 다시 측정한다. 스크롤·리사이즈·옵저버는 전부 `onScroll`로 들어와 `requestAnimationFrame` 한 번으로 합쳐진 뒤 `measure()`가 setState한다 — 프레임당 렌더 한 번.
 
 **프로젝트 상세는 해시 라우트다(2026-09-25, 모달 대체).** `#/p/<id>`가 유일한 진입점이고 `applyHash()`가 `hashchange`·첫 로드에서 뷰를 맞춘다 — 새로고침·뒤로가기·직접 링크가 모두 여기를 지난다. `open()`은 스크롤 위치를 저장하고 해시를 쌓는다(`location.hash`). 상세 안의 페이저·좌우 화살표 키(`step(±1)`, 끝에서 멈춤)는 `location.replace`라 기록을 쌓지 않는다 — 뒤로가기 한 번이면 메인이다. 닫기("← 메인으로"·Esc)는 우리가 쌓은 기록이면 `history.back()`, 해시로 바로 들어왔으면 `replaceState`로 해시만 지운다(`closeDetail`). 열면 맨 위로 올리고 `h1#dt-title`(tabindex -1)에 포커스, 페이저로 넘길 때는 누른 버튼에 포커스를 두고 끝에 닿아 비활성이 되면 `h1`로 옮긴다. 닫으면 저장한 스크롤 위치로 돌아가 마지막으로 본 프로젝트의 `.pc-btn`에 포커스한다. 상세에서 챕터나 이름을 누르면 메인으로 나와 그 섹션으로 간다. Alt/Ctrl/Meta가 눌린 화살표는 브라우저 몫이라 무시한다. 모달 시절의 `inert`·포커스 트랩·스와이프 닫기·바텀시트·`body` 스크롤 잠금은 모두 없다. 카드는 `<article>`이 클릭 면이고 접근성 컨트롤은 `h3 > button.pc-btn` 하나다 — article에 `role=button`을 주면 h3가 버튼 이름에 묻혀 헤딩 탐색에서 사라진다.
 
@@ -181,6 +181,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude/server.ps1
 - 데스크톱(4열 벤토) 값이 기본이고, **모바일 재정의는 시트 하단의 `@media (max-width:720px)` 블록 하나에서만** 한다. 721~1000px 중간 폭 블록은 벤토를 2열로 줄이는 용도다. 두 번째 모바일 블록을 만들지 않는다. `!important`도 쓰지 않는다 — 이길 인라인이 없으므로 필요가 없다. 모바일 블록에 기본값과 같은 값을 다시 적지 않는다.
 - 색은 `:root` 토큰(이름은 DESIGN.md colors와 1:1)에서만 온다. 새 색이 필요하면 **토큰부터 추가**하고, 헥스값을 직접 박지 않는다. `light-dark()`는 2024년부터 모든 주요 브라우저가 지원하므로 구형 브라우저용 폴백 블록은 두지 않는다(2026-09-25 제거).
 - **글자색 토큰은 놓이는 면 기준 4.5:1을 지킨다.** 흰 카드·쟁반·`--media`·잉크·액센트 다섯 면 위에서 잰다(2026-09-05 감사에서 카드 위 3.1:1이 잡혔다). 면 전용 색(`--accent`)과 글자·선 전용 색(`--accent-line`)을 나눈 이유가 이것이다.
+- 모바일에서 `[data-bar]`는 화면 아래 떠 있는 알약(언어 · 테마 · 메뉴)이 되고, 챕터는 데스크톱과 **같은 마크업**을 `[data-bar].is-open`일 때 하단 시트로 펼친다(상태 `menuOpen`, 2026-09-26). 모바일 전용 메뉴 마크업을 따로 만들지 않는다(메뉴의 PDF 버튼과 바깥 터치 층만 예외). 2026-09-05의 "본문을 가리는 우하단 고정 배치 금지"는 이 알약에 한해 사용자가 뒤집었다.
 - 손가락 타깃은 모바일에서 44px다(DESIGN.md). 2026-09-05에 사용자가 36px로 되돌린 적이 있으니 바가 무겁다는 지적이 다시 나오면 그 기록부터 본다.
 - 같은 마크업을 두 번 쓰지 않는다. 연락처(이메일·전화)는 `CONTACTS` 한 목록을 프로필 카드와 푸터가 `sc-for`로 돈다.
 - 구조 의존 셀렉터(`:first-of-type`, `> div:first-child`, 속성 부분일치)를 쓰지 않는다. 전부 취약해서 제거했다 — 명시적인 `data-*` 훅을 잡는다.
@@ -217,7 +218,7 @@ grep -c '@media (max-width:720px){' index.html
 grep -cE ':first-of-type|:last-of-type|> *div:first-child|style\*=' index.html
 ```
 
-**2026-09-25 기준 통과값:** 1 → `data-l` 20/20/20 · `data-lb` 11/11/11 | 2 → 119/119/119 | 3 → `0`, `1`, `0`.
+**2026-09-26 기준 통과값:** 1 → `data-l` 20/20/20 · `data-lb` 11/11/11 | 2 → 127/127/127 | 3 → `0`, `1`, `0`.
 
 4번째 검증 — **시트에 다크 리터럴이 남지 않았는가.** 색은 토큰에서만 온다(§7). 예외는 없다.
 
