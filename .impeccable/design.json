@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-27T04:46:19+00:00",
+  "generatedAt": "2026-09-27T06:36:41+00:00",
   "title": "Design System: 장민규 이력서",
   "extensions": {
     "colorMeta": {
@@ -227,6 +227,36 @@
           "#6e9aff",
           "#90c0ff",
           "#b4e6ff"
+        ]
+      },
+      "badge": {
+        "role": "neutral",
+        "displayName": "재직 배지 (Badge)",
+        "canonical": "light-dark(#2a45c7,#2a2a2f)",
+        "tonalRamp": [
+          "#120060",
+          "#0f0085",
+          "#1928ab",
+          "#3150d2",
+          "#4f75fa",
+          "#6e9aff",
+          "#90c0ff",
+          "#b4e6ff"
+        ]
+      },
+      "badge-text": {
+        "role": "neutral",
+        "displayName": "재직 배지 글자 (On Badge)",
+        "canonical": "light-dark(#ffffff,#ecebe6)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
         ]
       }
     },

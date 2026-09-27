@@ -57,10 +57,16 @@ var f=document.getElementById('favicon');if(f)f.href='./favicon-'+t+'.svg';})()<
   --ink-text:light-dark(#ffffff,#17171a);
   --ink-text-soft:light-dark(#b3b2ab,#5b5a55);    /* 잉크 위 보조 글자 — 불투명도 대신 */
   --ink-inset:light-dark(#2c2c30,#d9d8d2);
-  --accent:light-dark(#2a45c7,#b3242b);      /* 면 전용: 메인 히어로·재직 배지·상세 히어로. 다크는 칠기 도시락의 옻칠 빨강 */
+  --accent:light-dark(#2a45c7,#b3242b);      /* 면 전용: 메인 히어로·재직 배지(라이트만)·상세 히어로. 다크는 칠기 도시락의 옻칠 빨강 */
   --accent-text:#ffffff;
+  --badge:light-dark(var(--accent),var(--surface-inset));  /* 재직 배지: 다크는 빨강·흰색 모두 튀어서 카드 위 옅은 면(태그와 같은 바탕)으로(사용자 지적, 2026-09-27) */
+  --badge-text:light-dark(var(--accent-text),var(--text));
   /* 글자·선 전용 액센트(상세 05 AI 제목·포커스 링). 다크의 옻칠 빨강은 어두운 바탕 위에서 2.6:1이라 같은 계열을 밝혀 쓴다(5.1:1). */
   --accent-line:light-dark(#2a45c7,#f05a5f);
+  /* AI 활용(05) 제목 그라데이션: 桜(벚꽃) → 藤(등나무) → 瑠璃(청금석) — 일본 전통색으로 만든 AI 톤(사용자 결정, 2026-09-27) */
+  --ai-1:light-dark(#d05a6e,#f09aa8);
+  --ai-2:light-dark(#8f77b5,#b9a3dc);
+  --ai-3:light-dark(#1e50a2,#6f95e0);
   /* 바 뒤 흐림 덮개. 라이트는 회색 쟁반이 흰 카드 위에서 띠처럼 도드라져 옅게(25%·12%), 다크는 60%·35% 그대로. */
   --glass:color-mix(in srgb,var(--surface) 72%,transparent);   /* 모바일 위 알약: 반투명 + 뒤 흐림 */
   --blur-tint-1:light-dark(color-mix(in srgb,var(--canvas) 25%,transparent),color-mix(in srgb,var(--canvas) 60%,transparent));
@@ -192,11 +198,17 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 .stat{display:flex;align-items:baseline;gap:6px}
 .stat-v{font-size:88px;font-weight:700;line-height:1;letter-spacing:-.02em}
 .stat-u{font-size:28px;font-weight:700;line-height:1}
-.contact-list{display:flex;flex-direction:column;gap:4px}
-.contact-row{display:flex;align-items:center;justify-content:space-between;gap:4px;min-width:0;font-size:15px}
-.contact-row .copy-btn{margin-right:-10px}
-.contact-links{display:flex;gap:16px;margin-top:4px;font-size:15px;font-weight:500}
-.link-ico{display:none}
+/* 프로필 연락처는 모든 폭에서 동그라미 아이콘 넷(메일·전화는 누르면 복사, GitHub·LinkedIn은 링크) — 사용자 결정, 2026-09-27(모바일은 2026-09-26) */
+.contact-list{display:grid;grid-template-columns:repeat(2,60px);gap:10px}  /* 2×2 고정, 데스크톱은 60px로 크게(사용자 결정, 2026-09-27) */
+.contact-row{display:flex;align-items:center;min-width:0}
+.contact-row .dat{display:none}
+.contact-card .contact-row .copy-btn{width:60px;height:60px;margin:0;background:var(--ink-inset);color:var(--ink-text)}
+.contact-card .copy-ico{display:none}
+.contact-card .type-ico{display:block;width:22px;height:22px}
+.contact-links{display:contents}
+.contact-links a{display:inline-flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;background:var(--ink-inset);color:var(--ink-text)}
+.link-txt{display:none}
+.link-ico{display:block;width:22px;height:22px}
 .stack-card{grid-column:span 4}
 /* 핵심 스택만 알약으로 강조하고 나머지는 글자로 둔다. 전부 알약이면 카드가 쓸데없이 높아진다. */
 .stack-groups{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px 24px}
@@ -213,7 +225,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 .career-card{min-height:300px;padding:36px}
 .career-top{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:30px}
 .period{font-size:15px;font-weight:500;color:var(--muted)}
-.badge{flex:none;font-size:13px;font-weight:500;line-height:1.3;padding:6px 12px;border-radius:999px;background:var(--accent);color:var(--accent-text)}
+.badge{flex:none;font-size:13px;font-weight:500;line-height:1.3;padding:6px 12px;border-radius:999px;background:var(--badge);color:var(--badge-text)}
 .co-name{margin:0;font-size:28px;font-weight:700;line-height:1.3;letter-spacing:-.01em}
 .co-role{margin-top:4px;font-size:15px;color:var(--muted)}
 .co-desc{margin-top:auto;display:flex;flex-direction:column;gap:12px;padding-top:8px}
@@ -237,8 +249,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 .pc-btn:focus-visible{outline:none}
 /* 호버는 떠오르지 않고 제목에 밑줄만 생긴다(Flat Tray) */
 .proj-card:hover .pc-btn,.proj-card:focus-within .pc-btn{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
-.pc-arrow{color:var(--muted)}
-.card--ink .pc-arrow,.card--ink .pc-date{color:var(--ink-text-soft)}
+.card--ink .pc-date{color:var(--ink-text-soft)}
 .pc-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}
 .pc-date{font-size:15px;font-weight:500;line-height:1.4;color:var(--muted)}
 .pc-title{margin:0;font-size:24px;font-weight:700;line-height:1.35;letter-spacing:-.01em}
@@ -322,18 +333,21 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 .dt-media .pc-img{height:480px}
 .dt-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 .dt-stat{gap:8px}
-.dt-stat-v{font-size:64px;font-weight:700;line-height:1;letter-spacing:-.02em}
+.dt-stat-v{font-size:64px;font-weight:700;line-height:1;letter-spacing:-.02em;white-space:nowrap}
 .dt-body{display:flex;flex-direction:column;gap:16px}
 .hero-name,.sec-title,.co-name,.pc-title,.school-name,.cert-name,.dt-title,.dt-link-t,.dt-sec-h{text-wrap:balance}
 .dt-sec-h{margin:0;display:flex;align-items:baseline;gap:12px;font-size:22px;font-weight:700;line-height:1.35}
 .dt-num{font-size:15px;font-weight:500;color:var(--muted)}
-.dt-sec--ai .dt-sec-h,.dt-sec--ai .dt-num{color:var(--accent-line)}
+.dt-sec--ai .dt-sec-h{width:fit-content;background:linear-gradient(90deg,var(--ai-1),var(--ai-2),var(--ai-3));-webkit-background-clip:text;background-clip:text}
+.dt-sec--ai .dt-sec-h,.dt-sec--ai .dt-num{color:transparent}
 .dt-text{margin:0;font-size:16px;line-height:1.75;color:var(--body)}
 
 /* 데스크톱은 명세의 px 값을 0.9배로 그린다. 브라우저 90% 배율이 적정 밀도였다(사용자 결정, 2026-09-25).
    토큰·명세는 100% 기준 그대로 두고 여기 한 곳에서만 줄인다. 모바일·중간 폭·인쇄는 원래 크기다. */
 @media screen and (min-width:1001px){
   .page{zoom:.9}
+  /* 상세 본문 카드의 내용(01 문단·02~05 항목)은 데스크톱에서 18px(사용자 결정, 2026-09-27) */
+  .dt-text,.dt-item{font-size:18px}
   .dt-bar{display:none}
   .nav-pager{display:flex}
   .nav-ch.has-pager{border-radius:999px 0 0 999px;padding-right:12px}
@@ -341,7 +355,10 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 
 /* 호버 바탕은 마우스가 있는 기기에서만. 터치에서는 누른 뒤에도 :hover가 남아 버튼이 칠해진 채로 보였다(사용자 지적, 2026-09-27) */
 @media (hover:hover){
-  .ink-pill:hover,.foot-ic:hover{text-decoration:none;background:var(--surface-inset);color:var(--text)}
+  .ink-pill:hover,.foot-ic:hover,.contact-links a:hover,.contact-card .contact-row .copy-btn:hover{text-decoration:none;background:var(--surface-inset);color:var(--text)}
+  /* 연락처 동그라미에 마우스를 올리면 값(이메일·전화·주소)을 말풍선으로 보여 준다 — 오른쪽 열·푸터 끝이라 버튼 오른쪽 끝에 맞춰 왼쪽으로 편다(사용자 결정, 2026-09-27) */
+  [data-tip]{position:relative}
+  [data-tip]:hover::after{content:attr(data-tip);position:absolute;right:0;bottom:calc(100% + 8px);z-index:5;padding:6px 10px;border-radius:10px;background:var(--surface);color:var(--text);box-shadow:inset 0 0 0 1px var(--hairline);font-family:var(--data);font-size:13px;font-weight:500;line-height:1.3;white-space:nowrap;pointer-events:none}
   .copy-btn:hover{color:var(--ink-text)}
   .nav-ch:hover{background:var(--surface-inset);text-decoration:none}
   .icon-btn:hover{background:var(--surface-inset)}
@@ -413,6 +430,12 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   [data-bar].is-open .nav{display:flex;order:3;width:0;min-width:100%;flex-direction:column;align-items:stretch;gap:2px;padding:8px 0 0}
   /* 알약 모서리 32 − 안쪽 여백 10 = 22: 켜진 챕터 모서리가 알약 모서리와 같은 곡선 */
   .nav-ch{height:44px;padding:0 14px;border-radius:22px;font-size:16px;font-weight:500}
+  /* 상세에서 메뉴를 열면 켜진 "프로젝트" 줄 오른쪽 끝에 번호와 ‹ › 동그라미(시안 A — 사용자 결정, 2026-09-27).
+     페이저는 링크(a)의 형제라, 위로 끌어올려 같은 줄 오른쪽에 겹쳐 놓는다 */
+  .nav-pager{display:flex;align-items:center;align-self:flex-end;height:44px;margin:-46px 0 0;padding:0 4px 0 0;gap:4px;background:transparent;border-radius:0}
+  [data-bar] .nav-pager .icon-btn{width:36px;height:36px}
+  /* 번호는 ‹ › 왼쪽에 작게(사용자 결정, 2026-09-27) */
+  .nav-count{padding:0 4px 0 0;font-size:13px}
   /* PDF 저장은 바가 아니라 메뉴 안 마지막 줄(사용자 결정, 2026-09-26) */
   .menu-pdf{display:flex;align-items:center;gap:10px;height:44px;padding:0 14px;border:0;border-radius:22px;background:transparent;color:var(--text);font-size:15px;font-weight:500;cursor:pointer}
   /* 바 뒤 흐림은 모바일에서 뺀다. iOS Safari 26은 화면 끝에 붙은 전체 폭 fixed 층을 보고 주소창 자리를 단색 띠로 칠한다(2026-09-26) */
@@ -445,16 +468,6 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .lead-more{display:none}
   .stat-v{font-size:48px}
   .stat-u{font-size:20px}
-  /* 반 칸 연락처: 값 대신 동그라미 아이콘 — 메일·전화는 누르면 복사, GitHub·LinkedIn은 링크(2026-09-26) */
-  .contact-list{flex-direction:row;flex-wrap:wrap;gap:8px}
-  .contact-row .dat{display:none}
-  .contact-card .contact-row .copy-btn{width:44px;height:44px;margin:0;background:var(--ink-inset);color:var(--ink-text)}
-  .contact-card .copy-ico{display:none}
-  .contact-card .type-ico{display:block;width:18px;height:18px}
-  .contact-links{gap:8px;margin:0}
-  .contact-links a{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--ink-inset);color:var(--ink-text)}
-  .link-txt{display:none}
-  .link-ico{display:block;width:18px;height:18px}
   .stack-groups{grid-template-columns:minmax(0,1fr)}
 
   .sec-head{padding:40px 8px 4px}
@@ -475,9 +488,16 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .proj-card[data-kind="wide"] .pc-img{grid-column:1;grid-row:1 / 4;align-self:stretch;height:auto;border-radius:14px}
   .proj-card[data-kind="wide"] .pc-date,.proj-card[data-kind="wide"] .pc-title,.proj-card[data-kind="wide"] .pc-blurb{grid-column:2}
   .proj-card[data-kind="wide"] .pc-tags{grid-column:1 / -1;margin:0;padding-top:6px}
+  /* 1칸 보조 프로젝트(자재관리 앱·MakeTApp)는 덜 중요해 글자를 한 단계씩 작게(사용자 결정, 2026-09-27) */
+  .proj-card[data-kind="tall"] .pc-date{font-size:13px}
+  .proj-card[data-kind="tall"] .pc-title{font-size:16px}
+  .proj-card[data-kind="tall"] .pc-blurb{font-size:13px}
+  /* 여백도 글자에 맞춰 줄인다. 글자는 실제 폰에서 너무 작지 않게 한 단계 키웠다(2026-09-27) */
+  .proj-card[data-kind="tall"]{padding:16px 14px}
+  .proj-card[data-kind="tall"] .pc-text{gap:8px}
+  .proj-card[data-kind="tall"] .pc-tags{gap:4px;padding-top:6px}
+  .proj-card[data-kind="tall"] .tag{font-size:11px;padding:4px 8px}
   .proj-card[data-kind="wide"] .cap{display:none}
-  /* 모바일 카드 제목 끝의 ↗는 뺀다 — 카드 전체가 눌리는 면이라 없어도 된다(사용자 결정, 2026-09-26) */
-  .pc-arrow{display:none}
   .proj-card[data-kind="feature"] .pc-title{font-size:22px}
   .pc-title{font-size:18px}
   .pc-blurb{font-size:14px}
@@ -498,7 +518,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .dt-back{padding:0 16px 0 12px}
   .dt-count{min-width:48px}
   .dt-hero{grid-template-rows:none}
-  .dt-hero-card{min-height:0;padding:28px 24px;gap:32px}
+  /* 상세 표지 높이 +10%(한국어 기준 338 → 372px, 화면 기준 — 사용자 결정, 2026-09-27). 글이 더 길면 그만큼 늘어난다 */
+  .dt-hero-card{min-height:338px;padding:28px 24px;gap:32px}
   .dt-title{font-size:30px}
   .dt-blurb{font-size:15px}
   .dt-link-t{font-size:19px}
@@ -513,8 +534,13 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .dt-hero .dt-link-t{font-size:17px}
   html[lang="en"] .dt-hero .dt-link .ink-pill{padding:0 8px;font-size:12px}
   .dt-hero .dt-side--stack{grid-column:span 2;order:1}
-  /* 기간·결과물 보기는 정사각형 반 칸(사용자 결정, 2026-09-26) */
-  .dt-hero .dt-side:not(.dt-side--stack),.dt-hero .dt-link{aspect-ratio:1}
+  /* 기간·결과물 보기는 정사각형을 풀고 내용 높이로 낮춘다(사용자 결정, 2026-09-27).
+     안쪽 여백 18px·간격 8px — 기간이 두 줄로만 꺾여야 칸이 낮아진다(24px이면 세 줄로 흩어진다) */
+  .dt-hero .card.dt-side:not(.dt-side--stack),.dt-hero .card.dt-link{padding:18px;gap:8px}
+  /* 모바일 반 칸 연락처는 44px 동그라미 */
+  .contact-list{grid-template-columns:repeat(2,44px);gap:8px}
+  .contact-card .contact-row .copy-btn,.contact-links a{width:44px;height:44px}
+  .contact-card .type-ico,.link-ico{width:18px;height:18px}
   .dt-media{padding:12px}
   .dt-media .pc-img{height:220px}
   .dt-sec-h{font-size:17px}
@@ -611,7 +637,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
       <sc-for list="{{ contacts }}" as="c" hint-placeholder-count="2">
         <div class="contact-row">
           <span class="dat">{{ c.value }}</span>
-          <button type="button" onClick="{{ c.copy }}" aria-label="{{ c.label }}" title="{{ c.label }}" class="copy-btn">
+          <button type="button" onClick="{{ c.copy }}" aria-label="{{ c.label }}" data-tip="{{ c.value }}" class="copy-btn">
             <sc-if value="{{ c.copied }}"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-6"></path></svg></sc-if>
             <sc-if value="{{ c.idle }}"><svg class="copy-ico" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="7.5" height="7.5" rx="1.5"></rect><path d="M9.5 4.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.5"></path></svg></sc-if>
             <sc-if value="{{ c.idleMail }}"><svg class="type-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3.5" width="12" height="9" rx="1.5"></rect><path d="M2.5 4.5 8 9l5.5-4.5"></path></svg></sc-if>
@@ -620,8 +646,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
         </div>
       </sc-for>
       <div class="dat contact-links">
-        <a href="https://github.com/jjang010103" target="_blank" rel="noopener" aria-label="GitHub"><svg class="link-ico" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg><span class="link-txt">GitHub &#8599;</span></a>
-        <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="link-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"></path></svg><span class="link-txt">LinkedIn &#8599;</span></a>
+        <a href="https://github.com/jjang010103" target="_blank" rel="noopener" aria-label="GitHub" data-tip="github.com/jjang010103"><svg class="link-ico" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg><span class="link-txt">GitHub &#8599;</span></a>
+        <a href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" aria-label="LinkedIn" data-tip="linkedin.com/in/민규-장"><svg class="link-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"></path></svg><span class="link-txt">LinkedIn &#8599;</span></a>
       </div>
     </div>
   </div>
@@ -698,7 +724,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
         </div>
         <div class="pc-text">
           <div class="dat pc-date">{{ p.date }}</div>
-          <h3 class="pc-title"><button type="button" class="pc-btn" aria-describedby="pc-blurb-{{ p.id }}">{{ p.title }}<span class="pc-arrow" aria-hidden="true"> &#8599;</span></button></h3>
+          <h3 class="pc-title"><button type="button" class="pc-btn" aria-describedby="pc-blurb-{{ p.id }}">{{ p.title }}</button></h3>
           <p class="pc-blurb" id="pc-blurb-{{ p.id }}">{{ p.summary }}</p>
           <div class="tags pc-tags">
             <sc-for list="{{ p.stack }}" as="t" hint-placeholder-count="5"><span class="dat tag">{{ t }}</span></sc-for>
@@ -821,14 +847,14 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   <!-- 화면: 오른쪽 동그라미 2×2(메일·전화는 누르면 복사, GitHub·LinkedIn은 링크). 종이에는 값이 보여야 하므로 아래 글자 목록(.foot-right)을 인쇄에서만 켠다 -->
   <div class="foot-icons" data-noprint>
     <sc-for list="{{ contacts }}" as="c" hint-placeholder-count="2">
-      <button type="button" onClick="{{ c.copy }}" aria-label="{{ c.label }}" title="{{ c.label }}" class="foot-ic">
+      <button type="button" onClick="{{ c.copy }}" aria-label="{{ c.label }}" data-tip="{{ c.value }}" class="foot-ic">
         <sc-if value="{{ c.copied }}"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-6"></path></svg></sc-if>
         <sc-if value="{{ c.idleMail }}"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3.5" width="12" height="9" rx="1.5"></rect><path d="M2.5 4.5 8 9l5.5-4.5"></path></svg></sc-if>
         <sc-if value="{{ c.idlePhone }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg></sc-if>
       </button>
     </sc-for>
-    <a class="foot-ic" href="https://github.com/jjang010103" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg></a>
-    <a class="foot-ic" href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"></path></svg></a>
+    <a class="foot-ic" href="https://github.com/jjang010103" target="_blank" rel="noopener" aria-label="GitHub" data-tip="github.com/jjang010103"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg></a>
+    <a class="foot-ic" href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" aria-label="LinkedIn" data-tip="linkedin.com/in/민규-장"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"></path></svg></a>
   </div>
   <div class="foot-right">
     <div class="label"><span data-l="ko">연락처</span><span data-l="en">Contact</span><span data-l="ja">連絡先</span></div>
@@ -876,11 +902,11 @@ const EDU = {
   ] },
   certs: { label: { ko: '자격증', en: 'Certification', ja: '資格' }, items: [
     {
-      name: { ko: '정보처리산업기사', en: 'Industrial Engineer Information Processing', ja: '情報処理産業技士' },
-      meta: { ko: '2018.09 · 한국산업인력공단', en: '2018.09 · HRD Korea', ja: '2018.09 · 韓国産業人力公団' } },
+      name: { ko: '정보처리​산업기사', en: 'Industrial Engineer Information Processing', ja: '情報処理産業技士' },
+      meta: { ko: '2018.09 · 한국산업​인력공단', en: '2018.09 · HRD Korea', ja: '2018.09 · 韓国産業人力公団' } },
     {
-      name: { ko: '정보기기운용기능사', en: 'Craftsman Information Equipment Operation', ja: '情報機器運用技能士' },
-      meta: { ko: '2018.07 · 한국산업인력공단', en: '2018.07 · HRD Korea', ja: '2018.07 · 韓国産業人力公団' } }
+      name: { ko: '정보기기운용​기능사', en: 'Craftsman Information Equipment Operation', ja: '情報機器運用技能士' },
+      meta: { ko: '2018.07 · 한국산업​인력공단', en: '2018.07 · HRD Korea', ja: '2018.07 · 韓国産業人力公団' } }
   ] },
   service: { label: { ko: '병역', en: 'Military service', ja: '兵役' }, items: [
     {
