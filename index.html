@@ -6,6 +6,7 @@
 <title>장민규</title>
 <!-- 파비콘: 오른쪽 위로 비킨 강조색 원 + 아래 수평선(라이트 파랑·다크 빨강). 사이트 테마 버튼을 따라 라이트/다크 파일을 바꿔 끼운다(부트 스크립트·applyTheme) -->
 <link rel="icon" type="image/svg+xml" href="./favicon-light.svg" id="favicon">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <!-- 부트스트랩(테마/언어/제목)은 반드시 실제 <head>에 둔다.
      helmet 안에 두면 프레임워크가 <title>을 관리 대상으로 삼아
      매 렌더마다 정적 제목으로 되돌리고, 테마 적용도 첫 페인트보다 늦어진다. -->
@@ -1482,7 +1483,10 @@ class Component extends DCLogic {
     const theme = this.state.theme === 'dark' ? 'light' : 'dark';
     const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!document.startViewTransition || reduced) { this.applyTheme(theme); return; }
+    // Safari(iOS는 모든 브라우저가 WebKit)는 전체 화면 스냅샷에 clip-path를 매 프레임 다시 그려 버벅이고,
+    // 스냅샷이 덮는 동안 아이콘 회전이 멈췄다가 튄다 — 원형 확산 없이 바로 바꾼다(사용자 지적, 2026-09-27)
+    const webkit = /AppleWebKit/.test(navigator.userAgent) && !/Chrome\//.test(navigator.userAgent);
+    if (!document.startViewTransition || reduced || webkit) { this.applyTheme(theme); return; }
 
     // 원형 확산은 항상 눌린 테마 버튼 정중앙에서 시작한다.
     // 커서 좌표(clientX/Y)를 쓰면 키보드·터치에서 0이나 엉뚱한 지점이 잡힌다.

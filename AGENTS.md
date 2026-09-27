@@ -8,7 +8,7 @@
 | 파일 | 성격 |
 | --- | --- |
 | `index.html` | 사이트 전부(템플릿·스타일·데이터·로직). 거의 모든 수정은 여기서 한다. |
-| `favicon-light.svg` / `favicon-dark.svg` | 파비콘. 오른쪽 위로 비킨 강조색 원 + 아래 수평선(라이트 화지색 바탕·파란 원, 다크 쟁반 바탕·옻칠 빨간 원). 원 색은 `:root`의 `accent` 값을 옮겨 적은 것이라 토큰을 바꾸면 함께 고친다(DESIGN.md Favicon). 테마 버튼에 따라 부트 스크립트와 `applyTheme()`이 파일을 바꿔 끼운다. |
+| `favicon-light.svg` / `favicon-dark.svg` | 파비콘. 오른쪽 위로 비킨 강조색 원 + 아래 수평선(라이트 화지색 바탕·파란 원, 다크 쟁반 바탕·옻칠 빨간 원). 원 색은 `:root`의 `accent` 값을 옮겨 적은 것이라 토큰을 바꾸면 함께 고친다(DESIGN.md Favicon). 테마 버튼에 따라 부트 스크립트와 `applyTheme()`이 파일을 바꿔 끼운다. iOS Safari 즐겨찾기·홈 화면은 SVG를 안 읽어 `apple-touch-icon.png`(180px, 다크 도안·모서리 없이 — iOS가 둥글린다)를 따로 둔다. 도안을 바꾸면 함께 다시 만든다. |
 | `support.js` | **생성 파일, 수정 금지.** dc-runtime 번들. React를 CDN에서 UMD로 받아 문서를 렌더한다. |
 | `AGENTS.md` | 이 문서. |
 | `CLAUDE.md` | 이 문서를 가리키는 포인터. |
@@ -158,7 +158,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude/server.ps1
 
 `server.ps1`은 HttpListener 한 개짜리 정적 서버이고 `Cache-Control: no-store`를 붙인다(하드 리로드 없이 바로 반영). 루트는 `$PSScriptRoot`의 상위이므로 저장소를 옮겨도 따라온다. `.claude/launch.json`이 같은 서버를 8734 포트의 `portfolio` 프리뷰로 등록하지만 그쪽 `-File` 경로는 절대 경로다 — 저장소를 옮기면 함께 고친다.
 
-빌드 단계가 없으므로 `index.html`을 파일로 직접 열어도 동작한다. 다른 정적 서버를 써도 무방하다.
+빌드 단계가 없으므로 `index.html`을 파일로 직접 열어도 동작한다. 다만 `file://`에서는 support.js가 문서를 다시 받아 오는 `fetch(location.href)`를 브라우저가 막아 콘솔에 CORS 오류가 찍힌다 — 첫 렌더는 이미 끝났고 오류는 삼켜지므로 무해하다(support.js는 수정 금지). 콘솔을 깨끗하게 보려면 서버로 연다. 다른 정적 서버를 써도 무방하다.
 
 인쇄/PDF 출력은 **부가 기능이 아니라 1급 기능**이다(`@media print` 블록 + PDF 버튼). 레이아웃을 건드리면 반드시 인쇄 미리보기까지 확인한다(`Ctrl+P`). 잉크·액센트 카드(히어로·연락처·잉크 프로젝트 카드·푸터·상세 히어로·결과물 카드)는 `print-color-adjust:exact`로 배경을 강제하고, 흰 카드는 종이에서 사라지지 않게 헤어라인을 두른다 — 없으면 브라우저 기본값이 배경만 버려 밝은 글자가 종이색에 묻힌다.
 
@@ -189,7 +189,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude/server.ps1
 - 구조 의존 셀렉터(`:first-of-type`, `> div:first-child`, 속성 부분일치)를 쓰지 않는다. 전부 취약해서 제거했다 — 명시적인 `data-*` 훅을 잡는다.
 
 ### 테마 (라이트/다크)
-CSS `light-dark()`와 `<html>`의 `colorScheme`으로만 처리한다. **한쪽 테마 전용 색을 하드코딩하지 않는다.** 토글은 View Transition 원형 확산(`data-vt`, `--vtx/--vty/--vtr`)으로 애니메이션한다. 테마·언어는 localStorage에 `mj-resume-theme` / `mj-resume-lang`으로 저장되고, 첫 페인트 전에 `<head>` 부트 스크립트가 복원한다.
+CSS `light-dark()`와 `<html>`의 `colorScheme`으로만 처리한다. **한쪽 테마 전용 색을 하드코딩하지 않는다.** 토글은 View Transition 원형 확산(`data-vt`, `--vtx/--vty/--vtr`)으로 애니메이션한다 — 단 Safari(iOS의 모든 브라우저 포함)는 스냅샷 clip-path가 버벅여 확산 없이 즉시 바꾼다(2026-09-27). 테마·언어는 localStorage에 `mj-resume-theme` / `mj-resume-lang`으로 저장되고, 첫 페인트 전에 `<head>` 부트 스크립트가 복원한다.
 
 JS가 색을 만드는 곳은 없다. 언어 버튼은 상단 바의 `.icon-btn.is-on` 한 벌이고, `renderVals()`의 `cls`가 주는 `is-on` 클래스로 CSS가 칠한다(2026-09-05 critique 수정). `dark ? '#…' : '#…'` 리터럴 쌍을 다시 만들지 않는다.
 

@@ -1,0 +1,23 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-27T06:44:40.721Z",
+        "reason": "user confirmed: 2026-09-27 AI 활용 제목 桜→藤→瑠璃 그라데이션 시안 ② 선택"
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "createdAt": "2026-09-27T06:45:19.354Z",
+        "reason": "DESIGN.md typography: Space Grotesk는 숫자·날짜 전용 data 서체로 문서화된 기존 체계"
+      }
+    ]
+  }
+}
