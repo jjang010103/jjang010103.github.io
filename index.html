@@ -109,6 +109,8 @@ section[id],header[id]{scroll-margin-top:96px}
 :focus-visible{outline:2px solid var(--accent-line);outline-offset:3px;border-radius:4px}
 /* 액센트 면 위에서는 액센트 링이 보이지 않는다 */
 [data-accent] :focus-visible{outline-color:var(--accent-text)}
+/* 잉크 면(연락처·푸터·강조 프로젝트) 위에서도 액센트 링은 대비가 3:1에 못 미친다(디자인 검증, 2026-09-27) */
+.card--ink :focus-visible{outline-color:var(--ink-text)}
 .nav{scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
 
@@ -135,10 +137,8 @@ section[id],header[id]{scroll-margin-top:96px}
 .card--ink .tag{background:var(--ink-inset);color:var(--ink-text)}
 /* 잉크 카드 안의 알약 링크(푸터 GitHub·LinkedIn, 상세 결과물 보기) */
 .ink-pill{display:inline-flex;align-items:center;gap:6px;min-height:44px;box-sizing:border-box;padding:0 20px;border-radius:999px;background:var(--ink-inset);color:var(--ink-text);font-size:15px;font-weight:500}
-.ink-pill:hover{text-decoration:none;background:var(--surface-inset);color:var(--text)}
 /* 연락처 값은 텍스트로 남기고 복사 버튼만 동작한다(사용자 결정, 2026-09-24). 배경은 카드와 같다. */
 .copy-btn{flex:none;width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:50%;background:transparent;color:var(--ink-text-soft);cursor:pointer;transition:color .15s}
-.copy-btn:hover{color:var(--ink-text)}
 .copy-btn svg{display:block;width:16px;height:16px}
 .copy-btn .type-ico{display:none}
 .foot-row .copy-btn svg{width:18px;height:18px}
@@ -163,13 +163,11 @@ section[id],header[id]{scroll-margin-top:96px}
 .logo-btn{margin-right:auto;padding:0;border:0;background:transparent;cursor:pointer;color:var(--text);font-size:20px;font-weight:900;letter-spacing:-.02em;line-height:1.2;white-space:nowrap}
 .nav{display:flex;align-items:center;gap:4px}
 .nav-ch{flex:none;box-sizing:border-box;display:inline-flex;align-items:center;height:44px;padding:0 20px;border-radius:999px;font-size:15px;font-weight:500;color:var(--text);white-space:nowrap;transition:background .2s,color .2s}
-.nav-ch:hover{background:var(--surface-inset);text-decoration:none}
 .nav-ch.is-on,.nav-ch.is-on:hover{background:var(--ink);color:var(--ink-text)}
 .tools{display:flex;align-items:center;gap:2px;margin-left:8px}
 .icon-btn.menu-btn,.menu-scrim,.menu-pdf{display:none}
 .tools-lang{display:flex;align-items:center;gap:2px}
 .icon-btn{flex:none;box-sizing:border-box;width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:50%;background:transparent;color:var(--text);cursor:pointer;font-size:14px;font-weight:500;transition:background .15s}
-.icon-btn:hover{background:var(--surface-inset)}
 .icon-btn.is-on,.icon-btn.is-on:hover{background:var(--ink);color:var(--ink-text)}
 .icon-btn--ko{font-size:16px}
 .icon-btn:disabled,.icon-btn:disabled:hover{color:var(--hairline);cursor:default}
@@ -276,11 +274,15 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 
 /* ── footer ─────────────────────────────────────────────── */
 /* 섹션과 64px(페이지 gap 16 + 48) */
-[data-footer]{margin-top:48px;flex-direction:row;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:32px 48px;padding:48px}
+[data-footer]{margin-top:48px;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:24px;padding:48px}
 .foot-name{margin:0;font-size:40px;font-weight:900;line-height:1.15;letter-spacing:-.02em}
 .foot-role{margin-top:8px;font-size:16px;color:var(--ink-text-soft)}
-.foot-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-.foot-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;text-align:right;min-width:0}
+.foot-name,.foot-role{min-width:0}
+/* 푸터 오른쪽 연락처 동그라미 2×2 — 프로필 연락처 카드와 같은 모양(사용자 결정, 2026-09-27) */
+.foot-icons{flex:none;display:grid;grid-template-columns:repeat(2,44px);gap:8px}
+.foot-ic{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:var(--ink-inset);color:var(--ink-text);cursor:pointer}
+.foot-ic svg{width:18px;height:18px;display:block}
+.foot-right{display:none;flex-direction:column;align-items:flex-end;gap:4px;text-align:right;min-width:0}
 .foot-right .label{margin-bottom:8px}
 .foot-row{display:flex;align-items:center;justify-content:flex-end;gap:4px;min-width:0}
 .foot-mail{font-size:34px;font-weight:700;line-height:1.2;letter-spacing:-.01em;overflow-wrap:anywhere}
@@ -291,10 +293,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 /* ── project detail (C-4) ───────────────────────────────── */
 .dt-bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .dt-back{display:inline-flex;align-items:center;gap:8px;min-height:44px;box-sizing:border-box;padding:0 22px 0 18px;border:0;border-radius:999px;background:var(--surface);color:var(--text);font-size:15px;font-weight:500;cursor:pointer;transition:background .15s}
-.dt-back:hover{background:var(--surface-inset)}
 .dt-pager{display:flex;align-items:center;gap:8px}
 .dt-pager .icon-btn{width:44px;height:44px;background:var(--surface)}
-.dt-pager .icon-btn:not(:disabled):hover{background:var(--surface-inset)}
 .dt-pager .icon-btn:disabled,.dt-pager .icon-btn:disabled:hover{background:var(--surface)}
 .dt-count{min-width:64px;text-align:center;font-size:15px;font-weight:500;color:var(--muted)}
 /* 데스크톱 상세: 켜진 "프로젝트" 잉크 칩이 오른쪽으로 늘어나 번호와 이전·다음을 품는다(시안 v3 B, 사용자 결정 2026-09-26).
@@ -303,7 +303,6 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
    중간 폭·모바일은 이름이 안 보여서 본문 위 줄(.dt-bar)을 그대로 쓴다 */
 .nav-pager{display:none;align-items:center;gap:4px;height:44px;box-sizing:border-box;margin-left:-4px;padding:0 6px 0 0;border-radius:0 999px 999px 0;background:var(--ink);color:var(--ink-text)}
 .nav-pager .icon-btn{width:32px;height:32px;background:var(--surface-inset);color:var(--text)}
-.nav-pager .icon-btn:not(:disabled):hover{background:var(--hairline)}
 .nav-pager .icon-btn:disabled,.nav-pager .icon-btn:disabled:hover{background:var(--surface-inset);color:var(--text);opacity:.35}
 .bar-back{display:none}
 .nav-count{padding:0 8px 0 2px;font-size:13px;font-weight:500;color:var(--ink-text-soft);font-variant-numeric:tabular-nums}
@@ -340,6 +339,17 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .nav-ch.has-pager{border-radius:999px 0 0 999px;padding-right:12px}
 }
 
+/* 호버 바탕은 마우스가 있는 기기에서만. 터치에서는 누른 뒤에도 :hover가 남아 버튼이 칠해진 채로 보였다(사용자 지적, 2026-09-27) */
+@media (hover:hover){
+  .ink-pill:hover,.foot-ic:hover{text-decoration:none;background:var(--surface-inset);color:var(--text)}
+  .copy-btn:hover{color:var(--ink-text)}
+  .nav-ch:hover{background:var(--surface-inset);text-decoration:none}
+  .icon-btn:hover{background:var(--surface-inset)}
+  .dt-back:hover{background:var(--surface-inset)}
+  .dt-pager .icon-btn:not(:disabled):hover{background:var(--surface-inset)}
+  .nav-pager .icon-btn:not(:disabled):hover{background:var(--hairline)}
+}
+
 /* ============================================================
    MID (721~1000px) — 2열. 히어로는 2열 × 1행.
    ============================================================ */
@@ -367,8 +377,10 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   /* 위 바(사용자 결정 2026-09-26 — 하단 알약 대체): 언어 3 · 테마 · 메뉴를 가운데 정렬로 둔다(알약과 같은 순서, 사용자 결정 2026-09-26).
      이름은 없다 — 히어로가 보여 준다. 맨 위에서는 쟁반색 전체 폭 바(알약 바탕 없음), 스크롤하면 가운데 위 흰 알약이 된다.
      iOS Safari 주소창이 아래에 있으므로 우리 바는 위로 올려 겹쳐 쌓이지 않게 한다. 위 여백은 바 높이(56px)만큼 비운다 */
-  /* 아래 26px: 푸터 아래(12 + 최종 수정 22 + 26)가 푸터 위(48 + 12 = 60)와 같아지게 */
-  .page{padding:71px 16px 26px;gap:12px}
+  /* 푸터 위(52 + gap 12 = 64)와 푸터 아래(최종 수정 줄 간격 12 + 줄 약 22 + 30 = 64)를 같게 — 사용자 결정, 2026-09-27 */
+  /* 모바일은 페이지 전체를 1.1배로 그린다 — 실제 폰에서 브라우저 110% 확대가 더 잘 읽혔다(사용자 결정, 2026-09-27).
+     데스크톱의 zoom .9와 같은 방식이라 아래 px 값은 모두 1.1배로 보인다 */
+  .page{zoom:1.1;padding:80px 16px 30px;gap:12px}
   [data-main],[data-detail]{gap:12px}
   section[id],header[id]{scroll-margin-top:72px}
   /* zoom .9: 하단 알약 시절과 같은 크기(버튼 약 36px, 사용자 결정 2026-09-26). zoom이 여백·위치도 줄이므로 나눠서 실제 px을 맞춘다 */
@@ -383,26 +395,26 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   [data-bar].is-pill .icon-btn.menu-btn{background:var(--surface-inset)}
   /* 열린 메뉴의 × 버튼은 닫힌 메뉴 버튼과 같은 옅은 바탕을 쓴다. 잉크로 칠하면 켜진 언어 버튼과 같은 모양이 되고,
      다크에서는 밝은 동그라미로 뒤집혀 보였다(사용자 지적, 2026-09-26) */
-  /* 버튼 34px(× .9 ≈ 31px)·글리프 14px, 알약 안쪽 여백 10px — 알약 안을 더 여유 있게(사용자 결정, 2026-09-26) */
-  [data-bar] .icon-btn{width:34px;height:34px;font-size:13px}
-  [data-bar] .icon-btn--ko{font-size:15px}
-  [data-bar] .icon-btn svg{width:14px;height:14px}
+  /* 버튼 44px(× .9 × 1.1 ≈ 44px, 손가락 타깃 기준)·글리프 16px, 알약 안쪽 여백 10px(디자인 검증 반영, 2026-09-27) */
+  [data-bar] .icon-btn{width:44px;height:44px;font-size:14px}
+  [data-bar] .icon-btn--ko{font-size:16px}
+  [data-bar] .icon-btn svg{width:16px;height:16px}
   /* 버튼 줄은 화면 위·히어로에서 20px(사용자 지적, 2026-09-26). 스크롤하거나 메뉴를 열면 흰 알약: 위 11px(= 20 − 안쪽 여백 10 × .9),
      가로는 margin:auto로 가운데에 둬(transform 없이),
      바 ↔ 알약이 바뀔 때 버튼이 위아래·옆 어느 쪽으로도 움직이지 않게 한다(바탕만 바뀐다).
-     모서리 27 = 닫힌 높이 54의 절반. 메뉴는 맨 위에서도 항상 알약이 늘어난 카드로 연다(전체 폭 판은 쓰지 않는다, 사용자 결정 2026-09-26) */
+     모서리 32 = 닫힌 높이 64의 절반. 메뉴는 맨 위에서도 항상 알약이 늘어난 카드로 연다(전체 폭 판은 쓰지 않는다, 사용자 결정 2026-09-26) */
   /* 알약은 반투명 유리: 뒤 내용을 흐리게 비추고, 헤어라인 한 줄로 가장자리를 긋는다(사용자 결정, 2026-09-26).
      테두리는 크기가 변하지 않게 안쪽 box-shadow로 긋는다 — border면 버튼이 1px 밀린다.
      폭이 화면의 80%보다 좁고 위에서 떨어져 있어 iOS Safari 26의 툴바 칠하기 대상이 아니다 */
-  [data-bar].is-pill{top:calc(11px / .9);width:max-content;margin:0 auto;padding:10px;background:var(--glass);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);box-shadow:inset 0 0 0 1px var(--hairline);border-radius:27px}
+  [data-bar].is-pill{top:calc(11px / .9);width:max-content;margin:0 auto;padding:10px;background:var(--glass);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);box-shadow:inset 0 0 0 1px var(--hairline);border-radius:32px}
   /* 메뉴: 같은 챕터 마크업이 알약 버튼 줄 아래로 펼쳐진다. 바깥(투명 층)을 누르면 닫힌다 */
   .menu-scrim{display:block;position:fixed;inset:0;z-index:19}
   /* width:0 + min-width:100%: 알약일 때 목록이 알약 폭을 넓히지 않고 버튼 줄 폭을 따른다 */
   [data-bar].is-open .nav{display:flex;order:3;width:0;min-width:100%;flex-direction:column;align-items:stretch;gap:2px;padding:8px 0 0}
-  /* 알약 모서리 27 − 안쪽 여백 10 = 17: 켜진 챕터 모서리가 알약 모서리와 같은 곡선 */
-  .nav-ch{height:44px;padding:0 14px;border-radius:17px;font-size:16px;font-weight:500}
+  /* 알약 모서리 32 − 안쪽 여백 10 = 22: 켜진 챕터 모서리가 알약 모서리와 같은 곡선 */
+  .nav-ch{height:44px;padding:0 14px;border-radius:22px;font-size:16px;font-weight:500}
   /* PDF 저장은 바가 아니라 메뉴 안 마지막 줄(사용자 결정, 2026-09-26) */
-  .menu-pdf{display:flex;align-items:center;gap:10px;height:44px;padding:0 14px;border:0;border-radius:17px;background:transparent;color:var(--text);font-size:15px;font-weight:500;cursor:pointer}
+  .menu-pdf{display:flex;align-items:center;gap:10px;height:44px;padding:0 14px;border:0;border-radius:22px;background:transparent;color:var(--text);font-size:15px;font-weight:500;cursor:pointer}
   /* 바 뒤 흐림은 모바일에서 뺀다. iOS Safari 26은 화면 끝에 붙은 전체 폭 fixed 층을 보고 주소창 자리를 단색 띠로 칠한다(2026-09-26) */
   .bar-blur{display:none}
 
@@ -421,12 +433,14 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .proj-card.card--ink{order:-1}
   .stat-card,.contact-card,.cert-card,.dt-side,.proj-card[data-kind="tall"]{padding:20px 18px}
   .card{border-radius:22px;padding:24px}
-  /* 한 줄 소개의 두 번째 문장(인라이플·ezZip)은 빼고, 그 자리를 이름 아래 간격으로 돌려
-     카드 크기는 그대로 둔 채 글을 아래로 내린다. 빠진 줄 수는 390px 기준 한·영 3줄, 일 2줄(사용자 결정, 2026-09-26) */
-  .hero-card{min-height:0;padding:40px 32px;gap:40px}
+  /* 히어로는 정사각형(사용자 결정, 2026-09-27). 이름은 위, 한 줄 소개·자기소개는 아래에 붙인다.
+     한 줄 소개의 두 번째 문장(인라이플·ezZip)은 뺀다(2026-09-26). 글이 넘치면 정사각형보다 길어진다 */
+  .hero-card{min-height:0;aspect-ratio:1;padding:32px 28px}
+  .hero-body{flex:1;display:flex;flex-direction:column}
   .hero-name{font-size:36px}
-  .hero-lead{font-size:18px;margin-top:calc(20px + 3lh)}
-  html[lang="ja"] .hero-lead{margin-top:calc(20px + 2lh)}
+  /* 일본어 이름(8자)이 두 줄로 꺾이면 정사각형 안에 글이 넘친다 */
+  html[lang="ja"] .hero-name{font-size:30px;white-space:nowrap}
+  .hero-lead{font-size:18px;margin-top:auto;padding-top:20px}
   .hero-sub{font-size:14px;margin-top:16px}
   .lead-more{display:none}
   .stat-v{font-size:48px}
@@ -471,12 +485,10 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .school-name{font-size:18px}
   .cert-name{font-size:17px}
 
-  /* 푸터는 데스크톱처럼 위 콘텐츠에서 띄운다(margin 48 + page gap 12 = 60px, 사용자 결정 2026-09-26) */
-  [data-footer]{margin-top:48px;flex-direction:column;align-items:stretch;padding:28px 24px;gap:28px}
-  .foot-name{font-size:28px}
-  .foot-right{align-items:flex-start;text-align:left}
-  .foot-row{justify-content:space-between;width:100%}
-  .foot-mail{font-size:17px}
+  [data-footer]{margin-top:52px;padding:24px;gap:16px}
+  /* 오른쪽 동그라미 2×2 옆에서 이름이 한 줄에 들어가게(영어 "Min-gyu Jang", 일본어 8자) */
+  .foot-name{font-size:24px}
+  html[lang="ja"] .foot-name{font-size:21px;white-space:nowrap}
   .foot-note{padding:0 8px}
 
   /* 상세(사용자 결정 2026-09-26): 본문 위 "메인으로"·페이저 줄 대신 위 바 맨 앞에 ←(바탕 없음).
@@ -492,11 +504,14 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .dt-link-t{font-size:19px}
   /* 상세 히어로 아래: 기간 · 결과물 보기를 반 칸씩 한 줄, 기술 스택은 그 아래 전체 폭 한 줄(사용자 결정, 2026-09-26).
      결과물 칸은 링크가 없어도 있을 때와 같은 높이 — 옆 기간 카드와 한 줄이라 줄 높이를 함께 쓴다 */
-  .dt-hero .dt-link{grid-column:span 1;flex-direction:column;align-items:flex-start;justify-content:space-between}
-  /* 반 칸(안쪽 137px)에서 "공식 웹사이트 ↗"가 두 줄로 꺾이지 않게 알약을 한 단계 작게 */
-  .dt-hero .card.dt-link{padding:20px 18px}
-  .dt-hero .dt-link .ink-pill{padding:0 14px;font-size:14px;white-space:nowrap}
-  html[lang="en"] .dt-hero .dt-link .ink-pill{padding:0 10px;font-size:13px}
+  /* flex-wrap:nowrap — 기본 규칙의 wrap이 세로 방향에서 새 열을 만들어, 제목이 두 줄인 영어·일본어에서 알약이 카드 오른쪽 밖으로 밀려났다 */
+  .dt-hero .dt-link{grid-column:span 1;flex-direction:column;flex-wrap:nowrap;align-items:flex-start;justify-content:space-between}
+  /* 반 칸(1.1배 확대 후 안쪽 약 126px)에서 "공식 웹사이트 ↗"가 두 줄로 꺾이거나 넘치지 않게 알약을 작게 */
+  .dt-hero .card.dt-link{padding:20px 14px}
+  .dt-hero .dt-link .ink-pill{min-height:40px;padding:0 10px;font-size:13px;white-space:nowrap}
+  /* 제목이 두 줄인 영어·일본어도 360px 폭에서 정사각형 안에 들어가게 제목을 한 단계 작게 */
+  .dt-hero .dt-link-t{font-size:17px}
+  html[lang="en"] .dt-hero .dt-link .ink-pill{padding:0 8px;font-size:12px}
   .dt-hero .dt-side--stack{grid-column:span 2;order:1}
   /* 기간·결과물 보기는 정사각형 반 칸(사용자 결정, 2026-09-26) */
   .dt-hero .dt-side:not(.dt-side--stack),.dt-hero .dt-link{aspect-ratio:1}
@@ -519,6 +534,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   /* 종이는 흰색이라 흰 카드가 사라진다. 헤어라인으로 칸을 남긴다. */
   .card:not(.card--ink):not(.card--accent){border:1px solid var(--hairline)}
   .card,[data-footer]{break-inside:avoid}
+  /* 종이에는 동그라미 대신 이메일·전화 값을 글자로 */
+  .foot-right{display:flex}
   .sec-head{padding-top:32px}
   /* 잉크·액센트 카드는 배경 위의 밝은 글자다.
      브라우저 기본값 "배경 그래픽 끔"이 배경만 버리면 글자가 종이색이 되어 사라진다. */
@@ -568,7 +585,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 
 <header id="s-intro" class="bento">
   <div class="card card--accent hero-card" data-accent data-inverted>
-    <div>
+    <div class="hero-body">
       <h1 class="hero-name"><span data-lb="ko">장민규</span><span data-lb="en">Min&#8209;gyu Jang</span><span data-lb="ja">チャン・ミンギュ</span></h1>
       <p class="hero-lead">
         <span data-lb="ko">고등학교 때 개발을 시작해 <strong>8년차</strong>가 된 C#/.NET 개발자. <span class="lead-more"><a href="https://www.enliple.com" target="_blank" rel="noopener">인라이플</a>에서 압축 프로그램 <a href="https://ezlab.im/ko/tool/ezzip" target="_blank" rel="noopener">ezZip</a>과 자사 PC 제품군의 공통 플랫폼을 만들고 있습니다.</span></span>
@@ -800,10 +817,18 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   <div>
     <p class="foot-name"><span data-l="ko">장민규</span><span data-l="en">Min-gyu Jang</span><span data-l="ja">チャン・ミンギュ</span></p>
     <div class="foot-role">{{ roleLine }}</div>
-    <div class="dat foot-links">
-      <a class="ink-pill" href="https://github.com/jjang010103" target="_blank" rel="noopener">GitHub &#8599;</a>
-      <a class="ink-pill" href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener">LinkedIn &#8599;</a>
-    </div>
+  </div>
+  <!-- 화면: 오른쪽 동그라미 2×2(메일·전화는 누르면 복사, GitHub·LinkedIn은 링크). 종이에는 값이 보여야 하므로 아래 글자 목록(.foot-right)을 인쇄에서만 켠다 -->
+  <div class="foot-icons" data-noprint>
+    <sc-for list="{{ contacts }}" as="c" hint-placeholder-count="2">
+      <button type="button" onClick="{{ c.copy }}" aria-label="{{ c.label }}" title="{{ c.label }}" class="foot-ic">
+        <sc-if value="{{ c.copied }}"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-6"></path></svg></sc-if>
+        <sc-if value="{{ c.idleMail }}"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3.5" width="12" height="9" rx="1.5"></rect><path d="M2.5 4.5 8 9l5.5-4.5"></path></svg></sc-if>
+        <sc-if value="{{ c.idlePhone }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg></sc-if>
+      </button>
+    </sc-for>
+    <a class="foot-ic" href="https://github.com/jjang010103" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg></a>
+    <a class="foot-ic" href="https://www.linkedin.com/in/%EB%AF%BC%EA%B7%9C-%EC%9E%A5-a24b321a5" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"></path></svg></a>
   </div>
   <div class="foot-right">
     <div class="label"><span data-l="ko">연락처</span><span data-l="en">Contact</span><span data-l="ja">連絡先</span></div>
@@ -816,8 +841,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
         </button>
       </div>
     </sc-for>
-    <span class="vh" aria-live="polite">{{ liveMsg }}</span>
   </div>
+  <span class="vh" aria-live="polite">{{ liveMsg }}</span>
 </footer>
 <div class="dat foot-note">
   <span><span data-l="ko">최종 수정</span><span data-l="en">Last updated</span><span data-l="ja">最終更新</span> 2026.09.25</span>
@@ -1536,7 +1561,8 @@ class Component extends DCLogic {
       pdfLabel: t(T.pdf),
       liveMsg: this.state.copied ? t(CONTACTS.find(c => c.key === this.state.copied).done) : '',
       // 상세에서 이름은 "메인으로"와 같다 — 보던 카드 자리로 돌아가 그 카드에 포커스(사용자 결정, 2026-09-26)
-      homeLabel: t(this.state.openId ? T.back : T.home),
+      // 읽히는 이름에 화면 글자(이름)를 포함한다 — 음성 조작 "장민규 누르기"가 찾을 수 있게(WCAG 2.5.3, 2026-09-27)
+      homeLabel: window.NAMES[lang] + (lang === 'ja' ? '、' : ', ') + t(this.state.openId ? T.back : T.home),
       // 연차는 채운 햇수의 다음 해다(공백 제외): 7년 10개월 → 8년차
       careerYears: Math.floor(months / 12) + 1,
       roleLine: t(T.role).replace('{n}', Math.floor(months / 12) + 1),
