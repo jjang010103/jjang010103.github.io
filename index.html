@@ -17,6 +17,10 @@ document.title=window.NAMES[document.documentElement.lang];
 if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
 document.documentElement.style.colorScheme=t;
 var f=document.getElementById('favicon');if(f)f.href='./favicon-'+t+'.svg';})()</script>
+<!-- 방문 집계(GoatCounter, 쿠키 없음 — 동의 팝업 불필요). localhost는 스스로 건너뛴다.
+     첫 방문은 스크립트가 세고, 해시로 바로 들어온 상세(#/p/<id>)는 경로에 해시를 붙여 구분한다. 이후 상세 열기는 applyHash가 센다 -->
+<script>window.goatcounter={path:function(p){return /^#\/p\//.test(location.hash)?p+location.hash:p}}</script>
+<script data-goatcounter="https://jjang010103.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -1381,11 +1385,14 @@ class Component extends DCLogic {
 
   // 해시가 바뀔 때마다 여기서 뷰를 맞춘다. 상세로 들어가면 맨 위로 올리고 제목에 포커스,
   // 메인으로 나오면 떠나기 전 스크롤 위치로 돌아가 마지막으로 본 프로젝트의 카드 버튼에 포커스한다.
-  applyHash = () => {
+  applyHash = (e) => {
     const id = routeId();
     const prev = this.state.openId;
     if (id === prev) return;
     if (id) {
+      // hashchange로 연 상세만 센다. 첫 로드(e 없음)는 count.js가 이미 셌다
+      const gc = window.goatcounter;
+      if (e && gc && gc.count) gc.count({ path: location.pathname + '#/p/' + id });
       const focusTitle = this._focusTitle !== false;
       this._focusTitle = true;
       this.setState({ openId: id, navIdx: PROJ_NAV }, () => {
