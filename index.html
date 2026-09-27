@@ -436,6 +436,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
      다크에서만 도드라져, 두 테마가 달라 보였다(사용자 지적, 2026-09-26) */
   .icon-btn.menu-btn{display:inline-flex;order:2;margin-left:4px}
   [data-bar].is-pill .icon-btn.menu-btn{background:var(--surface-inset)}
+  /* 모바일 버튼은 바탕 전환(.15s)을 끈다. 테마를 바꾸면 페이지는 한 번에 바뀌는데 메뉴 버튼 바탕만 서서히 따라와 깜빡여 보였다(아이폰, 사용자 지적 2026-09-27). 터치에는 호버가 없어 이 전환이 쓰일 곳도 없다 */
+  .icon-btn{transition:none}
   /* 열린 메뉴의 × 버튼은 닫힌 메뉴 버튼과 같은 옅은 바탕을 쓴다. 잉크로 칠하면 켜진 언어 버튼과 같은 모양이 되고,
      다크에서는 밝은 동그라미로 뒤집혀 보였다(사용자 지적, 2026-09-26) */
   /* 버튼 44px(× .9 ≈ 40px — 페이지 1.1배를 되돌려 손가락 타깃 44px 아래가 됐다, 2026-09-27)·글리프 16px, 알약 안쪽 여백 10px(디자인 검증 반영, 2026-09-27) */
