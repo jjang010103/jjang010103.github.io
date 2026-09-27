@@ -20,7 +20,7 @@ var f=document.getElementById('favicon');if(f)f.href='./favicon-'+t+'.svg';})()<
 <!-- 방문 집계(GoatCounter, 쿠키 없음 — 동의 팝업 불필요). localhost는 스스로 건너뛴다.
      첫 방문은 스크립트가 세고, 해시로 바로 들어온 상세(#/p/<id>)는 경로에 해시를 붙여 구분한다. 이후 상세 열기는 applyHash가 센다 -->
 <script>window.goatcounter={path:function(p){return /^#\/p\//.test(location.hash)?p+location.hash:p}}</script>
-<script data-goatcounter="https://jjang010103.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://jjang010103.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -316,7 +316,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 /* 데스크톱 상세: 켜진 "프로젝트" 잉크 칩이 오른쪽으로 늘어나 번호와 이전·다음을 품는다(시안 v3 B, 사용자 결정 2026-09-26).
    칩(a)과 페이저(div)는 형제다 — 링크 안에 버튼을 넣을 수 없어서 두 조각을 이어 붙여 한 알약으로 보이게 한다.
    화살표는 모바일 알약의 메뉴 버튼과 같은 옅은 동그라미. "← 메인으로" 줄은 없다 — 이름을 누르면 보던 카드로 돌아간다.
-   중간 폭·모바일은 이름이 안 보여서 본문 위 줄(.dt-bar)을 그대로 쓴다 */
+   중간 폭도 같다(2026-09-27). 모바일은 메뉴 안 줄에 페이저를 둔다 */
 .nav-pager{display:none;align-items:center;gap:4px;height:44px;box-sizing:border-box;margin-left:-4px;padding:0 6px 0 0;border-radius:0 999px 999px 0;background:var(--ink);color:var(--ink-text)}
 .nav-pager .icon-btn{width:32px;height:32px;background:var(--surface-inset);color:var(--text)}
 .nav-pager .icon-btn:disabled,.nav-pager .icon-btn:disabled:hover{background:var(--surface-inset);color:var(--text);opacity:.35}
@@ -330,6 +330,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 .dt-blurb{margin:24px 0 0;max-width:640px;font-size:18px;line-height:1.7}
 .dt-side{justify-content:space-between}
 .dt-period{font-size:22px;font-weight:700;line-height:1.3}
+/* 상세 기간은 모든 폭에서 시작 — / 끝 두 줄(사용자 결정, 2026-09-27) */
+.dt-period span{display:block}
 .dt-stack{display:flex;flex-wrap:wrap;gap:2px 14px}
 .dt-stack-item{font-size:17px;font-weight:500;line-height:1.5}
 .dt-link{grid-column:span 2;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap}
@@ -351,8 +353,18 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
    토큰·명세는 100% 기준 그대로 두고 여기 한 곳에서만 줄인다. 모바일·중간 폭·인쇄는 원래 크기다. */
 @media screen and (min-width:1001px){
   .page{zoom:.9}
+  /* 푸터 동그라미는 54px(60px에서 10% 줄임)·아이콘 22px(사용자 결정, 2026-09-27) */
+  .foot-icons{grid-template-columns:repeat(2,54px);gap:10px}
+  .foot-ic{width:54px;height:54px}
+  .foot-ic svg{width:22px;height:22px}
   /* 상세 본문 카드의 내용(01 문단·02~05 항목)은 데스크톱에서 18px(사용자 결정, 2026-09-27) */
   .dt-text,.dt-item{font-size:18px}
+  /* 상세 기간 값·기술 스택은 칸을 채우게 크게 — 1440px에서 기간이 두 줄(36px·25.2px — 40·28에서 10% 줄임), 폭이 줄면 같이 줄어 칸 높이는 그대로(사용자 결정, 2026-09-27) */
+  .dt-period{font-size:clamp(21.6px,2.5vw,36px)}
+  .dt-stack-item{font-size:clamp(16.2px,1.755vw,25.2px)}
+}
+/* 상세 페이저는 데스크톱과 중간 폭 모두 켜진 "프로젝트" 칩 안에, 이름이 "메인으로" 역할(사용자 결정, 2026-09-27 — 중간 폭의 옛 본문 위 줄 제거) */
+@media screen and (min-width:721px){
   .dt-bar{display:none}
   .nav-pager{display:flex}
   .nav-ch.has-pager{border-radius:999px 0 0 999px;padding-right:12px}
@@ -377,8 +389,15 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
    ============================================================ */
 @media (min-width:721px) and (max-width:1000px){
   .page{padding:24px 24px 26px}
+  /* 이름은 뺀다 — 칩 페이저까지 한 줄에 넣으면 넘친다(사용자 결정, 2026-09-27) */
   .logo-btn{display:none}
-  .nav{margin-right:auto}
+  /* 이름 자리(왼쪽 28px)를 비워 첫 칩과 다운로드 버튼의 바깥 여백을 12px로 같게 */
+  [data-bar]{padding-left:12px}
+  .nav{margin-right:auto;gap:0}
+  /* 721px에서도 칩 페이저·도구가 한 줄에 들어가게 칩 여백과 도구 버튼을 줄인다 */
+  .nav-ch{padding:0 10px}
+  .nav-count{white-space:nowrap}
+  .tools .icon-btn{width:36px;height:36px}
   .bento,[data-projgrid],[data-edugrid]{grid-template-columns:repeat(2,minmax(0,1fr))}
   .hero-card,.dt-hero-card{grid-column:span 2;grid-row:auto}
   .proj-card{grid-row:auto}
@@ -388,6 +407,9 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .dt-hero{grid-template-rows:none}
   /* 결과물 칸은 링크가 없어도 있을 때와 같은 높이(사용자 지적, 2026-09-26) */
   .dt-link{min-height:108px}
+  /* 상세 히어로 아래는 모바일과 같은 배치: 기간 · 결과물 보기 반씩, 기술 스택은 그 아래 전체 폭(사용자 결정, 2026-09-27) */
+  .dt-hero .dt-link{grid-column:span 1}
+  .dt-hero .dt-side--stack{grid-column:span 2;order:1}
   .dt-title{font-size:48px}
 }
 
@@ -400,9 +422,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
      이름은 없다 — 히어로가 보여 준다. 맨 위에서는 쟁반색 전체 폭 바(알약 바탕 없음), 스크롤하면 가운데 위 흰 알약이 된다.
      iOS Safari 주소창이 아래에 있으므로 우리 바는 위로 올려 겹쳐 쌓이지 않게 한다. 위 여백은 바 높이(56px)만큼 비운다 */
   /* 푸터 위(52 + gap 12 = 64)와 푸터 아래(최종 수정 줄 간격 12 + 줄 약 22 + 30 = 64)를 같게 — 사용자 결정, 2026-09-27 */
-  /* 모바일은 페이지 전체를 1.1배로 그린다 — 실제 폰에서 브라우저 110% 확대가 더 잘 읽혔다(사용자 결정, 2026-09-27).
-     데스크톱의 zoom .9와 같은 방식이라 아래 px 값은 모두 1.1배로 보인다 */
-  .page{zoom:1.1;padding:80px 16px 30px;gap:12px}
+  /* 1.1배 확대는 되돌렸다(사용자 결정, 2026-09-27 — 한때 110%가 잘 읽혔지만 다시 -10%). 상세 본문 내용만 1.1배 때 크기(15.4px)를 지킨다 */
+  .page{padding:80px 16px 30px;gap:12px}
   [data-main],[data-detail]{gap:12px}
   section[id],header[id]{scroll-margin-top:72px}
   /* zoom .9: 하단 알약 시절과 같은 크기(버튼 약 36px, 사용자 결정 2026-09-26). zoom이 여백·위치도 줄이므로 나눠서 실제 px을 맞춘다 */
@@ -417,7 +438,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   [data-bar].is-pill .icon-btn.menu-btn{background:var(--surface-inset)}
   /* 열린 메뉴의 × 버튼은 닫힌 메뉴 버튼과 같은 옅은 바탕을 쓴다. 잉크로 칠하면 켜진 언어 버튼과 같은 모양이 되고,
      다크에서는 밝은 동그라미로 뒤집혀 보였다(사용자 지적, 2026-09-26) */
-  /* 버튼 44px(× .9 × 1.1 ≈ 44px, 손가락 타깃 기준)·글리프 16px, 알약 안쪽 여백 10px(디자인 검증 반영, 2026-09-27) */
+  /* 버튼 44px(× .9 ≈ 40px — 페이지 1.1배를 되돌려 손가락 타깃 44px 아래가 됐다, 2026-09-27)·글리프 16px, 알약 안쪽 여백 10px(디자인 검증 반영, 2026-09-27) */
   [data-bar] .icon-btn{width:44px;height:44px;font-size:14px}
   [data-bar] .icon-btn--ko{font-size:16px}
   [data-bar] .icon-btn svg{width:16px;height:16px}
@@ -479,7 +500,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .sec-title{font-size:26px}
   .career-card{min-height:0;padding:24px}
   .co-name{font-size:20px}
-  .co-item,.dt-item{font-size:14px}
+  .co-item{font-size:14px}
 
   .proj-card[data-kind="tall"]{min-height:0}
   .proj-card[data-kind="feature"]{display:flex;padding:12px}
@@ -532,16 +553,24 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
      결과물 칸은 링크가 없어도 있을 때와 같은 높이 — 옆 기간 카드와 한 줄이라 줄 높이를 함께 쓴다 */
   /* flex-wrap:nowrap — 기본 규칙의 wrap이 세로 방향에서 새 열을 만들어, 제목이 두 줄인 영어·일본어에서 알약이 카드 오른쪽 밖으로 밀려났다 */
   .dt-hero .dt-link{grid-column:span 1;flex-direction:column;flex-wrap:nowrap;align-items:flex-start;justify-content:space-between}
-  /* 반 칸(1.1배 확대 후 안쪽 약 126px)에서 "공식 웹사이트 ↗"가 두 줄로 꺾이거나 넘치지 않게 알약을 작게 */
-  .dt-hero .card.dt-link{padding:20px 14px}
-  .dt-hero .dt-link .ink-pill{min-height:40px;padding:0 10px;font-size:13px;white-space:nowrap}
+  /* 반 칸(안쪽 약 126px, 1.1배 시절 기준)에서 "공식 웹사이트 ↗"가 두 줄로 꺾이거나 넘치지 않게 알약을 작게 */
   /* 제목이 두 줄인 영어·일본어도 360px 폭에서 정사각형 안에 들어가게 제목을 한 단계 작게 */
   .dt-hero .dt-link-t{font-size:17px}
-  html[lang="en"] .dt-hero .dt-link .ink-pill{padding:0 8px;font-size:12px}
+  /* 기간 값은 기본값 22px 그대로, 두 줄 허용(사용자 결정, 2026-09-27) */
+  /* 결과물 칸은 132px 정사각형, 나머지는 기간 칸(사용자 결정, 2026-09-27). 세로 배치(제목 위·링크 아래)는 그대로 */
+  .bento.dt-hero{grid-template-columns:minmax(0,1fr) 132px}
   .dt-hero .dt-side--stack{grid-column:span 2;order:1}
   /* 기간·결과물 보기는 정사각형을 풀고 내용 높이로 낮춘다(사용자 결정, 2026-09-27).
      안쪽 여백 18px·간격 8px — 기간이 두 줄로만 꺾여야 칸이 낮아진다(24px이면 세 줄로 흩어진다) */
   .dt-hero .card.dt-side:not(.dt-side--stack),.dt-hero .card.dt-link{padding:18px;gap:8px}
+  .dt-hero .card.dt-link{aspect-ratio:1}
+  /* 모바일 결과물 칸은 제목 아래 왼쪽에 ↗ 동그라미 하나(시안 A — 사용자 결정, 2026-09-27). "공식 웹사이트" 글자는 화면에서 숨기고 링크 이름으로만 남긴다.
+     화살표는 동그라미 기준 절대 위치로 둔다. ↗는 화살촉(오른쪽 위)에 무게가 몰려 수학적 가운데면 위·오른쪽으로 떠 보여서 왼쪽 아래로 1.5px 옮겨 눈으로 가운데를 맞춘다(사용자 지적, 2026-09-27) — 숨긴 글자가 브라우저 최소 글자 크기 때문에 폭을 가지면 flex 가운데 정렬이 밀린다.
+     ::after는 동그라미 위치(칸 안쪽 18px)에서 132px 칸 전체를 덮어 어디를 눌러도 열린다 */
+  .dt-hero .dt-link .ink-pill{position:relative;width:40px;height:40px;min-height:0;padding:0;font-size:0;color:transparent;overflow:visible}
+  /* 화살표 글자(↗)는 서체마다 위치가 틀어져서, 다른 아이콘과 같은 1.8 굵기 선 아이콘을 마스크로 그린다 */
+  .dt-hero .dt-link .ink-pill::before{content:"";position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-9px 0 0 -9.5px;background:var(--ink-text);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.75 12.25l8.5-8.5M6.25 3.75h6v6'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.75 12.25l8.5-8.5M6.25 3.75h6v6'/%3E%3C/svg%3E") center/contain no-repeat}
+  .dt-hero .dt-link .ink-pill::after{content:"";position:absolute;left:-18px;bottom:-18px;width:132px;height:132px}
   /* 모바일 반 칸 연락처는 44px 동그라미 */
   .contact-list{grid-template-columns:repeat(2,44px);gap:8px}
   .contact-card .contact-row .copy-btn,.contact-links a{width:44px;height:44px}
@@ -549,7 +578,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .dt-media{padding:12px}
   .dt-media .pc-img{height:220px}
   .dt-sec-h{font-size:17px}
-  .dt-text{font-size:14px}
+  .dt-text,.dt-item{font-size:15.4px}
 }
 @media print{
   :root{color-scheme:light only}
@@ -592,9 +621,9 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
       <a href="{{ n.href }}" onClick="{{ n.go }}" class="nav-ch {{ n.cls }}" aria-current="{{ n.cur }}">{{ n.label }}</a>
       <sc-if value="{{ n.pager }}">
         <div class="nav-pager">
-          <span class="dat nav-count" aria-live="polite">{{ n.pagePos }}</span>
-          <button onClick="{{ n.goPrev }}" disabled="{{ n.noPrev }}" aria-label="{{ n.prevLabel }}" title="{{ n.prevLabel }}" class="icon-btn"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 2.5L4 7l4.5 4.5"></path></svg></button>
-          <button onClick="{{ n.goNext }}" disabled="{{ n.noNext }}" aria-label="{{ n.nextLabel }}" title="{{ n.nextLabel }}" class="icon-btn"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 2.5L10 7l-4.5 4.5"></path></svg></button>
+          <span class="dat nav-count" aria-live="polite">{{ pagePos }}</span>
+          <button onClick="{{ goPrev }}" disabled="{{ noPrev }}" aria-label="{{ prevLabel }}" title="{{ prevLabel }}" class="icon-btn"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 2.5L4 7l4.5 4.5"></path></svg></button>
+          <button onClick="{{ goNext }}" disabled="{{ noNext }}" aria-label="{{ nextLabel }}" title="{{ nextLabel }}" class="icon-btn"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 2.5L10 7l-4.5 4.5"></path></svg></button>
         </div>
       </sc-if>
     </sc-for>
@@ -795,7 +824,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
       </div>
       <div class="card dt-side">
         <div class="label">{{ periodLabel }}</div>
-        <div class="dat dt-period">{{ p.date }}</div>
+        <div class="dat dt-period"><span>{{ p.dateFrom }}</span> <span>{{ p.dateTo }}</span></div>
       </div>
       <div class="card dt-side dt-side--stack">
         <div class="label">{{ stackLabel }}</div>
@@ -805,7 +834,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
       <div class="card card--ink dt-link" data-inverted>
         <sc-if value="{{ p.url }}">
           <p class="dt-link-t">{{ resultLabel }}</p>
-          <a class="ink-pill" href="{{ p.url }}" target="_blank" rel="noopener">{{ linkLabel }} &#8599;</a>
+          <a class="ink-pill" href="{{ p.url }}" target="_blank" rel="noopener">{{ linkLabel }}&nbsp;&#8599;</a>
         </sc-if>
       </div>
     </div>
@@ -1286,18 +1315,9 @@ class Component extends DCLogic {
   state = { lang: 'ko', theme: 'light', openId: null, copied: '', navIdx: 0, scrolled: false, menuOpen: false };
 
   componentDidMount() {
-    let theme = null, lang = null;
-    try {
-      theme = localStorage.getItem('mj-resume-theme');
-      lang = localStorage.getItem('mj-resume-lang');
-    } catch (e) {}
-    if (!theme) {
-      theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    if (!lang) lang = 'ko';
-    document.documentElement.style.colorScheme = theme;
-    document.documentElement.lang = lang;
-    this.setState({ theme, lang });
+    // <head> 부트 스크립트가 이미 저장값·시스템 설정으로 정해 <html>에 걸어 두었다
+    const root = document.documentElement;
+    this.setState({ theme: root.style.colorScheme, lang: root.lang });
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('scroll', this.onScroll, { passive: true });
     window.addEventListener('resize', this.onScroll);
@@ -1305,11 +1325,11 @@ class Component extends DCLogic {
     this.applyHash();
     this.onScroll();
     // nav fills depend on final layout — fonts, images and reflow all land here
-    this._ro = new ResizeObserver(() => this.onScroll());
-    this._ro.observe(document.documentElement);
+    new ResizeObserver(() => this.onScroll()).observe(document.documentElement);
   }
 
   // file://이나 http에서는 navigator.clipboard가 없으므로 execCommand로 떨어진다.
+  // https여도 쓰기 권한을 거부하는 브라우저·웹뷰가 있다 — 그때도 같은 경로로 떨어진다.
   copyText(text, key) {
     const done = () => {
       this.setState({ copied: key });
@@ -1329,15 +1349,6 @@ class Component extends DCLogic {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(done, fallback);
     } else fallback();
-  }
-  componentWillUnmount() {
-    if (this._ro) this._ro.disconnect();
-    cancelAnimationFrame(this._raf);
-    clearTimeout(this._copyTimer);
-    window.removeEventListener('keydown', this.onKeyDown);
-    window.removeEventListener('scroll', this.onScroll);
-    window.removeEventListener('resize', this.onScroll);
-    window.removeEventListener('hashchange', this.applyHash);
   }
 
   // 활성 챕터 인덱스 하나만 고른다. 상세 뷰에서는 항상 "프로젝트"다.
@@ -1488,7 +1499,7 @@ class Component extends DCLogic {
     // 340ms 확산이 끝나기 전의 재클릭은 버린다. 겹치면 앞 전환의 콜백이 늦게 착지해 상태가 뒤집힌다.
     if (this._vtBusy) return;
     const theme = this.state.theme === 'dark' ? 'light' : 'dark';
-    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // Safari(iOS는 모든 브라우저가 WebKit)는 전체 화면 스냅샷에 clip-path를 매 프레임 다시 그려 버벅이고,
     // 스냅샷이 덮는 동안 아이콘 회전이 멈췄다가 튄다 — 원형 확산 없이 바로 바꾼다(사용자 지적, 2026-09-27)
@@ -1497,12 +1508,10 @@ class Component extends DCLogic {
 
     // 원형 확산은 항상 눌린 테마 버튼 정중앙에서 시작한다.
     // 커서 좌표(clientX/Y)를 쓰면 키보드·터치에서 0이나 엉뚱한 지점이 잡힌다.
-    let btn = e && (e.currentTarget || (e.target && e.target.closest && e.target.closest('[data-themebtn]')));
-    if (!btn || !btn.getBoundingClientRect) btn = document.querySelector('[data-themebtn]');
-    const br = btn && btn.getBoundingClientRect();
+    const br = e.currentTarget.getBoundingClientRect();
     const w = window.innerWidth, h = window.innerHeight;
-    const x = br ? br.left + br.width / 2 : w / 2;
-    const y = br ? br.top + br.height / 2 : h / 2;
+    const x = br.left + br.width / 2;
+    const y = br.top + br.height / 2;
 
     // px가 아니라 %로 넘긴다. clip-path는 ::view-transition-new(root)의 박스를 기준으로
     // 푸는데, 그 박스가 뷰포트와 1:1이 아닌 경우(스냅샷 크기·줌·스크롤바) px는 어긋난다.
@@ -1567,8 +1576,8 @@ class Component extends DCLogic {
       });
       return {
         // date는 '2025.02 — NOW' 한 형식으로 저장하고, NOW만 언어에 맞춰 바꿔 그린다
-        id: p.id, num: pad(i + 1), co: t(p.co), date: p.date.replace('NOW', t(T.now)), url: p.url,
-        title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb), intro: t(p.intro), summary: t(p.summary),
+        id: p.id, num: pad(i + 1), co: t(p.co), date: p.date.replace('NOW', t(T.now)), dateFrom: p.date.split(' — ')[0] + ' —', dateTo: p.date.split(' — ')[1].replace('NOW', t(T.now)), url: p.url,
+        title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb), summary: t(p.summary),
         stack: p.stack, img: p.img || '', noImg: !p.img,
         // 벤토 칸 수는 데이터가 정하고, 모양(대표·보조·가로형)은 칸 수에서 나온다.
         span: p.span || 1, rows: p.rows || 1,
@@ -1630,12 +1639,7 @@ class Component extends DCLogic {
         go: (e) => { e.preventDefault(); this.closeMenu(); if (this.state.openId) this.closeDetail('s-' + n.id); else this.goTo('s-' + n.id); },
         cls: (i === this.state.navIdx ? 'is-on' : '') + (pager && i === PROJ_NAV ? ' has-pager' : ''), cur: i === this.state.navIdx ? 'true' : null,
         // 상세에서는 켜진 "프로젝트" 칩 옆에 페이저가 붙는다(데스크톱만 CSS로 보인다)
-        pager: pager && i === PROJ_NAV,
-        pagePos: pager ? pad(openIdx + 1) + ' / ' + pad(total) : '',
-        noPrev: openIdx <= 0, noNext: openIdx < 0 || openIdx >= total - 1,
-        prevLabel: openIdx > 0 ? t(T.prev) + ': ' + t(PROJECTS[openIdx - 1].title) : t(T.prev),
-        nextLabel: openIdx >= 0 && openIdx < total - 1 ? t(T.next) + ': ' + t(PROJECTS[openIdx + 1].title) : t(T.next),
-        goPrev: () => this.step(-1), goNext: () => this.step(1) })),
+        pager: pager && i === PROJ_NAV })),
       stackGroups: STACK.map((g, i) => ({ label: t(g.label), items: g.items, cls: i === 0 ? 'stack-items--core' : '' })),
       schoolLabel: t(EDU.school.label),
       schools: EDU.school.items.map(it => ({ school: t(it.school), major: t(it.major), period: it.period })),
