@@ -37,7 +37,7 @@ var f=document.getElementById('favicon');if(f)f.href='./favicon-'+t+'.svg';})()<
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-<script>(function(){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',document.documentElement.style.colorScheme==='dark'?'#121214':'#ecebe6')})()</script>
+<script>(function(){var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',document.documentElement.style.colorScheme==='dark'?'#0a0a0b':'#ecebe6')})()</script>
 <style>
 /* ============================================================
    LAYOUT ARCHITECTURE — "한 판의 벤토" (시안 C + C-4)
@@ -50,8 +50,8 @@ var f=document.getElementById('favicon');if(f)f.href='./favicon-'+t+'.svg';})()<
    ============================================================ */
 :root{
   color-scheme:light dark;
-  --canvas:light-dark(#ecebe6,#121214);      /* 쟁반: 카드 사이 틈 */
-  --surface:light-dark(#ffffff,#1d1d21);     /* 기본 카드·내비 */
+  --canvas:light-dark(#ecebe6,#0a0a0b);      /* 쟁반: 카드 사이 틈. 다크는 거의 검정으로 내려 카드를 띄운다(팔레트 A, 사용자 결정 2026-09-27) */
+  --surface:light-dark(#ffffff,#1b1b1e);     /* 기본 카드·내비 */
   --surface-inset:light-dark(#ecebe6,#2a2a2f);  /* 흰 카드 안의 칩·태그 */
   --media:light-dark(#d9d7cf,#2f2f35);       /* 이미지 자리 */
   --hairline:light-dark(#dcdad3,#2f2f35);
@@ -1488,7 +1488,7 @@ class Component extends DCLogic {
       this.setState({ theme }, () => {
         document.documentElement.style.colorScheme = theme;
         const tc = document.querySelector('meta[name="theme-color"]');
-        if (tc) tc.setAttribute('content', theme === 'dark' ? '#121214' : '#ecebe6');
+        if (tc) tc.setAttribute('content', theme === 'dark' ? '#0a0a0b' : '#ecebe6');
         const fav = document.getElementById('favicon');
         if (fav) fav.href = './favicon-' + theme + '.svg';
         try { localStorage.setItem('mj-resume-theme', theme); } catch (e) {}

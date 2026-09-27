@@ -1,13 +1,13 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-27T11:52:21+00:00",
+  "generatedAt": "2026-09-27T12:52:58+00:00",
   "title": "Design System: 장민규 이력서",
   "extensions": {
     "colorMeta": {
       "canvas": {
         "role": "neutral",
         "displayName": "쟁반 (Warm Tray)",
-        "canonical": "light-dark(#ecebe6,#121214)",
+        "canonical": "light-dark(#ecebe6,#0a0a0b)",
         "tonalRamp": [
           "#0c0b08",
           "#262521",
@@ -22,7 +22,7 @@
       "surface": {
         "role": "neutral",
         "displayName": "카드 (Card White)",
-        "canonical": "light-dark(#ffffff,#1d1d21)",
+        "canonical": "light-dark(#ffffff,#1b1b1e)",
         "tonalRamp": [
           "#0b0b0b",
           "#252525",

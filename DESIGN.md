@@ -2,8 +2,8 @@
 name: 장민규 이력서
 description: 흰 카드와 파란 액센트 한 장으로 챕터를 벤토처럼 짜는 3개 국어 개발자 포트폴리오
 colors:
-  canvas: "light-dark(#ecebe6,#121214)"
-  surface: "light-dark(#ffffff,#1d1d21)"
+  canvas: "light-dark(#ecebe6,#0a0a0b)"
+  surface: "light-dark(#ffffff,#1b1b1e)"
   surface-inset: "light-dark(#ecebe6,#2a2a2f)"
   media: "light-dark(#d9d7cf,#2f2f35)"
   hairline: "light-dark(#dcdad3,#2f2f35)"
