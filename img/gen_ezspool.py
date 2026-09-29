@@ -1,22 +1,14 @@
-# Ez-Spool 이미지 생성기. 사이트 다크 토큰 색만 쓴다.
-#   python3 gen_ezspool.py <out_dir>  →  ezspool.svg(상세, 1200×440) · ezspool-thumb.svg(카드, 600×840)
+# Ez-Spool 이미지 생성기(공용 도구는 imgkit.py, 규칙은 AGENTS.md "프로젝트 이미지 만들기").
+#   python3 img/gen_ezspool.py img  →  ezspool.svg(상세, 1200×440) · ezspool-thumb.svg(카드, 600×840)
 # 칸 실측(2026-09-29): 상세 1181×432(데스크톱)·334×220(모바일), 카드 198×277·120×159. 모두 object-fit:cover.
 import math, os, sys
-
-BG, PANEL, LINE, INSET = '#1b1b1e', '#232327', '#2f2f35', '#2a2a2f'
-TEXT, BODY, MUTED = '#ecebe6', '#c4c4c8', '#9a9a9f'
-RED = '#f05a5f'
-MONO = "'SF Mono','Menlo','Consolas',monospace"
-C, Sn = math.cos(math.radians(30)), math.sin(math.radians(30))
+from imgkit import *
 
 # ── 배관 모델(3D). 본관 엘보 7개 + 티 분기(밸브). 스풀 셋으로 나뉜다
 P = [(0, 0, 3), (0, 0, 0), (3.5, 0, 0), (3.5, 0, 2.5), (3.5, -3, 2.5), (3.5, -3, 4.5),
      (6, -3, 4.5), (6, -3, 2), (6, -5, 2)]
 T = (1.5, 0, 0)
 BR = [T, (1.5, 2.2, 0), (1.5, 2.2, -1.5)]
-
-def lerp(a, b, t):
-    return tuple(a[i] + (b[i] - a[i]) * t for i in range(3))
 
 F1, F2 = lerp(T, P[2], 0.5), lerp(P[5], P[6], 0.5)
 SPOOLS = [([P[0], P[1], T, F1], TEXT), ([F1, P[2], P[3], P[4], P[5], F2], RED), ([F2, P[6], P[7], P[8]], MUTED)]
@@ -27,30 +19,6 @@ CHIPS = [(P[1], 'W1', 150, INSET, TEXT), (T, 'W2', -60, INSET, TEXT), (F1, 'F3',
          (P[7], 'W7', 150, INSET, TEXT),
          (lerp(P[0], P[1], 0.45), 'SP-01', 0, TEXT, BG), (lerp(P[3], P[4], 0.5), 'SP-02', 60, RED, '#ffffff'),
          (lerp(P[7], P[8], 0.5), 'SP-03', 60, MUTED, BG)]
-LEAD = 38
-
-def chip_w(label):
-    return 14 + 8.6 * len(label)
-
-class Svg:
-    def __init__(self, w, h):
-        self.w, self.h, self.o = w, h, []
-        self.a(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" width="{w}" height="{h}">')
-        self.a(f'<rect width="{w}" height="{h}" fill="{BG}"/>')
-        self.a(f'<g fill="{INSET}">' + ''.join(f'<circle cx="{x}" cy="{y}" r="1.1"/>'
-               for x in range(12, w, 24) for y in range(12, h, 24)) + '</g>')
-    def a(self, s):
-        self.o.append(s)
-    def text(self, x, y, s, size, col, anchor='start', fw='400', ls=None):
-        l = f' letter-spacing="{ls}"' if ls else ''
-        self.a(f'<text x="{x:.1f}" y="{y:.1f}" font-family="{MONO}" font-size="{size}" font-weight="{fw}" fill="{col}" text-anchor="{anchor}"{l}>{s}</text>')
-    def save(self, path):
-        open(path, 'w').write('\n'.join(self.o + ['</svg>']))
-
-def iso(p, S):
-    x, y, z = p
-    return ((x - y) * C * S, (x + y) * Sn * S - z * S)
-
 def extents(S):
     """도면 전체(배관·치수·칩)의 화면 상자, 원점 기준"""
     xs, ys = [], []
@@ -62,25 +30,12 @@ def extents(S):
         for p in (p0, p1):
             add(*iso(tuple(p[i] + off[i] for i in range(3)), S), 0, 16)
     for p, lab, ang, *_ in CHIPS:
-        x, y = iso(p, S)
-        c, s = math.cos(math.radians(ang)), math.sin(math.radians(ang))
-        add(x + LEAD * c + c * chip_w(lab) / 2, y + LEAD * s + s * 12, chip_w(lab) / 2, 12)
+        add(*chip_box(*iso(p, S), ang, lab))
     return min(xs), min(ys), max(xs), max(ys)
 
-def fit(box):
-    """box(x0,y0,x1,y1) 안에 가장 크게 들어가는 S와 원점"""
-    x0, y0, x1, y1 = box
-    S = 10
-    while True:
-        e = extents(S + 0.5)
-        if e[2] - e[0] > x1 - x0 or e[3] - e[1] > y1 - y0:
-            break
-        S += 0.5
-    e = extents(S)
-    return S, ((x0 + x1) - (e[0] + e[2])) / 2, ((y0 + y1) - (e[1] + e[3])) / 2
 
 def draw_pipe(g, box):
-    S, ox, oy = fit(box)
+    S, ox, oy = fit(extents, box)
     pr = lambda p: (iso(p, S)[0] + ox, iso(p, S)[1] + oy)
     k = S / 48  # 선 굵기·기호 크기를 도면 크기에 맞춘다
     # 치수선
@@ -135,27 +90,12 @@ def draw_pipe(g, box):
         x, y = pr(p)
         g.a(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{16*k:.1f}" fill="none" stroke="{RED}" stroke-width="1.5" stroke-dasharray="3 3"/>'
             f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{7.5*k:.1f}" fill="{RED}"/>')
-    # 번호 칩: 같은 길이의 선 끝에 알약. 선 방향으로 알약을 밀어 선이 알약 가장자리에 닿게 한다
+    # 번호 칩
     for p, lab, ang, fill, fg in CHIPS:
-        x, y = pr(p)
-        c, s = math.cos(math.radians(ang)), math.sin(math.radians(ang))
-        ex, ey = x + LEAD * c, y + LEAD * s
-        w = chip_w(lab)
-        cx, cy = ex + c * w / 2, ey + s * 12
-        g.a(f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{ex:.1f}" y2="{ey:.1f}" stroke="{MUTED}" stroke-width="1.2"/>')
-        g.a(f'<rect x="{cx - w/2:.1f}" y="{cy - 12:.1f}" width="{w:.1f}" height="24" rx="12" fill="{fill}"/>')
-        g.text(cx, cy + 4.5, lab, 13, fg, 'middle', '600')
-
-def compass(g, x, y):
-    ex, ey = x + C * 36, y - Sn * 36
-    g.a(f'<g stroke="{MUTED}" stroke-width="1.5" fill="none" opacity=".8" stroke-linecap="round">'
-        f'<line x1="{x}" y1="{y}" x2="{ex:.1f}" y2="{ey:.1f}"/>'
-        f'<path d="M{ex-9:.1f},{ey-2:.1f} L{ex:.1f},{ey:.1f} L{ex-5:.1f},{ey+8:.1f}"/></g>')
-    g.text(ex + 8, ey - 4, 'N', 14, MUTED)
+        chip(g, *pr(p), ang, lab, fill, fg)
 
 def spool_list(g, x, y, w, h):
-    g.a(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="22" fill="{PANEL}"/>')
-    g.text(x + 20, y + 32, 'SPOOL LIST', 12, MUTED, ls='1.5')
+    panel(g, x, y, w, h, 'SPOOL LIST')
     pad, top, gap = 12, 48, 10
     th = (h - top - pad - gap * 2) / 3
     for i, (ps, col) in enumerate(SPOOLS):
@@ -174,38 +114,6 @@ def spool_list(g, x, y, w, h):
         g.a(f'<polyline points="{d}" fill="none" stroke="{RED if sel else BODY}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>')
         g.text(x + pad + 14, ty + th - 14, f'SP-0{i+1}', 12, TEXT if sel else MUTED)
 
-def tabs(g, cx, y):
-    items, pad, gap = [('3D', 60), ('2D ISO', 92), ('WELD MAP', 112)], 6, 6
-    tw = sum(w for _, w in items) + gap * 2 + pad * 2
-    x = cx - tw / 2
-    g.a(f'<rect x="{x:.1f}" y="{y}" width="{tw:.1f}" height="48" rx="24" fill="{PANEL}"/>')
-    x += pad
-    for i, (lab, w) in enumerate(items):
-        on = i == 2
-        if on:
-            g.a(f'<rect x="{x:.1f}" y="{y+pad}" width="{w}" height="36" rx="18" fill="{TEXT}"/>')
-        g.text(x + w / 2, y + 29, lab, 13, BG if on else MUTED, 'middle', '600')
-        x += w + gap
-
-def title_block(g, x, y, w, h):
-    rows = [[('SPOOL NO', 'SP-02', RED), ('DWG NO', 'ISO-0412', TEXT), ('REV', '01', TEXT)],
-            [('SHOP WELD', '4', TEXT), ('FIELD WELD', '2', RED), ('SHEET', '2 / 3', TEXT)]]
-    cw = [w * 0.36, w * 0.38, w * 0.26]
-    st = f'stroke="{MUTED}" stroke-width="1" opacity=".6"'
-    g.a(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="none" {st}/>'
-        f'<line x1="{x}" y1="{y+h/2}" x2="{x+w}" y2="{y+h/2}" {st}/>')
-    cx = x
-    for c in cw[:-1]:
-        cx += c
-        g.a(f'<line x1="{cx:.1f}" y1="{y}" x2="{cx:.1f}" y2="{y+h}" {st}/>')
-    for r, row in enumerate(rows):
-        cx = x
-        for (k, v, col), c in zip(row, cw):
-            yy = y + r * h / 2
-            g.text(cx + 12, yy + 17, k, 10, MUTED, ls='.5')
-            g.text(cx + 12, yy + 39, v, 16, col, fw='700')
-            cx += c
-
 out = sys.argv[1] if len(sys.argv) > 1 else '.'
 
 # 상세 1200×440: 데스크톱은 거의 다 보이고, 모바일(1.52:1)은 가운데 약 668px(266~934)만 보인다.
@@ -218,7 +126,9 @@ g.save(os.path.join(out, 'ezspool.svg'))
 
 # 카드 600×840(데스크톱 0.71:1 · 모바일 0.76:1 — 거의 안 잘린다): 위 보기 탭 · 가운데 도면 · 아래 표제란
 g = Svg(600, 840)
-tabs(g, 300, 44)
+tabs(g, 300, 44, [('3D', 60), ('2D ISO', 92), ('WELD MAP', 112)], 2)
 draw_pipe(g, (44, 124, 556, 668))
-title_block(g, 44, 700, 512, 96)
+grid_block(g, 44, 700, 512, 96,
+           [[('SPOOL NO', 'SP-02', RED), ('DWG NO', 'ISO-0412', TEXT), ('REV', '01', TEXT)],
+            [('SHOP WELD', '4', TEXT), ('FIELD WELD', '2', RED), ('SHEET', '2 / 3', TEXT)]], [0.36, 0.38, 0.26])
 g.save(os.path.join(out, 'ezspool-thumb.svg'))

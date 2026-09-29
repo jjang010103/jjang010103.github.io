@@ -1,2 +1,5 @@
 # 로컬 개발 환경 설정 — launch.json / server.ps1에 머신별 절대 경로가 들어 있다
 .claude/
+
+# 이미지 생성기(img/*.py)가 imgkit을 불러올 때 생기는 캐시
+__pycache__/
