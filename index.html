@@ -336,8 +336,9 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 .dt-stack-item{font-size:17px;font-weight:500;line-height:1.5}
 .dt-link{grid-column:span 2;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap}
 .dt-link-t{margin:0;font-size:28px;font-weight:700;line-height:1.3}
-.dt-media{padding:16px}
-.dt-media .pc-img{height:480px}
+/* 상세 대표 이미지는 카드를 꽉 채운다 — 카드 바탕이 테두리처럼 둘리지 않게 여백 없이, 모서리는 카드를 따른다(사용자 결정, 2026-09-29) */
+.dt-media{padding:0}
+.dt-media .pc-img{height:480px;border-radius:inherit}
 .dt-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 .dt-stat{gap:8px}
 .dt-stat-v{font-size:64px;font-weight:700;line-height:1;letter-spacing:-.02em}
@@ -580,7 +581,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .contact-list{grid-template-columns:repeat(2,44px);gap:8px}
   .contact-card .contact-row .copy-btn,.contact-links a{width:44px;height:44px}
   .contact-card .type-ico,.link-ico{width:18px;height:18px}
-  .dt-media{padding:12px}
+  /* 모바일 .card{padding:24px}가 뒤에서 이기므로 꽉 채움을 다시 적는다 */
+  .dt-media{padding:0}
   .dt-media .pc-img{height:220px}
   .dt-sec-h{font-size:17px}
   .dt-text,.dt-item{font-size:15.4px}
@@ -758,7 +760,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
     <sc-for list="{{ cards }}" as="p" hint-placeholder-count="6">
       <article onClick="{{ open }}" data-pid="{{ p.id }}" data-kind="{{ p.kind }}" data-inverted="{{ p.inverted }}" class="card proj-card {{ p.cls }}" style="--span:{{ p.span }};--rows:{{ p.rows }}">
         <div class="pc-img">
-          <sc-if value="{{ p.img }}"><img src="{{ p.img }}" alt="" loading="lazy"></sc-if>
+          <sc-if value="{{ p.img }}"><img src="{{ p.thumb }}" alt="" loading="lazy"></sc-if>
           <sc-if value="{{ p.noImg }}"><span class="cap">{{ imgSoon }}</span></sc-if>
         </div>
         <div class="pc-text">
@@ -1122,6 +1124,7 @@ const PROJECTS = [
   {
     id: 'ezspool', span: 2, ink: true,
     co: CO.huen, date: '2019.02 — 2023.10',
+    img: './img/ezspool.svg', thumb: './img/ezspool-thumb.svg',
     url: 'https://www.huensystem.com/ez-solutions/solutions/ez-spool',
     title: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool — piping drawing automation', ja: '配管図面自動化 Ez-Spool' },
     mtitle: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool — Piping Drawing Automation', ja: '配管図面自動化 Ez-Spool' },
@@ -1584,6 +1587,8 @@ class Component extends DCLogic {
         id: p.id, num: pad(i + 1), co: t(p.co), date: p.date.replace('NOW', t(T.now)), dateFrom: p.date.split(' — ')[0] + ' —', dateTo: p.date.split(' — ')[1].replace('NOW', t(T.now)), url: p.url,
         title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb), summary: t(p.summary),
         stack: p.stack, img: p.img || '', noImg: !p.img,
+        // 카드 썸네일은 세로 칸(약 0.7:1), 상세는 가로 칸(약 2.7:1)이라 thumb이 있으면 카드에만 따로 쓴다
+        thumb: p.thumb || p.img || '',
         // 벤토 칸 수는 데이터가 정하고, 모양(대표·보조·가로형)은 칸 수에서 나온다.
         span: p.span || 1, rows: p.rows || 1,
         kind: (p.rows || 1) > 1 ? 'feature' : (p.span || 1) > 1 ? 'wide' : 'tall',
