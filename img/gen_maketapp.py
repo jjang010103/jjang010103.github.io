@@ -126,9 +126,15 @@ def toast(g, x, y, w):
 
 
 out = sys.argv[1] if len(sys.argv) > 1 else '.'
+ZOOM = 0.8   # 그림 전체를 캔버스 가운데 기준으로 줄인다 — 꽉 차 답답했다(사용자 결정, 2026-09-30)
+
+
+def zoom_in(g):
+    g.a(f'<g transform="translate({g.w * (1 - ZOOM) / 2:.1f} {g.h * (1 - ZOOM) / 2:.1f}) scale({ZOOM})">')
 
 # 상세 1200×440(데스크톱): 브라우저 속 쇼핑몰 → CREATE → 같은 쇼핑몰의 PC 앱 창(+ 푸시 알림)
 g = Svg(1200, 440)
+zoom_in(g)
 label(g, 60, 24, 'WEBSITE', INSET, TEXT)
 browser(g, 60, 62, 400, 350)
 arrow(g, 478, 236, 530)
@@ -137,13 +143,16 @@ arrow(g, 670, 236, 722)
 label(g, 740, 24, 'PC APP', BLUE, BG)
 app_window(g, 740, 62, 400, 350)
 toast(g, 888, 344, 280)
+g.a('</g>')
 g.save(os.path.join(out, 'maketapp.svg'), LIGHT_MT)
 
 # 상세 모바일 668×440: 브라우저 → PC 앱 두 창만(가운데 상자 없이 화살표)
 g = Svg(668, 440)
+zoom_in(g)
 label(g, 28, 24, 'WEBSITE', INSET, TEXT)
 browser(g, 28, 62, 280, 350)
 arrow(g, 316, 236, 352)
 label(g, 360, 24, 'PC APP', BLUE, BG)
 app_window(g, 360, 62, 280, 350)
+g.a('</g>')
 g.save(os.path.join(out, 'maketapp-m.svg'), LIGHT_MT)
