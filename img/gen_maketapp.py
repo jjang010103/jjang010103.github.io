@@ -1,6 +1,6 @@
 # MakeTApp 이미지 생성기(공용 도구는 imgkit.py, 규칙은 AGENTS.md "프로젝트 이미지 만들기").
 #   python3 img/gen_maketapp.py img  →  maketapp.svg(상세 데스크톱) · maketapp-m.svg(상세 모바일) + 라이트판
-# 무엇을 하는 서비스인지 그림만 봐도 읽히게: 브라우저 속 쇼핑몰 → BUILD → 주소창 없는 PC 앱 창(같은 쇼핑몰) + 푸시.
+# 무엇을 하는 서비스인지 그림만 봐도 읽히게: 브라우저 속 쇼핑몰 → CREATE → 주소창 없는 PC 앱 창(같은 쇼핑몰) + 푸시.
 # 추상 카드 격자만 그렸더니 무슨 서비스인지 알 수 없었다(사용자 지적, 2026-09-30).
 # 원본 참고: 티앱스토어 소개 영상·입점 혜택(쇼핑몰 PC 앱, 바탕화면 뱃지, 타겟 푸시). 1칸 카드라 썸네일은 만들지 않는다.
 import os, sys
@@ -101,17 +101,19 @@ def arrow(g, x0, y, x1):
 
 
 def build(g, cx, cy):
-    """가운데 포장 단계: 상자(앱 로고) 뒤로 여러 앱 아이콘이 부채꼴로 찍혀 나온다 + BUILD 라벨"""
+    """가운데 제작 단계: 상자(앱 로고) 뒤로 여러 앱 아이콘이 부채꼴로 찍혀 나온다 + CREATE 라벨.
+    상자 윗면·옆면은 두 테마 모두 밝게 — 다크에서 어두운 상자가 바탕에 묻혔다(사용자 지적, 2026-09-30)"""
     for i, (dx, dy, rot, col) in enumerate(((-34, 6, -16, LAV), (34, 6, 16, RED), (0, -6, 0, MUTED))):
         g.a(f'<g transform="translate({cx+dx} {cy-40+dy}) rotate({rot})">')
         app_icon(g, 0, 0, 46, col)
         g.a('</g>')
     # 상자: 앞면 + 윗면 뚜껑
-    g.a(f'<path d="M{cx-52} {cy-6} l52 -18 l52 18 l-52 18 z" fill="{INSET}" stroke="{LINE}" stroke-width="2" stroke-linejoin="round"/>')
-    g.a(f'<path d="M{cx-52} {cy-6} v54 l52 18 v-54 z" fill="{PANEL}" stroke="{LINE}" stroke-width="2" stroke-linejoin="round"/>')
+    g.a(f'<path d="M{cx-52} {cy-6} l52 -18 l52 18 l-52 18 z" fill="{CARD}" stroke="{LINE}" stroke-width="2" stroke-linejoin="round"/>')
+    g.a(f'<path d="M{cx-52} {cy-6} v54 l52 18 v-54 z" fill="{TILE}" stroke="{LINE}" stroke-width="2" stroke-linejoin="round"/>')
     g.a(f'<path d="M{cx+52} {cy-6} v54 l-52 18 v-54 z" fill="{BLUE}" stroke="{LINE}" stroke-width="2" stroke-linejoin="round"/>')
     g.a(f'<path d="M{cx+14} {cy+28} l24 -8 M{cx+26} {cy+24} v20" stroke="{CARD}" stroke-width="5" stroke-linecap="round"/>')
-    label(g, cx - 34, cy + 86, 'BUILD', TEXT, BG)
+    w = 20 + 8.6 * len('CREATE')
+    label(g, cx - w / 2, cy + 86, 'CREATE', TEXT, BG)   # BUILD는 개발로 읽혀 제작(서비스 이름 Make)으로(사용자 결정, 2026-09-30)
 
 
 def toast(g, x, y, w):
@@ -125,7 +127,7 @@ def toast(g, x, y, w):
 
 out = sys.argv[1] if len(sys.argv) > 1 else '.'
 
-# 상세 1200×440(데스크톱): 브라우저 속 쇼핑몰 → BUILD → 같은 쇼핑몰의 PC 앱 창(+ 푸시 알림)
+# 상세 1200×440(데스크톱): 브라우저 속 쇼핑몰 → CREATE → 같은 쇼핑몰의 PC 앱 창(+ 푸시 알림)
 g = Svg(1200, 440)
 label(g, 60, 24, 'WEBSITE', INSET, TEXT)
 browser(g, 60, 62, 400, 350)
