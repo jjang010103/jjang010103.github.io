@@ -29,8 +29,8 @@ def phone(g, cx, cy, s, rot, variant):
     # 화면 안 내용은 화면 모양(둥근 모서리)으로 잘라 가장자리 막대가 삐져나오지 않게 한다
     cid = f'scr{len(g.o)}'
     g.a(f'<clipPath id="{cid}"><rect x="-91" y="-196" width="182" height="392" rx="24"/></clipPath><g clip-path="url(#{cid})">')
-    # 다이나믹 아일랜드: 윗변에서 떨어진 검은 알약. 두 테마 모두 검정이라 LIGHT 표에 없는 색(canvas 다크 값)을 쓴다
-    g.a(f'<rect x="-30" y="-188" width="60" height="18" rx="9" fill="#0a0a0b"/>')
+    # 다이나믹 아일랜드: 윗변에서 떨어진 알약. 폰 테두리와 같은 색(사용자 결정, 2026-09-30)
+    g.a(f'<rect x="-30" y="-188" width="60" height="18" rx="9" fill="{LINE}"/>')
     bars(g, -74, -181.5, [22], MUTED, 5)                                                      # 시계(아일랜드와 같은 높이)
     g.a(f'<path d="M56 -175 v-4 M61 -175 v-6 M66 -175 v-8" stroke="{MUTED}" stroke-width="2.5" stroke-linecap="round"/>')
     g.a(f'<path d="M-66 -158 l-7 7 l7 7" fill="none" stroke="{MUTED}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>')

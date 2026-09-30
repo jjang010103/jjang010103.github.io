@@ -8,7 +8,7 @@
 <rect x="-100" y="-205" width="200" height="410" rx="32" fill="#2f2f35"/>
 <rect x="-91" y="-196" width="182" height="392" rx="24" fill="#232327"/>
 <clipPath id="scr9"><rect x="-91" y="-196" width="182" height="392" rx="24"/></clipPath><g clip-path="url(#scr9)">
-<rect x="-30" y="-188" width="60" height="18" rx="9" fill="#0a0a0b"/>
+<rect x="-30" y="-188" width="60" height="18" rx="9" fill="#2f2f35"/>
 <rect x="-74" y="-181.5" width="22" height="5" rx="3" fill="#9a9a9f"/>
 <path d="M56 -175 v-4 M61 -175 v-6 M66 -175 v-8" stroke="#9a9a9f" stroke-width="2.5" stroke-linecap="round"/>
 <path d="M-66 -158 l-7 7 l7 7" fill="none" stroke="#9a9a9f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -42,7 +42,7 @@
 <rect x="-100" y="-205" width="200" height="410" rx="32" fill="#2f2f35"/>
 <rect x="-91" y="-196" width="182" height="392" rx="24" fill="#232327"/>
 <clipPath id="scr43"><rect x="-91" y="-196" width="182" height="392" rx="24"/></clipPath><g clip-path="url(#scr43)">
-<rect x="-30" y="-188" width="60" height="18" rx="9" fill="#0a0a0b"/>
+<rect x="-30" y="-188" width="60" height="18" rx="9" fill="#2f2f35"/>
 <rect x="-74" y="-181.5" width="22" height="5" rx="3" fill="#9a9a9f"/>
 <path d="M56 -175 v-4 M61 -175 v-6 M66 -175 v-8" stroke="#9a9a9f" stroke-width="2.5" stroke-linecap="round"/>
 <path d="M-66 -158 l-7 7 l7 7" fill="none" stroke="#9a9a9f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
