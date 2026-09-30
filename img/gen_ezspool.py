@@ -119,13 +119,17 @@ def spool_list(g, x, y, w, h):
 
 out = sys.argv[1] if len(sys.argv) > 1 else '.'
 
-# 상세 1200×440: 데스크톱은 거의 다 보이고, 모바일(1.52:1)은 가운데 약 668px(266~934)만 보인다.
-# 목록은 모바일에서 통째로 빠지도록 왼쪽 끝, 도면은 그 가운데 띠 안에 둔다
+# 상세 1200×440(데스크톱). 모바일은 아래 ezspool-m.svg를 따로 쓴다.
 g = Svg(1200, 440)
 spool_list(g, 28, 28, 184, 384)
 draw_pipe(g, (390, 40, 910, 400))
 compass(g, 1010, 110)
 g.save(os.path.join(out, 'ezspool.svg'), LIGHT_SPOOL)
+
+# 모바일 상세 668×440(칸 약 1.52:1과 같다 — 안 잘린다): 도면만 크게
+g = Svg(668, 440)
+draw_pipe(g, (40, 36, 628, 404))
+g.save(os.path.join(out, 'ezspool-m.svg'), LIGHT_SPOOL)
 
 # 카드 600×840(데스크톱 0.71:1 · 모바일 0.76:1 — 거의 안 잘린다): 위 보기 탭 · 가운데 도면 · 아래 표제란
 g = Svg(600, 840)

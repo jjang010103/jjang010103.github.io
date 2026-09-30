@@ -12,6 +12,7 @@ LIGHT = {BG: '#ffffff', PANEL: '#ecebe6', INSET: '#dcdad3', LINE: '#dcdad3',
          TEXT: '#17171a', BODY: '#3a3a3e', MUTED: '#5b5a55',
          RED: '#2a45c7', LAV: '#8f77b5', BLUE: '#1e50a2'}
 MONO = "'SF Mono','Menlo','Consolas',monospace"
+SANS = "'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"   # 한글 글자용(<img> SVG는 웹폰트를 못 불러 시스템 글꼴로 그린다)
 C, Sn = math.cos(math.radians(30)), math.sin(math.radians(30))
 LEAD = 38  # 칩 지시선 길이. 모든 칩이 같다
 
@@ -28,9 +29,9 @@ class Svg:
     def a(self, s):
         self.o.append(s)
 
-    def text(self, x, y, s, size, col, anchor='start', fw='400', ls=None):
+    def text(self, x, y, s, size, col, anchor='start', fw='400', ls=None, font=MONO):
         l = f' letter-spacing="{ls}"' if ls else ''
-        self.a(f'<text x="{x:.1f}" y="{y:.1f}" font-family="{MONO}" font-size="{size}" font-weight="{fw}" fill="{col}" text-anchor="{anchor}"{l}>{s}</text>')
+        self.a(f'<text x="{x:.1f}" y="{y:.1f}" font-family="{font}" font-size="{size}" font-weight="{fw}" fill="{col}" text-anchor="{anchor}"{l}>{s}</text>')
 
     def save(self, path, light=None):
         """path(다크)와 <path>-light.svg(라이트) 두 장을 쓴다. light = 이 그림만의 LIGHT 덮어쓰기"""

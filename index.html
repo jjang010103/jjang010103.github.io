@@ -342,6 +342,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 /* 이미지가 있으면 높이를 고정하지 않고 이미지 비율대로 폭에 맞춘다 — 고정 높이에 cover면 창 폭이 바뀔 때 가장자리가 잘렸다(사용자 지적, 2026-09-29) */
 .dt-media .pc-img:has(img){height:auto}
 .dt-media .pc-img img{height:auto}
+.dt-media picture{display:contents}
 .dt-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 .dt-stat{gap:8px}
 .dt-stat-v{font-size:64px;font-weight:700;line-height:1;letter-spacing:-.02em}
@@ -588,9 +589,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   .contact-card .type-ico,.link-ico{width:18px;height:18px}
   /* 모바일 .card{padding:24px}가 뒤에서 이기므로 꽉 채움을 다시 적는다 */
   .dt-media{padding:0}
-  /* 모바일은 비율대로 줄이면 너무 낮아(약 130px) 220px에 두고 양옆을 자른다. 상세 이미지는 이 가운데 띠에 도면이 들어가게 그린다 */
-  .dt-media .pc-img,.dt-media .pc-img:has(img){height:220px}
-  .dt-media .pc-img img{height:100%}
+  /* 이미지가 없을 때 빈 칸 높이. 이미지가 있으면 모바일 전용 이미지(<id>-m.svg, 약 1.5:1)의 비율대로 높이가 정해진다 */
+  .dt-media .pc-img{height:220px}
   .dt-sec-h{font-size:17px}
   .dt-text,.dt-item{font-size:15.4px}
 }
@@ -853,12 +853,14 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
       </div>
     </div>
 
+    <sc-if value="{{ p.hasMedia }}">
     <div class="card dt-media">
       <div class="pc-img">
-        <sc-if value="{{ p.img }}"><img src="{{ p.img }}" alt="" loading="lazy"></sc-if>
+        <sc-if value="{{ p.img }}"><picture><source media="(max-width:720px)" srcset="{{ p.imgM }}"><img src="{{ p.img }}" alt="" loading="lazy"></picture></sc-if>
         <sc-if value="{{ p.noImg }}"><span class="cap">{{ imgSoon }}</span></sc-if>
       </div>
     </div>
+    </sc-if>
 
     <sc-if value="{{ p.hasStats }}">
       <div class="dt-stats">
@@ -1031,6 +1033,7 @@ const PROJECTS = [
   {
     id: 'isend', span: 2,
     co: CO.enliple, date: '2024.06 — 2025.02',
+    img: './img/isend.svg', thumb: './img/isend-thumb.svg',
     url: 'https://www.isend.co.kr/',
     title: { ko: '마케팅 메시지 발송 플랫폼 아이센드', en: 'iSend — marketing message platform', ja: 'マーケティング配信プラットフォーム iSend' },
     mtitle: { ko: '마케팅 메시지 발송 플랫폼 아이센드', en: 'iSend — Marketing Message Platform', ja: 'マーケティング配信プラットフォーム iSend' },
@@ -1223,6 +1226,7 @@ const PROJECTS = [
   },
   {
     id: 'mobile', span: 1,
+    media: false, // 상세 페이지 대표 이미지 칸을 두지 않는다(사용자 결정, 2026-09-30)
     co: CO.huen, date: '2020.01 — 2020.06',
     url: '',
     title: { ko: '자재관리 ERP 모바일 앱', en: 'Materials management app', ja: '資材管理モバイルアプリ' },
@@ -1574,7 +1578,9 @@ class Component extends DCLogic {
     const off = { pressed: 'false', cls: '' };
 
     // img/ 생성 이미지는 다크(<이름>.svg)·라이트(<이름>-light.svg) 한 쌍이다. <img>의 SVG는 테마 버튼을 모르므로 여기서 고른다
-    const themed = (src) => (src && !dark ? src.replace(/\.svg$/, '-light.svg') : src);
+    // ?v=는 이미지를 다시 그렸을 때 올린다 — 파일 이름이 같아 브라우저가 옛 그림을 붙잡는다(사용자 지적, 2026-09-30)
+    const IMG_V = 2;
+    const themed = (src) => (src ? (dark ? src : src.replace(/\.svg$/, '-light.svg')) + '?v=' + IMG_V : src);
 
     const view = (p, i) => {
       // 5단계는 고정 번호(01~05)다. 내용이 없는 단계는 건너뛰되 번호는 당기지 않는다.
@@ -1600,6 +1606,9 @@ class Component extends DCLogic {
         stack: p.stack, img: themed(p.img || ''), noImg: !p.img,
         // 카드 썸네일은 세로 칸(약 0.7:1), 상세는 가로 칸(약 2.7:1)이라 thumb이 있으면 카드에만 따로 쓴다
         thumb: themed(p.thumb || p.img || ''),
+        // 상세 이미지는 데스크톱(<id>.svg, 약 2.7:1)과 모바일(<id>-m.svg, 약 1.5:1)을 따로 그린다 — 한 장으로 둘 다 맞추면 한쪽이 비거나 잘렸다
+        imgM: themed((p.img || '').replace(/\.svg$/, '-m.svg')),
+        hasMedia: p.media !== false,
         // 벤토 칸 수는 데이터가 정하고, 모양(대표·보조·가로형)은 칸 수에서 나온다.
         span: p.span || 1, rows: p.rows || 1,
         kind: (p.rows || 1) > 1 ? 'feature' : (p.span || 1) > 1 ? 'wide' : 'tall',

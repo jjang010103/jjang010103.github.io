@@ -146,12 +146,17 @@ def legend_strip(g, x, y, w, h):
 
 out = sys.argv[1] if len(sys.argv) > 1 else '.'
 
-# 상세 1200×440: 모바일은 가운데 약 668px(266~934)만 보인다 — 양쪽 패널은 빠지고 랙만 남는다
+# 상세 1200×440(데스크톱). 모바일은 아래 ezcc-m.svg를 따로 쓴다
 g = Svg(1200, 440)
 progress(g, 28, 28, 184, 384)
 draw_rack(g, (300, 36, 900, 404))
 legend_panel(g, 988, 28, 184, 384)
 g.save(os.path.join(out, 'ezcc.svg'), LIGHT_CC)
+
+# 모바일 상세 668×440: 랙만 크게
+g = Svg(668, 440)
+draw_rack(g, (40, 30, 628, 410))
+g.save(os.path.join(out, 'ezcc-m.svg'), LIGHT_CC)
 
 # 카드 600×840: 위 보기 탭 · 가운데 랙 · 아래 범례 띠
 g = Svg(600, 840)
