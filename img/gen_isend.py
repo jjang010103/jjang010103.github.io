@@ -69,9 +69,9 @@ def tile(g, cx, cy, size, rot, kind):
     g.a(f'<rect x="-60" y="-60" width="120" height="120" rx="30" fill="{PANEL}" stroke="{LINE}" stroke-width="2"/>')
     if kind == 'chat':
         g.a(f'<path d="M-34 -2 a28 26 0 1 1 18 24 l-16 8 l4 -14 a28 26 0 0 1 -6 -18 z" fill="{RED}"/>')
-        g.a(f'<circle cx="14" cy="16" r="24" fill="{CARD}" stroke="{LINE}" stroke-width="1.5"/>')   # 라이트에서 검게 뒤집히지 않게 카드 색
+        g.a(f'<circle cx="14" cy="16" r="24" fill="{TEXT}"/>')   # 다크는 밝은 원·짙은 점, 라이트는 검은 원·흰 점(사용자 결정, 2026-09-30)
         for dx in (-10, 0, 10):   # 작은 말풍선(중심 14, 16)의 가운데에 맞춘다
-            g.a(f'<circle cx="{14 + dx}" cy="16" r="3.5" fill="{BAR}"/>')
+            g.a(f'<circle cx="{14 + dx}" cy="16" r="3.5" fill="{BG}"/>')
     elif kind == 'target':
         for r, col in ((32, RED), (21, RED), (10, RED)):
             g.a(f'<circle cx="0" cy="4" r="{r}" fill="none" stroke="{col}" stroke-width="5"/>')

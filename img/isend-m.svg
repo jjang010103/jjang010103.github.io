@@ -62,10 +62,10 @@
 <g transform="translate(185.25 94.5) rotate(-8) scale(0.708)">
 <rect x="-60" y="-60" width="120" height="120" rx="30" fill="#232327" stroke="#2f2f35" stroke-width="2"/>
 <path d="M-34 -2 a28 26 0 1 1 18 24 l-16 8 l4 -14 a28 26 0 0 1 -6 -18 z" fill="#f05a5f"/>
-<circle cx="14" cy="16" r="24" fill="#f1f0ec" stroke="#2f2f35" stroke-width="1.5"/>
-<circle cx="4" cy="16" r="3.5" fill="#2c2c30"/>
-<circle cx="14" cy="16" r="3.5" fill="#2c2c30"/>
-<circle cx="24" cy="16" r="3.5" fill="#2c2c30"/>
+<circle cx="14" cy="16" r="24" fill="#ecebe6"/>
+<circle cx="4" cy="16" r="3.5" fill="#1b1b1e"/>
+<circle cx="14" cy="16" r="3.5" fill="#1b1b1e"/>
+<circle cx="24" cy="16" r="3.5" fill="#1b1b1e"/>
 </g>
 <g transform="translate(491.25 341.0) rotate(10) scale(0.680)">
 <rect x="-60" y="-60" width="120" height="120" rx="30" fill="#232327" stroke="#2f2f35" stroke-width="2"/>
