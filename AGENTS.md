@@ -8,7 +8,7 @@
 | 파일 | 성격 |
 | --- | --- |
 | `index.html` | 사이트 전부(템플릿·스타일·데이터·로직). 거의 모든 수정은 여기서 한다. |
-| `favicon-light.svg` / `favicon-dark.svg` | 파비콘. 오른쪽 위로 비킨 강조색 원 + 아래 수평선(라이트 화지색 바탕·파란 원, 다크 쟁반 바탕·옻칠 빨간 원. 바탕 네모는 모서리 없이 꽉 채운다 — 투명한 모서리가 있으면 Safari 탭에 흰 테두리가 남는다, DESIGN.md Favicon). 강조색은 `:root`의 `accent` 값을 옮겨 적은 것이라 토큰을 바꾸면 함께 고친다(DESIGN.md Favicon). 테마 버튼에 따라 부트 스크립트와 `applyTheme()`이 파일을 바꿔 끼운다. iOS Safari 즐겨찾기·홈 화면은 SVG를 안 읽어 `apple-touch-icon.png`(180px, 다크 도안·모서리 없이 — iOS가 둥글린다)를 따로 둔다. 도안을 바꾸면 함께 다시 만들고, Safari가 옛 아이콘을 붙잡지 않게 `index.html`의 `?v=` 번호(파비콘 세 곳·터치 아이콘 한 곳)를 올린다. |
+| `favicon-light.png` / `favicon-dark.png` | 파비콘(64px PNG — SVG 파비콘은 Safari 탭에서 흰 판 위에 올라가 둘레에 흰 테두리가 남아 PNG로 바꿨다, 2026-09-30). 오른쪽 위로 비킨 강조색 원 + 아래 수평선(라이트 화지색 바탕·파란 원, 다크 쟁반 바탕·옻칠 빨간 원. 바탕 네모는 모서리 없이 꽉 채운다). 강조색은 `:root`의 `accent` 값을 옮겨 적은 것이라 토큰을 바꾸면 함께 고친다(DESIGN.md Favicon). 테마 버튼에 따라 부트 스크립트와 `applyTheme()`이 파일을 바꿔 끼운다. iOS 즐겨찾기·홈 화면용 `apple-touch-icon.png`(180px, 다크 도안·모서리 없이 — iOS가 둥글린다)를 따로 둔다. 도안을 바꾸면 함께 다시 만들고, Safari가 옛 아이콘을 붙잡지 않게 파일 이름을 바꾸거나 `index.html`의 `?v=` 번호를 붙여 올린다(파비콘 세 곳·터치 아이콘 한 곳). |
 | `img/` | 프로젝트 이미지. 프로젝트마다 `<id>.svg`(상세)·`<id>-thumb.svg`(카드)와 각각의 라이트판 `-light.svg`, 모두 네 장을 `gen_<id>.py`가 만들고, 공용 도구는 `imgkit.py`다. **SVG를 손으로 고치지 않는다** — 만드는 법은 §7 "프로젝트 이미지 만들기". |
 | `support.js` | **생성 파일, 수정 금지.** dc-runtime 번들. React를 CDN에서 UMD로 받아 문서를 렌더한다. |
 | `AGENTS.md` | 이 문서. |

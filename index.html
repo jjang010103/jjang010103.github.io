@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>장민규</title>
 <!-- 파비콘: 오른쪽 위로 비킨 강조색 원 + 아래 수평선(라이트 파랑·다크 빨강). 사이트 테마 버튼을 따라 라이트/다크 파일을 바꿔 끼운다(부트 스크립트·applyTheme) -->
-<link rel="icon" type="image/svg+xml" href="./favicon-light.svg?v=3" id="favicon">
+<link rel="icon" type="image/png" href="./favicon-light.png" id="favicon">
 <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=4">
 <!-- 부트스트랩(테마/언어/제목)은 반드시 실제 <head>에 둔다.
      helmet 안에 두면 프레임워크가 <title>을 관리 대상으로 삼아
@@ -16,7 +16,7 @@ document.documentElement.lang=l||'ko';
 document.title=window.NAMES[document.documentElement.lang];
 if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';
 document.documentElement.style.colorScheme=t;
-var f=document.getElementById('favicon');if(f)f.href='./favicon-'+t+'.svg?v=3';})()</script>
+var f=document.getElementById('favicon');if(f)f.href='./favicon-'+t+'.png';})()</script>
 <!-- 방문 집계(GoatCounter, 쿠키 없음 — 동의 팝업 불필요). localhost는 스스로 건너뛴다.
      첫 방문은 스크립트가 세고, 해시로 바로 들어온 상세(#/p/<id>)는 경로에 해시를 붙여 구분한다. 이후 상세 열기는 applyHash가 센다 -->
 <script>window.goatcounter={path:function(p){return /^#\/p\//.test(location.hash)?p+location.hash:p}}</script>
@@ -1504,7 +1504,7 @@ class Component extends DCLogic {
         const tc = document.querySelector('meta[name="theme-color"]');
         if (tc) tc.setAttribute('content', theme === 'dark' ? '#0a0a0b' : '#ecebe6');
         const fav = document.getElementById('favicon');
-        if (fav) fav.href = './favicon-' + theme + '.svg?v=3';
+        if (fav) fav.href = './favicon-' + theme + '.png';
         try { localStorage.setItem('mj-resume-theme', theme); } catch (e) {}
         resolve();
       });
