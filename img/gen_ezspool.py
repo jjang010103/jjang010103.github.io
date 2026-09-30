@@ -4,6 +4,9 @@
 import math, os, sys
 from imgkit import *
 
+# 라이트에서도 하이라이트(선택 스풀)는 빨강으로 둔다(사용자 결정, 2026-09-30). 사이트 accent 다크 값
+LIGHT_SPOOL = {RED: '#b3242b'}
+
 # ── 배관 모델(3D). 본관 엘보 7개 + 티 분기(밸브). 스풀 셋으로 나뉜다
 P = [(0, 0, 3), (0, 0, 0), (3.5, 0, 0), (3.5, 0, 2.5), (3.5, -3, 2.5), (3.5, -3, 4.5),
      (6, -3, 4.5), (6, -3, 2), (6, -5, 2)]
@@ -122,7 +125,7 @@ g = Svg(1200, 440)
 spool_list(g, 28, 28, 184, 384)
 draw_pipe(g, (390, 40, 910, 400))
 compass(g, 1010, 110)
-g.save(os.path.join(out, 'ezspool.svg'))
+g.save(os.path.join(out, 'ezspool.svg'), LIGHT_SPOOL)
 
 # 카드 600×840(데스크톱 0.71:1 · 모바일 0.76:1 — 거의 안 잘린다): 위 보기 탭 · 가운데 도면 · 아래 표제란
 g = Svg(600, 840)
@@ -131,4 +134,4 @@ draw_pipe(g, (44, 124, 556, 668))
 grid_block(g, 44, 700, 512, 96,
            [[('SPOOL NO', 'SP-02', RED), ('DWG NO', 'ISO-0412', TEXT), ('REV', '01', TEXT)],
             [('SHOP WELD', '4', TEXT), ('FIELD WELD', '2', RED), ('SHEET', '2 / 3', TEXT)]], [0.36, 0.38, 0.26])
-g.save(os.path.join(out, 'ezspool-thumb.svg'))
+g.save(os.path.join(out, 'ezspool-thumb.svg'), LIGHT_SPOOL)

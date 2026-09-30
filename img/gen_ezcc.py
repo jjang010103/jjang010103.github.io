@@ -1,7 +1,7 @@
 # Ez-CC 이미지 생성기(공용 도구는 imgkit.py, 규칙은 AGENTS.md "프로젝트 이미지 만들기").
 #   python3 img/gen_ezcc.py img  →  ezcc.svg(상세, 1200×440) · ezcc-thumb.svg(카드, 600×840)
 # 원본 참고: 공식 페이지의 4D 시공 시각화(파이프랙을 시공 상태 색으로 칠함)·상태 범례 띠·진행률 표.
-import os, sys
+import math, os, sys
 from imgkit import *
 
 # 시공 상태(원본 범례 순서). 원본의 초록·파랑은 토큰 색(ai-2 라벤더·ai-3 파랑)으로 바꿨다
@@ -9,35 +9,48 @@ from imgkit import *
 LIGHT_CC = {RED: '#d05a6e'}
 STATUS = [('NOT STARTED', TEXT), ('WELDING', MUTED), ('PAINTING', RED), ('ARRIVAL', LAV), ('ERECTION', BLUE)]
 
-# ── 파이프랙 모델(3D). 두 단(z=0, z=1.4), 배관은 x 방향으로 달린다
+# ── 파이프랙 모델(3D). 두 단(z=0, z=Z2), 배관은 x 방향으로 달리고 일부는 랙 밖으로 빠진다
 BENTS = [0.4, 3.0, 5.6]                 # 철골 프레임 위치(x)
 Y0, Y1, ZB, ZT = -0.5, 2.1, -1.4, 2.6   # 기둥 앞뒤(y)·아래·위(z)
 Z2 = 2.0                                # 위 단 높이. 두 단이 화면에서 한 띠로 겹치지 않게 벌린다
 BEAMS = [-0.3, Z2 - 0.3, ZT]            # 보 높이(각 단 배관 바로 아래 + 꼭대기)
+X0, X1 = -0.6, 6.6                      # 배관 양 끝
 # (경로, 색, 굵기 배율). 그리는 순서는 앞뒤(y+z)로 정렬한다
 PIPES = [
-    ([(-0.6, 0, 0), (6.6, 0, 0)], BLUE, 1.0),
-    ([(-0.6, 0.55, 0), (4.4, 0.55, 0), (4.4, 0.55, ZB)], RED, 0.8),          # 랙 아래로 내려간다
-    ([(-0.6, 1.1, 0), (6.6, 1.1, 0)], TEXT, 1.3),
-    ([(1.7, 1.65, ZB), (1.7, 1.65, 0), (6.6, 1.65, 0)], LAV, 0.8),           # 아래에서 올라온다
-    ([(-0.6, 0.2, Z2), (5.2, 0.2, Z2), (5.2, -2.2, Z2)], MUTED, 1.0),        # 랙 뒤로 빠진다
-    ([(-0.6, 0.85, Z2), (6.6, 0.85, Z2)], RED, 1.3),
-    ([(-0.6, 1.5, Z2), (3.5, 1.5, Z2), (3.5, 1.5, 3.4), (6.6, 1.5, 3.4)], BLUE, 0.8),  # 꼭대기 위로 올라탄다
+    # 아래 단
+    ([(X0, 0, 0), (X1, 0, 0)], BLUE, 1.0),
+    ([(X0, 0.35, 0), (2.2, 0.35, 0), (2.2, -1.8, 0), (2.2, -1.8, ZB)], RED, 0.7),    # 랙 뒤로 빠져 내려간다
+    ([(X0, 0.7, 0), (X1, 0.7, 0)], TEXT, 1.3),
+    ([(X0, 1.05, 0), (4.2, 1.05, 0), (4.2, 1.05, ZB)], MUTED, 0.8),                  # 랙 안에서 떨어진다
+    ([(1.2, 1.4, ZB), (1.2, 1.4, 0), (X1, 1.4, 0)], LAV, 0.8),                       # 아래에서 올라온다
+    ([(X0, 1.75, 0), (X1, 1.75, 0)], RED, 0.5),
+    # 위 단
+    ([(X0, 0.1, Z2), (5.2, 0.1, Z2), (5.2, -2.0, Z2)], MUTED, 1.0),                   # 랙 뒤로 빠진다
+    ([(X0, 0.5, Z2), (X1, 0.5, Z2)], RED, 1.3),
+    ([(X0, 0.9, Z2), (3.5, 0.9, Z2), (3.5, 0.9, 3.3), (X1, 0.9, 3.3)], BLUE, 0.8),    # 꼭대기 위로 올라탄다
+    ([(X0, 1.3, Z2), (4.6, 1.3, Z2), (4.6, 3.0, Z2), (4.6, 3.0, ZB)], LAV, 0.9),      # 앞으로 나와 떨어진다
+    ([(X0, 1.7, Z2), (X1, 1.7, Z2)], TEXT, 0.5),
 ]
-# 칩: (점, 글자, 방향, 바탕, 글자색). 랙 끝의 빈자리로 뺀다
-CHIPS = [((-0.2, 0.85, Z2), 'SP-02', -150, RED, '#ffffff'),
-         ((6.2, 1.1, 0), 'SP-11', 30, INSET, TEXT),
-         ((6.2, 1.5, 3.4), 'SP-07', -30, BLUE, BG)]
+VALVES = [((2.2, -1.8, -0.7), (2.2, -1.8, 0), RED), ((4.6, 3.0, 0.3), (4.6, 3.0, Z2), LAV)]   # (가운데, 배관 방향 기준점, 색)
+FLANGES = [((2.2, -1.8, ZB), (2.2, -1.8, 0), RED), ((4.2, 1.05, ZB), (4.2, 1.05, 0), MUTED),
+           ((1.2, 1.4, ZB), (1.2, 1.4, 0), LAV), ((4.6, 3.0, ZB), (4.6, 3.0, 0), LAV)]         # (끝점, 배관 쪽 점, 색)
+# 칩: (점, 글자, 방향, 바탕, 글자색). 배관이 없는 빈자리로 뺀다
+CHIPS = [((-0.2, 0.5, Z2), 'SP-02', -150, RED, '#ffffff'),
+         ((6.3, 0.9, 3.3), 'SP-07', -30, BLUE, BG),
+         ((4.6, 3.0, ZB), 'SP-11', 150, LAV, BG)]
 
 
 def steel():
-    """철골 선분 목록: 기둥(앞뒤) + 보"""
+    """철골 선분 목록: 기둥(앞뒤) + 가로보 + 앞뒤 세로보(스트링거)"""
     segs = []
     for x in BENTS:
         for y in (Y0, Y1):
             segs.append(((x, y, ZB), (x, y, ZT)))
         for z in BEAMS:
             segs.append(((x, Y0, z), (x, Y1, z)))
+    for y in (Y0, Y1):
+        for z in (BEAMS[0], ZT):
+            segs.append(((BENTS[0], y, z), (BENTS[-1], y, z)))
     return segs
 
 
@@ -67,6 +80,24 @@ def draw_rack(g, box):
         pts = ' '.join(f'{x:.1f},{y:.1f}' for x, y in map(pr, ps))
         for c, w in ((BG, (7 * d + 7) * k), (col, 7 * d * k)):
             g.a(f'<polyline points="{pts}" fill="none" stroke="{c}" stroke-width="{w:.1f}" stroke-linejoin="round" stroke-linecap="round"/>')
+    def unit(p, q):
+        (x0, y0), (x1, y1) = pr(p), pr(q)
+        L = math.hypot(x1 - x0, y1 - y0)
+        return x0, y0, (x1 - x0) / L, (y1 - y0) / L
+    # 플랜지: 배관 끝에 수직인 짧은 두 줄
+    for p, q, col in FLANGES:
+        x0, y0, ux, uy = unit(p, q)
+        for d in (0, 6 * k):
+            bx, by = x0 + ux * d, y0 + uy * d
+            g.a(f'<line x1="{bx + uy*11*k:.1f}" y1="{by - ux*11*k:.1f}" x2="{bx - uy*11*k:.1f}" y2="{by + ux*11*k:.1f}" '
+                f'stroke="{col}" stroke-width="{3.5*k:.1f}" stroke-linecap="round"/>')
+    # 밸브: 배관 방향으로 맞댄 두 삼각형
+    for c, q, col in VALVES:
+        mx, my, ux, uy = unit(c, q)
+        nx, ny, h, w = -uy, ux, 12 * k, 10 * k
+        g.a(f'<path d="M{mx-ux*h+nx*w:.1f},{my-uy*h+ny*w:.1f} L{mx-ux*h-nx*w:.1f},{my-uy*h-ny*w:.1f} '
+            f'L{mx+ux*h+nx*w:.1f},{my+uy*h+ny*w:.1f} L{mx+ux*h-nx*w:.1f},{my+uy*h-ny*w:.1f} Z" '
+            f'fill="{BG}" stroke="{col}" stroke-width="{2.6*k:.1f}" stroke-linejoin="round"/>')
     for p, lab, ang, fill, fg in CHIPS:
         chip(g, *pr(p), ang, lab, fill, fg)
 
