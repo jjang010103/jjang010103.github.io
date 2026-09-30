@@ -976,7 +976,7 @@ const PROJECTS = [
   {
     id: 'ezzip', span: 2, rows: 2, ink: true,
     co: CO.enliple, date: '2025.02 — NOW',
-    // 움직이는 SVG(18초 반복). 대표 카드 칸(약 1.5:1)은 모바일 상세와 비율이 같아 한 장을 같이 쓴다
+    // 움직이는 SVG(24초 반복). 대표 카드 칸(약 1.5:1)은 모바일 상세와 비율이 같아 한 장을 같이 쓴다
     img: './img/ezzip.svg', thumb: './img/ezzip-m.svg',
     url: 'https://ezlab.im/ko/tool/ezzip',
     title: { ko: '압축 프로그램 ezZip', en: 'ezZip & shared PC platform', ja: '圧縮ソフト ezZip · 共通プラットフォーム' },
@@ -1582,7 +1582,7 @@ class Component extends DCLogic {
 
     // img/ 생성 이미지는 다크(<이름>.svg)·라이트(<이름>-light.svg) 한 쌍이다. <img>의 SVG는 테마 버튼을 모르므로 여기서 고른다
     // ?v=는 이미지를 다시 그렸을 때 올린다 — 파일 이름이 같아 브라우저가 옛 그림을 붙잡는다(사용자 지적, 2026-09-30)
-    const IMG_V = 8;
+    const IMG_V = 9;
     const themed = (src) => (src ? (dark ? src : src.replace(/\.svg$/, '-light.svg')) + '?v=' + IMG_V : src);
 
     const view = (p, i) => {

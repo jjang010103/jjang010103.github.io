@@ -1,15 +1,20 @@
 # ezZip 움직이는 이미지 생성기(공용 도구는 imgkit.py, 규칙은 AGENTS.md "프로젝트 이미지 만들기").
 #   python3 img/gen_ezzip.py img  →  ezzip.svg(상세 데스크톱 1200×440) · ezzip-m.svg(카드·상세 모바일 668×440) + 라이트판
-# 원본 참고: 이지랩 제품 소개 영상(27초) — 공유 → 원본 자동 삭제 → 끌어 놓아 압축 풀기.
-# 파란 윈도우 바탕화면·형광 손글씨는 점 격자 바탕과 단계 알약으로 바꿨다. <img>로 넣어도 도는 CSS 애니메이션이다.
+# 원본 참고: 이지랩 제품 소개 영상. 장면은 사용자가 고른 핵심 기능 넷(2026-09-30):
+#   ① 우클릭 한 번에 압축 ② 끌어 놓아 압축 풀기 ③ 풀 때 바이러스 검사 ④ 한글 파일명 깨짐 없이
+# 화면 글자는 한국어, 단계 표시(알약·목록)는 두지 않는다 — AI가 만든 티가 났다(사용자 지적).
+# <img>로 넣어도 도는 CSS 애니메이션이다. 동작 줄이기 설정이면 ④의 마지막 장면에서 멈춘다.
 import os, sys
 from imgkit import *
 
-T = 18.0                                   # 한 바퀴(초). 장면마다 6초
+T = 24.0                                   # 한 바퀴(초)
 CARD = '#f1f0ec'                           # 창 안 흰 면(다크 ink 값 → 라이트 흰색)
 TILE, INK = '#d9d8d2', '#2c2c30'           # 창 안 옅은 칸 · 짙은 글자(두 테마 모두 밝은 면 위)
 LIGHT_ZZ = {RED: '#b3242b', CARD: '#ffffff', TILE: '#ecebe6', INK: '#17171a'}
-STEPS = [('01', 'SHARE'), ('02', 'AUTO DELETE'), ('03', 'EXTRACT')]
+# ④에 쓰는 파일: (깨진 이름, 바른 이름, 형식, 띠 색, 크기). 깨진 이름은 EUC-KR 한글을 Latin-1로 읽었을 때 실제로 나오는 글자다
+FILES = [('º¸°í¼­.xlsx', '보고서.xlsx', 'XLS', BLUE, '84 KB'),
+         ('È¸ÀÇ·Ï.pdf', '회의록.pdf', 'PDF', RED, '1.2 MB'),
+         ('»çÁø.jpg', '사진.jpg', 'JPG', LAV, '3.4 MB')]
 
 
 class Anim:
@@ -20,27 +25,38 @@ class Anim:
     def add(self, base, frames):
         self.n += 1
         name = f'a{self.n}'
-        ks = ' '.join(f'{t / T * 100:.2f}%{{{css}}}' for t, css in frames)
+        ks = ' '.join(f'{t / T * 100:.3f}%{{{css}}}' for t, css in frames)
         self.css.append(f'.{name}{{{base};animation:{name} {T}s linear infinite}}@keyframes {name}{{{ks}}}')
         return name
 
     def vis(self, t0, t1, f=0.3, poster=False):
         """t0~t1초에만 보인다(앞뒤 f초 페이드). poster=True면 움직임을 끈 사용자에게 보이는 정지 화면에 포함"""
-        fr = [(0, 'opacity:0'), (max(t0, 0.01), 'opacity:0'), (t0 + f, 'opacity:1'), (t1 - f, 'opacity:1'), (t1, 'opacity:0'), (T, 'opacity:0')]
-        if t0 == 0:
+        if t0 <= 0:
             fr = [(0, 'opacity:1'), (t1 - f, 'opacity:1'), (t1, 'opacity:0'), (T - f, 'opacity:0'), (T, 'opacity:1')]
+        elif t1 >= T:
+            fr = [(0, 'opacity:0'), (t0, 'opacity:0'), (t0 + f, 'opacity:1'), (T, 'opacity:1')]
+        else:
+            fr = [(0, 'opacity:0'), (t0, 'opacity:0'), (t0 + f, 'opacity:1'), (t1 - f, 'opacity:1'), (t1, 'opacity:0'), (T, 'opacity:0')]
         return self.add(f'opacity:{1 if poster else 0}', fr)
 
-    def move(self, pts, base=None):
-        """pts = [(초, x, y)] — 사이를 부드럽게 옮긴다"""
-        fr = [(t, f'transform:translate({x}px,{y}px);animation-timing-function:ease-in-out') for t, x, y in pts]
-        x, y = base or pts[0][1:]
-        return self.add(f'transform:translate({x}px,{y}px)', fr)
+    def pop(self, t0, t1, f=0.35, poster=False):
+        """t0에 작게서 튀어나와 t1에 사라진다"""
+        base = 'transform-box:fill-box;transform-origin:50% 50%'
+        fr = [(0, 'opacity:0;transform:scale(.4)'), (t0, 'opacity:0;transform:scale(.4)'),
+              (t0 + f * 0.7, 'opacity:1;transform:scale(1.08)'), (t0 + f, 'opacity:1;transform:scale(1)'),
+              (t1 - 0.3, 'opacity:1;transform:scale(1)'), (t1, 'opacity:0;transform:scale(1)'), (T, 'opacity:0;transform:scale(.4)')]
+        return self.add(f'{base};opacity:{1 if poster else 0}', fr)
 
-    def fill(self, t0, t1):
-        """진행 막대: t0~t1초 동안 왼쪽부터 찬다"""
-        return self.add('transform:scaleX(1);transform-box:fill-box;transform-origin:0 50%',
-                        [(0, 'transform:scaleX(0)'), (t0, 'transform:scaleX(0)'), (t1, 'transform:scaleX(1)'), (T, 'transform:scaleX(1)')])
+    def move(self, pts, base):
+        fr = [(t, f'transform:translate({x:.1f}px,{y:.1f}px);animation-timing-function:ease-in-out') for t, x, y in pts]
+        return self.add(f'transform:translate({base[0]:.1f}px,{base[1]:.1f}px)', fr)
+
+    def grow(self, t0, t1, t2, axis='X', poster=True):
+        """t0~t1초 동안 왼쪽(위)부터 찬다, t2에 비운다"""
+        o = '0 50%' if axis == 'X' else '0 0'
+        return self.add(f'transform:scale{axis}({1 if poster else 0});transform-box:fill-box;transform-origin:{o}',
+                        [(0, f'transform:scale{axis}(0)'), (t0, f'transform:scale{axis}(0)'), (t1, f'transform:scale{axis}(1)'),
+                         (t2, f'transform:scale{axis}(1)'), (t2 + 0.01, f'transform:scale{axis}(0)'), (T, f'transform:scale{axis}(0)')])
 
     def style(self):
         return ('<style>' + ''.join(self.css) +
@@ -52,191 +68,186 @@ def bars(g, x, y, widths, col, h=6, gap=12):
         g.a(f'<rect x="{x:.1f}" y="{y + i * gap:.1f}" width="{w:.1f}" height="{h}" rx="{h/2}" fill="{col}"/>')
 
 
-def file_icon(g, x, y, band, label, col):
-    """바탕화면 파일 아이콘: 귀 접힌 종이 + 색 띠(형식) + 이름 막대"""
-    g.a(f'<path d="M{x} {y+6} a6 6 0 0 1 6 -6 h26 l14 14 v42 a6 6 0 0 1 -6 6 h-34 a6 6 0 0 1 -6 -6 z" fill="{CARD}" stroke="{LINE}" stroke-width="2"/>')
-    g.a(f'<path d="M{x+32} {y} v10 a4 4 0 0 0 4 4 h10" fill="none" stroke="{LINE}" stroke-width="2"/>')
-    g.a(f'<rect x="{x-4}" y="{y+30}" width="40" height="16" rx="4" fill="{col}"/>')
-    g.text(x + 16, y + 42, band, 10, '#ffffff', 'middle', '800', '.5')
-    g.text(x + 23, y + 84, label, 11, TEXT, 'middle')
+def ko(g, x, y, s, size, col, anchor='start', fw='400'):
+    g.text(x, y, s, size, col, anchor, fw, font=SANS)
 
 
-def window(g, x, y, w, h, title=True):
+def doc(g, x, y, band, col, s=1.0):
+    """문서 아이콘(귀 접힌 종이 + 형식 띠). 높이는 폭과 비슷하게 — 길쭉하면 답답했다(사용자 지적, 2026-09-30)"""
+    w, h = 40 * s, 44 * s
+    f = 11 * s
+    g.a(f'<path d="M{x} {y+5*s:.1f} a{5*s:.1f} {5*s:.1f} 0 0 1 {5*s:.1f} {-5*s:.1f} h{w-f-5*s:.1f} l{f:.1f} {f:.1f} v{h-f-5*s:.1f} a{5*s:.1f} {5*s:.1f} 0 0 1 {-5*s:.1f} {5*s:.1f} h{-(w-10*s):.1f} a{5*s:.1f} {5*s:.1f} 0 0 1 {-5*s:.1f} {-5*s:.1f} z" '
+        f'fill="{CARD}" stroke="{LINE}" stroke-width="2"/>')
+    g.a(f'<path d="M{x+w-f:.1f} {y} v{f*0.7:.1f} a{3*s:.1f} {3*s:.1f} 0 0 0 {3*s:.1f} {3*s:.1f} h{f*0.7:.1f}" fill="none" stroke="{LINE}" stroke-width="2"/>')
+    g.a(f'<rect x="{x-4*s:.1f}" y="{y+h*0.46:.1f}" width="{w*0.86:.1f}" height="{14*s:.1f}" rx="{4*s:.1f}" fill="{col}"/>')
+    g.text(x - 4 * s + w * 0.43, y + h * 0.46 + 10.5 * s, band, 9 * s, '#ffffff', 'middle', '800', '.4')
+
+
+def desk_icon(g, cx, y, band, col, name):
+    """바탕화면 아이콘 = 문서 + 이름(한국어)"""
+    doc(g, cx - 20, y, band, col)
+    ko(g, cx, y + 64, name, 11.5, TEXT, 'middle')
+
+
+def window(g, x, y, w, h):
     g.a(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="14" fill="{CARD}" stroke="{LINE}" stroke-width="2"/>')
-    if title:
-        g.a(f'<rect x="{x+16}" y="{y+14}" width="20" height="16" rx="4" fill="{RED}"/>')
-        g.text(x + 26, y + 26, 'ZIP', 7, '#ffffff', 'middle', '800')
-        g.text(x + 44, y + 27, 'ezZip', 13, INK, fw='700')
-        for i, d in enumerate(('M-5 0 h10', 'M-5 -5 h10 v10 h-10 z', 'M-5 -5 l10 10 M5 -5 l-10 10')):
-            g.a(f'<path transform="translate({x+w-62+i*20} {y+22})" d="{d}" fill="none" stroke="{MUTED}" stroke-width="2" stroke-linecap="round"/>')
+    g.a(f'<rect x="{x+16}" y="{y+13}" width="22" height="17" rx="4" fill="{RED}"/>')
+    g.text(x + 27, y + 25, 'ZIP', 7.5, '#ffffff', 'middle', '800')
+    ko(g, x + 46, y + 26, '이지집', 13, INK, fw='700')
+    for i, d in enumerate(('M-5 0 h10', 'M-5 -5 h10 v10 h-10 z', 'M-5 -5 l10 10 M5 -5 l-10 10')):
+        g.a(f'<path transform="translate({x+w-62+i*20} {y+22})" d="{d}" fill="none" stroke="{MUTED}" stroke-width="2" stroke-linecap="round"/>')
+    # 툴바: 압축 열기 · 압축하기 · 압축 풀기 + 나머지
+    for i, lab in enumerate(('열기', '압축', '풀기')):
+        bx = x + 16 + i * 58
+        g.a(f'<rect x="{bx}" y="{y+44}" width="50" height="40" rx="9" fill="{TILE}"/>')
+        g.a(f'<rect x="{bx+17}" y="{y+50}" width="16" height="13" rx="3" fill="{RED}"/>')
+        ko(g, bx + 25, y + 78, lab, 9.5, INK, 'middle')
+    for i in range(3):
+        g.a(f'<rect x="{x+196+i*30}" y="{y+52}" width="22" height="22" rx="6" fill="{TILE}"/>')
+    g.a(f'<line x1="{x+16}" y1="{y+96}" x2="{x+w-16}" y2="{y+96}" stroke="{TILE}" stroke-width="2"/>')
 
 
 def cursor(g):
     g.a(f'<path d="M0 0 v22 l6 -6 l5 11 l4 -2 l-5 -11 h8 z" fill="{TEXT}" stroke="{BG}" stroke-width="2" stroke-linejoin="round"/>')
 
 
-def stage(g, A, ox, oy):
-    """무대(데스크톱 아이콘 + 장면 셋 + 커서). 좌표는 668×440 기준, (ox, oy)만큼 옮겨 그린다"""
-    g.a(f'<g transform="translate({ox} {oy})">')
-    ZX, ZY = 34, 20                                          # 보고서.zip 아이콘
-    file_icon(g, ZX, ZY, 'ZIP', 'REPORT.ZIP', RED)
-    g.a(f'<g class="{A.vis(16.7, 17.8, 0.25)}">')             # 풀려 나온 보고서.xlsx
-    file_icon(g, ZX, ZY + 110, 'XLS', 'REPORT.XLSX', BLUE)
-    g.a('</g>')
+def scene(g, A, L):
+    """L: 캔버스별 배치. icons=(x, y0, 간격) · win=(x, y, w, h)"""
+    ix, iy, gap = L['icons']
+    WX, WY, WW, WH = L['win']
+    icons = [('XLS', BLUE, '보고서.xlsx'), ('JPG', LAV, '사진.jpg'), ('PPT', MUTED, '발표.pptx')]
+    pos = [(ix, iy + i * gap) for i in range(3)]
 
-    # ── 장면 1 SHARE: 우클릭 메뉴 → 공유 창 → 진행 막대
-    MX, MY = 94, 40
-    g.a(f'<g class="{A.vis(0.9, 2.3, 0.2)}">')
-    g.a(f'<rect x="{MX}" y="{MY}" width="200" height="146" rx="12" fill="{CARD}" stroke="{LINE}" stroke-width="2"/>')
-    for i in range(5):
-        ry = MY + 10 + i * 26
-        if i == 2:
-            g.a(f'<rect x="{MX+8}" y="{ry}" width="184" height="24" rx="7" fill="{RED}" opacity=".16"/>')
-            g.a(f'<rect x="{MX+16}" y="{ry+6}" width="12" height="12" rx="3" fill="{RED}"/>')
-            g.text(MX + 36, ry + 16.5, 'SHARE TO DRIVE', 11, INK, fw='700')
+    # ── ① 우클릭 한 번에 압축 (0~6초)
+    sel = A.vis(1.5, 4.0, 0.2)                                  # 고른 아이콘 바탕
+    for cx, cy in pos:
+        g.a(f'<rect class="{sel}" x="{cx-40}" y="{cy-8}" width="80" height="84" rx="10" fill="{BLUE}" fill-opacity=".22" stroke="{BLUE}" stroke-opacity=".6" stroke-width="1.5"/>')
+    for (cx, cy), (band, col, name) in zip(pos, icons):
+        desk_icon(g, cx, cy, band, col, name)
+    rx0, ry0 = ix - 52, iy - 20                                 # 끌어 고르는 사각형
+    g.a(f'<g class="{A.vis(0.8, 1.7, 0.1)}"><rect class="{A.grow(0.8, 1.5, 1.7, "X", False)}" x="{rx0}" y="{ry0}" width="104" height="{gap*2+100}" fill="{BLUE}" fill-opacity=".1" stroke="{BLUE}" stroke-width="1.5" stroke-dasharray="4 3"/></g>')
+    MX, MY = ix + 58, iy + gap - 6                             # 윈도우 11 우클릭 메뉴
+    g.a(f'<g class="{A.pop(1.9, 3.7, 0.25)}">')
+    g.a(f'<rect x="{MX}" y="{MY}" width="232" height="178" rx="12" fill="{CARD}" stroke="{LINE}" stroke-width="2"/>')
+    for i in range(5):                                          # 위 아이콘 줄(잘라내기·복사…)
+        g.a(f'<rect x="{MX+16+i*42}" y="{MY+12}" width="26" height="22" rx="6" fill="{TILE}"/>')
+    g.a(f'<line x1="{MX+12}" y1="{MY+44}" x2="{MX+220}" y2="{MY+44}" stroke="{TILE}" stroke-width="2"/>')
+    rows = ['열기', '이지집으로 압축하기', '공유', '속성']
+    for i, lab in enumerate(rows):
+        ry = MY + 52 + i * 30
+        if i == 1:
+            g.a(f'<rect class="{A.vis(2.6, 3.7, 0.12)}" x="{MX+8}" y="{ry}" width="216" height="28" rx="7" fill="{RED}" fill-opacity=".16"/>')
+            g.a(f'<rect x="{MX+18}" y="{ry+7}" width="16" height="14" rx="3" fill="{RED}"/>')
+            ko(g, MX + 44, ry + 19, lab, 12.5, INK, fw='700')
         else:
-            g.a(f'<rect x="{MX+16}" y="{ry+6}" width="12" height="12" rx="3" fill="{TILE}"/>')
-            bars(g, MX + 36, ry + 9, [[110, 90, 0, 120, 80][i]], TILE, 6)
+            g.a(f'<rect x="{MX+18}" y="{ry+7}" width="16" height="14" rx="3" fill="{TILE}"/>')
+            ko(g, MX + 44, ry + 19, lab, 12.5, INK)
     g.a('</g>')
-    DX, DY, DW = 164, 116, 360
-    g.a(f'<g class="{A.vis(2.2, 5.8, 0.3, poster=True)}">')
-    window(g, DX, DY, DW, 230, title=False)
-    g.text(DX + DW / 2, DY + 32, 'SHARE', 13, INK, 'middle', '700', '1.5')
-    g.a(f'<line x1="{DX+20}" y1="{DY+46}" x2="{DX+DW-20}" y2="{DY+46}" stroke="{TILE}" stroke-width="2"/>')
-    icons = [('drive', BLUE), ('cloud', LAV), ('box', MUTED), ('mail', RED)]
-    for i, (kind, col) in enumerate(icons):
-        tx = DX + 30 + i * 78
-        g.a(f'<rect x="{tx}" y="{DY+62}" width="64" height="64" rx="14" fill="{TILE}"' + (f' stroke="{INK}" stroke-width="2.5"' if i == 0 else '') + '/>')
-        cx, cy = tx + 32, DY + 94
-        if kind == 'drive':
-            g.a(f'<path d="M{cx-4} {cy-14} h8 l14 24 l-4 7 h-28 l-4 -7 z" fill="{col}"/><path d="M{cx-18} {cy+10} l14 -24" stroke="{CARD}" stroke-width="3"/>')
-        elif kind == 'cloud':
-            g.a(f'<path d="M{cx-16} {cy+8} a8 8 0 0 1 2 -16 a11 11 0 0 1 21 -2 a8 8 0 0 1 9 18 z" fill="{col}"/>')
-        elif kind == 'box':
-            g.a(f'<path d="M{cx-14} {cy-10} l14 -6 l14 6 l-14 6 z M{cx-14} {cy-4} l14 6 l14 -6 v12 l-14 7 l-14 -7 z" fill="{col}"/>')
-        else:
-            g.a(f'<rect x="{cx-16}" y="{cy-11}" width="32" height="22" rx="4" fill="{col}"/><path d="M{cx-16} {cy-9} l16 11 l16 -11" fill="none" stroke="{CARD}" stroke-width="2.5"/>')
-    g.a(f'<rect x="{DX+30}" y="{DY+156}" width="{DW-60}" height="14" rx="7" fill="{TILE}"/>')
-    g.a(f'<rect class="{A.fill(3.0, 5.0)}" x="{DX+30}" y="{DY+156}" width="{DW-60}" height="14" rx="7" fill="{BLUE}"/>')
-    g.a(f'<g class="{A.vis(5.0, 5.8, 0.2, poster=True)}"><circle cx="{DX+DW/2}" cy="{DY+200}" r="12" fill="{BLUE}"/>'
-        f'<path d="M{DX+DW/2-6} {DY+200} l4 4 l8 -8" fill="none" stroke="{CARD}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>')
+    zx, zy = ix, iy + gap * 3                                  # 새로 생기는 보고서.zip
+    g.a(f'<g class="{A.pop(4.1, 23.7, 0.45, poster=True)}">')
+    desk_icon(g, zx, zy, 'ZIP', RED, '보고서.zip')
     g.a('</g>')
 
-    # ── 장면 2 AUTO DELETE: 설정 창에서 보관 기간 드롭다운 7일 → 30일
-    SX, SY, SW, SH = 130, 66, 480, 306
-    g.a(f'<g class="{A.vis(6.0, 11.8)}">')
-    window(g, SX, SY, SW, SH)
-    bars(g, SX + 18, SY + 60, [80, 64, 88, 70, 76, 60], TILE, 10, 22)
-    g.a(f'<rect x="{SX+124}" y="{SY+52}" width="{SW-142}" height="{SH-70}" rx="12" fill="{TILE}" opacity=".45"/>')
-    g.a(f'<path d="M{SX+146} {SY+76} h18 M{SX+150} {SY+76} v16 a2 2 0 0 0 2 2 h8 a2 2 0 0 0 2 -2 v-16 M{SX+152} {SY+72} h6" fill="none" stroke="{RED}" stroke-width="2.5" stroke-linecap="round"/>')
-    g.text(SX + 174, SY + 88, 'AUTO DELETE ORIGINAL', 13, INK, fw='700', ls='.5')
-    g.text(SX + 146, SY + 128, 'KEEP FOR', 11, MUTED, ls='.5')
-    DDX, DDY = SX + 146, SY + 140
-    g.a(f'<rect x="{DDX}" y="{DDY}" width="150" height="34" rx="9" fill="{CARD}" stroke="{INK}" stroke-width="2"/>')
-    g.a(f'<path d="M{DDX+126} {DDY+14} l6 6 l6 -6" fill="none" stroke="{INK}" stroke-width="2" stroke-linecap="round"/>')
-    g.a(f'<g class="{A.vis(6.0, 9.7, 0.15)}">'); g.text(DDX + 16, DDY + 22, '7 DAYS', 13, INK, fw='700'); g.a('</g>')
-    g.a(f'<g class="{A.vis(9.6, 11.8, 0.15)}">'); g.text(DDX + 16, DDY + 22, '30 DAYS', 13, RED, fw='700'); g.a('</g>')
-    bars(g, DDX + 170, DDY + 14, [110], TILE, 7)
-    g.a(f'<g class="{A.vis(8.0, 9.6, 0.15)}">')
-    g.a(f'<rect x="{DDX}" y="{DDY+40}" width="150" height="142" rx="9" fill="{CARD}" stroke="{LINE}" stroke-width="2"/>')
-    for i, d in enumerate(('7', '14', '30', '60', '180')):
-        ry = DDY + 46 + i * 26
-        if d == '30':
-            g.a(f'<rect x="{DDX+6}" y="{ry}" width="138" height="24" rx="6" fill="{RED}" opacity=".16"/>')
-        g.text(DDX + 16, ry + 16.5, f'{d} DAYS', 12, RED if d == '30' else INK, fw='700' if d == '30' else '400')
-    g.a('</g>')
-    g.a('</g>')
-
-    # ── 장면 3 EXTRACT: 빈 창에 zip을 끌어 놓으면 두 칸(열기·풀기) → 풀기 진행 → 바탕화면에 xlsx
-    WX, WY, WW, WH = 150, 60, 470, 316
-    g.a(f'<g class="{A.vis(12.0, 17.4)}">')
+    # ── ②~④ 이지집 창 (6~23.7초)
+    g.a(f'<g class="{A.vis(5.9, 23.7, 0.35, poster=True)}">')
     window(g, WX, WY, WW, WH)
-    for i in range(8):
-        g.a(f'<rect x="{WX+18+i*34}" y="{WY+48}" width="24" height="24" rx="6" fill="{RED if i < 2 else TILE}"/>')
-    g.a(f'<line x1="{WX+16}" y1="{WY+84}" x2="{WX+WW-16}" y2="{WY+84}" stroke="{TILE}" stroke-width="2"/>')
-    g.a(f'<g class="{A.vis(12.0, 13.4, 0.2)}"><circle cx="{WX+WW/2}" cy="{WY+210}" r="18" fill="{TILE}"/>'
-        f'<path d="M{WX+WW/2-8} {WY+210} h16 M{WX+WW/2} {WY+202} v16" stroke="{INK}" stroke-width="3" stroke-linecap="round"/></g>')
-    ZW = (WW - 48) / 2
-    g.a(f'<g class="{A.vis(13.3, 15.1, 0.2)}">')
-    for i, lab in enumerate(('OPEN', 'EXTRACT')):
-        zx = WX + 16 + i * (ZW + 16)
-        on = i == 1
-        g.a(f'<rect x="{zx:.1f}" y="{WY+100}" width="{ZW:.1f}" height="{WH-118}" rx="12" fill="{RED if on else CARD}" fill-opacity="{0.12 if on else 1}" stroke="{RED}" stroke-width="2" stroke-dasharray="7 6"/>')
-        g.text(zx + ZW / 2, WY + 100 + (WH - 118) / 2 + 5, lab, 13, RED if on else INK, 'middle', '700', '1')
+    BX, BY, BW, BH = WX + 16, WY + 110, WW - 32, WH - 126     # 창 본문
+    # 빈 창: 끌어 놓으라는 안내
+    g.a(f'<g class="{A.vis(5.9, 7.9, 0.25)}">')
+    g.a(f'<rect x="{BX}" y="{BY}" width="{BW}" height="{BH}" rx="12" fill="none" stroke="{TILE}" stroke-width="2" stroke-dasharray="7 6"/>')
+    g.a(f'<circle cx="{BX+BW/2}" cy="{BY+BH/2-14}" r="18" fill="{TILE}"/><path d="M{BX+BW/2-8} {BY+BH/2-14} h16 M{BX+BW/2} {BY+BH/2-22} v16" stroke="{INK}" stroke-width="3" stroke-linecap="round"/>')
+    ko(g, BX + BW / 2, BY + BH / 2 + 26, '압축 파일을 끌어 놓으세요', 12.5, MUTED, 'middle')
     g.a('</g>')
-    g.a(f'<g class="{A.vis(15.0, 16.8, 0.2)}">')
-    g.a(f'<rect x="{WX}" y="{WY}" width="{WW}" height="{WH}" rx="14" fill="{INK}" opacity=".35"/>')
-    PX, PY = WX + WW / 2 - 130, WY + 130
-    g.a(f'<rect x="{PX}" y="{PY}" width="260" height="96" rx="12" fill="{CARD}" stroke="{LINE}" stroke-width="2"/>')
-    g.text(PX + 20, PY + 32, 'EXTRACTING…', 13, INK, fw='700', ls='.5')
-    g.a(f'<rect x="{PX+20}" y="{PY+52}" width="220" height="12" rx="6" fill="{TILE}"/>')
-    g.a(f'<rect class="{A.fill(15.2, 16.5)}" x="{PX+20}" y="{PY+52}" width="220" height="12" rx="6" fill="{RED}"/>')
+    # ② 두 칸: 압축 열기 · 압축 풀기
+    ZW = (BW - 16) / 2
+    g.a(f'<g class="{A.vis(7.8, 9.5, 0.2)}">')
+    for i, lab in enumerate(('압축 열기', '압축 풀기')):
+        zx0 = BX + i * (ZW + 16)
+        on = i == 1
+        g.a(f'<rect x="{zx0:.1f}" y="{BY}" width="{ZW:.1f}" height="{BH}" rx="12" fill="{RED if on else CARD}" fill-opacity="{0.13 if on else 1}" stroke="{RED}" stroke-width="2" stroke-dasharray="7 6"/>')
+        ko(g, zx0 + ZW / 2, BY + BH / 2 + 5, lab, 14, RED if on else INK, 'middle', '700')
+    g.a('</g>')
+    # ③ 푸는 중 + 바이러스 검사
+    PW, PH = min(330, BW - 40), 150
+    PX, PY = BX + (BW - PW) / 2, BY + (BH - PH) / 2
+    g.a(f'<g class="{A.vis(9.4, 15.1, 0.25)}">')
+    g.a(f'<rect x="{BX}" y="{BY}" width="{BW}" height="{BH}" rx="12" fill="{INK}" opacity=".12"/>')
+    g.a(f'<rect x="{PX}" y="{PY}" width="{PW}" height="{PH}" rx="14" fill="{CARD}" stroke="{LINE}" stroke-width="2"/>')
+    ko(g, PX + 22, PY + 34, '압축 푸는 중', 13.5, INK, fw='700')
+    g.a(f'<rect x="{PX+22}" y="{PY+50}" width="{PW-44}" height="10" rx="5" fill="{TILE}"/>')
+    g.a(f'<rect class="{A.grow(9.7, 12.8, 15.1, "X", False)}" x="{PX+22}" y="{PY+50}" width="{PW-44}" height="10" rx="5" fill="{RED}"/>')
+    sx, sy = PX + 22, PY + 84                                  # 방패
+    g.a(f'<path d="M{sx+14} {sy} l13 5 v10 c0 9 -6 15 -13 18 c-7 -3 -13 -9 -13 -18 v-10 z" fill="{BLUE}"/>')
+    g.a(f'<path class="{A.vis(13.0, 15.1, 0.2)}" d="M{sx+8} {sy+16} l4 4 l8 -8" fill="none" stroke="{CARD}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>')
+    g.a(f'<g class="{A.vis(9.7, 13.0, 0.2)}">')
+    ko(g, sx + 40, sy + 21, '바이러스 검사 중', 12.5, INK)
+    for i in range(3):
+        fr = [(0, 'opacity:.2')]
+        for k in range(6):
+            t = 9.7 + k * 0.55 + i * 0.15
+            fr += [(t, 'opacity:.2'), (t + 0.2, 'opacity:1'), (t + 0.4, 'opacity:.2')]
+        fr.append((T, 'opacity:.2'))
+        g.a(f'<circle class="{A.add("opacity:.2", fr)}" cx="{sx+146+i*10}" cy="{sy+17}" r="3" fill="{BLUE}"/>')
+    g.a('</g>')
+    g.a(f'<g class="{A.vis(13.0, 15.1, 0.2)}">'); ko(g, sx + 40, sy + 21, '악성코드 없음 · 안전', 12.5, BLUE, fw='700'); g.a('</g>')
+    g.a('</g>')
+    # ④ 풀린 파일 목록: 다른 프로그램(깨진 이름) → 이지집(바른 이름)
+    g.a(f'<g class="{A.vis(15.0, 23.7, 0.3, poster=True)}">')
+    TGX = BX
+    g.a(f'<g class="{A.vis(15.0, 17.9, 0.25)}"><rect x="{TGX}" y="{BY}" width="178" height="28" rx="14" fill="{TILE}"/>')
+    ko(g, TGX + 89, BY + 19, '다른 프로그램으로 풀면', 12, INK, 'middle', '700'); g.a('</g>')
+    g.a(f'<g class="{A.vis(17.8, 23.7, 0.25, poster=True)}"><rect x="{TGX}" y="{BY}" width="150" height="28" rx="14" fill="{RED}"/>')
+    ko(g, TGX + 75, BY + 19, '이지집으로 풀면', 12, '#ffffff', 'middle', '700'); g.a('</g>')
+    hy = BY + 44
+    ko(g, BX + 14, hy + 12, '이름', 11, MUTED)
+    ko(g, BX + BW * 0.62, hy + 12, '크기', 11, MUTED)
+    ko(g, BX + BW * 0.8, hy + 12, '형식', 11, MUTED)
+    g.a(f'<line x1="{BX}" y1="{hy+22}" x2="{BX+BW}" y2="{hy+22}" stroke="{TILE}" stroke-width="2"/>')
+    for i, (bad, good, band, col, size) in enumerate(FILES):
+        ry = hy + 32 + i * ((BY + BH - hy - 40) / 3)
+        doc(g, BX + 14, ry, band, col, 0.62)
+        g.a(f'<g class="{A.vis(15.0, 18.0, 0.2)}">'); g.text(BX + 50, ry + 19, bad, 13, RED); g.a('</g>')
+        g.a(f'<g class="{A.vis(17.8, 23.7, 0.2, poster=True)}">'); ko(g, BX + 50, ry + 19, good, 13.5, INK, fw='700'); g.a('</g>')
+        g.text(BX + BW * 0.62, ry + 19, size, 12, MUTED)
+        g.text(BX + BW * 0.8, ry + 19, band, 12, MUTED)
+    # 바른 이름으로 바뀌는 순간 목록 위를 지나가는 빛줄기
+    sweep = A.add('opacity:0', [(0, 'opacity:0;transform:translateX(0px)'), (17.5, 'opacity:0;transform:translateX(0px)'),
+                                (17.6, 'opacity:1;transform:translateX(0px)'), (18.4, f'opacity:1;transform:translateX({BW-40:.0f}px)'),
+                                (18.5, f'opacity:0;transform:translateX({BW-40:.0f}px)'), (T, 'opacity:0;transform:translateX(0px)')])
+    g.a(f'<rect class="{sweep}" x="{BX}" y="{hy+26}" width="40" height="{BY+BH-hy-30:.0f}" rx="8" fill="{RED}" fill-opacity=".22"/>')
     g.a('</g>')
     g.a('</g>')
 
-    # 끌리는 zip(장면 3): 커서와 함께 움직인다
-    ghost = A.move([(0, ZX, ZY), (13.0, ZX, ZY), (14.4, 390, 250), (T, 390, 250)])
-    g.a(f'<g class="{A.vis(13.0, 14.6, 0.15)}"><g class="{ghost}" opacity=".85">')
-    file_icon(g, 0, 0, 'ZIP', '', RED)
+    # ② 끌리는 보고서.zip
+    dz = (BX + ZW + 16 + ZW / 2 - 20, BY + BH / 2 - 30)       # 압축 풀기 칸 가운데
+    ghost = A.move([(0, zx - 20, zy), (7.2, zx - 20, zy), (8.8, *dz), (T, *dz)], (zx - 20, zy))
+    g.a(f'<g class="{A.vis(7.2, 9.3, 0.15)}"><g class="{ghost}" opacity=".9">')
+    doc(g, 0, 0, 'ZIP', RED)
     g.a('</g></g>')
 
     # 커서
-    c0 = (330, 330)
-    zx, zy = ZX + 24, ZY + 34
-    pts = [(0, *c0), (0.8, zx, zy), (1.4, zx, zy), (1.9, MX + 110, MY + 74), (2.3, MX + 110, MY + 74), (2.9, DX + 62, DY + 96),
-           (5.8, DX + 62, DY + 96), (6.6, DDX + 100, DDY + 18), (8.0, DDX + 100, DDY + 18), (8.9, DDX + 60, DDY + 104),
-           (9.6, DDX + 60, DDY + 104), (11.8, 520, 340), (12.8, zx, zy), (13.0, zx, zy), (14.4, 420, 280), (16.8, 420, 280), (T, *c0)]
-    g.a(f'<g class="{A.move(pts, (DX + 62, DY + 96))}">')
+    rest = (WX + WW - 46, WY + WH - 40)           # 쉴 때는 창 오른쪽 아래 구석(목록을 가리지 않게)
+    menu_row = (MX + 120, MY + 52 + 30 + 14)
+    pts = [(0, *rest), (0.8, rx0, ry0), (1.5, rx0 + 104, ry0 + gap * 2 + 100), (1.9, ix + 10, iy + gap + 20),
+           (2.6, *menu_row), (3.4, *menu_row), (4.4, zx + 30, zy + 70), (5.9, zx + 30, zy + 70),
+           (6.8, zx + 4, zy + 26), (7.2, zx + 4, zy + 26), (8.8, dz[0] + 24, dz[1] + 30), (9.4, dz[0] + 24, dz[1] + 30),
+           (10.2, *rest), (23.7, *rest), (T, *rest)]
+    g.a(f'<g class="{A.move(pts, rest)}">')
     cursor(g)
     g.a('</g>')
-    g.a('</g>')
 
 
-def pills_row(g, A, cx, y):
-    """단계 알약(가로): 지금 장면의 알약이 켜진다"""
-    ws = [26 + 8.2 * len(f'{n} {t}') for n, t in STEPS]
-    x = cx - (sum(ws) + 8 * 2) / 2
-    for i, ((n, t), w) in enumerate(zip(STEPS, ws)):
-        g.a(f'<rect x="{x:.1f}" y="{y}" width="{w:.1f}" height="30" rx="15" fill="{PANEL}" stroke="{LINE}" stroke-width="1.5"/>')
-        g.text(x + w / 2, y + 19.5, f'{n} {t}', 11, MUTED, 'middle', '700', '.5')
-        g.a(f'<g class="{A.vis(i * 6, i * 6 + 6, 0.25, poster=i == 0)}">')
-        g.a(f'<rect x="{x:.1f}" y="{y}" width="{w:.1f}" height="30" rx="15" fill="{TEXT}"/>')
-        g.text(x + w / 2, y + 19.5, f'{n} {t}', 11, BG, 'middle', '700', '.5')
-        g.a('</g>')
-        x += w + 8
-
-
-def steps_col(g, A, x, y):
-    """단계 목록(세로, 데스크톱): 번호 · 이름 · 짧은 설명. 지금 장면이 켜지고 진행 막대가 찬다"""
-    desc = ['Send a zip straight to cloud drives', 'Originals delete themselves on schedule', 'Drop a zip in, get the files out']
-    for i, ((n, t), d) in enumerate(zip(STEPS, desc)):
-        ty = y + i * 118
-        g.a(f'<rect x="{x}" y="{ty}" width="340" height="100" rx="20" fill="{PANEL}" stroke="{LINE}" stroke-width="1.5"/>')
-        g.a(f'<g class="{A.vis(i * 6, i * 6 + 6, 0.3, poster=i == 0)}"><rect x="{x}" y="{ty}" width="340" height="100" rx="20" fill="{INSET}" stroke="{RED}" stroke-width="2"/></g>')
-        g.text(x + 22, ty + 42, n, 26, RED, fw='800')
-        g.text(x + 72, ty + 36, t, 14, TEXT, fw='700', ls='1')
-        g.text(x + 72, ty + 58, d, 11, MUTED)
-        g.a(f'<rect x="{x+22}" y="{ty+76}" width="296" height="5" rx="2.5" fill="{LINE}"/>')
-        g.a(f'<rect class="{A.add("transform:scaleX(0);transform-box:fill-box;transform-origin:0 50%", [(0, "transform:scaleX(0)"), (i * 6, "transform:scaleX(0)"), (i * 6 + 6, "transform:scaleX(1)"), (i * 6 + 6.01, "transform:scaleX(0)"), (T, "transform:scaleX(0)")])}" '
-            f'x="{x+22}" y="{ty+76}" width="296" height="5" rx="2.5" fill="{RED}"/>')
-
-
-def build(w, h, wide):
+def build(w, h, L):
     g = Svg(w, h)
+    head, g.o = g.o, []          # 본문을 따로 모아 <style>을 앞에 넣는다
     A = Anim()
-    body = []
-    g.o, head = [], g.o          # 본문을 따로 모아 <style>을 앞에 넣는다
-    if wide:
-        steps_col(g, A, 50, 43)
-        stage(g, A, 440, 22)
-    else:
-        pills_row(g, A, w / 2, 16)
-        stage(g, A, 0, 34)
-    body = g.o
-    g.o = head + [A.style()] + body
+    scene(g, A, L)
+    g.o = head + [A.style()] + g.o
     return g
 
 
 out = sys.argv[1] if len(sys.argv) > 1 else '.'
-build(1200, 440, True).save(os.path.join(out, 'ezzip.svg'), LIGHT_ZZ)
-build(668, 440, False).save(os.path.join(out, 'ezzip-m.svg'), LIGHT_ZZ)
+# 데스크톱: 왼쪽 바탕화면 아이콘 줄 · 오른쪽 넓은 이지집 창(단계 표시 없이 폭 전체)
+build(1200, 440, {'icons': (96, 22, 100), 'win': (330, 26, 820, 388)}).save(os.path.join(out, 'ezzip.svg'), LIGHT_ZZ)
+# 카드·모바일(약 1.5:1)
+build(668, 440, {'icons': (60, 22, 100), 'win': (150, 26, 494, 388)}).save(os.path.join(out, 'ezzip-m.svg'), LIGHT_ZZ)
