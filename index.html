@@ -766,7 +766,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
         <p class="co-about"><span data-lb="ko">플랜트 건설·엔지니어링 특화 솔루션 기업</span><span data-lb="en">Solutions vendor for plant construction &amp; engineering</span><span data-lb="ja">プラント建設・エンジニアリング特化のソリューション企業</span></p>
         <ul class="co-list">
           <li class="co-item"><span data-lb="ko">플랜트 배관 도면 자동화 제품군을 <strong>화면부터 DB까지</strong> 개발·운영</span><span data-lb="en">Built and ran the piping drawing automation suite <strong>from UI to database</strong></span><span data-lb="ja">配管図面自動化製品群を<strong>画面からDBまで</strong>開発・運用</span></li>
-          <li class="co-item"><span data-lb="ko">심볼 좌표 자동 추출로 수작업 계산 70% 절감</span><span data-lb="en">Cut manual calculations by 70% via automated symbol extraction</span><span data-lb="ja">シンボル座標抽出の自動化で手作業の計算工数を70%削減</span></li>
+          <li class="co-item"><span data-lb="ko">부품 기호 변환 도구로 손 계산 작업 70% 단축</span><span data-lb="en">Cut manual calculation by 70% with a part-symbol converter</span><span data-lb="ja">部品記号の変換ツールで手計算作業を70%削減</span></li>
           <li class="co-item"><span data-lb="ko">현대엔지니어링 8개+ 현장 · 삼성물산 평택 현장 기술 지원 직접 대응</span><span data-lb="en">Handled on-site technical support across 8+ Hyundai E&amp;C sites and Samsung C&amp;T Pyeongtaek</span><span data-lb="ja">現代エンジニアリング8箇所以上の現場およびサムスン物産・平沢現場の技術支援に直接対応</span></li>
           <li class="co-item"><span data-lb="ko">Navisworks 시공 모니터링 PC3D · Xamarin 자재관리 앱 1차 개발</span><span data-lb="en">First-phase builds of the PC3D Navisworks monitoring add-in and a Xamarin materials app</span><span data-lb="ja">Navisworks施工モニタリングPC3D・Xamarin資材管理アプリの1次開発</span></li>
         </ul>
@@ -1190,47 +1190,69 @@ const PROJECTS = [
     title: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool — piping drawing automation', ja: '配管図面自動化 Ez-Spool' },
     mtitle: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool — Piping Drawing Automation', ja: '配管図面自動化 Ez-Spool' },
     blurb: {
-      ko: 'Spool 도면 자동화 시스템을 화면부터 DB까지 맡아 개발·운영. 현대엔지니어링·삼성물산 현장 운영을 지원하고 수작업 계산을 70% 줄임.',
-      en: 'Built and ran a spool drawing automation system from UI to database, supporting Hyundai E&C and Samsung C&T sites and cutting manual calculation by 70%.',
-      ja: 'Spool図面自動化システムを画面からDBまで担当し開発・運用。現代エンジニアリング・サムスン物産の現場運用を支援し、手作業の計算を70%削減。'
+      ko: '플랜트 배관 제작 도면 자동화 시스템을 화면부터 DB까지 맡아 개발·운영. 현대엔지니어링 신규 프로젝트의 요구사항을 직접 받아 반영하고 손 계산 작업을 70% 줄임.',
+      en: 'Built and ran a plant-piping fabrication drawing system from UI to database, taking Hyundai E&C’s new-project requirements directly and cutting manual calculation by 70%.',
+      ja: 'プラント配管の製作図面自動化システムを画面からDBまで担当し開発・運用。現代エンジニアリング新規プロジェクトの要件を直接受けて反映し、手計算作業を70%削減。'
     },
     stack: ['C#', 'ASP.NET', 'VB.NET', 'MSSQL', 'EyeShot', 'LiteCad'],
     summary: {
-      ko: 'Spool 제작 도면·BOM·용접 리포트를 자동으로 만드는 시스템.',
-      en: 'Automates plant piping spool drawings, BOMs, and welding reports.',
-      ja: 'Spool製作図面・BOM・溶接レポートを自動算出するシステム。'
+      ko: '배관 설계 도면으로 제작 도면·자재 목록·용접 목록을 자동으로 만드는 시스템.',
+      en: 'Turns piping design drawings into fabrication drawings, material lists, and weld lists.',
+      ja: '配管設計図面から製作図面・資材リスト・溶接リストを自動作成するシステム。'
     },
     intro: {
-      ko: '플랜트 배관 시공에 필요한 Spool 제작 도면·BOM·용접 리포트를 자동으로 산출하는 시스템. 제품 운영 단계에 참여.',
-      en: 'A system that automatically produces spool fabrication drawings, BOMs, and welding reports for plant piping. Joined after launch.',
-      ja: 'プラント配管施工に必要なSpool製作図面・BOM・溶接レポートを自動算出するシステム。運用期から参画。'
+      ko: '플랜트 배관을 공장에서 미리 만들 조립 단위(Spool)로 나누고, 제작 도면·자재 목록(BOM)·용접 목록을 자동으로 만드는 시스템. 현대엔지니어링·롯데건설·삼성물산·두산 등 고객사마다 맞춤 버전으로 운영. 제품 운영 단계에 참여.',
+      en: 'A system that splits plant piping into shop-built assemblies (spools) and automatically produces their fabrication drawings, bills of materials, and weld lists, run as a tailored version for each client such as Hyundai E&C, Lotte E&C, Samsung C&T, and Doosan. Joined after launch.',
+      ja: 'プラント配管を工場で先に製作する組立単位(Spool)に分け、製作図面・資材リスト(BOM)・溶接リストを自動作成するシステム。現代エンジニアリング・ロッテ建設・サムスン物産・斗山など顧客ごとの専用版で運用。運用期から参画。'
     },
     features: [
-      { ko: '리포트에 넣을 항목과 순서를 고객이 직접 고르는 화면을 개발해 **양식 변경마다 하던 코드 수정·재배포를 없앰**',
-        en: 'Built a screen where clients pick report fields and their order, **removing the code change and redeploy each format request used to need**',
-        ja: 'レポートに載せる項目と順序を顧客自身が選べる画面を開発し、**書式変更のたびに必要だったコード修正・再配布を解消**' },
+      { ko: '자재 목록(BOM)에 어떤 정보를 어떻게 뽑을지 고객이 직접 정하는 **자재 목록 설정 기능** 개발, 용접 목록까지 확장',
+        en: 'Built **material-list settings** that let clients define what goes into the bill of materials and how it is extracted, later extended to weld lists',
+        ja: '資材リスト(BOM)に載せる情報と抽出方法を顧客自身が決める**資材リスト設定機能**を開発し、溶接リストにも拡張' },
+      { ko: '리포트에 넣을 항목과 순서를 고객이 직접 고르는 화면을 개발해 **고객사 양식 변경 요청 자체를 없앰**',
+        en: 'Built a screen where clients pick report fields and their order, **ending format-change requests altogether**',
+        ja: 'レポートに載せる項目と順序を顧客自身が選べる画面を開発し、**顧客からの書式変更依頼そのものを解消**' },
+      { ko: '롯데건설 버전에 설계 도면을 업계 표준 배관 데이터 파일(PCF)로 한 번에 바꾸는 **PCF 변환 기능** 개발',
+        en: 'Built a **PCF converter** for the Lotte E&C version that batch-converts design drawings into the industry-standard piping data file',
+        ja: 'ロッテ建設版に、設計図面を業界標準の配管データファイル(PCF)へ一括変換する**PCF変換機能**を開発' },
+      { ko: '함께 시공하는 회사마다 다른 규칙에 맞춰 도면 승인 도장·작업 그룹 자동 지정·조립 단위 번호 부여 등 **프로젝트별 맞춤 기능** 개발',
+        en: 'Built **project-specific features** such as drawing approval stamps, automatic work-group assignment, and spool numbering to match each joint-venture partner’s rules',
+        ja: '共同施工会社ごとに異なる規則に合わせ、図面承認スタンプ・作業グループ自動指定・組立単位の番号付与など**プロジェクト別の専用機能**を開発' },
+      { ko: '고객사가 CAD 파일로 보내는 자체 부품 기호를 시스템이 쓰는 좌표 데이터로 바꾸는 **기호 변환 도구** 개발',
+        en: 'Built a **symbol converter** that turns the part symbols clients send as CAD files into coordinate data the system uses',
+        ja: '顧客がCADファイルで送る独自の部品記号を、システムで使う座標データに変換する**記号変換ツール**を開発' },
       { ko: '시스템 전체 화면과 개발 도구의 UI/UX 개선',
         en: 'Improved the UI/UX of the full system and its developer tools',
         ja: 'システム全画面および開発ツールのUI/UXを改善' }
     ],
     stats: [
-      { v: { ko: '70%', en: '70%', ja: '70%' }, k: { ko: '수작업 계산 공수 단축', en: 'LESS MANUAL CALC', ja: '手動計算工数削減' } }
+      { v: { ko: '70%', en: '70%', ja: '70%' }, k: { ko: '손 계산 작업 단축', en: 'LESS MANUAL CALC', ja: '手計算作業削減' } },
+      { v: { ko: '10+', en: '10+', ja: '10+' }, k: { ko: '운영 참여 프로젝트', en: 'PROJECTS SUPPORTED', ja: '運用参加プロジェクト' } }
     ],
     metrics: [
-      { ko: 'CAD 도면 형상 기반 심볼 좌표 추출 도구를 개발해 **수작업 계산 공수 70% 단축**',
-        en: 'Developed CAD geometry symbol coordinate extraction, **reducing manual calculation effort by 70%**',
-        ja: 'CAD図面形状に基づくシンボル座標自動抽出ツールを開発し**手動計算工数を70%削減**' }
+      { ko: '기호 변환 도구로 부품 기호 좌표를 손으로 계산하던 **작업 시간 70% 단축**',
+        en: 'The symbol converter **cut the time spent hand-calculating part-symbol coordinates by 70%**',
+        ja: '記号変換ツールにより、部品記号の座標を手で計算していた**作業時間を70%短縮**' },
+      { ko: '현대엔지니어링 **프로젝트 10곳 이상**의 요구사항 개발과 운영 대응',
+        en: 'Developed requirements and supported operations for **10+ Hyundai E&C projects**',
+        ja: '現代エンジニアリング**プロジェクト10件以上**の要件開発と運用対応' }
     ],
     challenges: [
-      { ko: '현대엔지니어링 8개+·삼성물산 평택 현장 VOC에 대응하며, 오류 재현용 사내 도면 검색 도구를 재작성해 **검색 속도 98% 향상**',
-        en: 'Handled VOC for 8+ Hyundai E&C sites and Samsung C&T Pyeongtaek, and rewrote the in-house drawing search tool used to reproduce bugs, **making search 98% faster**',
-        ja: '現代エンジニアリング8箇所以上・サムスン物産平沢現場のVOCに対応し、不具合再現用の社内図面検索ツールを作り直して**検索速度を98%向上**' },
-      { ko: '레거시 쿼리를 SP·Function·View 구조로 재구성하여 **리포트 조회 성능 개선**',
-        en: 'Restructured legacy queries into SPs, Functions, and Views, **speeding up report queries**',
-        ja: 'レガシークエリをストアドプロシージャやView構造へ再構築し、**レポート照会性能を改善**' },
-      { ko: '배포·개발 환경 설정·기본 기능 설명 등 구전으로만 전해지던 절차를 **매뉴얼로 정리**해 온보딩·운영 효율 개선',
-        en: 'Turned word-of-mouth procedures for deployment, environment setup, and core features into **written manuals**, easing onboarding and operations',
-        ja: '配布・開発環境設定・基本機能説明など口頭で伝わっていた手順を**マニュアル化**し、オンボーディングと運用を効率化' }
+      { ko: '현대엔지니어링 프로젝트 3곳이 동시에 진행되던 시기, **하루 최대 10건의 요구사항을 직접 받아** 프로젝트별 규칙에 맞춰 반영',
+        en: 'With three Hyundai E&C projects running at once, **took up to 10 requests a day directly** and fitted each to its project’s rules',
+        ja: '現代エンジニアリングのプロジェクト3件が同時進行した時期、**1日最大10件の要件を直接受け**、プロジェクトごとの規則に合わせて反映' },
+      { ko: '도면 승인 처리를 DB 저장 프로시저로 옮겨 **승인 중 DB가 멈추던 교착상태 해결**',
+        en: 'Moved drawing-approval logic into a stored procedure, **resolving the database deadlock that froze approvals**',
+        ja: '図面承認処理をDBのストアドプロシージャへ移し、**承認中にDBが止まるデッドロックを解消**' },
+      { ko: '현대엔지니어링 8개 이상·삼성물산 평택 현장의 오류에 대응하며, 오류를 재현할 도면을 찾는 사내 검색 도구를 다시 만들어 **검색 속도 98% 향상**',
+        en: 'Handled issues from 8+ Hyundai E&C sites and Samsung C&T Pyeongtaek, and rebuilt the in-house tool for finding drawings to reproduce bugs, **making search 98% faster**',
+        ja: '現代エンジニアリング8箇所以上・サムスン物産平沢現場の不具合に対応し、不具合再現用の図面を探す社内検索ツールを作り直して**検索速度を98%向上**' },
+      { ko: '자재 목록(BOM) 리포트 쿼리를 DB 저장 프로시저·함수·뷰 구조로 재구성해 **조회 성능 개선**',
+        en: 'Restructured bill-of-materials report queries into stored procedures, functions, and views, **speeding up report queries**',
+        ja: '資材リスト(BOM)レポートのクエリをストアドプロシージャ・関数・View構造へ再構築し、**照会性能を改善**' },
+      { ko: '문서화되지 않았던 배포·개발 환경·기능 절차를 매뉴얼로 정리하고 **신규 입사자용 입문 자료** 작성',
+        en: 'Documented previously undocumented procedures for deployment, environment setup, and features, and **created an onboarding guide for new hires**',
+        ja: '文書化されていなかった配布・開発環境・機能の手順をマニュアル化し、**新規入社者向けの入門資料**を作成' }
     ],
     ai: []
   },
