@@ -332,6 +332,8 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 .dt-period{font-size:22px;font-weight:700;line-height:1.3}
 /* 상세 기간은 모든 폭에서 시작 — / 끝 두 줄(사용자 결정, 2026-09-27) */
 .dt-period span{display:block}
+/* 역할은 기간 아래 한 줄 — 높이를 바꾸지 않는 시안 A(사용자 결정, 2026-10-05) */
+.dt-role{margin:12px 0 0;font-size:17px;font-weight:500;line-height:1.4;color:var(--muted)}
 .dt-stack{display:flex;flex-wrap:wrap;gap:2px 14px}
 .dt-stack-item{font-size:17px;font-weight:500;line-height:1.5}
 .dt-link{grid-column:span 2;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap}
@@ -415,9 +417,13 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   /* 결과물 칸은 링크가 없어도 있을 때와 같은 높이(사용자 지적, 2026-09-26) */
   .dt-link{min-height:108px}
   /* 상세 히어로 아래는 모바일과 같은 배치: 기간 · 결과물 보기 반씩, 기술 스택은 그 아래 전체 폭(사용자 결정, 2026-09-27) */
-  .dt-hero .dt-link{grid-column:span 1}
+  /* 결과물 칸은 반 칸이라 제목·알약을 한 줄에 두면 어색하다 — 제목 위, 알약 아래 두 줄(사용자 지적, 2026-10-05) */
+  .dt-hero .dt-link{grid-column:span 1;flex-direction:column;flex-wrap:nowrap;align-items:flex-start;justify-content:space-between}
   .dt-hero .dt-side--stack{grid-column:span 2;order:1}
   .dt-title{font-size:48px}
+  /* 수치 카드는 2열 — auto-fit에 맡기면 3장일 때 셋째 줄 옆이 비어 벤토에 빈칸이 생긴다. 홀수 마지막 장은 모바일처럼 전체 폭(사용자 지적, 2026-10-05) */
+  .dt-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dt-stat.is-wide{grid-column:span 2}
 }
 
 /* ============================================================
@@ -569,20 +575,29 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
   /* 제목이 두 줄인 영어·일본어도 360px 폭에서 정사각형 안에 들어가게 제목을 한 단계 작게 */
   .dt-hero .dt-link-t{font-size:17px}
   /* 기간 값은 기본값 22px 그대로, 두 줄 허용(사용자 결정, 2026-09-27) */
-  /* 결과물 칸은 132px 정사각형, 나머지는 기간 칸(사용자 결정, 2026-09-27). 세로 배치(제목 위·링크 아래)는 그대로 */
+  /* 결과물 칸은 폭 132px, 나머지는 기간 칸(사용자 결정, 2026-09-27). 세로 배치(제목 위·링크 아래)는 그대로.
+     높이는 정사각형을 풀고 옆 기간 카드를 따라 세로로 늘어난다 — 기간 아래 역할 줄이 들어오며 바뀜(사용자 결정, 2026-10-05) */
   .bento.dt-hero{grid-template-columns:minmax(0,1fr) 132px}
   .dt-hero .dt-side--stack{grid-column:span 2;order:1}
   /* 기간·결과물 보기는 정사각형을 풀고 내용 높이로 낮춘다(사용자 결정, 2026-09-27).
      안쪽 여백 18px·간격 8px — 기간이 두 줄로만 꺾여야 칸이 낮아진다(24px이면 세 줄로 흩어진다) */
   .dt-hero .card.dt-side:not(.dt-side--stack),.dt-hero .card.dt-link{padding:18px;gap:8px}
-  .dt-hero .card.dt-link{aspect-ratio:1}
+  /* ↗ 동그라미는 오른쪽 아래(사용자 결정, 2026-10-05) */
+  .dt-hero .card.dt-link{overflow:hidden;justify-content:space-between}
+  .dt-hero .dt-link .ink-pill{align-self:flex-end}
+  /* 역할 줄은 15px(바로 위 "기간" 라벨과 같은 크기) — 11px는 모바일에서 읽기 어렵다(사용자 지적, 2026-10-05).
+     반 칸에서는 한 줄에 다 안 들어가 "·"가 줄 끝에 매달리고 언어마다 줄 수가 달라져서, 참여 형태와 범위를 늘 두 줄로 나눈다.
+     별도 타일로 빼는 안은 써 보고 되돌렸다(2026-10-05) */
+  .dt-role{font-size:15px}
+  .dt-role span{display:block}
+  .dt-role .dt-role-sep{display:none}
   /* 모바일 결과물 칸은 제목 아래 왼쪽에 ↗ 동그라미 하나(시안 A — 사용자 결정, 2026-09-27). "공식 웹사이트" 글자는 화면에서 숨기고 링크 이름으로만 남긴다.
      화살표는 동그라미 기준 절대 위치로 둔다. ↗는 화살촉(오른쪽 위)에 무게가 몰려 수학적 가운데면 위·오른쪽으로 떠 보여서 왼쪽 아래로 1.5px 옮겨 눈으로 가운데를 맞춘다(사용자 지적, 2026-09-27) — 숨긴 글자가 브라우저 최소 글자 크기 때문에 폭을 가지면 flex 가운데 정렬이 밀린다.
-     ::after는 동그라미 위치(칸 안쪽 18px)에서 132px 칸 전체를 덮어 어디를 눌러도 열린다 */
+     ::after는 동그라미 위아래로 넉넉히 뻗어 칸 전체를 덮고(어디를 눌러도 열린다), 칸의 overflow로 자른다 — 칸 높이가 기간 카드를 따르기 때문 */
   .dt-hero .dt-link .ink-pill{position:relative;width:40px;height:40px;min-height:0;padding:0;font-size:0;color:transparent;overflow:visible}
   /* 화살표 글자(↗)는 서체마다 위치가 틀어져서, 다른 아이콘과 같은 1.8 굵기 선 아이콘을 마스크로 그린다 */
   .dt-hero .dt-link .ink-pill::before{content:"";position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-9px 0 0 -9.5px;background:var(--ink-text);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.75 12.25l8.5-8.5M6.25 3.75h6v6'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.75 12.25l8.5-8.5M6.25 3.75h6v6'/%3E%3C/svg%3E") center/contain no-repeat}
-  .dt-hero .dt-link .ink-pill::after{content:"";position:absolute;left:-18px;bottom:-18px;width:132px;height:132px}
+  .dt-hero .dt-link .ink-pill::after{content:"";position:absolute;right:-18px;top:-200px;width:132px;height:600px}
   /* 모바일 반 칸 연락처는 44px 동그라미 */
   .contact-list{grid-template-columns:repeat(2,44px);gap:8px}
   .contact-card .contact-row .copy-btn,.contact-links a{width:44px;height:44px}
@@ -732,9 +747,10 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
       <div class="co-desc">
         <p class="co-about"><span data-lb="ko">국내 1위 리타겟팅 광고 플랫폼과 국내 최초 PC형 앱스토어를 운영하는 데이터 테크 기업</span><span data-lb="en">Data-tech company behind Korea's top retargeting ad platform and first PC app store</span><span data-lb="ja">韓国最大のリターゲティング広告プラットフォームと韓国初のPC向けアプリストアを運営するデータテック企業</span></p>
         <ul class="co-list">
-          <li class="co-item"><span data-lb="ko">자사 PC 제품군 <strong>공통 모듈 · 통합 인스톨러 플랫폼</strong> 설계·구축</span><span data-lb="en">Designed and built the <strong>shared module and installer platform</strong> for all company PC products</span><span data-lb="ja">自社PC製品群の<strong>共通モジュール・インストーラー基盤</strong>を設計・構築</span></li>
-          <li class="co-item"><span data-lb="ko">첫 제품 ezZip 기획부터 엔진 개발·운영 주도 → DAU 6만 명</span><span data-lb="en">Led ezZip from concept to engine development and operations, reaching 60K DAU</span><span data-lb="ja">第1弾製品ezZipの企画からエンジン開発・運用まで主導しDAU6万人を達成</span></li>
+          <li class="co-item"><span data-lb="ko">자사 PC 제품 7종이 쓰는 <strong>공통 모듈 · 통합 인스톨러 플랫폼</strong> 설계·구축</span><span data-lb="en">Designed and built the <strong>shared module and installer platform</strong> used by 7 company PC products</span><span data-lb="ja">自社PC製品7種が使う<strong>共通モジュール・インストーラー基盤</strong>を設計・構築</span></li>
+          <li class="co-item"><span data-lb="ko">압축 프로그램 ezZip 기획부터 엔진 개발·운영 주도 → DAU 6만 명</span><span data-lb="en">Led ezZip from concept to engine development and operations, reaching 60K DAU</span><span data-lb="ja">圧縮ソフトezZipの企画からエンジン開発・運用まで主導しDAU6万人を達成</span></li>
           <li class="co-item"><span data-lb="ko">이전: Java/Spring 대용량 메시지 발송 플랫폼 iSend 백엔드</span><span data-lb="en">Previously engineered the backend for iSend, a high-volume Java/Spring message delivery platform</span><span data-lb="ja">以前はJava/Spring基盤の大容量メッセージ配信プラットフォームiSendのバックエンドを担当</span></li>
+          <li class="co-item"><span data-lb="ko">PC 앱 제작 서비스 MakeTApp: 약 800개 앱 자동 빌드 시스템 구축</span><span data-lb="en">MakeTApp PC app builder: built an automated build system for ~800 apps</span><span data-lb="ja">PCアプリ制作サービスMakeTApp：約800本のアプリ自動ビルド環境を構築</span></li>
         </ul>
       </div>
     </article>
@@ -749,9 +765,10 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
       <div class="co-desc">
         <p class="co-about"><span data-lb="ko">플랜트 건설·엔지니어링 특화 솔루션 기업</span><span data-lb="en">Solutions vendor for plant construction &amp; engineering</span><span data-lb="ja">プラント建設・エンジニアリング特化のソリューション企業</span></p>
         <ul class="co-list">
-          <li class="co-item"><span data-lb="ko">플랜트 배관 도면 자동화 제품군 <strong>Windows 클라이언트 전담</strong></span><span data-lb="en">Led <strong>Windows client development</strong> for the piping drawing automation suite</span><span data-lb="ja">配管図面自動化製品群の<strong>Windowsクライアント開発を担当</strong></span></li>
-          <li class="co-item"><span data-lb="ko">도면 검색 속도 98% 개선, 심볼 좌표 자동 추출로 수작업 계산 70% 절감</span><span data-lb="en">Improved drawing search speed by 98% and cut manual calculations by 70% via automated symbol extraction</span><span data-lb="ja">図面検索速度を98%改善し、シンボル座標抽出の自動化で手作業の計算工数を70%削減</span></li>
+          <li class="co-item"><span data-lb="ko">플랜트 배관 도면 자동화 제품군을 <strong>화면부터 DB까지</strong> 개발·운영</span><span data-lb="en">Built and ran the piping drawing automation suite <strong>from UI to database</strong></span><span data-lb="ja">配管図面自動化製品群を<strong>画面からDBまで</strong>開発・運用</span></li>
+          <li class="co-item"><span data-lb="ko">심볼 좌표 자동 추출로 수작업 계산 70% 절감</span><span data-lb="en">Cut manual calculations by 70% via automated symbol extraction</span><span data-lb="ja">シンボル座標抽出の自動化で手作業の計算工数を70%削減</span></li>
           <li class="co-item"><span data-lb="ko">현대엔지니어링 8개+ 현장 · 삼성물산 평택 현장 기술 지원 직접 대응</span><span data-lb="en">Handled on-site technical support across 8+ Hyundai E&amp;C sites and Samsung C&amp;T Pyeongtaek</span><span data-lb="ja">現代エンジニアリング8箇所以上の現場およびサムスン物産・平沢現場の技術支援に直接対応</span></li>
+          <li class="co-item"><span data-lb="ko">Navisworks 시공 모니터링 PC3D · Xamarin 자재관리 앱 1차 개발</span><span data-lb="en">First-phase builds of the PC3D Navisworks monitoring add-in and a Xamarin materials app</span><span data-lb="ja">Navisworks施工モニタリングPC3D・Xamarin資材管理アプリの1次開発</span></li>
         </ul>
       </div>
     </article>
@@ -838,7 +855,10 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
       </div>
       <div class="card dt-side">
         <div class="label">{{ periodLabel }}</div>
-        <div class="dat dt-period"><span>{{ p.dateFrom }}</span> <span>{{ p.dateTo }}</span></div>
+        <div>
+          <div class="dat dt-period"><span>{{ p.dateFrom }}</span> <span>{{ p.dateTo }}</span></div>
+          <sc-if value="{{ p.role }}"><p class="dt-role"><span>{{ p.roleKind }}</span><span class="dt-role-sep"> · </span><span>{{ p.roleScope }}</span></p></sc-if>
+        </div>
       </div>
       <div class="card dt-side dt-side--stack">
         <div class="label">{{ stackLabel }}</div>
@@ -930,7 +950,7 @@ section[data-chapter]{display:flex;flex-direction:column;gap:16px}
 
 const STACK = [
   { label: { ko: '핵심 스택', en: 'Core', ja: 'コア' },
-    items: ['C#', '.NET 8+', 'WPF', 'Avalonia UI', 'MVVM', 'Native AOT'] },
+    items: ['C#', '.NET 8+', 'WPF', 'Avalonia UI', 'MVVM'] },
   { label: { ko: '플랫폼 · 네이티브', en: 'Platform & native', ja: 'プラットフォーム・ネイティブ' },
     items: ['COM Interop', 'C++ / VC++', 'Win32 API', 'WiX Toolset', 'MSIX', 'WinForm', 'Xamarin'] },
   { label: { ko: '백엔드 · 데이터', en: 'Backend & data', ja: 'バックエンド・データ' },
@@ -978,71 +998,91 @@ const PROJECTS = [
     co: CO.enliple, date: '2025.02 — NOW',
     // 움직이는 SVG(24초 반복). 대표 카드 칸(약 1.5:1)은 모바일 상세와 비율이 같아 한 장을 같이 쓴다
     img: './img/ezzip.svg', thumb: './img/ezzip-m.svg',
+    role: { ko: '단독 개발 · 기획부터 운영까지', en: 'Sole dev · end to end', ja: '単独開発 · 企画から運用まで' },
     url: 'https://ezlab.im/ko/tool/ezzip',
     title: { ko: '압축 프로그램 ezZip', en: 'ezZip & shared PC platform', ja: '圧縮ソフト ezZip · 共通プラットフォーム' },
     mtitle: { ko: '압축 프로그램 ezZip · 공통 플랫폼', en: 'ezZip — Compression Tool & Platform', ja: '圧縮ソフト ezZip・共通プラットフォーム' },
     blurb: {
-      ko: '자사 PC 제품군 공통 모듈·인스톨러 플랫폼을 설계하고, 첫 상용 제품인 ezZip의 고성능 C# 엔진 개발 및 배포를 총괄하여 DAU 6만 명 달성.',
-      en: 'Architected the shared desktop platform and engineered the high-performance C# engine for ezZip, scaling the flagship app to 60K DAU.',
-      ja: '自社PC製品の共通基盤を設計し、第1弾製品ezZipの高性能C#エンジン開発と配信を統括してDAU 6万人を達成。'
+      ko: '자사 PC 제품 7종이 함께 쓰는 공통 플랫폼을 설계하고, 그 위에서 압축 프로그램 ezZip을 기획부터 운영까지 맡아 DAU 6만 명 달성.',
+      en: 'Architected the shared platform behind 7 company PC products, then built and ran ezZip on top of it from concept to 60K DAU.',
+      ja: '自社PC製品7種が共用する共通基盤を設計し、その上で圧縮ソフトezZipを企画から運用まで担当してDAU 6万人を達成。'
     },
-    stack: ['C#', '.NET 8', 'WPF', 'Avalonia', 'VC++', 'Native AOT', 'WiX'],
+    stack: ['C#', '.NET 8', 'WPF', 'Avalonia', 'VC++', 'WiX', 'COM Interop'],
     summary: {
-      ko: '자사 PC 제품 공통 플랫폼과 첫 상용 제품 ezZip을 기획부터 운영까지 총괄.',
-      en: 'Led the shared PC platform and flagship ezZip from concept to operations.',
-      ja: '自社PC製品の共通基盤と第1弾製品ezZipを企画から運用まで統括。'
+      ko: '자사 PC 제품 7종 공통 플랫폼과 압축 프로그램 ezZip을 1인 개발.',
+      en: 'Solo-built the shared platform for 7 PC products and the ezZip archiver.',
+      ja: '自社PC製品7種の共通基盤と圧縮ソフトezZipを1人で開発。'
     },
     intro: {
-      ko: '자사 PC 소프트웨어 전반의 중복 개발을 해소하기 위한 공통 플랫폼을 구축하고, 첫 상용 제품으로 압축 프로그램 ezZip의 기획부터 배포·운영을 총괄.',
-      en: 'Established a shared desktop platform to eliminate duplicate engineering across company PC apps, leading ezZip as the flagship product from concept to operations.',
-      ja: '自社PCソフトウェア全般の重複開発を解消する共通基盤を構築し、第1弾の商用製品として圧縮ソフトezZipの企画から配信・運用までを統括。'
+      ko: '제품마다 따로 만들던 인스톨러·로그인·설정·업데이트를 공통 모듈로 묶어, 각 개발자가 제품 고유 기능에만 집중하도록 함.',
+      en: 'Pulled the installer, login, settings, and updates every product rebuilt into shared modules, so each developer could focus on product-specific features.',
+      ja: '製品ごとに作っていたインストーラー・ログイン・設定・更新を共通モジュールにまとめ、各開発者が製品固有の機能に集中できる体制を構築。'
     },
     features: [
-      { ko: '7z.dll을 .NET 8 Source-Generated COM Interop 기반 C# 엔진으로 재구현하고 **Span 제로 카피 마샬링** 적용',
-        en: 'Re-engineered 7z.dll with .NET 8 source-generated COM interop and **Span-based zero-copy marshalling**',
-        ja: '7z.dllを.NET 8のSource-Generated COM InteropベースのC#エンジンとして再構築し、**Spanゼロコピー**を適用' },
-      { ko: 'Directory.Build.props 기반 멀티 프로덕트 빌드 시스템 및 **WiX Toolset Bundle 전사 공통 통합 인스톨러** 개발',
-        en: 'Engineered a unified Directory.Build.props build system and **company-wide WiX Toolset Bundle installer**',
-        ja: '.propsベースのマルチプロダクトビルド環境と**全社共通WiX Toolset Bundleインストーラー**を開発' }
+      { ko: '인스톨러·로그인·공유·설정·자동 업데이트·테마를 **공통 모듈로 분리**하고 제품별 설정 파일 하나로 연결',
+        en: 'Split installer, login, sharing, settings, auto-update, and theming into **shared modules** wired up by one per-product config file',
+        ja: 'インストーラー・ログイン・共有・設定・自動更新・テーマを**共通モジュールに分離**し、製品別の設定ファイル1つで連携' },
+      { ko: '7z.dll을 .NET 8 Source-Generated COM Interop과 Span 제로 카피로 감싸 **원본 7-Zip과 같은 성능 확보**',
+        en: 'Wrapped 7z.dll with .NET 8 source-generated COM interop and Span zero-copy, **matching native 7-Zip performance**',
+        ja: '7z.dllを.NET 8のSource-Generated COM InteropとSpanゼロコピーでラップし、**本家7-Zipと同等の性能を確保**' },
+      { ko: '.props 기반 멀티 프로덕트 빌드 시스템과 **WiX Toolset Bundle 전사 공통 인스톨러**를 개발하고, 파트너 코드별 번들 일괄 빌드·서명 스크립트 작성',
+        en: 'Built a .props-based multi-product build system and a **company-wide WiX Toolset Bundle installer**, with a script that batch-builds and signs bundles per partner code',
+        ja: '.propsベースのマルチプロダクトビルド環境と**全社共通WiX Toolset Bundleインストーラー**を開発し、パートナーコード別バンドルの一括ビルド・署名スクリプトを作成' },
+      { ko: 'Windows 11(MSIX Sparse Package·IExplorerCommand)과 레거시 OS(COM Shell Extension) 방식을 각각 구현해 **Windows 11과 이전 버전 모두에서 우클릭 메뉴 지원**',
+        en: 'Implemented both Windows 11 (MSIX sparse package, IExplorerCommand) and legacy (COM shell extension) handlers, **supporting the right-click menu on Windows 11 and earlier**',
+        ja: 'Windows 11(MSIX Sparse Package・IExplorerCommand)とレガシーOS(COM Shell Extension)の方式をそれぞれ実装し、**Windows 11と旧バージョンの両方で右クリックメニューに対応**' },
+      { ko: 'Windows 작업 스케줄러와 서버 API를 연동한 **백그라운드 자동 업데이트** 구축',
+        en: 'Built **background auto-updates** using Windows Task Scheduler and a server API',
+        ja: 'Windowsタスクスケジューラとサーバーを連携した**バックグラウンド自動更新**を構築' }
     ],
     stats: [
       { v: { ko: '6만 명', en: '60K', ja: '6万人' },      k: { ko: 'DAU', en: 'DAU', ja: 'DAU' } },
       { v: { ko: '1,800건', en: '1,800', ja: '1,800件' }, k: { ko: '일 평균 설치', en: 'DAILY INSTALLS', ja: '1日平均インストール' } },
-      { v: { ko: '50%+', en: '50%+', ja: '50%+' },        k: { ko: '실행 파일 크기 감축', en: 'SMALLER BINARY', ja: 'バイナリ削減' } }
+      { v: { ko: '7종', en: '7', ja: '7種' },             k: { ko: '공통 플랫폼 적용 제품', en: 'PRODUCTS ON PLATFORM', ja: '共通基盤の適用製品' } }
     ],
     metrics: [
       { ko: '최초 기획부터 엔진 개발·운영을 주도하여 **일 평균 설치 1,800건, DAU 6만 명 달성** (자사 PC 제품군 최다 기록)',
         en: 'Led product end-to-end to **1,800 daily installs and 60K DAU**, achieving internal records',
         ja: '企画・開発・運用を一貫して主導し**1日平均インストール1,800件・DAU 6万人を達成**' },
-      { ko: 'Native AOT와 Trimming 최적화 및 경량화 설계로 **실행 파일 크기 50% 이상 감축**',
-        en: 'Reduced **binary size by over 50%** via Native AOT and lightweight architecture',
-        ja: 'Native AOT最適化と軽量設計により**バイナリサイズを50%以上削減**' }
+      { ko: '공통 플랫폼을 자사 제품 7종에 적용해 **새 제품의 기본 기능 구축을 약 6개월에서 3일 수준으로 단축**',
+        en: 'Rolled the platform out to 7 products, **cutting a new product’s baseline build-out from ~6 months to about 3 days**',
+        ja: '共通基盤を自社製品7種に適用し、**新製品の基本機能構築を約6か月から3日程度に短縮**' }
     ],
     challenges: [
+      { ko: 'ezZip 안에서 폴더와 파일을 둘러보는 탐색 화면을 직접 개발하고, 지연 로딩·병렬 처리·아이콘 캐시로 **Windows 탐색기와 같은 로딩 속도 달성**',
+        en: 'Built ezZip’s own in-app file browser and applied lazy loading, parallel processing, and icon caching, **matching Windows Explorer load speed**',
+        ja: 'ezZip内でフォルダやファイルを閲覧する独自の画面を開発し、遅延ロード・並列処理・アイコンキャッシュで**Windowsエクスプローラーと同等の速度を達成**' },
+      { ko: '인스톨러 UI를 Avalonia로 옮기고 Trimming을 적용해 **71.1MB에서 36.8MB로 감축**',
+        en: 'Moved the installer UI to Avalonia and applied trimming, **shrinking it from 71.1MB to 36.8MB**',
+        ja: 'インストーラーUIをAvaloniaへ移行しTrimmingを適用、**71.1MBから36.8MBに削減**' },
       { ko: 'Latin1 터널링 기반 다국어 인코딩 자동 감지 로직으로 **레거시 압축 파일의 파일명 깨짐 문제 해결**',
         en: 'Resolved **legacy archive filename encoding corruptions** via Latin1 tunnelling autodetection',
         ja: 'Latin1トンネリング自動文字コード判定により**レガシー圧縮ファイルの文字化けを解消**' },
-      { ko: '윈도우 11 MSIX Sparse Package 및 셸 확장 메뉴와 **AMSI 기반 악성코드 사전 검사 연동**',
-        en: 'Implemented Windows 11 MSIX / shell extensions and **AMSI-based malware inspection**',
-        ja: 'Win11 MSIX・シェル拡張メニューと**AMSI連携のマルウェア事前検査を実装**' }
+      { ko: '**압축 파일 내부 악성코드 검사**를 AMSI로 구현하고 미지원 백신은 MpCmdRun으로 우회해 설치된 백신과 무관하게 검사 보장',
+        en: 'Built **archive malware scanning** on AMSI and routed unsupported antivirus setups through MpCmdRun, guaranteeing scans regardless of the installed antivirus',
+        ja: '**圧縮ファイル内部のマルウェア検査**をAMSIで実装し、非対応のウイルス対策ソフトはMpCmdRunで迂回して導入済みの製品に関係なく検査を保証' }
     ],
     ai: [
-      { ko: '7-Zip C++ 레거시 코드베이스 분석 및 최신 C# 변환에 **AI 도구를 적극 활용하여 개발 생산성 극대화**',
-        en: 'Accelerated development by **leveraging AI tools for 7-Zip C++ codebase analysis** and modern C# porting',
-        ja: '7-Zip C++レガシーコードの解析と最新C#移植に**AIツールを積極活用し開発生産性を最大化**' }
+      { ko: '아키텍처·파일 탐색기·WiX 인스톨러 등 낯선 과제마다 Gemini·ChatGPT·Claude Code의 **서로 다른 해법을 비교·종합**',
+        en: 'For unfamiliar problems like architecture, the file explorer, and the WiX installer, **compared and combined answers** from Gemini, ChatGPT, and Claude Code',
+        ja: 'アーキテクチャ・ファイルエクスプローラー・WiXインストーラーなど未知の課題ごとに、Gemini・ChatGPT・Claude Codeの**異なる解法を比較・統合**' },
+      { ko: '기본 코드는 직접 작성하고, AI는 설계 검토와 성능 개선안 탐색에 활용',
+        en: 'Wrote the core code by hand, using AI for design review and exploring performance improvements',
+        ja: '基本コードは自ら実装し、AIは設計レビューと性能改善案の探索に活用' }
     ]
   },
   {
     id: 'isend', span: 2,
     co: CO.enliple, date: '2024.06 — 2025.02',
     img: './img/isend.svg', thumb: './img/isend-thumb.svg',
+    role: { ko: '운영 단계 참여 · 백엔드 API', en: 'Post-launch · backend APIs', ja: '運用期に参画 · バックエンドAPI' },
     url: 'https://www.isend.co.kr/',
     title: { ko: '마케팅 메시지 발송 플랫폼 아이센드', en: 'iSend — marketing message platform', ja: 'マーケティング配信プラットフォーム iSend' },
     mtitle: { ko: '마케팅 메시지 발송 플랫폼 아이센드', en: 'iSend — Marketing Message Platform', ja: 'マーケティング配信プラットフォーム iSend' },
     blurb: {
-      ko: '다채널 마케팅 메시징과 CRM 타겟팅을 연계한 대용량 백엔드 플랫폼. 일 90만 건 트랜잭션을 무장애로 처리하고 쿼리 튜닝으로 주요 조회를 30% 개선.',
-      en: 'High-throughput backend integrating multi-channel messaging with CRM ad targeting. Handled 900K+ daily transactions and improved queries by 30%.',
-      ja: '多チャネル配信とCRM広告を連携する大容量バックエンド。日90万件超のトランザクションを無障害処理し、照会性能を30%改善。'
+      ko: 'Java/Spring 기반 마케팅 메시지 백엔드. 90만 명 대상 캠페인 발송 장애를 DB 개선으로 해결하고, 반복 운영 업무를 관리자 기능으로 시스템화.',
+      en: 'Java/Spring marketing message backend. Fixed a failure in a 900K-recipient campaign send via DB improvements and turned recurring ops work into admin features.',
+      ja: 'Java/Spring基盤のマーケティング配信バックエンド。90万人規模キャンペーンの配信障害をDB改善で解消し、繰り返しの運用業務を管理機能としてシステム化。'
     },
     stack: ['Java', 'Spring Boot', 'MariaDB', 'MyBatis', 'REST API'],
     summary: {
@@ -1051,34 +1091,40 @@ const PROJECTS = [
       ja: 'KakaoTalk・SMS・メール配信をCRM広告とつなぐ大容量データ処理サービス。'
     },
     intro: {
-      ko: '카카오톡·문자·이메일 등 다채널 메시징을 통합 관리하고 자사 CRM 광고 타겟팅과 연계되는 대용량 백엔드 플랫폼 개발 및 운영.',
-      en: 'Engineered high-throughput messaging pipelines unifying KakaoTalk, SMS/LMS, and email with proprietary CRM ad targeting.',
-      ja: 'KakaoTalk・SMS・メール配信を統合管理し、自社CRMターゲティング広告と連携する大容量バックエンド基盤を開発・運用。'
+      ko: '카카오톡·문자·이메일 발송을 통합 관리하고, 자사 Tune720과 연계해 CRM 타겟팅 광고 메시지를 보내는 플랫폼. 서비스 운영 단계에 참여해 백엔드 API 개발과 운영을 맡음.',
+      en: 'A platform that unifies KakaoTalk, SMS, and email delivery and sends CRM-targeted ad messages through the in-house Tune720. Joined after launch to build backend APIs and run operations.',
+      ja: 'KakaoTalk・SMS・メール配信を統合管理し、自社Tune720と連携してCRMターゲティング広告メッセージを送るプラットフォーム。運用期から参画し、バックエンドAPIの開発と運用を担当。'
     },
     features: [
-      { ko: '카카오톡·SMS·이메일 다채널 메시징 연동 및 **Tune720 연계 CRM 타겟팅 광고 발송 파이프라인** 구축',
-        en: 'Built multi-channel messaging integrations and **Tune720 CRM targeted ad delivery pipelines**',
-        ja: 'KakaoTalk・SMS・メール配信連携および**CRMターゲティング広告配信パイプライン**を構築' },
-      { ko: '톡포인트 지급·광고주 잔액 관리·정산 리포트 등 **핵심 비즈니스 API 및 최고관리자 어드민** 백엔드 개발',
-        en: 'Engineered core business APIs for point grants, advertiser balance, and **super-admin backend services**',
-        ja: 'ポイント付与・広告主残高管理・精算レポート等の**主要APIおよび最高管理者バックエンド**を開発' }
+      { ko: '톡포인트 지급·광고주 잔액 관리·리포트 API와 최고관리자 백엔드 API 개발',
+        en: 'Built APIs for TalkPoint grants, advertiser balances, and reports, plus super-admin backend APIs',
+        ja: 'トークポイント付与・広告主残高管理・レポートのAPIおよび最高管理者バックエンドAPIを開発' },
+      { ko: '출석 체크·상품 보기 미션 등 톡포인트 참여 기능을 개발해 **사용자 참여 경로 확장**',
+        en: 'Developed TalkPoint missions such as daily check-ins and product views, **widening ways for users to engage**',
+        ja: '出席チェック・商品閲覧ミッションなどトークポイントの参加型機能を開発し、**ユーザー参加の導線を拡大**' },
+      { ko: 'Spring 기반 구 아이센드 유지보수·운영 병행',
+        en: 'Maintained and operated the legacy Spring-based iSend in parallel',
+        ja: 'Spring基盤の旧iSendの保守・運用を並行' }
     ],
     stats: [
-      { v: { ko: '90만+', en: '900K+', ja: '90万+' }, k: { ko: '일 발송 건수', en: 'MESSAGES / DAY', ja: '1日配信件数' } },
-      { v: { ko: '30%', en: '30%', ja: '30%' },       k: { ko: '주요 조회 성능 개선', en: 'FASTER KEY QUERIES', ja: '主要照会性能改善' } }
+      { v: { ko: '90만 명', en: '900K', ja: '90万人' }, k: { ko: '캠페인 1회 발송 대상', en: 'RECIPIENTS / CAMPAIGN', ja: 'キャンペーン1回の配信対象' } },
+      { v: { ko: '30%', en: '30%', ja: '30%' },       k: { ko: '주요 조회 시간 단축', en: 'FASTER KEY QUERIES', ja: '主要照会時間短縮' } }
     ],
     metrics: [
-      { ko: '**일 90만 건 이상** 규모의 대용량 마케팅 메시지 발송 트랜잭션 및 발송 데이터를 무장애로 안정적 처리',
-        en: 'Reliably processed high-throughput messaging transactions delivering **over 900K messages daily** with zero downtime',
-        ja: '**1日90万件以上**規模の大容量マーケティングメッセージ配信トランザクションおよびデータを無障害で安定処理' },
-      { ko: '대규모 통계 및 배치 쿼리 실행 계획 튜닝을 통해 **주요 조회 성능 30% 개선**',
-        en: 'Tuned query execution plans for high-load batch and reporting jobs, **improving key query performance by 30%**',
-        ja: '大規模集計・バッチクエリの実行計画チューニングにより**主要照会性能を30%改善**' }
+      { ko: '90만 명 대상 캠페인 예약 발송에서 발생한 서버 장애를 DB 개선으로 해결해 **다음 캠페인은 장애 없이 발송**',
+        en: 'Fixed the server failure in a 900K-recipient scheduled campaign through DB improvements, **and the next campaign went out without failure**',
+        ja: '90万人対象のキャンペーン予約配信で発生したサーバー障害をDB改善で解消し、**次回の配信は障害なく完了**' },
+      { ko: '레거시 쿼리를 개선해 **주요 조회 시간 30% 단축**',
+        en: 'Reworked legacy queries, **cutting key query time by 30%**',
+        ja: 'レガシークエリを改善し**主要照会時間を30%短縮**' }
     ],
     challenges: [
-      { ko: '반복적인 수기 운영 요청을 **최고관리자 API 및 기능 시스템화로 전환하여 운영 부담 대폭 감소**',
-        en: 'Engineered super-admin APIs and self-service features, **substantially reducing recurring operational overhead**',
-        ja: '頻繁な運用要請を**最高管理者APIおよびセルフ機能へシステム化し、運用負荷を大幅に削減**' }
+      { ko: '광고주 잔액 조정·포인트 수동 지급·카톡 메시지 단가 관리를 **관리자 기능으로 시스템화**',
+        en: 'Turned advertiser balance adjustments, manual point grants, and KakaoTalk message pricing into **self-service admin features**',
+        ja: '広告主残高の調整・ポイント手動付与・カカオトーク配信単価の管理を**管理機能としてシステム化**' },
+      { ko: '검증을 이유로 보류되던 신규 시스템 전환을 주도해 **초기 오류를 직접 해결**하고 레거시 유지보수 종료',
+        en: 'Drove the stalled move to the new system, **personally fixing its early-stage bugs**, and ended legacy maintenance',
+        ja: '検証を理由に保留されていた新システムへの移行を主導し、**初期の不具合を自ら解消**してレガシー保守を終了' }
     ],
     ai: []
   },
@@ -1086,6 +1132,7 @@ const PROJECTS = [
     id: 'maketapp', span: 1,
     co: CO.enliple, date: '2024.03 — 2024.06',
     img: './img/maketapp.svg',   // 1칸 카드는 썸네일을 그리지 않아 상세 이미지만 둔다
+    role: { ko: '개발 단계 참여 · 빌드 자동화', en: 'Mid-build · automation', ja: '開発期に参画 · ビルド自動化' },
     url: '',
     title: { ko: 'PC 앱 제작 서비스 MakeTApp', en: 'MakeTApp — PC app builder', ja: 'PCアプリ制作サービス MakeTApp' },
     mtitle: { ko: 'PC 앱 제작 서비스 MakeTApp', en: 'MakeTApp — PC App Builder', ja: 'PCアプリ制作サービス MakeTApp' },
@@ -1101,17 +1148,17 @@ const PROJECTS = [
       ja: 'Webサービスをデスクトップアプリへ一括パッケージする自動化ソリューション。'
     },
     intro: {
-      ko: 'PC형 앱스토어 생태계 유통을 위해 웹 서비스를 독립된 데스크톱 앱으로 대량 패키징·빌드하는 자동화 솔루션 개발.',
-      en: 'Developed an automated desktop solution that mass-generates and packages web services into standalone desktop applications.',
-      ja: 'PC向けアプリストア流通のため、Webサービスを独立したデスクトップアプリとして一括生成する自動化ソリューションを開発。'
+      ko: 'PC형 앱스토어에 올릴 웹 서비스를 독립된 데스크톱 앱으로 대량 패키징·빌드하는 자동화 솔루션. 개발 단계에 참여.',
+      en: 'An automation solution that packages and builds web services as standalone desktop apps for a PC app store. Joined during development.',
+      ja: 'PC向けアプリストアに載せるWebサービスを独立したデスクトップアプリとして一括パッケージ・ビルドする自動化ソリューション。開発期から参画。'
     },
     features: [
-      { ko: '쇼핑몰·뉴스·웹툰 등 카테고리별로 분리된 솔루션을 **단일 통합 코어로 일원화**',
-        en: 'Consolidated category-fragmented solutions into a **unified single-core desktop runtime**',
-        ja: 'カテゴリ別に分散していたソリューションを**単一の統合コアへ一本化**' },
-      { ko: 'CefSharp 기반 웹뷰 래퍼 아키텍처 및 **800여 개 앱 자동 대량 빌드 시스템** 설계',
-        en: 'Architected CefSharp webview wrapper and **batch automated build pipeline for ~800 apps**',
-        ja: 'CefSharpベースのWebViewラッパーおよび**約800本アプリの一括自動ビルド環境**を設計' }
+      { ko: '쇼핑몰·언론사로 나뉘어 있던 솔루션과 빌드 경로를 **템플릿 하나로 통합**',
+        en: 'Merged the separate shopping and news-media solutions and build paths into **a single template**',
+        ja: 'ショッピングモール・報道機関向けに分かれていたソリューションとビルド経路を**1つのテンプレートに統合**' },
+      { ko: '업체 정보를 서버에서 받아 **복사·설정 주입·빌드·아이콘·배포까지 자동화**한 앱 빌더 개발',
+        en: 'Built an app builder that pulls client data from the server and **automates copying, config injection, build, icons, and deployment**',
+        ja: '企業情報をサーバーから取得し、**コピー・設定注入・ビルド・アイコン・配布まで自動化**するアプリビルダーを開発' }
     ],
     stats: [
       { v: { ko: '800개', en: '~800', ja: '800本' },          k: { ko: '자동 빌드 앱', en: 'APPS AUTO-BUILT', ja: '自動ビルド' } },
@@ -1120,17 +1167,17 @@ const PROJECTS = [
       { v: { ko: '75%', en: '75%', ja: '75%' }, k: { ko: '페이지 이동 로딩 단축', en: 'FASTER PAGE TRANSITIONS', ja: 'ページ遷移ロード短縮' } }
     ],
     metrics: [
-      { ko: '약 **800개 앱 자동 빌드 시스템**을 구축하여 하루 소요되던 제작 작업을 1시간으로 대폭 단축',
-        en: 'Engineered an automated batch pipeline for **~800 apps, slashing production time from 1 day to 1 hour**',
-        ja: '約**800本のアプリを一括自動ビルド**する環境を構築し、1日要していた制作作業を1時間に大幅短縮' },
-      { ko: 'CefSharp 렌더링·캐시 최적화로 **웹뷰 첫 실행 로딩과 페이지 이동 로딩을 각각 75% 단축**',
-        en: 'Optimized CefSharp rendering and caching, **cutting first-run webview load and page-transition load times by 75% each**',
-        ja: 'CefSharpの描画・キャッシュ最適化により**WebView初回起動とページ遷移のロード時間をそれぞれ75%短縮**' }
+      { ko: '약 800개 앱 자동 빌드 시스템을 구축해 **하루 걸리던 제작 작업을 1시간으로 단축**',
+        en: 'Built an automated build pipeline for ~800 apps, **cutting production work from a full day to 1 hour**',
+        ja: '約800本のアプリを一括自動ビルドする環境を構築し、**1日かかっていた制作作業を1時間に短縮**' },
+      { ko: '실행 전 서버 호출을 빌드 단계로 옮기고 페이지 이동 후처리를 1회로 줄여 **첫 실행·페이지 이동 로딩을 각각 75% 단축**',
+        en: 'Moved pre-launch server calls into the build step and ran post-navigation work once per load, **cutting first-run and page-transition load times by 75% each**',
+        ja: '起動前のサーバー呼び出しをビルド工程へ移し、ページ遷移後の処理を1回に絞って**初回起動・ページ遷移のロードをそれぞれ75%短縮**' }
     ],
     challenges: [
-      { ko: '카테고리별 다양한 웹 기술 스펙 차이를 **단일 웹뷰 래퍼 환경에서 안정적으로 호환되도록 설계**',
-        en: 'Engineered webview wrapper ensuring robust compatibility across diverse third-party web technologies',
-        ja: 'カテゴリごとの多様なWeb技術仕様の差異を**単一WebView環境で安定して互換動作するよう設計**' }
+      { ko: '사이트마다 다른 페이지 구조에 대비해 대체 스크립트 순차 재시도와 우편번호 창 한글 입력 처리를 구현',
+        en: 'Handled varied site structures with sequential fallback scripts and fixed Korean input in postcode pop-ups',
+        ja: 'サイトごとに異なるページ構造に備え、代替スクリプトの順次リトライと郵便番号検索画面のハングル入力処理を実装' }
     ],
     ai: []
   },
@@ -1138,13 +1185,14 @@ const PROJECTS = [
     id: 'ezspool', span: 2, ink: true,
     co: CO.huen, date: '2019.02 — 2023.10',
     img: './img/ezspool.svg', thumb: './img/ezspool-thumb.svg',
+    role: { ko: '운영 단계 참여 · 화면부터 DB까지', en: 'Post-launch · UI to DB', ja: '運用期に参画 · 画面からDBまで' },
     url: 'https://www.huensystem.com/ez-solutions/solutions/ez-spool',
     title: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool — piping drawing automation', ja: '配管図面自動化 Ez-Spool' },
     mtitle: { ko: '배관 도면 자동화 Ez-Spool', en: 'Ez-Spool — Piping Drawing Automation', ja: '配管図面自動化 Ez-Spool' },
     blurb: {
-      ko: '플랜트 배관 Spool 도면·BOM 자동 산출 및 도면 추출 엔진. 검색 알고리즘 개선으로 도면 조회를 98% 단축하고 현대엔지니어링·삼성물산 현장을 지원.',
-      en: 'Automated plant piping spool drawing and BOM engine. Accelerated drawing search by 98% and led on-site operations for Hyundai E&C and Samsung C&T.',
-      ja: '配管Spool図面・BOM自動算出エンジン。検索処理を98%高速化し、現代エンジニアリングやサムスン物産の施工現場へ直接対応。'
+      ko: 'Spool 도면 자동화 시스템을 화면부터 DB까지 맡아 개발·운영. 현대엔지니어링·삼성물산 현장 운영을 지원하고 수작업 계산을 70% 줄임.',
+      en: 'Built and ran a spool drawing automation system from UI to database, supporting Hyundai E&C and Samsung C&T sites and cutting manual calculation by 70%.',
+      ja: 'Spool図面自動化システムを画面からDBまで担当し開発・運用。現代エンジニアリング・サムスン物産の現場運用を支援し、手作業の計算を70%削減。'
     },
     stack: ['C#', 'ASP.NET', 'VB.NET', 'MSSQL', 'EyeShot', 'LiteCad'],
     summary: {
@@ -1153,37 +1201,36 @@ const PROJECTS = [
       ja: 'Spool製作図面・BOM・溶接レポートを自動算出するシステム。'
     },
     intro: {
-      ko: '플랜트 시공 현장의 수작업 도면 작도 비효율을 개선하기 위한 Spool 제작 도면·BOM·용접 리포트 자동화 시스템 개발 및 운영.',
-      en: 'Engineered automated drafting and data extraction systems for plant piping fabrication drawings, BOMs, and welding reports.',
-      ja: 'プラント配管施工現場の作図非効率を改善するため、Spool製作図面・BOM・溶接レポートの自動算出システムを開発・運用。'
+      ko: '플랜트 배관 시공에 필요한 Spool 제작 도면·BOM·용접 리포트를 자동으로 산출하는 시스템. 제품 운영 단계에 참여.',
+      en: 'A system that automatically produces spool fabrication drawings, BOMs, and welding reports for plant piping. Joined after launch.',
+      ja: 'プラント配管施工に必要なSpool製作図面・BOM・溶接レポートを自動算出するシステム。運用期から参画。'
     },
     features: [
-      { ko: '플랜트 배관 시공에 필요한 **Spool 도면·BOM·용접 리포트 자동 산출 엔진** 개발 및 유지보수',
-        en: 'Engineered automated generation of plant piping **spool drawings, BOMs, and welding reports**',
-        ja: 'プラント配管施工向けの**Spool製作図面・BOM・溶接レポート自動生成エンジン**を開発' },
-      { ko: '사용자 정의 리포트 포맷 및 데이터 매핑 화면을 개발해 **고객사별 커스터마이징 대응 효율 극대화**',
-        en: 'Engineered custom report builders and data mapping UI, **maximizing client customization efficiency**',
-        ja: 'ユーザー定義レポート書式およびデータマッピング画面を開発し**個別カスタマイズ対応効率を最大化**' }
+      { ko: '리포트에 넣을 항목과 순서를 고객이 직접 고르는 화면을 개발해 **양식 변경마다 하던 코드 수정·재배포를 없앰**',
+        en: 'Built a screen where clients pick report fields and their order, **removing the code change and redeploy each format request used to need**',
+        ja: 'レポートに載せる項目と順序を顧客自身が選べる画面を開発し、**書式変更のたびに必要だったコード修正・再配布を解消**' },
+      { ko: '시스템 전체 화면과 개발 도구의 UI/UX 개선',
+        en: 'Improved the UI/UX of the full system and its developer tools',
+        ja: 'システム全画面および開発ツールのUI/UXを改善' }
     ],
     stats: [
-      { v: { ko: '98%', en: '98%', ja: '98%' }, k: { ko: '도면 검색 속도 향상', en: 'FASTER SEARCH', ja: '図面検索速度向上' } },
       { v: { ko: '70%', en: '70%', ja: '70%' }, k: { ko: '수작업 계산 공수 단축', en: 'LESS MANUAL CALC', ja: '手動計算工数削減' } }
     ],
     metrics: [
-      { ko: '도면 인덱싱 및 공간 검색 알고리즘을 개선해 **도면 검색 속도 98% 향상**',
-        en: 'Optimized drawing indexing and search algorithms, achieving a **98% faster drawing search speed**',
-        ja: '図面インデックスおよび検索アルゴリズムを改善し**図面検索速度を98%向上**' },
       { ko: 'CAD 도면 형상 기반 심볼 좌표 추출 도구를 개발해 **수작업 계산 공수 70% 단축**',
         en: 'Developed CAD geometry symbol coordinate extraction, **reducing manual calculation effort by 70%**',
         ja: 'CAD図面形状に基づくシンボル座標自動抽出ツールを開発し**手動計算工数を70%削減**' }
     ],
     challenges: [
-      { ko: '현대엔지니어링 8개 이상 현장 및 삼성물산 평택 현장의 **운영 이슈와 VOC에 실시간 전담 대응**',
-        en: 'Handled technical support and real-time operations for **8+ Hyundai E&C and Samsung C&T sites**',
-        ja: '現代エンジニアリング8箇所以上の現場およびサムスン物産・平沢現場の**運用課題に専任対応**' },
-      { ko: '레거시 쿼리를 SP·Function·View 구조로 재구성하여 **리포트 조회 성능과 데이터 정합성 개선**',
-        en: 'Restructured legacy queries into SPs, Functions, and Views, **optimizing report queries and data integrity**',
-        ja: 'レガシークエリをストアドプロシージャやView構造へ再構築し、**レポート照会性能と整合性を改善**' }
+      { ko: '현대엔지니어링 8개+·삼성물산 평택 현장 VOC에 대응하며, 오류 재현용 사내 도면 검색 도구를 재작성해 **검색 속도 98% 향상**',
+        en: 'Handled VOC for 8+ Hyundai E&C sites and Samsung C&T Pyeongtaek, and rewrote the in-house drawing search tool used to reproduce bugs, **making search 98% faster**',
+        ja: '現代エンジニアリング8箇所以上・サムスン物産平沢現場のVOCに対応し、不具合再現用の社内図面検索ツールを作り直して**検索速度を98%向上**' },
+      { ko: '레거시 쿼리를 SP·Function·View 구조로 재구성하여 **리포트 조회 성능 개선**',
+        en: 'Restructured legacy queries into SPs, Functions, and Views, **speeding up report queries**',
+        ja: 'レガシークエリをストアドプロシージャやView構造へ再構築し、**レポート照会性能を改善**' },
+      { ko: '배포·개발 환경 설정·기본 기능 설명 등 구전으로만 전해지던 절차를 **매뉴얼로 정리**해 온보딩·운영 효율 개선',
+        en: 'Turned word-of-mouth procedures for deployment, environment setup, and core features into **written manuals**, easing onboarding and operations',
+        ja: '配布・開発環境設定・基本機能説明など口頭で伝わっていた手順を**マニュアル化**し、オンボーディングと運用を効率化' }
     ],
     ai: []
   },
@@ -1191,36 +1238,40 @@ const PROJECTS = [
     id: 'ezcc', span: 2,
     co: CO.huen, date: '2023.01 — 2023.05',
     img: './img/ezcc.svg', thumb: './img/ezcc-thumb.svg',
+    role: { ko: '1차 개발 참여 · 구조 정비', en: 'Phase 1 · restructuring', ja: '1次開発に参画 · 構造整理' },
     url: 'https://www.huensystem.com/ez-solutions/solutions/ez-cc',
     title: { ko: '배관 시공 모니터링 Ez-CC', en: 'Ez-CC — piping construction monitoring', ja: '配管施工モニタリング Ez-CC' },
     mtitle: { ko: '배관 시공 모니터링 Ez-CC', en: 'Ez-CC — Piping Construction Monitoring', ja: '配管施工モニタリング Ez-CC' },
     blurb: {
-      ko: '대용량 3D 플랜트 모델 위에 배관 시공 공정을 실시간 컬러링 시각화하는 솔루션. C++ Native 연산 최적화로 메모리 누수(Zero Leak)를 해결.',
-      en: 'Real-time 3D plant piping visualization Add-in for Navisworks. Resolved high-load memory leaks (Zero Leak) via C++ native optimization.',
-      ja: '大容量3Dプラントモデル上に配管施工工程を可視化するNavisworksアドイン。C++最適化によりメモリリーク(Zero Leak)を完全解消。'
+      ko: 'Navisworks 3D 모델에 배관 시공 현황을 색으로 표시하는 Add-in. 대용량 데이터 전달 시 C++ 메모리 부족을 JSON 파서 교체로 해결.',
+      en: 'Navisworks Add-in that color-codes piping progress on 3D models. Fixed C++ out-of-memory crashes on large data hand-offs by swapping the JSON parser.',
+      ja: 'Navisworksの3Dモデル上に配管施工状況を色分け表示するアドイン。大容量データ受け渡し時のC++側メモリ不足をJSONパーサー変更で解消。'
     },
-    stack: ['C#', 'C++', 'Navisworks API'],
+    stack: ['C#', 'C++', 'Navisworks API', 'RapidJSON'],
     summary: {
-      ko: 'Navisworks 3D 모델 위에 배관 시공 현황을 실시간 색으로 표시.',
-      en: 'Colors piping construction progress live on Navisworks 3D models.',
-      ja: 'Navisworksの3Dモデル上で配管施工状況をリアルタイムに色分け表示。'
+      ko: 'Navisworks 3D 모델 위 배관 시공 현황을 색으로 구분해 표시.',
+      en: 'Color-codes piping construction progress on Navisworks 3D models.',
+      ja: 'Navisworksの3Dモデル上で配管施工状況を色分け表示。'
     },
     intro: {
-      ko: 'Autodesk Navisworks Add-in 환경에서 대용량 3D 플랜트 모델 위에 배관 시공 현황을 실시간 컬러링으로 시각화하는 시스템 개발.',
-      en: 'Developed a real-time 3D construction progress visualization Add-in within Autodesk Navisworks.',
-      ja: 'Autodesk Navisworksアドイン環境で大容量3Dプラントモデル上に配管施工工程をリアルタイム色分け表示する監視システムを開発。'
+      ko: 'Autodesk Navisworks Add-in 환경에서 대용량 3D 플랜트 모델 위에 배관 시공 현황을 색으로 구분해 보여주는 시스템. 1차 개발에 참여.',
+      en: 'An Autodesk Navisworks Add-in that color-codes piping construction status on large 3D plant models. Took part in first-phase development.',
+      ja: 'Autodesk Navisworksアドイン環境で、大容量3Dプラントモデル上に配管施工状況を色分け表示するシステム。1次開発に参画。'
     },
     features: [
-      { ko: 'Autodesk Navisworks Add-in 기반으로 **3D 모델 위에 배관 시공 공정을 실시간 컬러링 모니터링**하는 시스템 구축',
-        en: 'Built an Autodesk Navisworks Add-in **monitoring plant piping status via real-time 3D color-coding**',
-        ja: 'Autodesk Navisworksアドインとして**3Dモデル上に配管施工工程をリアルタイム色分け監視**するシステムを開発' }
+      { ko: 'Navisworks Add-in에서 **3D 모델 위 배관 시공 공정을 색으로 구분하는 모니터링 기능** 개발',
+        en: 'Developed **color-coded monitoring of piping progress on 3D models** in the Navisworks Add-in',
+        ja: 'Navisworksアドインで**3Dモデル上の配管施工工程を色分けするモニタリング機能**を開発' }
     ],
     metrics: [
-      { ko: '대용량 3D 모델 연산 시 발생하던 **메모리 누수를 C++ Native 레이어에서 완전 해결(Zero Leak)**하여 시스템 안정성 확보',
-        en: 'Completely resolved **memory leaks in the C++ native layer (Zero Leak)** during high-load 3D computations, ensuring rock-solid stability',
-        ja: '大容量3Dモデル演算時の**メモリリークをC++ Nativeレイヤーで完全解消(Zero Leak)**しシステムの高安定性を確保' }
+      { ko: '데이터 포맷(Access) 전환안 대신 **JSON 파서 교체만으로 대용량 3D 데이터 처리를 안정화**',
+        en: 'Instead of migrating the data format to Access, **stabilized large 3D data processing by swapping the JSON parser alone**',
+        ja: 'データ形式(Access)への移行案ではなく、**JSONパーサーの変更だけで大容量3Dデータ処理を安定化**' }
     ],
     challenges: [
+      { ko: 'C#에서 전달한 대용량 JSON을 C++에서 한 번에 읽어 메모리가 부족하던 문제를 RapidJSON FileReadStream 스트리밍 파싱으로 바꿔 **메모리 부족 해소**',
+        en: 'C++ ran out of memory loading large JSON from C# in one pass; switched to RapidJSON FileReadStream streaming parsing and **eliminated the out-of-memory failures**',
+        ja: 'C#から渡した大容量JSONをC++側で一括読み込みしメモリ不足になる問題を、RapidJSON FileReadStreamのストリーミング解析に切り替えて**メモリ不足を解消**' },
       { ko: '개념 검증(PoC) 수준의 코드를 **지속 확장 및 유지보수 가능한 컴포넌트 아키텍처로 전면 리팩토링**',
         en: 'Refactored proof-of-concept codebase into an **extensible, highly maintainable component architecture**',
         ja: 'PoC段階のコードを**継続的な拡張と保守が可能なコンポーネント設計へと全面リファクタリング**' }
@@ -1231,24 +1282,25 @@ const PROJECTS = [
     id: 'mobile', span: 1,
     media: false, // 상세 페이지 대표 이미지 칸을 두지 않는다(사용자 결정, 2026-09-30)
     co: CO.huen, date: '2020.01 — 2020.06',
+    role: { ko: '단독 개발 · 1차 개발 후 이관', en: 'Sole dev · handed off', ja: '単独開発 · 1次開発後に移管' },
     url: '',
     title: { ko: '자재관리 ERP 모바일 앱', en: 'Materials management app', ja: '資材管理モバイルアプリ' },
     mtitle: { ko: '자재관리 ERP 모바일 앱', en: 'Materials Management ERP App', ja: '資材管理ERPモバイルアプリ' },
     blurb: {
-      ko: '윈도우 ERP의 핵심 자재 수불 및 물류 관리 기능을 모바일로 이식한 크로스플랫폼 솔루션. Xamarin·MVVM 아키텍처부터 FCM 푸시까지 100% 단독 개발.',
-      en: 'Cross-platform mobile app porting desktop ERP materials logistics. Solely engineered end-to-end (100%) from Xamarin/MVVM architecture to FCM push.',
-      ja: 'Windows ERPの主要な資材管理機能を移植したモバイルアプリ。Xamarin/MVVM設計からFCM通知まで100%単独開発。'
+      ko: 'Windows ERP의 자재 관리·공지사항·출퇴근 기록을 옮긴 iOS/Android 앱. Xamarin·MVVM 설계부터 FCM 푸시까지 단독 개발.',
+      en: 'iOS/Android app bringing materials management, notices, and attendance from a Windows ERP. Solo-built from Xamarin/MVVM design to FCM push.',
+      ja: 'Windows ERPの資材管理・お知らせ・出退勤記録を移したiOS/Androidアプリ。Xamarin/MVVM設計からFCM通知まで単独開発。'
     },
     stack: ['C#', 'Xamarin', 'MVVM', 'Firebase'],
     summary: {
-      ko: '데스크톱 ERP의 자재 수불·현장 물류 기능을 모바일로 단독 이식.',
-      en: 'Solo port of desktop ERP inventory and site logistics to mobile.',
-      ja: 'デスクトップERPの資材受払・現場物流機能をモバイルへ単独移植。'
+      ko: '데스크톱 ERP의 자재 관리·출퇴근 기록을 모바일 앱으로 단독 이식.',
+      en: 'Solo port of desktop ERP materials and attendance features to mobile.',
+      ja: 'デスクトップERPの資材管理・出退勤記録をモバイルアプリへ単独移植。'
     },
     intro: {
-      ko: '기존 윈도우 데스크톱 ERP의 핵심 자재 수불 및 현장 물류 관리 기능을 모바일 환경으로 단독 이식·구축.',
-      en: 'Solely developed and ported core materials inventory and on-site logistics features from desktop ERP to mobile.',
-      ja: '既存WindowsデスクトップERPの主要な資材受払・現場物流管理機能をモバイル環境へ単独で移植・構築。'
+      ko: '고객사 Windows ERP와 같은 기능 일부를 모바일로 구현한 1차 개발로, 6개월간 단독으로 개발한 뒤 후임에게 이관.',
+      en: 'First-phase build of mobile versions of a client’s Windows ERP features, developed solo for six months, then handed off.',
+      ja: '顧客企業のWindows ERPと同じ機能の一部をモバイルで実装した1次開発。6か月間単独で開発し後任へ移管。'
     },
     features: [
       { ko: 'Xamarin·MVVM·XAML 기반으로 **iOS/Android 동시 지원 크로스플랫폼 앱을 단독 설계 및 개발(100%)**',
@@ -1256,15 +1308,11 @@ const PROJECTS = [
         ja: 'Xamarin・MVVM・XAMLを用いて**iOS/Android両対応のクロスプラットフォームアプリを単独で設計・開発(100%)**' }
     ],
     metrics: [
-      { ko: 'Google Firebase Cloud Messaging(FCM) 기반 **공지사항 및 긴급 불출 Push 알림 구현**으로 현장 소통 신속화',
-        en: 'Implemented **Google Firebase Cloud Messaging (FCM) push notifications** for urgent notices and dispatch, accelerating on-site coordination',
-        ja: 'Google Firebase Cloud Messaging(FCM)を活用した**お知らせ・緊急出庫Push通知を実装**し現場の連携を迅速化' }
+      { ko: 'Google Firebase Cloud Messaging(FCM) 기반 공지사항 Push 알림 구현',
+        en: 'Implemented notice push notifications with Google Firebase Cloud Messaging (FCM)',
+        ja: 'Google Firebase Cloud Messaging(FCM)によるお知らせPush通知を実装' }
     ],
-    challenges: [
-      { ko: '기존 Windows ERP의 핵심 자재 수불 및 현장 관리 기능을 **모바일 터치 환경에 최적화하여 안정적으로 이식**',
-        en: 'Ported core desktop ERP materials logistics into an **optimized mobile user experience**',
-        ja: '既存Windows ERPの主要な資材受払機能を**モバイル環境へ最適化し安定移植**' }
-    ],
+    challenges: [],
     ai: []
   }
 ];
@@ -1605,7 +1653,7 @@ class Component extends DCLogic {
       return {
         // date는 '2025.02 — NOW' 한 형식으로 저장하고, NOW만 언어에 맞춰 바꿔 그린다
         id: p.id, num: pad(i + 1), co: t(p.co), date: p.date.replace('NOW', t(T.now)), dateFrom: p.date.split(' — ')[0] + ' —', dateTo: p.date.split(' — ')[1].replace('NOW', t(T.now)), url: p.url,
-        title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb), summary: t(p.summary),
+        title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb), summary: t(p.summary), role: !!p.role, roleKind: p.role ? t(p.role).split(' · ')[0] : '', roleScope: p.role ? t(p.role).split(' · ')[1] : '',
         stack: p.stack, img: themed(p.img || ''), noImg: !p.img,
         // 카드 썸네일은 세로 칸(약 0.7:1), 상세는 가로 칸(약 2.7:1)이라 thumb이 있으면 카드에만 따로 쓴다
         thumb: themed(p.thumb || p.img || ''),
