@@ -1653,7 +1653,8 @@ class Component extends DCLogic {
     // img/ 생성 이미지는 다크(<이름>.svg)·라이트(<이름>-light.svg) 한 쌍이다. <img>의 SVG는 테마 버튼을 모르므로 여기서 고른다
     // ?v=는 이미지를 다시 그렸을 때 올린다 — 파일 이름이 같아 브라우저가 옛 그림을 붙잡는다(사용자 지적, 2026-09-30)
     const IMG_V = 9;
-    const themed = (src) => (src ? (dark ? src : src.replace(/\.svg$/, '-light.svg')) + '?v=' + IMG_V : src);
+    // 강조(잉크) 카드는 카드 색이 테마와 반대라, 그 안 썸네일도 반대 테마판을 쓴다(사용자 결정, 2026-10-08)
+    const themed = (src, invert) => (src ? ((dark !== !!invert) ? src : src.replace(/\.svg$/, '-light.svg')) + '?v=' + IMG_V : src);
 
     const view = (p, i) => {
       // 5단계는 고정 번호(01~05)다. 내용이 없는 단계는 건너뛰되 번호는 당기지 않는다.
@@ -1678,7 +1679,7 @@ class Component extends DCLogic {
         title: t(p.title), mtitle: t(p.mtitle), blurb: t(p.blurb), summary: t(p.summary), role: !!p.role, roleKind: p.role ? t(p.role).split(' · ')[0] : '', roleScope: p.role ? t(p.role).split(' · ')[1] : '',
         stack: p.stack, img: themed(p.img || ''), noImg: !p.img,
         // 카드 썸네일은 세로 칸(약 0.7:1), 상세는 가로 칸(약 2.7:1)이라 thumb이 있으면 카드에만 따로 쓴다
-        thumb: themed(p.thumb || p.img || ''),
+        thumb: themed(p.thumb || p.img || '', p.ink),
         // 상세 이미지는 데스크톱(<id>.svg, 약 2.7:1)과 모바일(<id>-m.svg, 약 1.5:1)을 따로 그린다 — 한 장으로 둘 다 맞추면 한쪽이 비거나 잘렸다
         imgM: themed((p.img || '').replace(/\.svg$/, '-m.svg')),
         hasMedia: p.media !== false,
